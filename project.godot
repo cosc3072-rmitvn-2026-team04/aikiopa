@@ -1,0 +1,42 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="AIKIOPA"
+config/description="COSC3072 Games Studio 1 Project, Team 04, RMIT Vietnam 2026."
+config/features=PackedStringArray("4.6", "Forward Plus")
+config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=3
+window/size/resizable=false
+
+[file_customization]
+
+folder_colors={
+"res://assets/": "red",
+"res://build/": "gray",
+"res://scenes/": "blue",
+"res://scripts/": "purple",
+"res://shaders/": "green"
+}
+
+[physics]
+
+2d/physics_engine="Dummy"
+3d/physics_engine="Dummy"
+
+[rendering]
+
+rendering_device/driver.windows="d3d12"
