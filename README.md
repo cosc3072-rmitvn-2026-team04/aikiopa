@@ -84,3 +84,11 @@ For further information, use:
 
 - We follow the [GDScript style guide](https://docs.godotengine.org/en/4.6/tutorials/scripting/gdscript/gdscript_styleguide.html).
 - Prefer verbose documentation comments in custom classes where applicable. See [GDScript documentation comments](https://docs.godotengine.org/en/4.6/tutorials/scripting/gdscript/gdscript_documentation_comments.html).
+
+
+## Version Control Conventions
+
+- Use feature branches. Example naming: `feature-game-hud`
+- Include feature branch name in commit. Example: `[feature-game-hud] Updated status bar`
+- Make pull request from feature branches into `dev` branch upon feature completion.
+- Pull request into `main` branch must be from `dev` branch.
