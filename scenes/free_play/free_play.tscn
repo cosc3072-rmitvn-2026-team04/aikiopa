@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bxlo1y44rtffo"]
+
+[ext_resource type="Script" uid="uid://dqjitm5fwb83b" path="res://scripts/core/game_scene_2d.gd" id="1_dlqee"]
+
+[node name="FreePlay" type="Node2D" unique_id=209919511]
+script = ExtResource("1_dlqee")
+metadata/_custom_type_script = "uid://dqjitm5fwb83b"

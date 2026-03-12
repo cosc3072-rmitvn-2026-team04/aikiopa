@@ -82,4 +82,5 @@ For further information, use:
 
 ## 📃 Coding Conventions
 
-We follow the [GDScript style guide](https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_styleguide.html).
+- We follow the [GDScript style guide](https://docs.godotengine.org/en/4.6/tutorials/scripting/gdscript/gdscript_styleguide.html).
+- Prefer verbose documentation comments in custom classes where applicable. See [GDScript documentation comments](https://docs.godotengine.org/en/4.6/tutorials/scripting/gdscript/gdscript_documentation_comments.html).

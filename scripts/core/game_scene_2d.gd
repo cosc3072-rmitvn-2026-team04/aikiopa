@@ -1,5 +1,5 @@
 class_name GameScene2D
-extends Control
+extends Node2D
 
 
 ## Signals whether this scene is done processing and is ready to switch to the
@@ -14,9 +14,19 @@ signal scene_finished(next_scene_key: SceneKey)
 
 enum SceneKey {
 	MAIN_MENU,
+	PROLOGUE_TUTORIAL,
+	FREE_PLAY,
+	SAVEGAME_LOADER,
+	SETTINGS,
+	CREDITS,
 	NONE,
 }
 
-const GAME_SCENE = {
+const GAME_SCENE: Dictionary[int, String] = {
 	SceneKey.MAIN_MENU: "res://scenes/main_menu/main_menu.tscn",
+	SceneKey.PROLOGUE_TUTORIAL: "res://scenes/prologue_tutorial/prologue_tutorial.tscn",
+	SceneKey.FREE_PLAY: "res://scenes/prologue_tutorial/prologue_tutorial.tscn",
+	SceneKey.SAVEGAME_LOADER: "res://scenes/prologue_tutorial/prologue_tutorial.tscn",
+	SceneKey.SETTINGS: "res://scenes/prologue_tutorial/prologue_tutorial.tscn",
+	SceneKey.CREDITS: "res://scenes/prologue_tutorial/prologue_tutorial.tscn",
 }
