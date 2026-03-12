@@ -15,6 +15,10 @@ config/description="COSC3072 Games Studio 1 Project, Team 04, RMIT Vietnam 2026.
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Globals="*uid://1e7omhauptu1"
+
 [display]
 
 window/size/viewport_width=1920
