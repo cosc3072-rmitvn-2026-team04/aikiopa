@@ -2,6 +2,6 @@
 
 [ext_resource type="Script" uid="uid://dqjitm5fwb83b" path="res://scripts/core/game_scene_2d.gd" id="1_4icvw"]
 
-[node name="SavegameLoader" type="Node2D" unique_id=1976988115]
+[node name="SaveLoader" type="Node2D" unique_id=1976988115]
 script = ExtResource("1_4icvw")
 metadata/_custom_type_script = "uid://dqjitm5fwb83b"
