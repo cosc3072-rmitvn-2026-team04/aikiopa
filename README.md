@@ -88,8 +88,8 @@ For further information, use:
 
 ## 🥦 Version Control Conventions
 
-- Use feature branches. Example naming: `feature-game-hud`,
-- Include feature branch name in commit. Example: `[feature-game-hud] Updated status bar`.
+- Use feature branches. Example naming: `123-game-hud`, where `123` is the issue number.
+- Include feature branch name in commit. Example: `[feature-123-game-hud] Updated status bar`.
 - Make pull request from feature branches into `dev` branch upon feature completion.
 - Delete feature branch upon completion and its pull request is merged.
 - Pull request into `main` branch must be from `dev` branch.
