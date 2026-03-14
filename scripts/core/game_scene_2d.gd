@@ -14,19 +14,19 @@ signal scene_finished(next_scene_key: SceneKey)
 
 enum SceneKey {
 	MAIN_MENU,
-	PROLOGUE_TUTORIAL,
+	TUTORIAL,
 	FREE_PLAY,
-	SAVEGAME_LOADER,
+	SAVE_LOADER,
 	SETTINGS,
 	CREDITS,
 	NONE,
 }
 
 const GAME_SCENE: Dictionary[int, String] = {
-	SceneKey.MAIN_MENU: "res://scenes/main_menu/main_menu.tscn",
-	SceneKey.PROLOGUE_TUTORIAL: "res://scenes/prologue_tutorial/prologue_tutorial.tscn",
-	SceneKey.FREE_PLAY: "res://scenes/prologue_tutorial/prologue_tutorial.tscn",
-	SceneKey.SAVEGAME_LOADER: "res://scenes/prologue_tutorial/prologue_tutorial.tscn",
-	SceneKey.SETTINGS: "res://scenes/prologue_tutorial/prologue_tutorial.tscn",
-	SceneKey.CREDITS: "res://scenes/prologue_tutorial/prologue_tutorial.tscn",
+	SceneKey.MAIN_MENU: "res://scenes/main_menu.tscn",
+	SceneKey.TUTORIAL: "res://scenes/tutorial.tscn",
+	SceneKey.FREE_PLAY: "res://scenes/free_play.tscn",
+	SceneKey.SAVE_LOADER: "res://scenes/save_loader.tscn",
+	SceneKey.SETTINGS: "res://scenes/settings.tscn",
+	SceneKey.CREDITS: "res://scenes/credits.tscn",
 }
