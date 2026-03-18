@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://ckf5ejaxdb3vf"]
+
+[ext_resource type="Script" uid="uid://dhh27y8ixdvyk" path="res://scripts/game/game.gd" id="1_sul5r"]
+
+[sub_resource type="TileSet" id="TileSet_7h61r"]
+tile_shape = 3
+tile_size = Vector2i(58, 52)
+
+[node name="Game" type="Node2D" unique_id=1327406412]
+script = ExtResource("1_sul5r")
+
+[node name="TerrainTileMapLayer" type="TileMapLayer" parent="." unique_id=375012425]
+unique_name_in_owner = true
+tile_set = SubResource("TileSet_7h61r")
