@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://d107gii2hpg1j"]
 
 [ext_resource type="Script" uid="uid://dn6k6ykoyxmka" path="res://scripts/scenes/main_menu.gd" id="1_0ebjn"]
-[ext_resource type="Script" uid="uid://cupvablkoadik" path="res://scripts/core/game_ui.gd" id="2_0ebjn"]
+[ext_resource type="Script" uid="uid://pv8kfa1omp0b" path="res://scripts/scenes/main_menu_ui.gd" id="2_ekxnf"]
 
 [node name="MainMenu" type="Node2D" unique_id=285205235]
 script = ExtResource("1_0ebjn")
@@ -18,7 +18,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("2_0ebjn")
+script = ExtResource("2_ekxnf")
 metadata/_custom_type_script = "uid://cupvablkoadik"
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/MainMenuUI" unique_id=718349148]
