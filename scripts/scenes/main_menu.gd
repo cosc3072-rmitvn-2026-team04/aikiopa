@@ -16,7 +16,7 @@ func _ready() -> void:
 func _on_main_menu_ui_acted(action: StringName) -> void:
 	match action:
 		"prologue_tutorial":
-			scene_finished.emit(SceneKey.PROLOGUE_TUTORIAL)
+			scene_finished.emit(SceneKey.TUTORIAL)
 		"free_play":
 			scene_finished.emit(SceneKey.FREE_PLAY)
 		"settings":
