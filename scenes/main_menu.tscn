@@ -1,11 +1,13 @@
 [gd_scene format=3 uid="uid://d107gii2hpg1j"]
 
-[ext_resource type="Script" uid="uid://dn6k6ykoyxmka" path="res://scripts/scenes/main_menu.gd" id="1_0ebjn"]
-[ext_resource type="Script" uid="uid://pv8kfa1omp0b" path="res://scripts/scenes/main_menu_ui.gd" id="2_ekxnf"]
+[ext_resource type="Script" uid="uid://dn6k6ykoyxmka" path="res://scripts/scenes/main_menu/main_menu.gd" id="1_0ebjn"]
+[ext_resource type="Script" uid="uid://pv8kfa1omp0b" path="res://scripts/scenes/main_menu/main_menu_ui.gd" id="2_ekxnf"]
 
 [node name="MainMenu" type="Node2D" unique_id=285205235]
 script = ExtResource("1_0ebjn")
 metadata/_custom_type_script = "uid://dqjitm5fwb83b"
+
+[node name="BackgroundSprite2D" type="Sprite2D" parent="." unique_id=1736822857]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=262500120]
 layer = 99
@@ -40,7 +42,7 @@ horizontal_alignment = 1
 [node name="TutorialButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=1569103081]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Tutorials"
+text = "Tutorial"
 
 [node name="FreeGameButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=1634631360]
 unique_name_in_owner = true
