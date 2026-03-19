@@ -32,7 +32,7 @@ horizontal_alignment = 1
 
 [node name="MessageLabel" type="Label" parent="ColorRect/VBoxContainer" unique_id=1388868528]
 layout_mode = 2
-text = "Expendition Completed!"
+text = "Expedition Completed!"
 horizontal_alignment = 1
 
 [node name="SaveButton" type="Button" parent="ColorRect/VBoxContainer" unique_id=1160669998]
