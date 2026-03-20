@@ -12,3 +12,9 @@ script = ExtResource("1_sul5r")
 [node name="TerrainTileMapLayer" type="TileMapLayer" parent="." unique_id=375012425]
 unique_name_in_owner = true
 tile_set = SubResource("TileSet_7h61r")
+
+[node name="TerrainFeatures" type="Node2D" parent="." unique_id=424106602]
+unique_name_in_owner = true
+
+[node name="Buildings" type="Node2D" parent="." unique_id=1244332153]
+unique_name_in_owner = true
