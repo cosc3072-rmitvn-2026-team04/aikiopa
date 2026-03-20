@@ -44,10 +44,8 @@ jobs:
 
           Write-Output "Installing Godot editor configuration"
           Copy-Item ./.github/dist/editor_settings-4.6.tres -Destination ~/AppData/Roaming/Godot
-      - name: Export Projects
+      - name: Export Project
         run: ./build.ps1 -c -m debug
-      - name: Debug PWD
-        run: ls
       - name: Upload Artifact
         uses: actions/upload-artifact@v6
         if: startsWith(github.ref, 'refs/tags/')
