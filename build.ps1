@@ -29,6 +29,8 @@ if ($c.IsPresent) {
     Write-Host "[ DONE ]" -ForegroundColor Magenta
 }
 
+$projectName = "AIKIOPA"
+
 $repositoryPath = $PSScriptRoot
 $archiveFolderPath = Join-Path -Path $repositoryPath -ChildPath "artifact"
 switch ($m) {
@@ -84,7 +86,7 @@ foreach ($exportPreset in $exportPresets) {
     Write-Host "Exporting project ($exportPreset) ..." -ForegroundColor Yellow
     godot --headless --path $repositoryPath $godotExportFlag $exportPreset | Out-Default
 
-    $zipFileName = "$exportPreset.zip"
+    $zipFileName = "${projectName}_$exportPreset.zip"
     $zipFilePath = Join-Path -Path $archiveFolderPath -ChildPath $zipFileName
     if (-not (Test-Path -Path $archiveFolderPath)) {
         New-Item -ItemType Directory -Path $archiveFolderPath | Out-Null
@@ -95,7 +97,7 @@ foreach ($exportPreset in $exportPresets) {
     Write-Host "Archiving project ($exportPreset) from $exportDirectory into $zipFilePath" -ForegroundColor Yellow
     Write-Host "- Source: $exportDirectory" -ForegroundColor Yellow
     Write-Host "- Target: $zipFilePath" -ForegroundColor Yellow
-    Invoke-Expression -Command "zip -jr -0 $zipFilePath $exportDirectory"
+    Invoke-Expression -Command "zip -jr -0 '$zipFilePath' $exportDirectory"
 }
 
 Write-Host "[ DONE ]" -ForegroundColor Black -BackgroundColor Magenta
