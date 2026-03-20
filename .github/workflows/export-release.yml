@@ -47,7 +47,7 @@ jobs:
       - name: Export Projects
         run: ./build.ps1 -c -m release
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: startsWith(github.ref, 'refs/tags/')
         with:
           name: release_build
