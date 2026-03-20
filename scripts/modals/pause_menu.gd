@@ -4,9 +4,9 @@ extends GameUI
 # ============================================================================ #
 #region Godot builtins
 func _ready() -> void:
+	%UnpauseButton.pressed.connect(_on_unpause_button_pressed)
 	%SaveButton.pressed.connect(_on_save_button_pressed)
-	%NewGameButton.pressed.connect(_on_new_game_button_pressed)
-	%QuitToMenuButton.pressed.connect(_on_quit_to_menu_button_press)
+	%QuitToMainMenuButton.pressed.connect(_on_quit_to_main_menu_button_press)
 #endregion
 # ============================================================================ #
 
@@ -14,16 +14,17 @@ func _ready() -> void:
 # ============================================================================ #
 #region Signal listeners
 
+# Listens to %UnpauseButton.pressed.connect().
+func _on_unpause_button_pressed() -> void:
+	acted.emit(&"unpause")
+
 # Listens to %SaveButton.pressed.connect().
 func _on_save_button_pressed() -> void:
 	acted.emit(&"save_expedition")
 
-# Listens to %NewGameButton.pressed.connect().
-func _on_new_game_button_pressed() -> void:
-	acted.emit(&"new_game")
-
-# Listens to %QuitToMenuButton.pressed.connect().
-func _on_quit_to_menu_button_press() -> void:
+# Listens to %QuitToMainMenuButton.pressed.connect().
+func _on_quit_to_main_menu_button_press() -> void:
 	acted.emit(&"quit_to_menu")
+
 #endregion
 # ============================================================================ #

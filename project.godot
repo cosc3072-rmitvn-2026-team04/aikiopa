@@ -34,7 +34,6 @@ window/size/mode.editor=0
 
 folder_colors={
 "res://assets/": "red",
-"res://build/": "gray",
 "res://scenes/": "blue",
 "res://scripts/": "purple",
 "res://shaders/": "green"
