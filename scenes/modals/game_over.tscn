@@ -59,4 +59,4 @@ text = "New Expedition"
 [node name="QuitToMainMenuButton" type="Button" parent="OverlayColorRect/VBoxContainer" unique_id=1268427561]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Quit To Main Menu"
+text = "Quit to Main Menu"
