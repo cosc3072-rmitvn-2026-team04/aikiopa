@@ -54,6 +54,7 @@ export/uwp/debug_algorithm = 2
 export/web/http_port = 8060
 export/web/tls_key = ""
 export/web/tls_certificate = ""
+export/windows/rcedit = "C:\Users\runneradmin\scoop\shims\rcedit.exe"
 export/windows/signtool = ""
 network/debug_adapter/request_timeout = 1000
 network/debug_adapter/sync_breakpoints = true
