@@ -47,9 +47,7 @@ jobs:
       - name: Export Projects
         run: ./build.ps1 -c -m release
       - name: Debug PWD
-        run: |
-          pwd
-          ls
+        run: ls
       - name: Upload Artifact
         uses: actions/upload-artifact@v6
         if: startsWith(github.ref, 'refs/tags/')
