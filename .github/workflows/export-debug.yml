@@ -8,6 +8,9 @@ on:
     branches:
       - main
       - dev
+  push:
+    tags:
+      - '*'
 
 env:
   GODOT_VERSION: 4.6
