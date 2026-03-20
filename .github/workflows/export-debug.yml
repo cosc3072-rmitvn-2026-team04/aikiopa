@@ -7,13 +7,9 @@ on:
       - synchronize
     branches:
       - main
-      - dev
-  push:
-    tags:
-      - '*'
 
 env:
-  GODOT_VERSION: 4.3
+  GODOT_VERSION: 4.6
 
 jobs:
   export:
@@ -43,7 +39,7 @@ jobs:
           Rename-Item -Path $templates_dir/templates -NewName "$($env:GODOT_VERSION).stable" -Force
 
           Write-Output "Installing Godot editor configuration"
-          Copy-Item ./.github/dist/editor_settings-4.tres -Destination ~/AppData/Roaming/Godot
+          Copy-Item ./.github/dist/editor_settings-4.6.tres -Destination ~/AppData/Roaming/Godot
       - name: Export Projects
         run: ./build.ps1 -c -m debug
       - name: Upload Artifact
