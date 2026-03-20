@@ -49,5 +49,5 @@ jobs:
           name: debug_build
           path: artifact/debug/*
           compression-level: 0
-          retention-days: 3
+          retention-days: 90
           if-no-files-found: error
