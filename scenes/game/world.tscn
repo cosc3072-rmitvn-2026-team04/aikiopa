@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://b7p1b85oyvfnp"]
+
+[ext_resource type="Script" uid="uid://dtslxw8hw6d1l" path="res://scripts/game/world.gd" id="1_t4al5"]
+
+[sub_resource type="TileSet" id="TileSet_7h61r"]
+tile_shape = 3
+tile_size = Vector2i(64, 52)
+
+[node name="World" type="Node2D" unique_id=1513868058]
+script = ExtResource("1_t4al5")
+
+[node name="TerrainTileMapLayer" type="TileMapLayer" parent="." unique_id=1094802460]
+unique_name_in_owner = true
+tile_set = SubResource("TileSet_7h61r")
+
+[node name="TerrainFeatures" type="Node2D" parent="." unique_id=614560681]
+unique_name_in_owner = true
+
+[node name="Buildings" type="Node2D" parent="." unique_id=357589614]
+unique_name_in_owner = true

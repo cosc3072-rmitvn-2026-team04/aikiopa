@@ -1,4 +1,3 @@
-class_name Game
 extends Node2D
 ## Responsible for the main gameplay loop
 
