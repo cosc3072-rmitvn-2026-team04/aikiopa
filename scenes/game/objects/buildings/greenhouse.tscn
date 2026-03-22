@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://b48xj46vq8p2u"]
+
+[ext_resource type="PackedScene" uid="uid://q1crh5ps008g" path="res://scenes/game/objects/buildings/_generic.tscn" id="1_1psii"]
+
+[node name="Greenhouse" unique_id=1178872670 instance=ExtResource("1_1psii")]

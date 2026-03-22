@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://cshval8odsh5a"]
+
+[ext_resource type="PackedScene" uid="uid://q1crh5ps008g" path="res://scenes/game/objects/buildings/_generic.tscn" id="1_4ne2n"]
+
+[node name="NuclearReactor" unique_id=1178872670 instance=ExtResource("1_4ne2n")]
