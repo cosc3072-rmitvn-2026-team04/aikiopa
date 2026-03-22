@@ -1,25 +1,10 @@
 [gd_scene format=3 uid="uid://ckf5ejaxdb3vf"]
 
 [ext_resource type="Script" uid="uid://dhh27y8ixdvyk" path="res://scripts/game/game.gd" id="1_sul5r"]
-[ext_resource type="Script" uid="uid://dtslxw8hw6d1l" path="res://scripts/game/world.gd" id="2_7h61r"]
-
-[sub_resource type="TileSet" id="TileSet_7h61r"]
-tile_shape = 3
-tile_size = Vector2i(64, 52)
+[ext_resource type="PackedScene" uid="uid://b7p1b85oyvfnp" path="res://scenes/game/world.tscn" id="2_7h61r"]
 
 [node name="Game" type="Node2D" unique_id=1327406412]
 script = ExtResource("1_sul5r")
 
-[node name="World" type="Node2D" parent="." unique_id=1009863956]
-unique_name_in_owner = true
-script = ExtResource("2_7h61r")
-
-[node name="TerrainTileMapLayer" type="TileMapLayer" parent="World" unique_id=375012425]
-unique_name_in_owner = true
-tile_set = SubResource("TileSet_7h61r")
-
-[node name="TerrainFeatures" type="Node2D" parent="World" unique_id=424106602]
-unique_name_in_owner = true
-
-[node name="Buildings" type="Node2D" parent="World" unique_id=1244332153]
+[node name="World" parent="." unique_id=1513868058 instance=ExtResource("2_7h61r")]
 unique_name_in_owner = true
