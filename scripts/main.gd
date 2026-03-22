@@ -1,5 +1,5 @@
 extends Node
-## Game entry point
+## Game entry point.
 
 
 var _current_scene_key: GameScene2D.SceneKey

@@ -1,5 +1,5 @@
 extends Node2D
-## Responsible for the main gameplay loop
+## Responsible for the main gameplay loop.
 
 
 enum GameModes {
