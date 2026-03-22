@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://ep552e3lf5hx"]
+
+[ext_resource type="PackedScene" uid="uid://q1crh5ps008g" path="res://scenes/game/objects/buildings/_generic.tscn" id="1_352gu"]
+
+[node name="LandingSite" unique_id=1178872670 instance=ExtResource("1_352gu")]

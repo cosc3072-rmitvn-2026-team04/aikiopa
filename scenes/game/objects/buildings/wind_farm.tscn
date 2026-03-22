@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://bthct8fbfcwp3"]
+
+[ext_resource type="PackedScene" uid="uid://q1crh5ps008g" path="res://scenes/game/objects/buildings/_generic.tscn" id="1_w4082"]
+
+[node name="WindFarm" unique_id=1178872670 instance=ExtResource("1_w4082")]
