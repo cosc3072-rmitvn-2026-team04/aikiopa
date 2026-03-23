@@ -1,0 +1,88 @@
+[gd_scene format=4 uid="uid://cqsh2tatcmerd"]
+
+[ext_resource type="PackedScene" uid="uid://b7p1b85oyvfnp" path="res://scenes/game/world.tscn" id="1_y52w7"]
+[ext_resource type="PackedScene" uid="uid://due3x8p1rjvea" path="res://scenes/game/objects/terrain_features/mountain.tscn" id="2_5vt6i"]
+[ext_resource type="PackedScene" uid="uid://cj10xohbicqgv" path="res://scenes/game/objects/terrain_features/forest.tscn" id="3_ge07p"]
+[ext_resource type="PackedScene" uid="uid://c8peqxnyhye3w" path="res://scenes/game/objects/terrain_features/sand_dunes.tscn" id="4_1lhl4"]
+[ext_resource type="PackedScene" uid="uid://c06w4jws5f68e" path="res://scenes/game/objects/terrain_features/fishes.tscn" id="5_4utx7"]
+[ext_resource type="PackedScene" uid="uid://b20bxvxynxhqv" path="res://scenes/game/objects/terrain_features/chasm.tscn" id="6_kg817"]
+
+[node name="World" unique_id=1513868058 instance=ExtResource("1_y52w7")]
+
+[node name="TerrainTileMapLayer" parent="." index="0" unique_id=1094802460]
+tile_map_data = PackedByteArray("AAD/////AAABAAEAAAD//wEAAAABAAEAAAD//wMAAAABAAEAAAD//wUAAAABAAEAAAD//wcAAAABAAEAAAD//wkAAAABAAEAAAD//wsAAAABAAEAAAAAAP//AAABAAEAAAAAAAAAAAABAAEAAAAAAAEAAAABAAEAAAAAAAIAAAABAAEAAAAAAAMAAAABAAEAAAAAAAQAAAABAAEAAAAAAAUAAAABAAEAAAAAAAYAAAABAAEAAAAAAAcAAAACAAAAAAAAAAgAAAABAAEAAAAAAAkAAAABAAEAAAAAAAoAAAABAAEAAAAAAAsAAAABAAEAAAABAP//AAABAAEAAAABAAAAAAABAAEAAAABAAEAAAABAAEAAAABAAIAAAABAAEAAAABAAMAAAABAAEAAAABAAQAAAABAAEAAAABAAUAAAACAAAAAAABAAYAAAACAAAAAAABAAcAAAABAAAAAAABAAgAAAACAAAAAAABAAkAAAACAAAAAAABAAoAAAABAAEAAAABAAsAAAABAAEAAAACAP//AAABAAEAAAACAAAAAAABAAEAAAACAAEAAAABAAEAAAACAAIAAAABAAEAAAACAAMAAAACAAAAAAACAAQAAAACAAAAAAACAAUAAAACAAAAAAACAAYAAAABAAAAAAACAAcAAAAAAAEAAAACAAgAAAAAAAEAAAACAAkAAAAAAAEAAAACAAoAAAACAAAAAAACAAsAAAABAAEAAAADAP//AAABAAEAAAADAAAAAAABAAEAAAADAAEAAAABAAEAAAADAAIAAAACAAAAAAADAAMAAAABAAAAAAADAAQAAAABAAAAAAADAAUAAAABAAAAAAADAAYAAAABAAAAAAADAAcAAAACAAAAAAADAAgAAAAAAAEAAAADAAkAAAACAAAAAAADAAoAAAACAAAAAAADAAsAAAABAAEAAAAEAP//AAABAAEAAAAEAAAAAAABAAEAAAAEAAEAAAABAAEAAAAEAAIAAAACAAAAAAAEAAMAAAAAAAEAAAAEAAQAAAAAAAEAAAAEAAUAAAAAAAEAAAAEAAYAAAABAAAAAAAEAAcAAAABAAAAAAAEAAgAAAACAAAAAAAEAAkAAAABAAEAAAAEAAoAAAABAAEAAAAEAAsAAAABAAEAAAAFAP//AAABAAEAAAAFAAAAAAABAAEAAAAFAAEAAAACAAAAAAAFAAIAAAACAAAAAAAFAAMAAAAAAAEAAAAFAAQAAAAAAAEAAAAFAAUAAAAAAAEAAAAFAAYAAAAAAAEAAAAFAAcAAAABAAAAAAAFAAgAAAACAAAAAAAFAAkAAAABAAEAAAAFAAoAAAABAAEAAAAFAAsAAAABAAEAAAAGAP//AAABAAEAAAAGAAAAAAABAAEAAAAGAAEAAAACAAAAAAAGAAIAAAABAAAAAAAGAAMAAAAAAAEAAAAGAAQAAAAAAAEAAAAGAAUAAAAAAAAAAAAGAAYAAAABAAAAAAAGAAcAAAABAAAAAAAGAAgAAAACAAAAAAAGAAkAAAACAAAAAAAGAAoAAAABAAEAAAAGAAsAAAABAAEAAAAHAP//AAABAAEAAAAHAAAAAAABAAEAAAAHAAEAAAACAAAAAAAHAAIAAAABAAAAAAAHAAMAAAABAAAAAAAHAAQAAAAAAAAAAAAHAAUAAAAAAAAAAAAHAAYAAAAAAAAAAAAHAAcAAAAAAAAAAAAHAAgAAAABAAAAAAAHAAkAAAACAAAAAAAHAAoAAAABAAEAAAAHAAsAAAABAAEAAAAIAP//AAABAAEAAAAIAAAAAAACAAAAAAAIAAEAAAAAAAAAAAAIAAIAAAAAAAAAAAAIAAMAAAAAAAAAAAAIAAQAAAAAAAAAAAAIAAUAAAAAAAAAAAAIAAYAAAAAAAAAAAAIAAcAAAABAAAAAAAIAAgAAAABAAAAAAAIAAkAAAACAAAAAAAIAAoAAAABAAEAAAAIAAsAAAABAAEAAAAJAP//AAABAAEAAAAJAAAAAAACAAAAAAAJAAEAAAACAAAAAAAJAAIAAAAAAAAAAAAJAAMAAAACAAAAAAAJAAQAAAACAAAAAAAJAAUAAAACAAAAAAAJAAYAAAAAAAAAAAAJAAcAAAACAAAAAAAJAAgAAAACAAAAAAAJAAkAAAABAAEAAAAJAAoAAAABAAEAAAAJAAsAAAABAAEAAAAKAP//AAABAAEAAAAKAAAAAAABAAEAAAAKAAEAAAABAAEAAAAKAAIAAAACAAAAAAAKAAMAAAABAAEAAAAKAAQAAAABAAEAAAAKAAUAAAABAAEAAAAKAAYAAAACAAAAAAAKAAcAAAABAAEAAAAKAAgAAAABAAEAAAAKAAkAAAABAAEAAAAKAAoAAAABAAEAAAAKAAsAAAABAAEAAAALAP//AAABAAEAAAALAAAAAAABAAEAAAALAAEAAAABAAEAAAALAAIAAAABAAEAAAALAAMAAAABAAEAAAALAAQAAAABAAEAAAALAAUAAAABAAEAAAALAAYAAAABAAEAAAALAAcAAAABAAEAAAALAAgAAAABAAEAAAALAAkAAAABAAEAAAALAAoAAAABAAEAAAALAAsAAAABAAEAAAA=")
+
+[node name="Mountain" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="0" unique_id=609911264 instance=ExtResource("2_5vt6i")]
+position = Vector2(872, 451)
+
+[node name="Mountain2" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="1" unique_id=1731690927 instance=ExtResource("2_5vt6i")]
+position = Vector2(961, 546)
+
+[node name="Mountain3" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="2" unique_id=1989208071 instance=ExtResource("2_5vt6i")]
+position = Vector2(1118, 546)
+
+[node name="Mountain4" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="3" unique_id=1131990581 instance=ExtResource("2_5vt6i")]
+position = Vector2(1192, 446)
+
+[node name="Forest" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="4" unique_id=1542832817 instance=ExtResource("3_ge07p")]
+position = Vector2(712, 456)
+
+[node name="Forest2" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="5" unique_id=917795901 instance=ExtResource("3_ge07p")]
+position = Vector2(1032, 449)
+
+[node name="Forest3" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="6" unique_id=200746276 instance=ExtResource("3_ge07p")]
+position = Vector2(1116, 354)
+
+[node name="Forest4" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="7" unique_id=441313923 instance=ExtResource("3_ge07p")]
+position = Vector2(955, 352)
+
+[node name="Forest5" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="8" unique_id=735945196 instance=ExtResource("3_ge07p")]
+position = Vector2(1036, 256)
+
+[node name="Forest6" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="9" unique_id=1683762613 instance=ExtResource("3_ge07p")]
+position = Vector2(549, 845)
+
+[node name="Forest7" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="10" unique_id=1940499083 instance=ExtResource("3_ge07p")]
+position = Vector2(478, 935)
+
+[node name="Forest8" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="11" unique_id=1492718217 instance=ExtResource("3_ge07p")]
+position = Vector2(395, 850)
+
+[node name="Forest9" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="12" unique_id=1644305586 instance=ExtResource("3_ge07p")]
+position = Vector2(1037, 644)
+
+[node name="SandDunes" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="13" unique_id=647369735 instance=ExtResource("4_1lhl4")]
+position = Vector2(1439, 550)
+
+[node name="SandDunes2" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="14" unique_id=1903731939 instance=ExtResource("4_1lhl4")]
+position = Vector2(1279, 551)
+
+[node name="SandDunes3" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="15" unique_id=1045482632 instance=ExtResource("4_1lhl4")]
+position = Vector2(1373, 259)
+
+[node name="SandDunes4" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="16" unique_id=1906637993 instance=ExtResource("4_1lhl4")]
+position = Vector2(1201, 649)
+
+[node name="Fishes" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="17" unique_id=1619707702 instance=ExtResource("5_4utx7")]
+position = Vector2(639, 748)
+
+[node name="Fishes2" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="18" unique_id=1133005785 instance=ExtResource("5_4utx7")]
+position = Vector2(477, 552)
+
+[node name="Forest10" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="19" unique_id=31863317 instance=ExtResource("3_ge07p")]
+position = Vector2(715, 646)
+
+[node name="Chasm" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="20" unique_id=1564893698 instance=ExtResource("6_kg817")]
+position = Vector2(809, 557)
+
+[node name="Chasm2" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="21" unique_id=1660207485 instance=ExtResource("6_kg817")]
+position = Vector2(1283, 748)
+
+[node name="Forest11" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="22" unique_id=464058614 instance=ExtResource("3_ge07p")]
+position = Vector2(715, 646)
+
+[node name="Chasm3" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="23" unique_id=1930766387 instance=ExtResource("6_kg817")]
+position = Vector2(809, 557)
+
+[node name="Chasm4" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="24" unique_id=1452170702 instance=ExtResource("6_kg817")]
+position = Vector2(1283, 748)
