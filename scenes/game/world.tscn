@@ -1,10 +1,22 @@
 [gd_scene format=3 uid="uid://b7p1b85oyvfnp"]
 
 [ext_resource type="Script" uid="uid://dtslxw8hw6d1l" path="res://scripts/game/world.gd" id="1_t4al5"]
+[ext_resource type="Texture2D" uid="uid://b4p0nr7itoqnj" path="res://assets/tilesheets/terrains.png" id="2_g5t8f"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d8brc"]
+resource_name = "terrains"
+texture = ExtResource("2_g5t8f")
+texture_region_size = Vector2i(160, 130)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_7h61r"]
 tile_shape = 3
-tile_size = Vector2i(64, 52)
+tile_size = Vector2i(160, 130)
+sources/0 = SubResource("TileSetAtlasSource_d8brc")
 
 [node name="World" type="Node2D" unique_id=1513868058]
 script = ExtResource("1_t4al5")
