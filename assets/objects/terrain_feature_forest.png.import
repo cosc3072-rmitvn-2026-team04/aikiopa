@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2qja0wjoqvlm"
-path="res://.godot/imported/feature_sand_dunes.png-feace9a152d9653338c49345e1a0c7b5.ctex"
+uid="uid://jhghyddm5mpa"
+path="res://.godot/imported/terrain_feature_forest.png-7ab50cdbe24d1ee075ed94bfd4361be2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/objects/feature_sand_dunes.png"
-dest_files=["res://.godot/imported/feature_sand_dunes.png-feace9a152d9653338c49345e1a0c7b5.ctex"]
+source_file="res://assets/objects/terrain_feature_forest.png"
+dest_files=["res://.godot/imported/terrain_feature_forest.png-7ab50cdbe24d1ee075ed94bfd4361be2.ctex"]
 
 [params]
 

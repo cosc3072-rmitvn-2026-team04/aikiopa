@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b20bxvxynxhqv"]
 
 [ext_resource type="PackedScene" uid="uid://blvhcx1c6kpg7" path="res://scenes/game/objects/terrain_features/_generic.tscn" id="1_1tr88"]
-[ext_resource type="Texture2D" uid="uid://dsfub37jnsgb3" path="res://assets/objects/feature_chasm.png" id="2_6amod"]
+[ext_resource type="Texture2D" uid="uid://dsfub37jnsgb3" path="res://assets/objects/terrain_feature_chasm.png" id="2_6amod"]
 
 [node name="Chasm" unique_id=609911264 instance=ExtResource("1_1tr88")]
 

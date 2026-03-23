@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dti3722xw4pdt"
-path="res://.godot/imported/feature_fishes.png-6e9fd51b32e65555ca8bab4a04eb164d.ctex"
+uid="uid://bx26oeqm4ggxx"
+path="res://.godot/imported/terrain_feature_mountain.png-16d6ce5874c78a462f9946a4bebb39f3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/objects/feature_fishes.png"
-dest_files=["res://.godot/imported/feature_fishes.png-6e9fd51b32e65555ca8bab4a04eb164d.ctex"]
+source_file="res://assets/objects/terrain_feature_mountain.png"
+dest_files=["res://.godot/imported/terrain_feature_mountain.png-16d6ce5874c78a462f9946a4bebb39f3.ctex"]
 
 [params]
 

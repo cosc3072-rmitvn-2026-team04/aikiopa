@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dsfub37jnsgb3"
-path="res://.godot/imported/feature_chasm.png-9d4e420484f9db3ab8395991d63f741d.ctex"
+uid="uid://2qja0wjoqvlm"
+path="res://.godot/imported/terrain_feature_sand_dunes.png-bed525ee86fbbbfe6c26b68e60025a95.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/objects/feature_chasm.png"
-dest_files=["res://.godot/imported/feature_chasm.png-9d4e420484f9db3ab8395991d63f741d.ctex"]
+source_file="res://assets/objects/terrain_feature_sand_dunes.png"
+dest_files=["res://.godot/imported/terrain_feature_sand_dunes.png-bed525ee86fbbbfe6c26b68e60025a95.ctex"]
 
 [params]
 
