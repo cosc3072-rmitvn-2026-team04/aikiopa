@@ -1,4 +1,4 @@
-# How to contribute
+# HOW TO CONTRIBUTE
 
 ## 📃 Coding Conventions
 

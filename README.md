@@ -39,6 +39,7 @@ For Linux/Mac users, you are suggested to run a Windows virtual machine.
 ├── icon.svg            # Project icon
 ├── project.godot       # Godot project config
 ├── LICENSE             # License information
+├── CONTRIBUTING.md     # Contributing guidelines
 └── README.md           # This file
 ```
 
