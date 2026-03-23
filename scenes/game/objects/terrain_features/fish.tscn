@@ -1,5 +1,9 @@
 [gd_scene format=3 uid="uid://c06w4jws5f68e"]
 
 [ext_resource type="PackedScene" uid="uid://blvhcx1c6kpg7" path="res://scenes/game/objects/terrain_features/_generic.tscn" id="1_h7clm"]
+[ext_resource type="Texture2D" uid="uid://dti3722xw4pdt" path="res://assets/objects/feature_fishes.png" id="2_b7m4h"]
 
 [node name="Fish" unique_id=609911264 instance=ExtResource("1_h7clm")]
+
+[node name="Sprite2D" parent="." index="0" unique_id=929203464]
+texture = ExtResource("2_b7m4h")
