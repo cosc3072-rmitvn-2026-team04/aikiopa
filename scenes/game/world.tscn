@@ -19,6 +19,9 @@ tile_shape = 3
 tile_size = Vector2i(160, 130)
 sources/0 = SubResource("TileSetAtlasSource_d8brc")
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_d8brc"]
+noise_type = 3
+
 [node name="World" type="Node2D" unique_id=1513868058]
 script = ExtResource("1_t4al5")
 
@@ -32,5 +35,8 @@ unique_name_in_owner = true
 [node name="Buildings" type="Node2D" parent="." unique_id=357589614]
 unique_name_in_owner = true
 
-[node name="WorldGenerator" type="Node" parent="." unique_id=1493408137]
+[node name="WorldGenerator" type="Node" parent="." unique_id=1493408137 node_paths=PackedStringArray("terrain_layer", "terrain_features_layer")]
 script = ExtResource("3_d8brc")
+noise_generator = SubResource("FastNoiseLite_d8brc")
+terrain_layer = NodePath("../TerrainTileMapLayer")
+terrain_features_layer = NodePath("../TerrainFeatures")
