@@ -12,7 +12,7 @@ extends Node2D
 #region Constants
 
 ## Savegame location.
-const SAVE_DIR: String = "user://saves/"
+const SAVE_DIR: String = "user://saves"
 
 #endregion
 # ============================================================================ #

@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://brxq3lcgxk4g8" path="res://scripts/game/world/world_generator.gd" id="3_d8brc"]
 [ext_resource type="Script" uid="uid://bhw8kyxi04s7t" path="res://scripts/game/world/terrain_features.gd" id="3_qd3kh"]
 [ext_resource type="Script" uid="uid://b2nle6lcx1mst" path="res://scripts/game/world/buildings.gd" id="4_w1nur"]
+[ext_resource type="Script" uid="uid://pp8fyccvy4i7" path="res://scripts/game/world/debug_camera_2d.gd" id="6_q5tta"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d8brc"]
 resource_name = "terrains"
@@ -22,7 +23,6 @@ tile_size = Vector2i(160, 130)
 sources/0 = SubResource("TileSetAtlasSource_d8brc")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_d8brc"]
-noise_type = 3
 
 [node name="World" type="Node2D" unique_id=1513868058]
 script = ExtResource("1_t4al5")
@@ -39,8 +39,11 @@ script = ExtResource("3_qd3kh")
 unique_name_in_owner = true
 script = ExtResource("4_w1nur")
 
-[node name="WorldGenerator" type="Node" parent="." unique_id=1493408137 node_paths=PackedStringArray("terrain_layer", "terrain_features_layer")]
+[node name="DebugCamera2D" type="Camera2D" parent="." unique_id=1341375189]
+script = ExtResource("6_q5tta")
+
+[node name="WorldGenerator" type="Node" parent="." unique_id=1493408137 node_paths=PackedStringArray("world")]
+unique_name_in_owner = true
 script = ExtResource("3_d8brc")
 noise_generator = SubResource("FastNoiseLite_d8brc")
-terrain_layer = NodePath("../TerrainTileMapLayer")
-terrain_features_layer = NodePath("../TerrainFeatures")
+world = NodePath("..")
