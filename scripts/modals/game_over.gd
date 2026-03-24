@@ -31,9 +31,11 @@ func set_population(population: int) -> void:
 func _on_save_button_pressed() -> void:
 	acted.emit(&"save_expedition")
 
+
 # Listens to %NewExpeditionButton.pressed.connect().
 func _on_new_expedition_button_pressed() -> void:
 	acted.emit(&"new_expedition")
+
 
 # Listens to %QuitToMainMenuButton.pressed.connect().
 func _on_quit_to_main_menu_button_press() -> void:
