@@ -6,6 +6,15 @@
 [ext_resource type="PackedScene" uid="uid://c8peqxnyhye3w" path="res://scenes/game/objects/terrain_features/sand_dunes.tscn" id="4_1lhl4"]
 [ext_resource type="PackedScene" uid="uid://c06w4jws5f68e" path="res://scenes/game/objects/terrain_features/fishes.tscn" id="5_4utx7"]
 [ext_resource type="PackedScene" uid="uid://b20bxvxynxhqv" path="res://scenes/game/objects/terrain_features/chasm.tscn" id="6_kg817"]
+[ext_resource type="PackedScene" uid="uid://ep552e3lf5hx" path="res://scenes/game/objects/buildings/landing_site.tscn" id="7_mwd2l"]
+[ext_resource type="PackedScene" uid="uid://cuyaodod3ycrv" path="res://scenes/game/objects/buildings/ranch.tscn" id="8_0prlu"]
+[ext_resource type="PackedScene" uid="uid://c10emlv5pmphw" path="res://scenes/game/objects/buildings/solar_farm.tscn" id="9_e5kk6"]
+[ext_resource type="PackedScene" uid="uid://bthct8fbfcwp3" path="res://scenes/game/objects/buildings/wind_farm.tscn" id="10_7qspy"]
+[ext_resource type="PackedScene" uid="uid://ccgovrh7nwa1d" path="res://scenes/game/objects/buildings/housing.tscn" id="11_awecp"]
+[ext_resource type="PackedScene" uid="uid://b48xj46vq8p2u" path="res://scenes/game/objects/buildings/greenhouse.tscn" id="12_ylelj"]
+[ext_resource type="PackedScene" uid="uid://d00cp1m1nbkw5" path="res://scenes/game/objects/buildings/fishery.tscn" id="13_l82yw"]
+[ext_resource type="PackedScene" uid="uid://qg445j4asjvt" path="res://scenes/game/objects/buildings/factory.tscn" id="14_y87f1"]
+[ext_resource type="PackedScene" uid="uid://cshval8odsh5a" path="res://scenes/game/objects/buildings/nuclear_reactor.tscn" id="15_0prlu"]
 
 [node name="World" unique_id=1513868058 instance=ExtResource("1_y52w7")]
 
@@ -86,3 +95,42 @@ position = Vector2(809, 557)
 
 [node name="Chasm4" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="24" unique_id=1452170702 instance=ExtResource("6_kg817")]
 position = Vector2(1283, 748)
+
+[node name="LandingSite" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="0" unique_id=1178872670 instance=ExtResource("7_mwd2l")]
+position = Vector2(881, 617)
+
+[node name="Ranch" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="1" unique_id=2068667409 instance=ExtResource("8_0prlu")]
+position = Vector2(640, 540)
+
+[node name="SolarFarm" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="2" unique_id=189066939 instance=ExtResource("9_e5kk6")]
+position = Vector2(1356, 641)
+
+[node name="WindFarm" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="3" unique_id=195833678 instance=ExtResource("10_7qspy")]
+position = Vector2(1188, 627)
+
+[node name="WindFarm2" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="4" unique_id=253609113 instance=ExtResource("10_7qspy")]
+position = Vector2(1509, 440)
+
+[node name="Housing" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="5" unique_id=1089995812 instance=ExtResource("11_awecp")]
+position = Vector2(1281, 350)
+
+[node name="Greenhouse" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="6" unique_id=28098927 instance=ExtResource("12_ylelj")]
+position = Vector2(1122, 740)
+
+[node name="Fishery" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="7" unique_id=2049153507 instance=ExtResource("13_l82yw")]
+position = Vector2(640, 750)
+
+[node name="Fishery2" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="8" unique_id=2025811653 instance=ExtResource("13_l82yw")]
+position = Vector2(478, 553)
+
+[node name="Factory" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="9" unique_id=1361406799 instance=ExtResource("14_y87f1")]
+position = Vector2(957, 741)
+
+[node name="Factory2" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="10" unique_id=1987318850 instance=ExtResource("14_y87f1")]
+position = Vector2(1360, 442)
+
+[node name="NuclearReactor" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="11" unique_id=1999556063 instance=ExtResource("15_0prlu")]
+position = Vector2(1436, 344)
+
+[node name="Housing2" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="12" unique_id=1050833759 instance=ExtResource("11_awecp")]
+position = Vector2(1524, 251)

@@ -1,5 +1,9 @@
 [gd_scene format=3 uid="uid://b48xj46vq8p2u"]
 
 [ext_resource type="PackedScene" uid="uid://q1crh5ps008g" path="res://scenes/game/objects/buildings/_generic.tscn" id="1_1psii"]
+[ext_resource type="Texture2D" uid="uid://c8rhursgc3vrc" path="res://assets/objects/building_greenhouse.png" id="2_7e8cd"]
 
 [node name="Greenhouse" unique_id=1178872670 instance=ExtResource("1_1psii")]
+
+[node name="Sprite2D" parent="." index="0" unique_id=906012488]
+texture = ExtResource("2_7e8cd")

@@ -1,5 +1,9 @@
 [gd_scene format=3 uid="uid://cshval8odsh5a"]
 
 [ext_resource type="PackedScene" uid="uid://q1crh5ps008g" path="res://scenes/game/objects/buildings/_generic.tscn" id="1_4ne2n"]
+[ext_resource type="Texture2D" uid="uid://ht1psllv6o3e" path="res://assets/objects/building_nuclear_reactor.png" id="2_xchxa"]
 
 [node name="NuclearReactor" unique_id=1178872670 instance=ExtResource("1_4ne2n")]
+
+[node name="Sprite2D" parent="." index="0" unique_id=906012488]
+texture = ExtResource("2_xchxa")
