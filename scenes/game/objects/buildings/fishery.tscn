@@ -1,5 +1,9 @@
 [gd_scene format=3 uid="uid://d00cp1m1nbkw5"]
 
 [ext_resource type="PackedScene" uid="uid://q1crh5ps008g" path="res://scenes/game/objects/buildings/_generic.tscn" id="1_ua16u"]
+[ext_resource type="Texture2D" uid="uid://bkc4klgrxu463" path="res://assets/objects/building_fishery.png" id="2_qn3ht"]
 
 [node name="Fishery" unique_id=1178872670 instance=ExtResource("1_ua16u")]
+
+[node name="Sprite2D" parent="." index="0" unique_id=906012488]
+texture = ExtResource("2_qn3ht")
