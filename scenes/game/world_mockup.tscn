@@ -16,7 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://qg445j4asjvt" path="res://scenes/game/objects/buildings/factory.tscn" id="14_y87f1"]
 [ext_resource type="PackedScene" uid="uid://cshval8odsh5a" path="res://scenes/game/objects/buildings/nuclear_reactor.tscn" id="15_0prlu"]
 [ext_resource type="Texture2D" uid="uid://jf04f1yt7bt6" path="res://icon.svg" id="16_e5kk6"]
-[ext_resource type="Script" uid="uid://bkua0rrkip8l5" path="res://scripts/game/mockup_test_sprite2d.gd" id="17_7qspy"]
+[ext_resource type="Script" uid="uid://bkua0rrkip8l5" path="res://scripts/game/world/mockup_test_sprite2d.gd" id="17_7qspy"]
 
 [node name="World" unique_id=1513868058 instance=ExtResource("1_y52w7")]
 
