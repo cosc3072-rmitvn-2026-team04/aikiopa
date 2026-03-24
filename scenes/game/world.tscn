@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dtslxw8hw6d1l" path="res://scripts/game/world.gd" id="1_t4al5"]
 [ext_resource type="Texture2D" uid="uid://b4p0nr7itoqnj" path="res://assets/tilesheets/terrains.png" id="2_g5t8f"]
+[ext_resource type="Script" uid="uid://brxq3lcgxk4g8" path="res://scripts/game/world_generator.gd" id="3_d8brc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d8brc"]
 resource_name = "terrains"
@@ -30,3 +31,6 @@ unique_name_in_owner = true
 
 [node name="Buildings" type="Node2D" parent="." unique_id=357589614]
 unique_name_in_owner = true
+
+[node name="WorldGenerator" type="Node" parent="." unique_id=1493408137]
+script = ExtResource("3_d8brc")
