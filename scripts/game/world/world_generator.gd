@@ -16,11 +16,11 @@ extends Node
 
 
 @export_group("Terrain Tuning")
-@export var water_height: float = 0.2
-@export var plain_height: float = 0.4
-@export var fertile_plain_height: float = 0.6
-@export var desert_height: float = 0.8
-@export var mountain_height: float = 1.0
+@export var water_height: float = -0.2
+@export var plain_height: float = -0.4
+@export var fertile_plain_height: float = -0.6
+@export var desert_height: float = -0.8
+@export var mountain_height: float = 0.0
 
 
 @export_group("Output")
