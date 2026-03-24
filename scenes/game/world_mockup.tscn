@@ -15,6 +15,8 @@
 [ext_resource type="PackedScene" uid="uid://d00cp1m1nbkw5" path="res://scenes/game/objects/buildings/fishery.tscn" id="13_l82yw"]
 [ext_resource type="PackedScene" uid="uid://qg445j4asjvt" path="res://scenes/game/objects/buildings/factory.tscn" id="14_y87f1"]
 [ext_resource type="PackedScene" uid="uid://cshval8odsh5a" path="res://scenes/game/objects/buildings/nuclear_reactor.tscn" id="15_0prlu"]
+[ext_resource type="Texture2D" uid="uid://jf04f1yt7bt6" path="res://icon.svg" id="16_e5kk6"]
+[ext_resource type="Script" uid="uid://bkua0rrkip8l5" path="res://scripts/game/mockup_test_sprite2d.gd" id="17_7qspy"]
 
 [node name="World" unique_id=1513868058 instance=ExtResource("1_y52w7")]
 
@@ -134,3 +136,9 @@ position = Vector2(1436, 344)
 
 [node name="Housing2" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="12" unique_id=1050833759 instance=ExtResource("11_awecp")]
 position = Vector2(1524, 251)
+
+[node name="MockupTestSprite2D" type="Sprite2D" parent="." index="4" unique_id=888500883 node_paths=PackedStringArray("terrain")]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("16_e5kk6")
+script = ExtResource("17_7qspy")
+terrain = NodePath("../TerrainTileMapLayer")
