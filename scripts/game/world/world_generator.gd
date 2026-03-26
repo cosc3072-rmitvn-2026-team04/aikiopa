@@ -13,14 +13,14 @@ extends Node
 @export var h_map: FastNoiseLite = null
 
 ## Affects how large/small the generated biomes would be.
-@export_range(0.1, 0.1, 1.0, "or_greater") var h_noise_scale: float = 0.5
+@export_range(0.1, 10.0, 0.1, "or_greater") var h_noise_scale: float = 1.0
 
 ## Noise values below this generates Deep Water (water).
-@export_range(-1.0, 1.0, 0.1) var h_water_height: float = -0.2
+@export_range(-1.0, 1.0, 0.01) var h_water_height: float = -0.2
 
 ## Noise values between Water Height and this generates Plain (land). Noise
 ## values larger or equal to this generates Mountain.
-@export_range(-1.0, 1.0, 0.1) var h_land_height: float = -0.4
+@export_range(-1.0, 1.0, 0.01) var h_land_height: float = -0.4
 
 
 # Moisture map generation noise algorithm. Produces Fertile Plain / Desert based
@@ -32,14 +32,14 @@ extends Node
 @export var m_map: FastNoiseLite = null
 
 ## Affects how large/small the generated biomes would be.
-@export_range(0.1, 0.1, 1.0, "or_greater") var m_noise_scale: float = 0.5
+@export_range(0.1, 10.0, 0.1, "or_greater") var m_noise_scale: float = 1.0
 
 ## Noise values below this generates Desert.
-@export_range(-1.0, 1.0, 0.1) var m_desert_height: float = -0.6
+@export_range(-1.0, 1.0, 0.01) var m_desert_height: float = -0.6
 
 ## Noise values between Desert Height and this generates Plain. Noise values
 ## larger or equal to this generate Fertile Plain.
-@export_range(-1.0, 1.0, 0.1) var m_plain_height: float = -0.6
+@export_range(-1.0, 1.0, 0.01) var m_plain_height: float = -0.6
 
 
 @export_group("Output")
@@ -89,42 +89,52 @@ func get_seeds() -> Dictionary[String, int]:
 ## world origin.
 func create_chunk(offset: Vector2i = Vector2i.ZERO) -> void:
 	world.get_terrain_tile_map_layer().clear()
+	# TODO: This hangs the Godot Editor, find out why.
 	# world.get_terrain_features_layer().clear()
-	# world.get_buildings_layer().clear()
 
-	# for x in range(chunk_size.x):
-	# 	for y in range(chunk_size.y):
-	# 		var noise_value: float = noise_generator.get_noise_2d(
-	# 				x * noise_scale, y * noise_scale
-	# 		)
-
-	# 		if noise_value < water_height:
-	# 			world.set_terrain_at(
-	# 					Vector2i(x, y),
-	# 					World.TerrainTypes.DeepWater
-	# 			)
-	# 		elif noise_value < plain_height:
-	# 			world.set_terrain_at(
-	# 					Vector2i(x, y),
-	# 					World.TerrainTypes.Plain
-	# 			)
-	# 		elif noise_value < fertile_plain_height:
-	# 			world.set_terrain_at(
-	# 					Vector2i(x, y),
-	# 					World.TerrainTypes.FertilePlain
-	# 			)
-	# 		elif noise_value < desert_height:
-	# 			world.set_terrain_at(
-	# 					Vector2i(x, y),
-	# 					World.TerrainTypes.Desert
-	# 			)
-	# 		else:
-	# 			world.set_terrain_at(
-	# 					Vector2i(x, y),
-	# 					World.TerrainTypes.PlainMountain
-	# 			)
+	_create_height_map(offset)
+	_create_moisture_map(offset)
 
 	## TODO: Implement terrain features and chunk offset calculations.
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Public methods
+
+@warning_ignore("unused_parameter")
+func _create_height_map(offset: Vector2i = Vector2i.ZERO) -> void:
+	for x in range(chunk_size.x):
+		for y in range(chunk_size.y):
+			var noise_value: float = h_map.get_noise_2d(
+					x * h_noise_scale,
+					y * h_noise_scale
+			)
+
+			if noise_value < h_water_height:
+				world.set_terrain_at(
+					Vector2i(x, y),
+					World.TerrainTypes.DeepWater
+				)
+			elif noise_value < h_land_height:
+				world.set_terrain_at(
+					Vector2i(x, y),
+					World.TerrainTypes.Plain
+				)
+			else:
+				world.set_terrain_at(
+					Vector2i(x, y),
+					World.TerrainTypes.PlainMountain
+				)
+
+
+@warning_ignore("unused_parameter")
+func _create_moisture_map(offset: Vector2i = Vector2i.ZERO) -> void:
+	for x in range(chunk_size.x):
+		for y in range(chunk_size.y):
+			pass
 
 #endregion
 # ============================================================================ #
