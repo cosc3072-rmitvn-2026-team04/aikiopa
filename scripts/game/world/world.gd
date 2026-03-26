@@ -37,6 +37,7 @@ enum TerrainTypes {
 	FertilePlainChasm,
 	Desert,
 	DesertDunes,
+	DesertMountain,
 }
 
 ## The building types available in the game.
