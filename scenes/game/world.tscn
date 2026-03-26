@@ -46,6 +46,7 @@ script = ExtResource("4_w1nur")
 
 [node name="DebugCamera2D" type="Camera2D" parent="." unique_id=1341375189]
 anchor_mode = 0
+zoom = Vector2(0.5, 0.5)
 script = ExtResource("6_q5tta")
 
 [node name="WorldGenerator" type="Node" parent="." unique_id=1493408137 node_paths=PackedStringArray("world")]
