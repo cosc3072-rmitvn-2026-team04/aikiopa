@@ -1,6 +1,9 @@
 extends Camera2D
 
 
+@export var pan_speed: int = 25
+
+
 func _process(delta: float) -> void:
 	var movement: Vector2 = Input.get_vector(
 			"ui_left",
@@ -9,4 +12,4 @@ func _process(delta: float) -> void:
 			"ui_down"
 	)
 	if movement:
-		position += movement * 1000 * delta
+		position += movement * (pan_speed * 100 / zoom.x) * delta
