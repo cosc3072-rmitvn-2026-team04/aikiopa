@@ -71,7 +71,7 @@ var _terrain_feature_mountain: PackedScene =\
 #region Godot builtins
 
 func _ready() -> void:
-	%WorldGenerator.generate_seed()
+	%WorldGenerator.generate_seeds()
 	%WorldGenerator.create_chunk()
 
 #endregion

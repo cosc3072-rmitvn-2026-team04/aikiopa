@@ -22,6 +22,10 @@ tile_shape = 3
 tile_size = Vector2i(160, 130)
 sources/0 = SubResource("TileSetAtlasSource_d8brc")
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_q5tta"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vn813"]
+
 [node name="World" type="Node2D" unique_id=1513868058]
 script = ExtResource("1_t4al5")
 
@@ -44,4 +48,7 @@ script = ExtResource("6_q5tta")
 [node name="WorldGenerator" type="Node" parent="." unique_id=1493408137 node_paths=PackedStringArray("world")]
 unique_name_in_owner = true
 script = ExtResource("3_d8brc")
+h_map = SubResource("FastNoiseLite_q5tta")
+m_map = SubResource("FastNoiseLite_vn813")
+m_desert_height = 1.0
 world = NodePath("..")
