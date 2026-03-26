@@ -16,11 +16,11 @@ extends Node
 @export_range(0.1, 10.0, 0.1, "or_greater") var h_noise_scale: float = 1.0
 
 ## Noise values below this generates Deep Water (water).
-@export_range(-1.0, 1.0, 0.01) var h_water_height: float = -0.2
+@export_range(-1.0, 1.0, 0.01) var h_water_height: float = -0.5
 
 ## Noise values between Water Height and this generates Plain (land). Noise
 ## values larger or equal to this generates Mountain.
-@export_range(-1.0, 1.0, 0.01) var h_land_height: float = -0.4
+@export_range(-1.0, 1.0, 0.01) var h_land_height: float = 0.5
 
 
 # Moisture map generation noise algorithm. Produces Fertile Plain / Desert based
@@ -35,11 +35,11 @@ extends Node
 @export_range(0.1, 10.0, 0.1, "or_greater") var m_noise_scale: float = 1.0
 
 ## Noise values below this generates Desert.
-@export_range(-1.0, 1.0, 0.01) var m_desert_height: float = -0.6
+@export_range(-1.0, 1.0, 0.01) var m_desert_height: float = -0.5
 
 ## Noise values between Desert Height and this generates Plain. Noise values
 ## larger or equal to this generate Fertile Plain.
-@export_range(-1.0, 1.0, 0.01) var m_plain_height: float = -0.6
+@export_range(-1.0, 1.0, 0.01) var m_plain_height: float = 0.5
 
 
 @export_group("Output")
