@@ -134,6 +134,11 @@ func set_terrain_at(coords: Vector2i, terrain_type: TerrainTypes) -> void:
 			forest.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(forest)
+		TerrainTypes.ShallowWaterFishes:
+			var fishes: Node2D = _terrain_feature_fishes.instantiate()
+			fishes.position = get_terrain_tile_map_layer()\
+					.map_to_local(coords)
+			get_terrain_features_layer().add_child(fishes)
 
 
 ## Returns the [enum World.TerrainTypes] at [param coords].
