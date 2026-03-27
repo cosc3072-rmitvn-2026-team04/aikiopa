@@ -18,9 +18,11 @@ func _ready() -> void:
 func _on_unpause_button_pressed() -> void:
 	acted.emit(&"unpause")
 
+
 # Listens to %SaveButton.pressed.connect().
 func _on_save_button_pressed() -> void:
 	acted.emit(&"save_expedition")
+
 
 # Listens to %QuitToMainMenuButton.pressed.connect().
 func _on_quit_to_main_menu_button_press() -> void:

@@ -1,7 +1,12 @@
 [gd_scene format=3 uid="uid://b7p1b85oyvfnp"]
 
-[ext_resource type="Script" uid="uid://dtslxw8hw6d1l" path="res://scripts/game/world.gd" id="1_t4al5"]
+[ext_resource type="Script" uid="uid://dtslxw8hw6d1l" path="res://scripts/game/world/world.gd" id="1_t4al5"]
 [ext_resource type="Texture2D" uid="uid://b4p0nr7itoqnj" path="res://assets/tilesheets/terrains.png" id="2_g5t8f"]
+[ext_resource type="Script" uid="uid://brxq3lcgxk4g8" path="res://scripts/game/world/world_generator.gd" id="3_d8brc"]
+[ext_resource type="Script" uid="uid://bhw8kyxi04s7t" path="res://scripts/game/world/terrain_features.gd" id="3_qd3kh"]
+[ext_resource type="Script" uid="uid://c4me4d4ubdu7" path="res://scripts/game/world/terrain_tile_map_layer.gd" id="3_vn813"]
+[ext_resource type="Script" uid="uid://b2nle6lcx1mst" path="res://scripts/game/world/buildings.gd" id="4_w1nur"]
+[ext_resource type="Script" uid="uid://pp8fyccvy4i7" path="res://scripts/game/world/debug_camera_2d.gd" id="6_q5tta"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d8brc"]
 resource_name = "terrains"
@@ -18,15 +23,51 @@ tile_shape = 3
 tile_size = Vector2i(160, 130)
 sources/0 = SubResource("TileSetAtlasSource_d8brc")
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_q5tta"]
+noise_type = 3
+frequency = 0.015
+fractal_octaves = 6
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vn813"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_a33jj"]
+noise_type = 3
+frequency = 0.08
+cellular_distance_function = 1
+cellular_return_type = 6
+
 [node name="World" type="Node2D" unique_id=1513868058]
 script = ExtResource("1_t4al5")
 
 [node name="TerrainTileMapLayer" type="TileMapLayer" parent="." unique_id=1094802460]
 unique_name_in_owner = true
 tile_set = SubResource("TileSet_7h61r")
+script = ExtResource("3_vn813")
 
 [node name="TerrainFeatures" type="Node2D" parent="." unique_id=614560681]
 unique_name_in_owner = true
+script = ExtResource("3_qd3kh")
 
 [node name="Buildings" type="Node2D" parent="." unique_id=357589614]
 unique_name_in_owner = true
+script = ExtResource("4_w1nur")
+
+[node name="DebugCamera2D" type="Camera2D" parent="." unique_id=1341375189]
+anchor_mode = 0
+zoom = Vector2(0.6, 0.6)
+script = ExtResource("6_q5tta")
+
+[node name="WorldGenerator" type="Node" parent="." unique_id=1493408137 node_paths=PackedStringArray("world")]
+unique_name_in_owner = true
+script = ExtResource("3_d8brc")
+h_map = SubResource("FastNoiseLite_q5tta")
+h_noise_scale = 10.0
+h_water_height = -0.09999999999999998
+h_land_height = 0.28
+m_map = SubResource("FastNoiseLite_vn813")
+m_noise_scale = 10.0
+m_desert_height = -0.07999999999999996
+m_plain_height = 0.15999999999999992
+f_map = SubResource("FastNoiseLite_a33jj")
+f_forest_height = 0.19999999999999996
+world = NodePath("..")

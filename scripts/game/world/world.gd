@@ -21,7 +21,7 @@ signal building_removed(coords: Vector2i)
 # ============================================================================ #
 #region Enums
 
-## Game terrain types including terrain features.
+## Terrain types (including terrain features) in the game.
 enum TerrainTypes {
 	None,
 	ShallowWater,
@@ -37,6 +37,7 @@ enum TerrainTypes {
 	FertilePlainChasm,
 	Desert,
 	DesertDunes,
+	DesertMountain,
 }
 
 ## The building types available in the game.
@@ -58,14 +59,67 @@ enum BuildingTypes {
 
 
 # ============================================================================ #
+#region Private variables
+
+var _terrain_feature_forest: PackedScene =\
+		preload("res://scenes/game/objects/terrain_features/forest.tscn")
+var _terrain_feature_mountain: PackedScene =\
+		preload("res://scenes/game/objects/terrain_features/mountain.tscn")
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Godot builtins
+
+func _ready() -> void:
+	%WorldGenerator.generate_seeds()
+	%WorldGenerator.create_chunk()
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
 #region Public methods
+
+
+## Returns the [code]TerrainTileMapLayer[/code] node.
+func get_terrain_tile_map_layer() -> TileMapLayer:
+	return %TerrainTileMapLayer
+
+
+## Returns the [code]TerrainFeatures[/code] node.
+func get_terrain_features_layer() -> TileMapLayer:
+	return %TerrainFeatures
+
+
+## Returns the [code]Buildings[/code] node.
+func get_buildings_layer() -> TileMapLayer:
+	return %Buildings
+
 
 ## Sets the terrain at [param coords] to one of [enum World.TerrainTypes].
 ## Automatically assign terrain feature variation(s) at random.
 @warning_ignore("unused_parameter") # Remove when this function is implemented.
-func set_terrain_at(coords: Vector2i, terrain: TerrainTypes) -> void:
-	## TODO: Implement this.
-	assert(false, "Game.set_terrain_at() not implemented")
+func set_terrain_at(coords: Vector2i, terrain_type: TerrainTypes) -> void:
+	get_terrain_tile_map_layer().set_cell(
+		coords,
+		get_terrain_tile_map_layer().SOURCE_ID,
+		get_terrain_tile_map_layer().ATLAS_COORDS[terrain_type])
+	match terrain_type:
+		TerrainTypes.PlainForest, TerrainTypes.FertilePlainForest:
+			var forest: Node2D = _terrain_feature_forest.instantiate()
+			forest.position = get_terrain_tile_map_layer()\
+					.map_to_local(coords)
+			get_terrain_features_layer().add_child(forest)
+		TerrainTypes.PlainMountain, TerrainTypes.DesertMountain:
+			var mountain: Node2D = _terrain_feature_mountain.instantiate()
+			mountain.position = get_terrain_tile_map_layer()\
+					.map_to_local(coords)
+			get_terrain_features_layer().add_child(mountain)
+
 
 ## Returns the [enum World.TerrainTypes] at [param coords].
 @warning_ignore("unused_parameter") # Remove when this function is implemented.
@@ -87,6 +141,7 @@ func set_building_at(coords: Vector2i, type: BuildingTypes) -> bool:
 		building_added.emit(coords, type)
 	return false
 
+
 ## Removes the building at [param coords].[br]
 ## [br]
 ## Returns [code]false[/code] if there is no existing building at
@@ -98,6 +153,7 @@ func remove_building_at(coords: Vector2i, type: BuildingTypes) -> bool:
 	if false:
 		building_removed.emit(coords)
 	return false
+
 
 ## Returns the [enum World.BuildingTypes] at [param coords].
 @warning_ignore("unused_parameter") # Remove when this function is implemented.
