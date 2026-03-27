@@ -321,8 +321,7 @@ func _render_chunk(
 			var coords: Vector2i = Globals.linear_index_to_coords_2d(
 					index,
 					chunk_size)
-			var neighbors_coords: Array[Vector2i] = tile_map\
-					.get_surrounding_cells(coords)
+			var neighbors_coords: Array[Vector2i] = tile_map.get_surrounding_cells(coords)
 			for neighbor_coords in neighbors_coords:
 				var atlas_coords: Vector2i = tile_map.get_cell_atlas_coords(neighbor_coords)
 				if atlas_coords not in [
@@ -345,7 +344,7 @@ func _insert_chunk_fishes(
 		chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 	for x in range(chunk_size.x):
 		for y in range(chunk_size.y):
-			var noise_value: float = t_map.get_noise_2d(
+			var noise_value: float = f_map.get_noise_2d(
 					x * t_noise_scale,
 					y * t_noise_scale)
 			if noise_value < f_height:
