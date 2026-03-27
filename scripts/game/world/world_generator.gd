@@ -80,20 +80,24 @@ func get_seeds() -> Dictionary[String, int]:
 	}
 
 
-## Generates new chunk at [param offset]. [param offset] defaults to
-## [constant Vector2i.ZERO] - the chunk at world origin.[br]
+## Generates new world chunk at [param chunk_offset]. [param chunk_offset]
+## defaults to [constant Vector2i.ZERO] - the chunk at world origin.[br]
 ## [br]
-## [param offset] should have [member Vector2i.x] and [member Vector2i.y]
+## [param chunk_offset] should have [member Vector2i.x] and [member Vector2i.y]
 ## representing the [b]whole-chunk[/b] offset, i.e. [code]Vector2i(2, -3)[/code]
 ## points to 2 chunks to the right and 3 chunks to the bottom of the chunk at
 ## world origin.
-func create_chunk(offset: Vector2i = Vector2i.ZERO) -> void:
+func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
+	# Row-major mapping of the 2D terrain chunk.
+	var chunk_linear_data: Array[World.TerrainTypes] = []
+
 	world.get_terrain_tile_map_layer().clear()
 	# TODO: This hangs the Godot Editor, find out why.
 	# world.get_terrain_features_layer().clear()
 
-	_create_height_map(offset)
-	_create_moisture_map(offset)
+	_create_chunk_height_map(chunk_linear_data, chunk_offset)
+	# _create_chunk_moisture_map(chunk_linear_data, chunk_offset)
+	_render_chunk(chunk_linear_data, chunk_offset)
 
 	## TODO: Implement terrain features and chunk offset calculations.
 
@@ -102,39 +106,64 @@ func create_chunk(offset: Vector2i = Vector2i.ZERO) -> void:
 
 
 # ============================================================================ #
-#region Public methods
+#region Private methods
 
+# TODO: Remove this @warning_ignore when [param chunk_offset] is implemented.
 @warning_ignore("unused_parameter")
-func _create_height_map(offset: Vector2i = Vector2i.ZERO) -> void:
+func _create_chunk_height_map(
+		chunk_linear_data: Array[World.TerrainTypes],
+		chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 	for x in range(chunk_size.x):
 		for y in range(chunk_size.y):
 			var noise_value: float = h_map.get_noise_2d(
 					x * h_noise_scale,
-					y * h_noise_scale
-			)
+					y * h_noise_scale)
 
 			if noise_value < h_water_height:
-				world.set_terrain_at(
-					Vector2i(x, y),
-					World.TerrainTypes.DeepWater
-				)
+				chunk_linear_data.append(World.TerrainTypes.DeepWater)
 			elif noise_value < h_land_height:
-				world.set_terrain_at(
-					Vector2i(x, y),
-					World.TerrainTypes.Plain
-				)
+				chunk_linear_data.append(World.TerrainTypes.Plain)
 			else:
-				world.set_terrain_at(
-					Vector2i(x, y),
-					World.TerrainTypes.PlainMountain
-				)
+				chunk_linear_data.append(World.TerrainTypes.PlainMountain)
 
 
+# TODO: Remove this @warning_ignore when [param chunk_offset] is implemented.
 @warning_ignore("unused_parameter")
-func _create_moisture_map(offset: Vector2i = Vector2i.ZERO) -> void:
+func _create_chunk_moisture_map(
+		chunk_linear_data: Array[World.TerrainTypes],
+		chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 	for x in range(chunk_size.x):
 		for y in range(chunk_size.y):
-			pass
+			var noise_value: float = h_map.get_noise_2d(
+					x * h_noise_scale,
+					y * h_noise_scale)
+			var index: int = Globals.coords_2d_to_linear_index(
+					Vector2i(x, y),
+					chunk_size)
+
+			if chunk_linear_data[index] == World.TerrainTypes.Plain:
+				if noise_value < m_desert_height:
+					chunk_linear_data[index] = World.TerrainTypes.Desert
+				elif noise_value >= m_plain_height:
+					chunk_linear_data[index] = World.TerrainTypes.FertilePlain
+
+			if chunk_linear_data[index] == World.TerrainTypes.PlainMountain:
+				if noise_value < m_desert_height:
+					chunk_linear_data[index] = World.TerrainTypes.DesertMountain
+				elif noise_value >= m_plain_height:
+					chunk_linear_data[index] = World.TerrainTypes.FertilePlainMountain
+
+
+# TODO: Remove this @warning_ignore when [param chunk_offset] is implemented.
+@warning_ignore("unused_parameter")
+func _render_chunk(
+		chunk_linear_data: Array[World.TerrainTypes],
+		chunk_offset: Vector2i = Vector2i.ZERO) -> void:
+	for index in range(chunk_linear_data.size()):
+		var terrain_type: World.TerrainTypes = chunk_linear_data[index]
+		world.set_terrain_at(
+				Globals.linear_index_to_coords_2d(index, chunk_size),
+				terrain_type)
 
 #endregion
 # ============================================================================ #

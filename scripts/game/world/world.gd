@@ -21,7 +21,7 @@ signal building_removed(coords: Vector2i)
 # ============================================================================ #
 #region Enums
 
-## Game terrain types including terrain features.
+## Terrain types (including terrain features) in the game.
 enum TerrainTypes {
 	None,
 	ShallowWater,
@@ -101,22 +101,17 @@ func get_buildings_layer() -> TileMapLayer:
 ## Sets the terrain at [param coords] to one of [enum World.TerrainTypes].
 ## Automatically assign terrain feature variation(s) at random.
 @warning_ignore("unused_parameter") # Remove when this function is implemented.
-func set_terrain_at(coords: Vector2i, terrain: TerrainTypes) -> void:
-	match terrain:
-		TerrainTypes.DeepWater:
-			get_terrain_tile_map_layer().set_cell(coords, 0, Vector2i(1, 1))
-		TerrainTypes.Plain:
-			get_terrain_tile_map_layer().set_cell(coords, 0, Vector2i(1, 0))
-		TerrainTypes.FertilePlain:
-			get_terrain_tile_map_layer().set_cell(coords, 0, Vector2i(0, 1))
-		TerrainTypes.Desert:
-			get_terrain_tile_map_layer().set_cell(coords, 0, Vector2i(0, 0))
+func set_terrain_at(coords: Vector2i, terrain_type: TerrainTypes) -> void:
+	get_terrain_tile_map_layer().set_cell(
+		coords,
+		get_terrain_tile_map_layer().SOURCE_ID,
+		get_terrain_tile_map_layer().ATLAS_COORDS[terrain_type])
+	match terrain_type:
 		TerrainTypes.PlainMountain:
 			var mountain: Node2D = _terrain_feature_mountain.instantiate()
 			mountain.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(mountain)
-			get_terrain_tile_map_layer().set_cell(coords, 0, Vector2i(1, 0))
 
 
 ## Returns the [enum World.TerrainTypes] at [param coords].
