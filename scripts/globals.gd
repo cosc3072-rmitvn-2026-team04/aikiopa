@@ -78,7 +78,7 @@ func coords_2d_to_linear_index(coords: Vector2i, size_2d: Vector2i) -> int:
 
 ## Game state data. Contains relevant information on the current state of the
 ## game.
-class GameState extends RefCounted:
+class GameState extends Node:
 	pass
 
 #endregion
