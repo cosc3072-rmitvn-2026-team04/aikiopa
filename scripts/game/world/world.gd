@@ -62,12 +62,14 @@ enum BuildingTypes {
 # ============================================================================ #
 #region Private variables
 
-var _terrain_feature_forest: PackedScene =\
-		preload("res://scenes/game/objects/terrain_features/forest.tscn")
 var _terrain_feature_mountain: PackedScene =\
 		preload("res://scenes/game/objects/terrain_features/mountain.tscn")
 var _terrain_feature_chasm: PackedScene =\
 		preload("res://scenes/game/objects/terrain_features/chasm.tscn")
+var _terrain_feature_sand_dunes: PackedScene =\
+		preload("res://scenes/game/objects/terrain_features/sand_dunes.tscn")
+var _terrain_feature_forest: PackedScene =\
+		preload("res://scenes/game/objects/terrain_features/forest.tscn")
 
 #endregion
 # ============================================================================ #
@@ -112,11 +114,6 @@ func set_terrain_at(coords: Vector2i, terrain_type: TerrainTypes) -> void:
 		get_terrain_tile_map_layer().SOURCE_ID,
 		get_terrain_tile_map_layer().ATLAS_COORDS[terrain_type])
 	match terrain_type:
-		TerrainTypes.PlainForest, TerrainTypes.FertilePlainForest:
-			var forest: Node2D = _terrain_feature_forest.instantiate()
-			forest.position = get_terrain_tile_map_layer()\
-					.map_to_local(coords)
-			get_terrain_features_layer().add_child(forest)
 		TerrainTypes.PlainMountain, TerrainTypes.FertilePlainMountain, TerrainTypes.DesertMountain:
 			var mountain: Node2D = _terrain_feature_mountain.instantiate()
 			mountain.position = get_terrain_tile_map_layer()\
@@ -127,6 +124,16 @@ func set_terrain_at(coords: Vector2i, terrain_type: TerrainTypes) -> void:
 			chasm.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(chasm)
+		TerrainTypes.DesertDunes:
+			var sand_dunes: Node2D = _terrain_feature_sand_dunes.instantiate()
+			sand_dunes.position = get_terrain_tile_map_layer()\
+					.map_to_local(coords)
+			get_terrain_features_layer().add_child(sand_dunes)
+		TerrainTypes.PlainForest, TerrainTypes.FertilePlainForest:
+			var forest: Node2D = _terrain_feature_forest.instantiate()
+			forest.position = get_terrain_tile_map_layer()\
+					.map_to_local(coords)
+			get_terrain_features_layer().add_child(forest)
 
 
 ## Returns the [enum World.TerrainTypes] at [param coords].

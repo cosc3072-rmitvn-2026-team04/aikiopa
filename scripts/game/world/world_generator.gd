@@ -23,7 +23,7 @@ extends Node
 @export_range(-1.0, 1.0, 0.01) var h_land_height: float = 0.5
 
 
-# Chasm generation noise algorithm. Produces Chasm based on noise values
+# Chasm generation noise algorithm. Produces Chasm based on noise values.
 @export_group("Chasm Map", "c")
 
 # Chasm map generation noise algorithm. Produces Chasm based on noise values.
@@ -55,7 +55,20 @@ extends Node
 @export_range(-1.0, 1.0, 0.01) var m_plain_height: float = 0.5
 
 
-# Forest generation noise algorithm. Produces Forest based on noise values
+# Dunes generation noise algorithm. Produces Dunes based on noise values.
+@export_group("Dunes Map", "d")
+
+# Forest map generation noise algorithm. Produces Forest based on noise values.
+@export var d_map: FastNoiseLite = preload("res://resources/world_generator/dunes_map_noise.tres")
+
+## Affects how large/small the generated biomes would be.
+@export_range(0.1, 10.0, 0.1, "or_greater") var d_noise_scale: float = 1.0
+
+## Noise values above or equal to this generates Dunes.
+@export_range(-1.0, 1.0, 0.01) var d_height: float = 0.0
+
+
+# Forest generation noise algorithm. Produces Forest based on noise values.
 @export_group("Forest Map", "t")
 
 # Forest map generation noise algorithm. Produces Forest based on noise values.
@@ -68,7 +81,7 @@ extends Node
 @export_range(-1.0, 1.0, 0.01) var t_height: float = 0.0
 
 
-# Fish generation noise algorithm. Produces Fish based on noise values
+# Fish generation noise algorithm. Produces Fish based on noise values.
 @export_group("Fish Map", "f")
 
 # Fish map generation noise algorithm. Produces Fish based on noise values.
@@ -110,6 +123,7 @@ func generate_seeds() -> void:
 	h_map.seed = _rng.randi()
 	c_map.seed = _rng.randi()
 	m_map.seed = _rng.randi()
+	d_map.seed = _rng.randi()
 	t_map.seed = _rng.randi()
 	f_map.seed = _rng.randi()
 
@@ -120,6 +134,7 @@ func get_seeds() -> Dictionary[String, int]:
 		"height_map_seed": h_map.seed,
 		"chasm_map_seed": c_map.seed,
 		"moisture_map_seed": m_map.seed,
+		"dunes_map_seed": d_map.seed,
 		"forest_map_seed": t_map.seed,
 		"fish_map_seed": f_map.seed,
 	}
@@ -236,7 +251,19 @@ func _create_chunk_moisture_map(
 func _create_chunk_dunes_map(
 		chunk_linear_data: Array[World.TerrainTypes],
 		chunk_offset: Vector2i = Vector2i.ZERO) -> void:
-	pass
+	for x in range(chunk_size.x):
+		for y in range(chunk_size.y):
+			var noise_value: float = t_map.get_noise_2d(
+					x * t_noise_scale,
+					y * t_noise_scale)
+			if noise_value < d_height:
+				continue
+
+			var index: int = Globals.coords_2d_to_linear_index(
+					Vector2i(x, y),
+					chunk_size)
+			if chunk_linear_data[index] == World.TerrainTypes.Desert:
+					chunk_linear_data[index] = World.TerrainTypes.DesertDunes
 
 
 # TODO: Remove this @warning_ignore when [param chunk_offset] is implemented.
