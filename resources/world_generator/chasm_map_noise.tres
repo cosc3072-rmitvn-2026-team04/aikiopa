@@ -2,6 +2,6 @@
 
 [resource]
 noise_type = 0
-frequency = 0.1
-fractal_type = 2
+frequency = 0.4
+fractal_type = 0
 cellular_return_type = 6

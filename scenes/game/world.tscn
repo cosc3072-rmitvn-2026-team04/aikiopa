@@ -41,7 +41,7 @@ script = ExtResource("4_w1nur")
 
 [node name="DebugCamera2D" type="Camera2D" parent="." unique_id=1341375189]
 anchor_mode = 0
-zoom = Vector2(0.6, 0.6)
+zoom = Vector2(0.5, 0.5)
 script = ExtResource("6_q5tta")
 
 [node name="WorldGenerator" type="Node" parent="." unique_id=1493408137 node_paths=PackedStringArray("world")]
@@ -50,10 +50,14 @@ script = ExtResource("3_d8brc")
 h_noise_scale = 10.0
 h_water_height = -0.09999999999999998
 h_land_height = 0.28
+c_noise_scale = 0.2
 c_height = 0.19999999999999996
 m_noise_scale = 10.0
 m_desert_height = -0.07999999999999996
 m_plain_height = 0.15999999999999992
+d_noise_scale = 0.4
 d_height = 0.19999999999999996
 t_height = 0.19999999999999996
+f_noise_scale = 0.1
+f_height = 0.6800000000000002
 world = NodePath("..")
