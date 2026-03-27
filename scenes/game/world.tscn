@@ -29,8 +29,12 @@ frequency = 0.015
 fractal_octaves = 6
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_vn813"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_a33jj"]
 noise_type = 3
-frequency = 0.015
+frequency = 0.08
+cellular_distance_function = 1
+cellular_return_type = 6
 
 [node name="World" type="Node2D" unique_id=1513868058]
 script = ExtResource("1_t4al5")
@@ -50,7 +54,7 @@ script = ExtResource("4_w1nur")
 
 [node name="DebugCamera2D" type="Camera2D" parent="." unique_id=1341375189]
 anchor_mode = 0
-zoom = Vector2(0.5, 0.5)
+zoom = Vector2(0.6, 0.6)
 script = ExtResource("6_q5tta")
 
 [node name="WorldGenerator" type="Node" parent="." unique_id=1493408137 node_paths=PackedStringArray("world")]
@@ -59,9 +63,11 @@ script = ExtResource("3_d8brc")
 h_map = SubResource("FastNoiseLite_q5tta")
 h_noise_scale = 10.0
 h_water_height = -0.09999999999999998
-h_land_height = 0.19999999999999996
+h_land_height = 0.28
 m_map = SubResource("FastNoiseLite_vn813")
 m_noise_scale = 10.0
-m_desert_height = -0.09999999999999998
-m_plain_height = 0.19999999999999996
+m_desert_height = -0.07999999999999996
+m_plain_height = 0.15999999999999992
+f_map = SubResource("FastNoiseLite_a33jj")
+f_forest_height = 0.19999999999999996
 world = NodePath("..")

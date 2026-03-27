@@ -24,7 +24,7 @@ extends Node
 
 
 # Moisture map generation noise algorithm. Produces Fertile Plain / Desert based
-# on noise values
+# on noise values.
 @export_group("Moisture Map", "m")
 
 # Moisture map generation noise algorithm. Produces Desert / Plain / Fertile
@@ -40,6 +40,19 @@ extends Node
 ## Noise values between Desert Height and this generates Plain. Noise values
 ## larger or equal to this generate Fertile Plain.
 @export_range(-1.0, 1.0, 0.01) var m_plain_height: float = 0.5
+
+
+# Forest generation noise algorithm. Produces Forest based on noise values
+@export_group("Forest Map", "f")
+
+# Forest map generation noise algorithm. Produces Forest based on noise values.
+@export var f_map: FastNoiseLite = null
+
+## Affects how large/small the generated biomes would be.
+@export_range(0.1, 10.0, 0.1, "or_greater") var f_noise_scale: float = 1.0
+
+## Noise values above this generates Forest.
+@export_range(-1.0, 1.0, 0.01) var f_forest_height: float = 0.0
 
 
 @export_group("Output")
@@ -70,13 +83,15 @@ var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 func generate_seeds() -> void:
 	h_map.seed = _rng.randi()
 	m_map.seed = _rng.randi()
+	f_map.seed = _rng.randi()
 
 
 ## Returns the current world's seeds.
 func get_seeds() -> Dictionary[String, int]:
 	return {
 		"height_map_seed": h_map.seed,
-		"moisture_map_seed": m_map.seed
+		"moisture_map_seed": m_map.seed,
+		"forest_map_seed": f_map.seed,
 	}
 
 
@@ -96,7 +111,8 @@ func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 	# world.get_terrain_features_layer().clear()
 
 	_create_chunk_height_map(chunk_linear_data, chunk_offset)
-	# _create_chunk_moisture_map(chunk_linear_data, chunk_offset)
+	_create_chunk_moisture_map(chunk_linear_data, chunk_offset)
+	_create_chunk_forest_map(chunk_linear_data, chunk_offset)
 	_render_chunk(chunk_linear_data, chunk_offset)
 
 	## TODO: Implement terrain features and chunk offset calculations.
@@ -152,6 +168,29 @@ func _create_chunk_moisture_map(
 					chunk_linear_data[index] = World.TerrainTypes.DesertMountain
 				elif noise_value >= m_plain_height:
 					chunk_linear_data[index] = World.TerrainTypes.FertilePlainMountain
+
+
+# TODO: Remove this @warning_ignore when [param chunk_offset] is implemented.
+@warning_ignore("unused_parameter")
+func _create_chunk_forest_map(
+		chunk_linear_data: Array[World.TerrainTypes],
+		chunk_offset: Vector2i = Vector2i.ZERO) -> void:
+	for x in range(chunk_size.x):
+		for y in range(chunk_size.y):
+			var noise_value: float = f_map.get_noise_2d(
+					x * f_noise_scale,
+					y * f_noise_scale)
+			var index: int = Globals.coords_2d_to_linear_index(
+					Vector2i(x, y),
+					chunk_size)
+
+			if chunk_linear_data[index] == World.TerrainTypes.Plain:
+				if noise_value > f_forest_height:
+					chunk_linear_data[index] = World.TerrainTypes.PlainForest
+
+			if chunk_linear_data[index] == World.TerrainTypes.FertilePlain:
+				if noise_value > f_forest_height:
+					chunk_linear_data[index] = World.TerrainTypes.FertilePlainForest
 
 
 # TODO: Remove this @warning_ignore when [param chunk_offset] is implemented.
