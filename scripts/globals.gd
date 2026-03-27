@@ -77,8 +77,8 @@ func coords_2d_to_linear_index(coords: Vector2i, size_2d: Vector2i) -> int:
 #region Inner classes
 
 ## Game state data. Contains relevant information on the current state of the
-## game, for use with a [StateMachine] and its [State]s.
-class GameState extends Node:
+## game.
+class GameState extends RefCounted:
 	pass
 
 #endregion
