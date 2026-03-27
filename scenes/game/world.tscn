@@ -54,4 +54,5 @@ m_noise_scale = 10.0
 m_desert_height = -0.07999999999999996
 m_plain_height = 0.15999999999999992
 t_height = 0.19999999999999996
+c_height = 0.19999999999999996
 world = NodePath("..")

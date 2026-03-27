@@ -38,6 +38,7 @@ enum TerrainTypes {
 	Desert,
 	DesertDunes,
 	DesertMountain,
+	DesertChasm,
 }
 
 ## The building types available in the game.
@@ -65,6 +66,8 @@ var _terrain_feature_forest: PackedScene =\
 		preload("res://scenes/game/objects/terrain_features/forest.tscn")
 var _terrain_feature_mountain: PackedScene =\
 		preload("res://scenes/game/objects/terrain_features/mountain.tscn")
+var _terrain_feature_chasm: PackedScene =\
+		preload("res://scenes/game/objects/terrain_features/chasm.tscn")
 
 #endregion
 # ============================================================================ #
@@ -114,11 +117,16 @@ func set_terrain_at(coords: Vector2i, terrain_type: TerrainTypes) -> void:
 			forest.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(forest)
-		TerrainTypes.PlainMountain, TerrainTypes.DesertMountain:
+		TerrainTypes.PlainMountain, TerrainTypes.FertilePlainMountain, TerrainTypes.DesertMountain:
 			var mountain: Node2D = _terrain_feature_mountain.instantiate()
 			mountain.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(mountain)
+		TerrainTypes.PlainChasm, TerrainTypes.FertilePlainChasm, TerrainTypes.DesertChasm:
+			var chasm: Node2D = _terrain_feature_chasm.instantiate()
+			chasm.position = get_terrain_tile_map_layer()\
+					.map_to_local(coords)
+			get_terrain_features_layer().add_child(chasm)
 
 
 ## Returns the [enum World.TerrainTypes] at [param coords].

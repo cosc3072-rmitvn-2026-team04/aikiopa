@@ -19,7 +19,7 @@ extends Node
 @export_range(-1.0, 1.0, 0.01) var h_water_height: float = -0.5
 
 ## Noise values between Water Height and this generates Plain (land). Noise
-## values larger or equal to this generates Mountain.
+## values above or equal to this generates Mountain.
 @export_range(-1.0, 1.0, 0.01) var h_land_height: float = 0.5
 
 
@@ -38,7 +38,7 @@ extends Node
 @export_range(-1.0, 1.0, 0.01) var m_desert_height: float = -0.5
 
 ## Noise values between Desert Height and this generates Plain. Noise values
-## larger or equal to this generate Fertile Plain.
+## above or equal to this generate Fertile Plain.
 @export_range(-1.0, 1.0, 0.01) var m_plain_height: float = 0.5
 
 
@@ -51,7 +51,7 @@ extends Node
 ## Affects how large/small the generated biomes would be.
 @export_range(0.1, 10.0, 0.1, "or_greater") var t_noise_scale: float = 1.0
 
-## Noise values above this generates Forest.
+## Noise values above or equal to this generates Forest.
 @export_range(-1.0, 1.0, 0.01) var t_height: float = 0.0
 
 
@@ -64,7 +64,7 @@ extends Node
 ## Affects how large/small the generated biomes would be.
 @export_range(0.1, 10.0, 0.1, "or_greater") var c_noise_scale: float = 1.0
 
-## Noise values above this generates Forest.
+## Noise values above or equal to this generates Chasm.
 @export_range(-1.0, 1.0, 0.01) var c_height: float = 0.0
 
 
@@ -77,7 +77,7 @@ extends Node
 ## Affects how large/small the generated biomes would be.
 @export_range(0.1, 10.0, 0.1, "or_greater") var f_noise_scale: float = 1.0
 
-## Noise values above this generates Forest.
+## Noise values above or equal to this generates Fish.
 @export_range(-1.0, 1.0, 0.01) var f_height: float = 0.0
 
 
@@ -135,19 +135,18 @@ func get_seeds() -> Dictionary[String, int]:
 func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 	# Row-major mapping of the 2D terrain chunk.
 	var chunk_linear_data: Array[World.TerrainTypes] = []
-
 	world.get_terrain_tile_map_layer().clear()
 	# TODO: This hangs the Godot Editor, find out why.
 	# world.get_terrain_features_layer().clear()
 
+	# WARNING: DO NOT RE-ORDER THE FOLLOWING PRIVATE METHOD CALLS. IT WILL BREAK
+	# THE PROCEDURAL GENERATION ALGORITHM.
 	_create_chunk_height_map(chunk_linear_data, chunk_offset)
 	_create_chunk_moisture_map(chunk_linear_data, chunk_offset)
 	_create_chunk_forest_map(chunk_linear_data, chunk_offset)
 	_create_chunk_chasm_map(chunk_linear_data, chunk_offset)
 	_render_chunk(chunk_linear_data, chunk_offset)
 	_insert_chunk_fishes(chunk_linear_data, chunk_offset)
-
-	## TODO: Implement terrain features and chunk offset calculations.
 
 #endregion
 # ============================================================================ #
@@ -157,6 +156,7 @@ func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 #region Private methods
 
 # TODO: Remove this @warning_ignore when [param chunk_offset] is implemented.
+# 1st Step.
 @warning_ignore("unused_parameter")
 func _create_chunk_height_map(
 		chunk_linear_data: Array[World.TerrainTypes],
@@ -176,6 +176,7 @@ func _create_chunk_height_map(
 
 
 # TODO: Remove this @warning_ignore when [param chunk_offset] is implemented.
+# 2nd Step.
 @warning_ignore("unused_parameter")
 func _create_chunk_moisture_map(
 		chunk_linear_data: Array[World.TerrainTypes],
@@ -203,6 +204,7 @@ func _create_chunk_moisture_map(
 
 
 # TODO: Remove this @warning_ignore when [param chunk_offset] is implemented.
+# 3rd Step.
 @warning_ignore("unused_parameter")
 func _create_chunk_forest_map(
 		chunk_linear_data: Array[World.TerrainTypes],
@@ -212,20 +214,21 @@ func _create_chunk_forest_map(
 			var noise_value: float = t_map.get_noise_2d(
 					x * t_noise_scale,
 					y * t_noise_scale)
+			if noise_value < t_height:
+				continue
+
 			var index: int = Globals.coords_2d_to_linear_index(
 					Vector2i(x, y),
 					chunk_size)
-
-			if chunk_linear_data[index] == World.TerrainTypes.Plain:
-				if noise_value > t_height:
+			match chunk_linear_data[index]:
+				World.TerrainTypes.Plain:
 					chunk_linear_data[index] = World.TerrainTypes.PlainForest
-
-			if chunk_linear_data[index] == World.TerrainTypes.FertilePlain:
-				if noise_value > t_height:
+				World.TerrainTypes.FertilePlain:
 					chunk_linear_data[index] = World.TerrainTypes.FertilePlainForest
 
 
 # TODO: Remove this @warning_ignore when [param chunk_offset] is implemented.
+# 4th Step.
 @warning_ignore("unused_parameter")
 func _create_chunk_chasm_map(
 		chunk_linear_data: Array[World.TerrainTypes],
@@ -235,20 +238,23 @@ func _create_chunk_chasm_map(
 			var noise_value: float = t_map.get_noise_2d(
 					x * t_noise_scale,
 					y * t_noise_scale)
+			if noise_value < c_height:
+				continue
+
 			var index: int = Globals.coords_2d_to_linear_index(
 					Vector2i(x, y),
 					chunk_size)
-
-			if chunk_linear_data[index] == World.TerrainTypes.Plain:
-				if noise_value > t_height:
-					chunk_linear_data[index] = World.TerrainTypes.PlainForest
-
-			if chunk_linear_data[index] == World.TerrainTypes.FertilePlain:
-				if noise_value > t_height:
-					chunk_linear_data[index] = World.TerrainTypes.FertilePlainForest
+			match chunk_linear_data[index]:
+				World.TerrainTypes.PlainMountain:
+					chunk_linear_data[index] = World.TerrainTypes.PlainChasm
+				World.TerrainTypes.FertilePlainMountain:
+					chunk_linear_data[index] = World.TerrainTypes.FertilePlainChasm
+				World.TerrainTypes.DesertMountain:
+					chunk_linear_data[index] = World.TerrainTypes.DesertChasm
 
 
 # TODO: Remove this @warning_ignore when [param chunk_offset] is implemented.
+# 5th Step.
 @warning_ignore("unused_parameter")
 func _render_chunk(
 		chunk_linear_data: Array[World.TerrainTypes],
@@ -284,6 +290,7 @@ func _render_chunk(
 
 
 # TODO: Remove this @warning_ignore when [param chunk_offset] is implemented.
+# 6th Step.
 @warning_ignore("unused_parameter")
 func _insert_chunk_fishes(
 		chunk_linear_data: Array[World.TerrainTypes],
