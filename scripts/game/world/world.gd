@@ -81,7 +81,7 @@ var _terrain_feature_fishes: PackedScene =\
 #region Godot builtins
 
 func _ready() -> void:
-	# %WorldGenerator.generate_seeds()
+	%WorldGenerator.generate_seeds()
 	%WorldGenerator.create_chunk()
 
 #endregion

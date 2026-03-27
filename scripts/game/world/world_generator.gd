@@ -173,7 +173,7 @@ func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 	_create_chunk_dunes_map(chunk_linear_data, chunk_offset)
 	_create_chunk_forest_map(chunk_linear_data, chunk_offset)
 	_render_chunk(chunk_linear_data, chunk_offset)
-	# _insert_chunk_fishes(chunk_linear_data, chunk_offset)
+	_insert_chunk_fishes(chunk_linear_data, chunk_offset)
 
 #endregion
 # ============================================================================ #
