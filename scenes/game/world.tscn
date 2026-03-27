@@ -31,11 +31,11 @@ unique_name_in_owner = true
 tile_set = SubResource("TileSet_7h61r")
 script = ExtResource("3_vn813")
 
-[node name="TerrainFeatures" type="Node2D" parent="." unique_id=614560681]
+[node name="TerrainFeatureLayer" type="Node2D" parent="." unique_id=614560681]
 unique_name_in_owner = true
 script = ExtResource("3_qd3kh")
 
-[node name="Buildings" type="Node2D" parent="." unique_id=357589614]
+[node name="BuildingLayer" type="Node2D" parent="." unique_id=357589614]
 unique_name_in_owner = true
 script = ExtResource("4_w1nur")
 

@@ -81,7 +81,7 @@ var _terrain_feature_fishes: PackedScene =\
 #region Godot builtins
 
 func _ready() -> void:
-	%WorldGenerator.generate_seeds()
+	# %WorldGenerator.generate_seeds()
 	%WorldGenerator.create_chunk()
 
 #endregion
@@ -97,14 +97,14 @@ func get_terrain_tile_map_layer() -> TileMapLayer:
 	return %TerrainTileMapLayer
 
 
-## Returns the [code]TerrainFeatures[/code] node.
+## Returns the [code]TerrainFeatureLayer[/code] node.
 func get_terrain_features_layer() -> TileMapLayer:
-	return %TerrainFeatures
+	return %TerrainFeatureLayer
 
 
-## Returns the [code]Buildings[/code] node.
+## Returns the [code]BuildingLayer[/code] node.
 func get_buildings_layer() -> TileMapLayer:
-	return %Buildings
+	return %BuildingLayer
 
 
 ## Sets the terrain at [param coords] to one of [enum World.TerrainTypes].
