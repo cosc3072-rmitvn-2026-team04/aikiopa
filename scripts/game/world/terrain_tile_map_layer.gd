@@ -6,6 +6,7 @@ const SOURCE_ID: int = 0
 
 ## Atlas coordinate data for [enum World.TerrainTypes].
 const ATLAS_COORDS: Dictionary[World.TerrainTypes, Vector2i] = {
+	World.TerrainTypes.None: Vector2i(-1, -1),
 	World.TerrainTypes.ShallowWater: Vector2i(0, 0),
 	World.TerrainTypes.ShallowWaterFishes: Vector2i(0, 0),
 	World.TerrainTypes.DeepWater: Vector2i(1, 0),

@@ -325,9 +325,10 @@ func _render_chunk(
 			for neighbor_coords in neighbors_coords:
 				var atlas_coords: Vector2i = tile_map.get_cell_atlas_coords(neighbor_coords)
 				if atlas_coords not in [
-					tile_map.ATLAS_COORDS[World.TerrainTypes.DeepWater],
+					tile_map.ATLAS_COORDS[World.TerrainTypes.None],
 					tile_map.ATLAS_COORDS[World.TerrainTypes.ShallowWater],
 					tile_map.ATLAS_COORDS[World.TerrainTypes.ShallowWaterFishes],
+					tile_map.ATLAS_COORDS[World.TerrainTypes.DeepWater],
 				]:
 					chunk_linear_data[index] = World.TerrainTypes.ShallowWater
 					world.set_terrain_at(
