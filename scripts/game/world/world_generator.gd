@@ -102,6 +102,13 @@ extends Node
 ## The [World].
 @export var world: World = null
 
+
+# TODO: Remove this when WorldMockup is no longer needed.
+@export_group("Debug")
+
+## Enable/disable this node.
+@export var bypass: bool = false
+
 #endregion
 # ============================================================================ #
 
@@ -148,6 +155,10 @@ func get_seeds() -> Dictionary[String, int]:
 ## points to 2 chunks to the right and 3 chunks to the bottom of the chunk at
 ## world origin.
 func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
+	# TODO: Remove this when WorldMockup is no longer needed.
+	if bypass:
+		return
+
 	# Row-major mapping of the 2D terrain chunk.
 	var chunk_linear_data: Array[World.TerrainTypes] = []
 	world.get_terrain_tile_map_layer().clear()
@@ -162,7 +173,7 @@ func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 	_create_chunk_dunes_map(chunk_linear_data, chunk_offset)
 	_create_chunk_forest_map(chunk_linear_data, chunk_offset)
 	_render_chunk(chunk_linear_data, chunk_offset)
-	_insert_chunk_fishes(chunk_linear_data, chunk_offset)
+	# _insert_chunk_fishes(chunk_linear_data, chunk_offset)
 
 #endregion
 # ============================================================================ #
