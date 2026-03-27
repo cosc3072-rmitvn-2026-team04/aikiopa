@@ -11,8 +11,7 @@ var _current_scene: Node
 func _ready() -> void:
 	get_window().set_min_size(Vector2i(
 			ProjectSettings.get_setting("display/window/size/viewport_width"),
-			ProjectSettings.get_setting("display/window/size/viewport_height")
-	))
+			ProjectSettings.get_setting("display/window/size/viewport_height")))
 	_current_scene_key = GameScene2D.SceneKey.MAIN_MENU
 	_current_scene = null
 
