@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://c2jk4roqpaohs"]
+
+[ext_resource type="Script" uid="uid://fh4lfcav0lye" path="res://scripts/modals/game_over.gd" id="1_n68tj"]
+
+[node name="GameOver" type="Control" unique_id=1463684322]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_n68tj")
+metadata/_custom_type_script = "uid://cupvablkoadik"
+
+[node name="OverlayColorRect" type="ColorRect" parent="." unique_id=1891324629]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.11764706)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OverlayColorRect" unique_id=257114138]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -93.0
+offset_top = -103.5
+offset_right = 93.0
+offset_bottom = 103.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PopulationValueLabel" type="Label" parent="OverlayColorRect/VBoxContainer" unique_id=2025826919]
+unique_name_in_owner = true
+layout_mode = 2
+text = "[POP VALUE]"
+horizontal_alignment = 1
+
+[node name="MessageLabel" type="Label" parent="OverlayColorRect/VBoxContainer" unique_id=1388868528]
+layout_mode = 2
+text = "Expedition Completed!"
+horizontal_alignment = 1
+
+[node name="SaveButton" type="Button" parent="OverlayColorRect/VBoxContainer" unique_id=1160669998]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Save"
+
+[node name="NewExpeditionButton" type="Button" parent="OverlayColorRect/VBoxContainer" unique_id=183934942]
+unique_name_in_owner = true
+layout_mode = 2
+text = "New Expedition"
+
+[node name="QuitToMainMenuButton" type="Button" parent="OverlayColorRect/VBoxContainer" unique_id=1268427561]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quit to Main Menu"

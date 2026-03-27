@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cuyaodod3ycrv"]
+
+[ext_resource type="PackedScene" uid="uid://q1crh5ps008g" path="res://scenes/game/objects/buildings/_generic.tscn" id="1_wch6q"]
+[ext_resource type="Texture2D" uid="uid://c55vc5m23tmso" path="res://assets/objects/building_ranch.png" id="2_jnsub"]
+
+[node name="Ranch" unique_id=1178872670 instance=ExtResource("1_wch6q")]
+
+[node name="Sprite2D" parent="." index="0" unique_id=906012488]
+texture = ExtResource("2_jnsub")

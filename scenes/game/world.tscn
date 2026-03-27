@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://b7p1b85oyvfnp"]
+
+[ext_resource type="Script" uid="uid://dtslxw8hw6d1l" path="res://scripts/game/world/world.gd" id="1_t4al5"]
+[ext_resource type="Texture2D" uid="uid://b4p0nr7itoqnj" path="res://assets/tilesheets/terrains.png" id="2_g5t8f"]
+[ext_resource type="Script" uid="uid://brxq3lcgxk4g8" path="res://scripts/game/world/world_generator.gd" id="3_d8brc"]
+[ext_resource type="Script" uid="uid://bhw8kyxi04s7t" path="res://scripts/game/world/terrain_feature_layer.gd" id="3_qd3kh"]
+[ext_resource type="Script" uid="uid://c4me4d4ubdu7" path="res://scripts/game/world/terrain_tile_map_layer.gd" id="3_vn813"]
+[ext_resource type="Script" uid="uid://b2nle6lcx1mst" path="res://scripts/game/world/building_layer.gd" id="4_w1nur"]
+[ext_resource type="Script" uid="uid://pp8fyccvy4i7" path="res://scripts/game/world/debug_camera_2d.gd" id="6_q5tta"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d8brc"]
+resource_name = "terrains"
+texture = ExtResource("2_g5t8f")
+texture_region_size = Vector2i(160, 130)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_7h61r"]
+tile_shape = 3
+tile_size = Vector2i(160, 130)
+sources/0 = SubResource("TileSetAtlasSource_d8brc")
+
+[node name="World" type="Node2D" unique_id=1513868058]
+script = ExtResource("1_t4al5")
+
+[node name="TerrainTileMapLayer" type="TileMapLayer" parent="." unique_id=1094802460]
+unique_name_in_owner = true
+tile_set = SubResource("TileSet_7h61r")
+script = ExtResource("3_vn813")
+
+[node name="TerrainFeatureLayer" type="Node2D" parent="." unique_id=614560681]
+unique_name_in_owner = true
+script = ExtResource("3_qd3kh")
+
+[node name="BuildingLayer" type="Node2D" parent="." unique_id=357589614]
+unique_name_in_owner = true
+script = ExtResource("4_w1nur")
+
+[node name="DebugCamera2D" type="Camera2D" parent="." unique_id=1341375189]
+anchor_mode = 0
+zoom = Vector2(0.5, 0.5)
+script = ExtResource("6_q5tta")
+
+[node name="WorldGenerator" type="Node" parent="." unique_id=1493408137 node_paths=PackedStringArray("world")]
+unique_name_in_owner = true
+script = ExtResource("3_d8brc")
+h_noise_scale = 10.0
+h_water_height = -0.09999999999999998
+h_land_height = 0.28
+c_noise_scale = 0.2
+c_height = 0.19999999999999996
+m_noise_scale = 10.0
+m_desert_height = -0.07999999999999996
+m_plain_height = 0.15999999999999992
+d_noise_scale = 0.4
+d_height = 0.19999999999999996
+t_height = 0.19999999999999996
+f_noise_scale = 0.1
+f_height = 0.6800000000000002
+world = NodePath("..")

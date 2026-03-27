@@ -1,6 +1,6 @@
 class_name GameUI
 extends Control
-## Must be a child of a [CanvasLayer] for correct scaling
+## Must be a child of a [CanvasLayer] for correct scaling.
 
 ## Emitted when a child UI element requests the parent scene to perform an
 ## [param action].

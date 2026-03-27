@@ -1,16 +1,21 @@
 [gd_scene format=3 uid="uid://d107gii2hpg1j"]
 
-[ext_resource type="Script" uid="uid://dn6k6ykoyxmka" path="res://scripts/scenes/main_menu.gd" id="1_0ebjn"]
-[ext_resource type="Script" uid="uid://cupvablkoadik" path="res://scripts/core/game_ui.gd" id="2_0ebjn"]
+[ext_resource type="Script" uid="uid://dn6k6ykoyxmka" path="res://scripts/scenes/main_menu/main_menu.gd" id="1_0ebjn"]
+[ext_resource type="Texture2D" uid="uid://drsmsbinxipa8" path="res://assets/placeholder.png" id="2_bqqt6"]
+[ext_resource type="Script" uid="uid://pv8kfa1omp0b" path="res://scripts/scenes/main_menu/main_menu_ui.gd" id="2_ekxnf"]
 
 [node name="MainMenu" type="Node2D" unique_id=285205235]
 script = ExtResource("1_0ebjn")
 metadata/_custom_type_script = "uid://dqjitm5fwb83b"
 
+[node name="BackgroundSprite2D" type="Sprite2D" parent="." unique_id=1736822857]
+texture = ExtResource("2_bqqt6")
+centered = false
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=262500120]
 layer = 99
 
-[node name="MainMenuUI" type="Control" parent="CanvasLayer" unique_id=394943527]
+[node name="MainMenuUI" type="Control" parent="CanvasLayer" unique_id=305829909]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
@@ -18,5 +23,46 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("2_0ebjn")
+script = ExtResource("2_ekxnf")
 metadata/_custom_type_script = "uid://cupvablkoadik"
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/MainMenuUI" unique_id=718349148]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainMenuContainer" type="VBoxContainer" parent="CanvasLayer/MainMenuUI/CenterContainer" unique_id=417638024]
+layout_mode = 2
+
+[node name="GameNameLabel" type="Label" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=1638659751]
+layout_mode = 2
+text = "AIKIOΠA"
+horizontal_alignment = 1
+
+[node name="TutorialButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=1569103081]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Tutorial"
+
+[node name="FreeGameButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=1634631360]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Free Play"
+
+[node name="SettingsButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=88263360]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Settings"
+
+[node name="CreditsButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=174603475]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Credits"
+
+[node name="QuitButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=517774371]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quit"
