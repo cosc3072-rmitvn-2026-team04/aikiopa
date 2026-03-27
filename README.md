@@ -27,6 +27,7 @@ For Linux/Mac users, you are suggested to run a Windows virtual machine.
 ├── 📂.github/          # GitHub Actions workflows
 ├── 📂.vscode/          # Visual Studio Code config
 ├── 📂assets/           # Assets (art, music, sfx, etc.)
+├── 📂resources/        # Resource files (`.tres`)
 ├── 📂scenes/           # Scene files (`.tscn`)
 ├── 📂scripts/          # GDScript files (`.gd`)
 ├── 📂shaders/          # Shader files (`.gdshader`)

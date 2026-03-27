@@ -15,130 +15,133 @@
 [ext_resource type="PackedScene" uid="uid://d00cp1m1nbkw5" path="res://scenes/game/objects/buildings/fishery.tscn" id="13_l82yw"]
 [ext_resource type="PackedScene" uid="uid://qg445j4asjvt" path="res://scenes/game/objects/buildings/factory.tscn" id="14_y87f1"]
 [ext_resource type="PackedScene" uid="uid://cshval8odsh5a" path="res://scenes/game/objects/buildings/nuclear_reactor.tscn" id="15_0prlu"]
-[ext_resource type="Texture2D" uid="uid://jf04f1yt7bt6" path="res://icon.svg" id="16_e5kk6"]
+[ext_resource type="Texture2D" uid="uid://dqp3lnsxh5fw" path="res://icon.png" id="16_7qspy"]
 [ext_resource type="Script" uid="uid://bkua0rrkip8l5" path="res://scripts/game/world/mockup_test_sprite2d.gd" id="17_7qspy"]
 
-[node name="World" unique_id=1513868058 instance=ExtResource("1_y52w7")]
+[node name="WorldMockup" unique_id=1513868058 instance=ExtResource("1_y52w7")]
 
 [node name="TerrainTileMapLayer" parent="." index="0" unique_id=1094802460]
-tile_map_data = PackedByteArray("AAD/////AAABAAEAAAD//wEAAAABAAEAAAD//wMAAAABAAEAAAD//wUAAAABAAEAAAD//wcAAAABAAEAAAD//wkAAAABAAEAAAD//wsAAAABAAEAAAAAAP//AAABAAEAAAAAAAAAAAABAAEAAAAAAAEAAAABAAEAAAAAAAIAAAABAAEAAAAAAAMAAAABAAEAAAAAAAQAAAABAAEAAAAAAAUAAAABAAEAAAAAAAYAAAABAAEAAAAAAAcAAAACAAAAAAAAAAgAAAABAAEAAAAAAAkAAAABAAEAAAAAAAoAAAABAAEAAAAAAAsAAAABAAEAAAABAP//AAABAAEAAAABAAAAAAABAAEAAAABAAEAAAABAAEAAAABAAIAAAABAAEAAAABAAMAAAABAAEAAAABAAQAAAABAAEAAAABAAUAAAACAAAAAAABAAYAAAACAAAAAAABAAcAAAABAAAAAAABAAgAAAACAAAAAAABAAkAAAACAAAAAAABAAoAAAABAAEAAAABAAsAAAABAAEAAAACAP//AAABAAEAAAACAAAAAAABAAEAAAACAAEAAAABAAEAAAACAAIAAAABAAEAAAACAAMAAAACAAAAAAACAAQAAAACAAAAAAACAAUAAAACAAAAAAACAAYAAAABAAAAAAACAAcAAAAAAAEAAAACAAgAAAAAAAEAAAACAAkAAAAAAAEAAAACAAoAAAACAAAAAAACAAsAAAABAAEAAAADAP//AAABAAEAAAADAAAAAAABAAEAAAADAAEAAAABAAEAAAADAAIAAAACAAAAAAADAAMAAAABAAAAAAADAAQAAAABAAAAAAADAAUAAAABAAAAAAADAAYAAAABAAAAAAADAAcAAAACAAAAAAADAAgAAAAAAAEAAAADAAkAAAACAAAAAAADAAoAAAACAAAAAAADAAsAAAABAAEAAAAEAP//AAABAAEAAAAEAAAAAAABAAEAAAAEAAEAAAABAAEAAAAEAAIAAAACAAAAAAAEAAMAAAAAAAEAAAAEAAQAAAAAAAEAAAAEAAUAAAAAAAEAAAAEAAYAAAABAAAAAAAEAAcAAAABAAAAAAAEAAgAAAACAAAAAAAEAAkAAAABAAEAAAAEAAoAAAABAAEAAAAEAAsAAAABAAEAAAAFAP//AAABAAEAAAAFAAAAAAABAAEAAAAFAAEAAAACAAAAAAAFAAIAAAACAAAAAAAFAAMAAAAAAAEAAAAFAAQAAAAAAAEAAAAFAAUAAAAAAAEAAAAFAAYAAAAAAAEAAAAFAAcAAAABAAAAAAAFAAgAAAACAAAAAAAFAAkAAAABAAEAAAAFAAoAAAABAAEAAAAFAAsAAAABAAEAAAAGAP//AAABAAEAAAAGAAAAAAABAAEAAAAGAAEAAAACAAAAAAAGAAIAAAABAAAAAAAGAAMAAAAAAAEAAAAGAAQAAAAAAAEAAAAGAAUAAAAAAAAAAAAGAAYAAAABAAAAAAAGAAcAAAABAAAAAAAGAAgAAAACAAAAAAAGAAkAAAACAAAAAAAGAAoAAAABAAEAAAAGAAsAAAABAAEAAAAHAP//AAABAAEAAAAHAAAAAAABAAEAAAAHAAEAAAACAAAAAAAHAAIAAAABAAAAAAAHAAMAAAABAAAAAAAHAAQAAAAAAAAAAAAHAAUAAAAAAAAAAAAHAAYAAAAAAAAAAAAHAAcAAAAAAAAAAAAHAAgAAAABAAAAAAAHAAkAAAACAAAAAAAHAAoAAAABAAEAAAAHAAsAAAABAAEAAAAIAP//AAABAAEAAAAIAAAAAAACAAAAAAAIAAEAAAAAAAAAAAAIAAIAAAAAAAAAAAAIAAMAAAAAAAAAAAAIAAQAAAAAAAAAAAAIAAUAAAAAAAAAAAAIAAYAAAAAAAAAAAAIAAcAAAABAAAAAAAIAAgAAAABAAAAAAAIAAkAAAACAAAAAAAIAAoAAAABAAEAAAAIAAsAAAABAAEAAAAJAP//AAABAAEAAAAJAAAAAAACAAAAAAAJAAEAAAACAAAAAAAJAAIAAAAAAAAAAAAJAAMAAAACAAAAAAAJAAQAAAACAAAAAAAJAAUAAAACAAAAAAAJAAYAAAAAAAAAAAAJAAcAAAACAAAAAAAJAAgAAAACAAAAAAAJAAkAAAABAAEAAAAJAAoAAAABAAEAAAAJAAsAAAABAAEAAAAKAP//AAABAAEAAAAKAAAAAAABAAEAAAAKAAEAAAABAAEAAAAKAAIAAAACAAAAAAAKAAMAAAABAAEAAAAKAAQAAAABAAEAAAAKAAUAAAABAAEAAAAKAAYAAAACAAAAAAAKAAcAAAABAAEAAAAKAAgAAAABAAEAAAAKAAkAAAABAAEAAAAKAAoAAAABAAEAAAAKAAsAAAABAAEAAAALAP//AAABAAEAAAALAAAAAAABAAEAAAALAAEAAAABAAEAAAALAAIAAAABAAEAAAALAAMAAAABAAEAAAALAAQAAAABAAEAAAALAAUAAAABAAEAAAALAAYAAAABAAEAAAALAAcAAAABAAEAAAALAAgAAAABAAEAAAALAAkAAAABAAEAAAALAAoAAAABAAEAAAALAAsAAAABAAEAAAA=")
+tile_map_data = PackedByteArray("AAD/////AAABAAAAAAD//wEAAAABAAAAAAD//wMAAAABAAAAAAD//wUAAAABAAAAAAD//wcAAAABAAAAAAD//wkAAAABAAAAAAD//wsAAAABAAAAAAAAAP//AAABAAAAAAAAAAAAAAABAAAAAAAAAAEAAAABAAAAAAAAAAIAAAABAAAAAAAAAAMAAAABAAAAAAAAAAQAAAABAAAAAAAAAAUAAAABAAAAAAAAAAYAAAABAAAAAAAAAAcAAAAAAAAAAAAAAAgAAAABAAAAAAAAAAkAAAABAAAAAAAAAAoAAAABAAAAAAAAAAsAAAABAAAAAAABAP//AAABAAAAAAABAAAAAAABAAAAAAABAAEAAAABAAAAAAABAAIAAAABAAAAAAABAAMAAAABAAAAAAABAAQAAAABAAAAAAABAAUAAAAAAAAAAAABAAYAAAAAAAAAAAABAAcAAAAAAAEAAAABAAgAAAAAAAAAAAABAAkAAAAAAAAAAAABAAoAAAABAAAAAAABAAsAAAABAAAAAAACAP//AAABAAAAAAACAAAAAAABAAAAAAACAAEAAAABAAAAAAACAAIAAAABAAAAAAACAAMAAAAAAAAAAAACAAQAAAAAAAAAAAACAAUAAAAAAAAAAAACAAYAAAAAAAEAAAACAAcAAAABAAEAAAACAAgAAAABAAEAAAACAAkAAAABAAEAAAACAAoAAAAAAAAAAAACAAsAAAABAAAAAAADAP//AAABAAAAAAADAAAAAAABAAAAAAADAAEAAAABAAAAAAADAAIAAAAAAAAAAAADAAMAAAAAAAEAAAADAAQAAAAAAAEAAAADAAUAAAAAAAEAAAADAAYAAAAAAAEAAAADAAcAAAAAAAAAAAADAAgAAAABAAEAAAADAAkAAAAAAAAAAAADAAoAAAAAAAAAAAADAAsAAAABAAAAAAAEAP//AAABAAAAAAAEAAAAAAABAAAAAAAEAAEAAAABAAAAAAAEAAIAAAAAAAAAAAAEAAMAAAABAAEAAAAEAAQAAAABAAEAAAAEAAUAAAABAAEAAAAEAAYAAAAAAAEAAAAEAAcAAAAAAAEAAAAEAAgAAAAAAAAAAAAEAAkAAAABAAAAAAAEAAoAAAABAAAAAAAEAAsAAAABAAAAAAAFAP//AAABAAAAAAAFAAAAAAABAAAAAAAFAAEAAAAAAAAAAAAFAAIAAAAAAAAAAAAFAAMAAAABAAEAAAAFAAQAAAABAAEAAAAFAAUAAAABAAEAAAAFAAYAAAABAAEAAAAFAAcAAAAAAAEAAAAFAAgAAAAAAAAAAAAFAAkAAAABAAAAAAAFAAoAAAABAAAAAAAFAAsAAAABAAAAAAAGAP//AAABAAAAAAAGAAAAAAABAAAAAAAGAAEAAAAAAAAAAAAGAAIAAAAAAAEAAAAGAAMAAAABAAEAAAAGAAQAAAABAAEAAAAGAAUAAAAAAAEAAAAGAAYAAAAAAAEAAAAGAAcAAAAAAAEAAAAGAAgAAAAAAAAAAAAGAAkAAAAAAAAAAAAGAAoAAAABAAAAAAAGAAsAAAABAAAAAAAHAP//AAABAAAAAAAHAAAAAAABAAAAAAAHAAEAAAAAAAAAAAAHAAIAAAAAAAEAAAAHAAMAAAAAAAEAAAAHAAQAAAAAAAEAAAAHAAUAAAACAAAAAAAHAAYAAAACAAAAAAAHAAcAAAACAAAAAAAHAAgAAAAAAAEAAAAHAAkAAAAAAAAAAAAHAAoAAAABAAAAAAAHAAsAAAABAAAAAAAIAP//AAABAAAAAAAIAAAAAAAAAAAAAAAIAAEAAAACAAAAAAAIAAIAAAACAAAAAAAIAAMAAAACAAAAAAAIAAQAAAACAAAAAAAIAAUAAAACAAAAAAAIAAYAAAACAAAAAAAIAAcAAAAAAAEAAAAIAAgAAAAAAAEAAAAIAAkAAAAAAAAAAAAIAAoAAAABAAAAAAAIAAsAAAABAAAAAAAJAP//AAABAAAAAAAJAAAAAAAAAAAAAAAJAAEAAAAAAAAAAAAJAAIAAAACAAAAAAAJAAMAAAAAAAAAAAAJAAQAAAAAAAAAAAAJAAUAAAAAAAAAAAAJAAYAAAACAAAAAAAJAAcAAAAAAAAAAAAJAAgAAAAAAAAAAAAJAAkAAAABAAAAAAAJAAoAAAABAAAAAAAJAAsAAAABAAAAAAAKAP//AAABAAAAAAAKAAAAAAABAAAAAAAKAAEAAAABAAAAAAAKAAIAAAAAAAAAAAAKAAMAAAABAAAAAAAKAAQAAAABAAAAAAAKAAUAAAABAAAAAAAKAAYAAAAAAAAAAAAKAAcAAAABAAAAAAAKAAgAAAABAAAAAAAKAAkAAAABAAAAAAAKAAoAAAABAAAAAAAKAAsAAAABAAAAAAALAP//AAABAAAAAAALAAAAAAABAAAAAAALAAEAAAABAAAAAAALAAIAAAABAAAAAAALAAMAAAABAAAAAAALAAQAAAABAAAAAAALAAUAAAABAAAAAAALAAYAAAABAAAAAAALAAcAAAABAAAAAAALAAgAAAABAAAAAAALAAkAAAABAAAAAAALAAoAAAABAAAAAAALAAsAAAABAAAAAAA=")
 
-[node name="Mountain" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="0" unique_id=609911264 instance=ExtResource("2_5vt6i")]
+[node name="Mountain" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="0" unique_id=609911264 instance=ExtResource("2_5vt6i")]
 position = Vector2(872, 451)
 
-[node name="Mountain2" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="1" unique_id=1731690927 instance=ExtResource("2_5vt6i")]
+[node name="Mountain2" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="1" unique_id=1731690927 instance=ExtResource("2_5vt6i")]
 position = Vector2(961, 546)
 
-[node name="Mountain3" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="2" unique_id=1989208071 instance=ExtResource("2_5vt6i")]
+[node name="Mountain3" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="2" unique_id=1989208071 instance=ExtResource("2_5vt6i")]
 position = Vector2(1118, 546)
 
-[node name="Mountain4" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="3" unique_id=1131990581 instance=ExtResource("2_5vt6i")]
+[node name="Mountain4" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="3" unique_id=1131990581 instance=ExtResource("2_5vt6i")]
 position = Vector2(1192, 446)
 
-[node name="Forest" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="4" unique_id=1542832817 instance=ExtResource("3_ge07p")]
+[node name="Forest" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="4" unique_id=1542832817 instance=ExtResource("3_ge07p")]
 position = Vector2(712, 456)
 
-[node name="Forest2" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="5" unique_id=917795901 instance=ExtResource("3_ge07p")]
+[node name="Forest2" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="5" unique_id=917795901 instance=ExtResource("3_ge07p")]
 position = Vector2(1032, 449)
 
-[node name="Forest3" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="6" unique_id=200746276 instance=ExtResource("3_ge07p")]
+[node name="Forest3" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="6" unique_id=200746276 instance=ExtResource("3_ge07p")]
 position = Vector2(1116, 354)
 
-[node name="Forest4" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="7" unique_id=441313923 instance=ExtResource("3_ge07p")]
+[node name="Forest4" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="7" unique_id=441313923 instance=ExtResource("3_ge07p")]
 position = Vector2(955, 352)
 
-[node name="Forest5" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="8" unique_id=735945196 instance=ExtResource("3_ge07p")]
+[node name="Forest5" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="8" unique_id=735945196 instance=ExtResource("3_ge07p")]
 position = Vector2(1036, 256)
 
-[node name="Forest6" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="9" unique_id=1683762613 instance=ExtResource("3_ge07p")]
+[node name="Forest6" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="9" unique_id=1683762613 instance=ExtResource("3_ge07p")]
 position = Vector2(549, 845)
 
-[node name="Forest7" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="10" unique_id=1940499083 instance=ExtResource("3_ge07p")]
+[node name="Forest7" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="10" unique_id=1940499083 instance=ExtResource("3_ge07p")]
 position = Vector2(478, 935)
 
-[node name="Forest8" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="11" unique_id=1492718217 instance=ExtResource("3_ge07p")]
+[node name="Forest8" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="11" unique_id=1492718217 instance=ExtResource("3_ge07p")]
 position = Vector2(395, 850)
 
-[node name="Forest9" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="12" unique_id=1644305586 instance=ExtResource("3_ge07p")]
+[node name="Forest9" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="12" unique_id=1644305586 instance=ExtResource("3_ge07p")]
 position = Vector2(1037, 644)
 
-[node name="SandDunes" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="13" unique_id=647369735 instance=ExtResource("4_1lhl4")]
+[node name="SandDunes" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="13" unique_id=647369735 instance=ExtResource("4_1lhl4")]
 position = Vector2(1439, 550)
 
-[node name="SandDunes2" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="14" unique_id=1903731939 instance=ExtResource("4_1lhl4")]
+[node name="SandDunes2" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="14" unique_id=1903731939 instance=ExtResource("4_1lhl4")]
 position = Vector2(1279, 551)
 
-[node name="SandDunes3" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="15" unique_id=1045482632 instance=ExtResource("4_1lhl4")]
+[node name="SandDunes3" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="15" unique_id=1045482632 instance=ExtResource("4_1lhl4")]
 position = Vector2(1373, 259)
 
-[node name="SandDunes4" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="16" unique_id=1906637993 instance=ExtResource("4_1lhl4")]
+[node name="SandDunes4" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="16" unique_id=1906637993 instance=ExtResource("4_1lhl4")]
 position = Vector2(1201, 649)
 
-[node name="Fishes" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="17" unique_id=1619707702 instance=ExtResource("5_4utx7")]
+[node name="Fishes" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="17" unique_id=1619707702 instance=ExtResource("5_4utx7")]
 position = Vector2(639, 748)
 
-[node name="Fishes2" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="18" unique_id=1133005785 instance=ExtResource("5_4utx7")]
+[node name="Fishes2" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="18" unique_id=1133005785 instance=ExtResource("5_4utx7")]
 position = Vector2(477, 552)
 
-[node name="Forest10" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="19" unique_id=31863317 instance=ExtResource("3_ge07p")]
+[node name="Forest10" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="19" unique_id=31863317 instance=ExtResource("3_ge07p")]
 position = Vector2(715, 646)
 
-[node name="Chasm" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="20" unique_id=1564893698 instance=ExtResource("6_kg817")]
+[node name="Chasm" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="20" unique_id=1564893698 instance=ExtResource("6_kg817")]
 position = Vector2(809, 557)
 
-[node name="Chasm2" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="21" unique_id=1660207485 instance=ExtResource("6_kg817")]
+[node name="Chasm2" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="21" unique_id=1660207485 instance=ExtResource("6_kg817")]
 position = Vector2(1283, 748)
 
-[node name="Forest11" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="22" unique_id=464058614 instance=ExtResource("3_ge07p")]
+[node name="Forest11" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="22" unique_id=464058614 instance=ExtResource("3_ge07p")]
 position = Vector2(715, 646)
 
-[node name="Chasm3" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="23" unique_id=1930766387 instance=ExtResource("6_kg817")]
+[node name="Chasm3" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="23" unique_id=1930766387 instance=ExtResource("6_kg817")]
 position = Vector2(809, 557)
 
-[node name="Chasm4" parent="TerrainFeatures" parent_id_path=PackedInt32Array(614560681) index="24" unique_id=1452170702 instance=ExtResource("6_kg817")]
+[node name="Chasm4" parent="TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="24" unique_id=1452170702 instance=ExtResource("6_kg817")]
 position = Vector2(1283, 748)
 
-[node name="LandingSite" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="0" unique_id=1178872670 instance=ExtResource("7_mwd2l")]
+[node name="LandingSite" parent="BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="0" unique_id=1178872670 instance=ExtResource("7_mwd2l")]
 position = Vector2(881, 617)
 
-[node name="Ranch" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="1" unique_id=2068667409 instance=ExtResource("8_0prlu")]
+[node name="Ranch" parent="BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="1" unique_id=2068667409 instance=ExtResource("8_0prlu")]
 position = Vector2(640, 540)
 
-[node name="SolarFarm" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="2" unique_id=189066939 instance=ExtResource("9_e5kk6")]
+[node name="SolarFarm" parent="BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="2" unique_id=189066939 instance=ExtResource("9_e5kk6")]
 position = Vector2(1356, 641)
 
-[node name="WindFarm" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="3" unique_id=195833678 instance=ExtResource("10_7qspy")]
+[node name="WindFarm" parent="BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="3" unique_id=195833678 instance=ExtResource("10_7qspy")]
 position = Vector2(1188, 627)
 
-[node name="WindFarm2" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="4" unique_id=253609113 instance=ExtResource("10_7qspy")]
+[node name="WindFarm2" parent="BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="4" unique_id=253609113 instance=ExtResource("10_7qspy")]
 position = Vector2(1509, 440)
 
-[node name="Housing" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="5" unique_id=1089995812 instance=ExtResource("11_awecp")]
+[node name="Housing" parent="BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="5" unique_id=1089995812 instance=ExtResource("11_awecp")]
 position = Vector2(1281, 350)
 
-[node name="Greenhouse" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="6" unique_id=28098927 instance=ExtResource("12_ylelj")]
+[node name="Greenhouse" parent="BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="6" unique_id=28098927 instance=ExtResource("12_ylelj")]
 position = Vector2(1122, 740)
 
-[node name="Fishery" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="7" unique_id=2049153507 instance=ExtResource("13_l82yw")]
+[node name="Fishery" parent="BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="7" unique_id=2049153507 instance=ExtResource("13_l82yw")]
 position = Vector2(640, 750)
 
-[node name="Fishery2" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="8" unique_id=2025811653 instance=ExtResource("13_l82yw")]
+[node name="Fishery2" parent="BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="8" unique_id=2025811653 instance=ExtResource("13_l82yw")]
 position = Vector2(478, 553)
 
-[node name="Factory" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="9" unique_id=1361406799 instance=ExtResource("14_y87f1")]
+[node name="Factory" parent="BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="9" unique_id=1361406799 instance=ExtResource("14_y87f1")]
 position = Vector2(957, 741)
 
-[node name="Factory2" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="10" unique_id=1987318850 instance=ExtResource("14_y87f1")]
+[node name="Factory2" parent="BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="10" unique_id=1987318850 instance=ExtResource("14_y87f1")]
 position = Vector2(1360, 442)
 
-[node name="NuclearReactor" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="11" unique_id=1999556063 instance=ExtResource("15_0prlu")]
+[node name="NuclearReactor" parent="BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="11" unique_id=1999556063 instance=ExtResource("15_0prlu")]
 position = Vector2(1436, 344)
 
-[node name="Housing2" parent="Buildings" parent_id_path=PackedInt32Array(357589614) index="12" unique_id=1050833759 instance=ExtResource("11_awecp")]
+[node name="Housing2" parent="BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="12" unique_id=1050833759 instance=ExtResource("11_awecp")]
 position = Vector2(1524, 251)
 
 [node name="MockupTestSprite2D" type="Sprite2D" parent="." index="4" unique_id=888500883 node_paths=PackedStringArray("terrain")]
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("16_e5kk6")
+texture = ExtResource("16_7qspy")
 script = ExtResource("17_7qspy")
 terrain = NodePath("../TerrainTileMapLayer")
+
+[node name="WorldGenerator" parent="." index="5" unique_id=1493408137]
+bypass = true
