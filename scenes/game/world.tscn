@@ -7,10 +7,6 @@
 [ext_resource type="Script" uid="uid://c4me4d4ubdu7" path="res://scripts/game/world/terrain_tile_map_layer.gd" id="3_vn813"]
 [ext_resource type="Script" uid="uid://b2nle6lcx1mst" path="res://scripts/game/world/buildings.gd" id="4_w1nur"]
 [ext_resource type="Script" uid="uid://pp8fyccvy4i7" path="res://scripts/game/world/debug_camera_2d.gd" id="6_q5tta"]
-[ext_resource type="FastNoiseLite" uid="uid://cnfnywj0pgvcn" path="res://resources/world_generator/height_map_noise.tres" id="8_wcixa"]
-[ext_resource type="FastNoiseLite" uid="uid://dgdiu352fmekt" path="res://resources/world_generator/moisture_map_noise.tres" id="9_ry5kt"]
-[ext_resource type="FastNoiseLite" uid="uid://co6breuglja6h" path="res://resources/world_generator/forest_map_noise.tres" id="10_st3ua"]
-[ext_resource type="FastNoiseLite" uid="uid://lghn8mvuoj4m" path="res://resources/world_generator/fish_map_noise.tres" id="11_7jg8g"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d8brc"]
 resource_name = "terrains"
@@ -26,8 +22,6 @@ texture_region_size = Vector2i(160, 130)
 tile_shape = 3
 tile_size = Vector2i(160, 130)
 sources/0 = SubResource("TileSetAtlasSource_d8brc")
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_740o0"]
 
 [node name="World" type="Node2D" unique_id=1513868058]
 script = ExtResource("1_t4al5")
@@ -53,16 +47,11 @@ script = ExtResource("6_q5tta")
 [node name="WorldGenerator" type="Node" parent="." unique_id=1493408137 node_paths=PackedStringArray("world")]
 unique_name_in_owner = true
 script = ExtResource("3_d8brc")
-h_map = ExtResource("8_wcixa")
 h_noise_scale = 10.0
 h_water_height = -0.09999999999999998
 h_land_height = 0.28
-m_map = ExtResource("9_ry5kt")
 m_noise_scale = 10.0
 m_desert_height = -0.07999999999999996
 m_plain_height = 0.15999999999999992
-t_map = ExtResource("10_st3ua")
 t_height = 0.19999999999999996
-f_map = ExtResource("11_7jg8g")
-c_map = SubResource("FastNoiseLite_740o0")
 world = NodePath("..")
