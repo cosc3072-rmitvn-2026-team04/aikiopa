@@ -317,7 +317,7 @@ func _render_chunk(
 				if atlas_coords not in [
 					tile_map.ATLAS_COORDS[World.TerrainTypes.DeepWater],
 					tile_map.ATLAS_COORDS[World.TerrainTypes.ShallowWater],
-					tile_map.ATLAS_COORDS[World.TerrainTypes.ShallowWaterFish],
+					tile_map.ATLAS_COORDS[World.TerrainTypes.ShallowWaterFishes],
 				]:
 					chunk_linear_data[index] = World.TerrainTypes.ShallowWater
 					world.set_terrain_at(
@@ -337,17 +337,17 @@ func _insert_chunk_fishes(
 			var noise_value: float = t_map.get_noise_2d(
 					x * t_noise_scale,
 					y * t_noise_scale)
+			if noise_value < f_height:
+				continue
+
 			var index: int = Globals.coords_2d_to_linear_index(
 					Vector2i(x, y),
 					chunk_size)
-
-			if chunk_linear_data[index] == World.TerrainTypes.Plain:
-				if noise_value > t_height:
-					chunk_linear_data[index] = World.TerrainTypes.PlainForest
-
-			if chunk_linear_data[index] == World.TerrainTypes.FertilePlain:
-				if noise_value > t_height:
-					chunk_linear_data[index] = World.TerrainTypes.FertilePlainForest
+			if chunk_linear_data[index] == World.TerrainTypes.ShallowWater:
+					chunk_linear_data[index] = World.TerrainTypes.ShallowWaterFishes
+					world.set_terrain_at(
+							Vector2i(x, y),
+							World.TerrainTypes.ShallowWaterFishes)
 
 #endregion
 # ============================================================================ #

@@ -25,7 +25,7 @@ signal building_removed(coords: Vector2i)
 enum TerrainTypes {
 	None,
 	ShallowWater,
-	ShallowWaterFish,
+	ShallowWaterFishes,
 	DeepWater,
 	Plain,
 	PlainForest,
@@ -70,6 +70,8 @@ var _terrain_feature_sand_dunes: PackedScene =\
 		preload("res://scenes/game/objects/terrain_features/sand_dunes.tscn")
 var _terrain_feature_forest: PackedScene =\
 		preload("res://scenes/game/objects/terrain_features/forest.tscn")
+var _terrain_feature_fishes: PackedScene =\
+		preload("res://scenes/game/objects/terrain_features/fishes.tscn")
 
 #endregion
 # ============================================================================ #
