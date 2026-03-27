@@ -198,11 +198,33 @@ func _create_chunk_forest_map(
 func _render_chunk(
 		chunk_linear_data: Array[World.TerrainTypes],
 		chunk_offset: Vector2i = Vector2i.ZERO) -> void:
+	# Render chunk_linear_data onto World.
 	for index in range(chunk_linear_data.size()):
 		var terrain_type: World.TerrainTypes = chunk_linear_data[index]
 		world.set_terrain_at(
 				Globals.linear_index_to_coords_2d(index, chunk_size),
 				terrain_type)
+
+	# Insert ShallowWater tiles.
+	var tile_map: TileMapLayer = world.get_terrain_tile_map_layer()
+	for index in range(chunk_linear_data.size()):
+		if chunk_linear_data[index] == World.TerrainTypes.DeepWater:
+			var coords: Vector2i = Globals.linear_index_to_coords_2d(
+					index,
+					chunk_size)
+			var neighbors_coords: Array[Vector2i] = tile_map\
+					.get_surrounding_cells(coords)
+			for neighbor_coords in neighbors_coords:
+				var atlas_coords: Vector2i = tile_map.get_cell_atlas_coords(neighbor_coords)
+				if atlas_coords not in [
+					tile_map.ATLAS_COORDS[World.TerrainTypes.DeepWater],
+					tile_map.ATLAS_COORDS[World.TerrainTypes.ShallowWater],
+					tile_map.ATLAS_COORDS[World.TerrainTypes.ShallowWaterFish],
+				]:
+					world.set_terrain_at(
+							coords,
+							World.TerrainTypes.ShallowWater)
+					break
 
 #endregion
 # ============================================================================ #
