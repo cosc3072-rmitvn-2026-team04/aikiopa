@@ -88,31 +88,7 @@ var _terrain_feature_fishes: PackedScene =\
 
 
 # ============================================================================ #
-#region Godot builtins
-
-func _ready() -> void:
-	%WorldGenerator.generate_seeds()
-	%WorldGenerator.create_chunk()
-
-#endregion
-# ============================================================================ #
-
-
-# ============================================================================ #
 #region Public methods
-
-
-## Returns the position of the [b]center[/b] of the chunk at
-## [param chunk_offset].
-func get_chunk_center_position(chunk_offset: Vector2i = Vector2i.ZERO) -> Vector2:
-	var tile_size: Vector2 = Vector2(%TerrainTileMapLayer.tile_set.tile_size)
-	var chunk_size: Vector2 = Vector2(%WorldGenerator.chunk_size)
-	var x: float = tile_size.x * chunk_size.x / 2
-	x += tile_size.x * chunk_size.x * chunk_offset.x
-	var y: float = tile_size.y * chunk_size.y / 2
-	y += tile_size.y * chunk_size.y * chunk_offset.y
-	return Vector2(x, y)
-
 
 ## Returns the [code]TerrainTileMapLayer[/code] node.
 func get_terrain_tile_map_layer() -> TileMapLayer:
@@ -127,6 +103,35 @@ func get_terrain_features_layer() -> TileMapLayer:
 ## Returns the [code]BuildingLayer[/code] node.
 func get_buildings_layer() -> TileMapLayer:
 	return %BuildingLayer
+
+
+## Generates new [World] seeds, effectively creating a new world.
+func generate_seeds() -> void:
+	%WorldGenerator.generate_seeds()
+
+
+## Returns the current world's seeds.
+func get_seeds() -> Dictionary[String, int]:
+	return %WorldGenerator.get_seeds()
+
+
+## Generates new world chunk at [param chunk_offset]. [param chunk_offset]
+## defaults to [constant Vector2i.ZERO] - the chunk at world origin.[br]
+## [br]
+## Example: [code]Vector2i(2, -3)[/code] points to 2 chunks to the right and 3
+## chunks to the bottom relative to the chunk at origin.
+func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
+	%WorldGenerator.create_chunk(chunk_offset)
+
+
+## Returns the position of the [b]center[/b] of the chunk at
+## [param chunk_offset].
+func get_chunk_center_position(chunk_offset: Vector2i = Vector2i.ZERO) -> Vector2:
+	var tile_size: Vector2 = Vector2(%TerrainTileMapLayer.tile_set.tile_size)
+	var chunk_size: Vector2 = Vector2(%WorldGenerator.chunk_size)
+	return Vector2(
+			tile_size.x * chunk_size.x * (0.5 + chunk_offset.x),
+			tile_size.y * chunk_size.y * (0.5 + chunk_offset.y))
 
 
 ## Sets the terrain at [param coords] to one of [enum World.TerrainTypes].

@@ -96,7 +96,8 @@ extends Node
 
 @export_group("Output")
 
-## The amount of tiles generated at one time. Given in [Vector2i] dimensions.
+## The amount of tiles generated at once in a chunk. Given in [Vector2i]
+## dimensions.
 @export var chunk_size: Vector2i = Vector2i(64, 64)
 
 ## The [World].
@@ -125,7 +126,7 @@ var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 # ============================================================================ #
 #region Public methods
 
-## Generates a new seeds for the generator, effectively creating a new world.
+## Generates new seeds for the generator, effectively creating a new world.
 func generate_seeds() -> void:
 	h_map.seed = _rng.randi()
 	c_map.seed = _rng.randi()
@@ -150,30 +151,29 @@ func get_seeds() -> Dictionary[String, int]:
 ## Generates new world chunk at [param chunk_offset]. [param chunk_offset]
 ## defaults to [constant Vector2i.ZERO] - the chunk at world origin.[br]
 ## [br]
-## [param chunk_offset] should have [member Vector2i.x] and [member Vector2i.y]
-## representing the [b]whole-chunk[/b] offset, i.e. [code]Vector2i(2, -3)[/code]
-## points to 2 chunks to the right and 3 chunks to the bottom of the chunk at
-## world origin.
+## Example: [code]Vector2i(2, -3)[/code] points to 2 chunks to the right and 3
+## chunks to the bottom relative to the chunk at origin.
 func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
-	# TODO: Remove this when WorldMockup is no longer needed.
-	if bypass:
-		return
-
 	# Row-major mapping of the 2D terrain chunk.
 	var chunk_linear_data: Array[World.TerrainTypes] = []
-	world.get_terrain_tile_map_layer().clear()
-	# TODO: This hangs the Godot Editor, find out why.
-	# world.get_terrain_features_layer().clear()
+
+	# Set chunk offset.
+	h_map.offset = Vector3(chunk_offset.x, chunk_offset.y, 0.0)
+	c_map.offset = Vector3(chunk_offset.x, chunk_offset.y, 0.0)
+	m_map.offset = Vector3(chunk_offset.x, chunk_offset.y, 0.0)
+	d_map.offset = Vector3(chunk_offset.x, chunk_offset.y, 0.0)
+	t_map.offset = Vector3(chunk_offset.x, chunk_offset.y, 0.0)
+	f_map.offset = Vector3(chunk_offset.x, chunk_offset.y, 0.0)
 
 	# WARNING: DO NOT RE-ORDER THE FOLLOWING PRIVATE METHOD CALLS. IT WILL BREAK
 	# THE PROCEDURAL GENERATION ALGORITHM.
-	_create_chunk_height_map(chunk_linear_data, chunk_offset)
-	_create_chunk_chasm_map(chunk_linear_data, chunk_offset)
-	_create_chunk_moisture_map(chunk_linear_data, chunk_offset)
-	_create_chunk_dunes_map(chunk_linear_data, chunk_offset)
-	_create_chunk_forest_map(chunk_linear_data, chunk_offset)
+	_create_chunk_height_map(chunk_linear_data)
+	_create_chunk_chasm_map(chunk_linear_data)
+	_create_chunk_moisture_map(chunk_linear_data)
+	_create_chunk_dunes_map(chunk_linear_data)
+	_create_chunk_forest_map(chunk_linear_data)
 	_render_chunk(chunk_linear_data, chunk_offset)
-	_insert_chunk_fishes(chunk_linear_data, chunk_offset)
+	_insert_chunk_shallow_water(chunk_linear_data, chunk_offset)
 
 #endregion
 # ============================================================================ #
@@ -182,12 +182,8 @@ func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 # ============================================================================ #
 #region Private methods
 
-# TODO: Remove this @warning_ignore when [param chunk_offset] is implemented.
 # 1st Step.
-@warning_ignore("unused_parameter")
-func _create_chunk_height_map(
-		chunk_linear_data: Array[World.TerrainTypes],
-		chunk_offset: Vector2i = Vector2i.ZERO) -> void:
+func _create_chunk_height_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
 	for x in range(chunk_size.x):
 		for y in range(chunk_size.y):
 			var noise_value: float = h_map.get_noise_2d(
@@ -202,12 +198,8 @@ func _create_chunk_height_map(
 				chunk_linear_data.append(World.TerrainTypes.PlainMountain)
 
 
-# TODO: Remove this @warning_ignore when [param chunk_offset] is implemented.
 # 2nd Step.
-@warning_ignore("unused_parameter")
-func _create_chunk_chasm_map(
-		chunk_linear_data: Array[World.TerrainTypes],
-		chunk_offset: Vector2i = Vector2i.ZERO) -> void:
+func _create_chunk_chasm_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
 	for x in range(chunk_size.x):
 		for y in range(chunk_size.y):
 			var noise_value: float = t_map.get_noise_2d(
@@ -228,12 +220,9 @@ func _create_chunk_chasm_map(
 					chunk_linear_data[index] = World.TerrainTypes.DesertChasm
 
 
-# TODO: Remove this @warning_ignore when [param chunk_offset] is implemented.
 # 3rd Step.
 @warning_ignore("unused_parameter")
-func _create_chunk_moisture_map(
-		chunk_linear_data: Array[World.TerrainTypes],
-		chunk_offset: Vector2i = Vector2i.ZERO) -> void:
+func _create_chunk_moisture_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
 	for x in range(chunk_size.x):
 		for y in range(chunk_size.y):
 			var noise_value: float = h_map.get_noise_2d(
@@ -256,12 +245,9 @@ func _create_chunk_moisture_map(
 					chunk_linear_data[index] = World.TerrainTypes.FertilePlainMountain
 
 
-# TODO: Remove this @warning_ignore when [param chunk_offset] is implemented.
 # 4th Step.
 @warning_ignore("unused_parameter")
-func _create_chunk_dunes_map(
-		chunk_linear_data: Array[World.TerrainTypes],
-		chunk_offset: Vector2i = Vector2i.ZERO) -> void:
+func _create_chunk_dunes_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
 	for x in range(chunk_size.x):
 		for y in range(chunk_size.y):
 			var noise_value: float = t_map.get_noise_2d(
@@ -277,12 +263,9 @@ func _create_chunk_dunes_map(
 					chunk_linear_data[index] = World.TerrainTypes.DesertDunes
 
 
-# TODO: Remove this @warning_ignore when [param chunk_offset] is implemented.
 # 5th Step.
 @warning_ignore("unused_parameter")
-func _create_chunk_forest_map(
-		chunk_linear_data: Array[World.TerrainTypes],
-		chunk_offset: Vector2i = Vector2i.ZERO) -> void:
+func _create_chunk_forest_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
 	for x in range(chunk_size.x):
 		for y in range(chunk_size.y):
 			var noise_value: float = t_map.get_noise_2d(
@@ -301,7 +284,6 @@ func _create_chunk_forest_map(
 					chunk_linear_data[index] = World.TerrainTypes.FertilePlainForest
 
 
-# TODO: Remove this @warning_ignore when [param chunk_offset] is implemented.
 # 6th Step.
 @warning_ignore("unused_parameter")
 func _render_chunk(
@@ -311,16 +293,22 @@ func _render_chunk(
 	for index in range(chunk_linear_data.size()):
 		var terrain_type: World.TerrainTypes = chunk_linear_data[index]
 		world.set_terrain_at(
-				Globals.linear_index_to_coords_2d(index, chunk_size),
+				Globals.linear_index_to_coords_2d(index, chunk_size) + chunk_offset,
 				terrain_type)
 
+
+# 7th Step.
+@warning_ignore("unused_parameter")
+func _insert_chunk_shallow_water(
+		chunk_linear_data: Array[World.TerrainTypes],
+		chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 	# Insert ShallowWater tiles.
 	var tile_map: TileMapLayer = world.get_terrain_tile_map_layer()
 	for index in range(chunk_linear_data.size()):
 		if chunk_linear_data[index] == World.TerrainTypes.DeepWater:
-			var coords: Vector2i = Globals.linear_index_to_coords_2d(
-					index,
-					chunk_size)
+			var coords: Vector2i = (
+					Globals.linear_index_to_coords_2d(index, chunk_size)
+					+ chunk_offset)
 			var neighbors_coords: Array[Vector2i] = tile_map.get_surrounding_cells(coords)
 			for neighbor_coords in neighbors_coords:
 				var atlas_coords: Vector2i = tile_map.get_cell_atlas_coords(neighbor_coords)
@@ -330,35 +318,20 @@ func _render_chunk(
 					tile_map.ATLAS_COORDS[World.TerrainTypes.ShallowWaterFishes],
 					tile_map.ATLAS_COORDS[World.TerrainTypes.DeepWater],
 				]:
-					chunk_linear_data[index] = World.TerrainTypes.ShallowWater
-					world.set_terrain_at(
-							coords,
-							World.TerrainTypes.ShallowWater)
+					var f_noise_value: float = f_map.get_noise_2d(
+							coords.x * f_noise_scale,
+							coords.y * f_noise_scale)
+
+					if f_noise_value < f_height: # No fish.
+						world.set_terrain_at(
+								coords,
+								World.TerrainTypes.ShallowWater)
+					else: # Has fish
+						world.set_terrain_at(
+								coords,
+								World.TerrainTypes.ShallowWaterFishes)
+
 					break
-
-
-# TODO: Remove this @warning_ignore when [param chunk_offset] is implemented.
-# 7th Step.
-@warning_ignore("unused_parameter")
-func _insert_chunk_fishes(
-		chunk_linear_data: Array[World.TerrainTypes],
-		chunk_offset: Vector2i = Vector2i.ZERO) -> void:
-	for x in range(chunk_size.x):
-		for y in range(chunk_size.y):
-			var noise_value: float = f_map.get_noise_2d(
-					x * t_noise_scale,
-					y * t_noise_scale)
-			if noise_value < f_height:
-				continue
-
-			var index: int = Globals.coords_2d_to_linear_index(
-					Vector2i(x, y),
-					chunk_size)
-			if chunk_linear_data[index] == World.TerrainTypes.ShallowWater:
-					chunk_linear_data[index] = World.TerrainTypes.ShallowWaterFishes
-					world.set_terrain_at(
-							Vector2i(x, y),
-							World.TerrainTypes.ShallowWaterFishes)
 
 #endregion
 # ============================================================================ #

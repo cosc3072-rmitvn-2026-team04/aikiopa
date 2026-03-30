@@ -14,6 +14,9 @@ enum GameModes {
 #region Godot builtins
 
 func _ready() -> void:
+	%World.generate_seeds()
+	%World.create_chunk(Vector2i.ZERO) # Create first chunk.
+
 	%MainCamera2D.make_current()
 	%MainCamera2D.position = %World.get_chunk_center_position()
 	%MainCamera2D.reset_smoothing()
