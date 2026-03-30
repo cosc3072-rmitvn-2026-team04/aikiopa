@@ -284,7 +284,8 @@ func _create_chunk_forest_map(chunk_linear_data: Array[World.TerrainTypes]) -> v
 # 6th Step.
 func _render_chunk(
 		chunk_linear_data: Array[World.TerrainTypes],
-		chunk_offset: Vector2i = Vector2i.ZERO) -> void:
+		chunk_offset: Vector2i = Vector2i.ZERO
+) -> void:
 	# Render chunk_linear_data onto World.
 	for index in range(chunk_linear_data.size()):
 		var terrain_type: World.TerrainTypes = chunk_linear_data[index]
@@ -300,7 +301,8 @@ func _render_chunk(
 # 7th Step.
 func _insert_chunk_shallow_water(
 		chunk_linear_data: Array[World.TerrainTypes],
-		chunk_offset: Vector2i = Vector2i.ZERO) -> void:
+		chunk_offset: Vector2i = Vector2i.ZERO
+) -> void:
 	# Insert ShallowWater tiles.
 	var tile_map: TileMapLayer = world.get_terrain_tile_map_layer()
 	for index in range(chunk_linear_data.size()):
