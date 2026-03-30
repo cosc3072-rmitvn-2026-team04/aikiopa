@@ -104,12 +104,6 @@ extends Node
 @export var world: World = null
 
 
-# TODO: Remove this when WorldMockup is no longer needed.
-@export_group("Debug")
-
-## Enable/disable this node.
-@export var bypass: bool = false
-
 #endregion
 # ============================================================================ #
 
