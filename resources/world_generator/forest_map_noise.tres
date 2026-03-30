@@ -2,4 +2,5 @@
 
 [resource]
 noise_type = 3
-frequency = 0.08
+frequency = 0.2
+fractal_type = 0
