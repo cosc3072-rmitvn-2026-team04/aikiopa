@@ -2,9 +2,44 @@
 
 [ext_resource type="Script" uid="uid://dhh27y8ixdvyk" path="res://scripts/game/game.gd" id="1_sul5r"]
 [ext_resource type="PackedScene" uid="uid://b7p1b85oyvfnp" path="res://scenes/game/world.tscn" id="2_7h61r"]
+[ext_resource type="Script" uid="uid://pp8fyccvy4i7" path="res://scripts/game/debug_camera_2d.gd" id="3_0sr1o"]
+[ext_resource type="Script" uid="uid://6lexlgkglwls" path="res://scripts/game/main_camera_2d.gd" id="3_kelw5"]
 
 [node name="Game" type="Node2D" unique_id=1327406412]
 script = ExtResource("1_sul5r")
 
-[node name="World" parent="." unique_id=1513868058 instance=ExtResource("2_7h61r")]
+[node name="World" parent="." unique_id=1513868058 node_paths=PackedStringArray("MainCamera", "DebugCamera") instance=ExtResource("2_7h61r")]
 unique_name_in_owner = true
+MainCamera = NodePath("../MainCamera2D")
+DebugCamera = NodePath("../DebugCamera2D")
+
+[node name="MainCamera2D" type="Camera2D" parent="." unique_id=2126184769]
+unique_name_in_owner = true
+limit_enabled = false
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+script = ExtResource("3_kelw5")
+
+[node name="ReferenceRect" type="ReferenceRect" parent="MainCamera2D" unique_id=1312999257]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(0, 0.8666667, 0.8392157, 1)
+border_width = 6.0
+metadata/_edit_use_anchors_ = true
+
+[node name="DebugCamera2D" type="Camera2D" parent="." unique_id=887816951]
+unique_name_in_owner = true
+zoom = Vector2(0.5, 0.5)
+limit_enabled = false
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+script = ExtResource("3_0sr1o")

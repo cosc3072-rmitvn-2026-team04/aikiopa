@@ -14,7 +14,17 @@ enum GameModes {
 #region Godot builtins
 
 func _ready() -> void:
-	pass
+	%MainCamera2D.make_current()
+
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("toggle_debug_mode"):
+		if %MainCamera2D.is_current():
+			%DebugCamera2D.make_current()
+			%MainCamera2D/ReferenceRect.editor_only = false
+		elif %DebugCamera2D.is_current():
+			%MainCamera2D.make_current()
+			%MainCamera2D/ReferenceRect.editor_only = true
 
 #endregion
 # ============================================================================ #

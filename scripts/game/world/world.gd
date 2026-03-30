@@ -19,6 +19,16 @@ signal building_removed(coords: Vector2i)
 
 
 # ============================================================================ #
+#region Variables
+
+@export var MainCamera: Camera2D = null
+@export var DebugCamera: Camera2D = null
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
 #region Enums
 
 ## Terrain types (including terrain features) in the game.
