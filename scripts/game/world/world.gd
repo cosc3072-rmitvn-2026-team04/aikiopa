@@ -19,16 +19,6 @@ signal building_removed(coords: Vector2i)
 
 
 # ============================================================================ #
-#region Variables
-
-@export var MainCamera: Camera2D = null
-@export var DebugCamera: Camera2D = null
-
-#endregion
-# ============================================================================ #
-
-
-# ============================================================================ #
 #region Enums
 
 ## Terrain types (including terrain features) in the game.
@@ -70,6 +60,16 @@ enum BuildingTypes {
 
 
 # ============================================================================ #
+#region Export properties
+
+@export var MainCamera: Camera2D = null
+@export var DebugCamera: Camera2D = null
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
 #region Private variables
 
 var _terrain_feature_mountain: PackedScene =\
@@ -82,6 +82,18 @@ var _terrain_feature_forest: PackedScene =\
 		preload("res://scenes/game/objects/terrain_features/forest.tscn")
 var _terrain_feature_fishes: PackedScene =\
 		preload("res://scenes/game/objects/terrain_features/fishes.tscn")
+
+var _generated_chunks: Dictionary[Vector2i, bool]
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Godot builtins
+
+func _ready() -> void:
+	_generated_chunks.clear()
 
 #endregion
 # ============================================================================ #
@@ -113,6 +125,7 @@ func get_chunk_size() -> Vector2i:
 ## Generates new [World] seeds, effectively creating a new world.
 func generate_seeds() -> void:
 	%WorldGenerator.generate_seeds()
+	_generated_chunks.clear()
 
 
 ## Returns the current world's seeds.
@@ -126,7 +139,12 @@ func get_seeds() -> Dictionary[String, int]:
 ## Example: [code]Vector2i(2, -3)[/code] points to 2 chunks to the right and 3
 ## chunks to the bottom relative to the chunk at origin.
 func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
+	if is_chunk_generated(chunk_offset):
+		push_warning(
+				"Previously generated chunk (%d, %d) is overwritten."
+				% [chunk_offset.x, chunk_offset.y])
 	%WorldGenerator.create_chunk(chunk_offset)
+	_generated_chunks.set(chunk_offset, true)
 
 
 ## Returns the position of the [b]center[/b] of the chunk at
@@ -141,6 +159,32 @@ func get_chunk_center_position(chunk_offset: Vector2i = Vector2i.ZERO) -> Vector
 	return (
 			get_terrain_tile_map_layer().map_to_local(chunk_size * 0.5)
 			+ chunk_screen_offset)
+
+
+## Returns a list of offset positions of generated chunks.
+func get_generated_chunks() -> Array[Vector2i]:
+	return _generated_chunks.keys()
+
+
+## Returns [code]true[/code] if the chunk at [param chunk_offset] is already
+## generated.
+func is_chunk_generated(chunk_offset: Vector2i) -> bool:
+	return _generated_chunks.has(chunk_offset)
+
+
+## Returns the 8 neighboring chunk offset coordinates of the chunk at
+## [param chunk_offset].
+func get_neigboring_chunks(chunk_offset: Vector2i) -> Array[Vector2i]:
+	return [
+		chunk_offset + Vector2i.LEFT,
+		chunk_offset + Vector2i.RIGHT,
+		chunk_offset + Vector2i.UP,
+		chunk_offset + Vector2i.DOWN,
+		chunk_offset + Vector2i.UP + Vector2i.LEFT,
+		chunk_offset + Vector2i.UP + Vector2i.RIGHT,
+		chunk_offset + Vector2i.DOWN + Vector2i.LEFT,
+		chunk_offset + Vector2i.DOWN + Vector2i.RIGHT,
+	]
 
 
 ## Sets the terrain at [param coords] to one of [enum World.TerrainTypes].

@@ -14,18 +14,9 @@ enum GameModes {
 #region Godot builtins
 
 func _ready() -> void:
+	# World setup.
 	%World.generate_seeds()
-
-	# Generate first chunk at the center and its surrounding chunks.
 	%World.create_chunk(Vector2i.ZERO)
-	%World.create_chunk(Vector2i.LEFT)
-	%World.create_chunk(Vector2i.RIGHT)
-	%World.create_chunk(Vector2i.UP)
-	%World.create_chunk(Vector2i.DOWN)
-	%World.create_chunk(Vector2i.UP + Vector2i.LEFT)
-	%World.create_chunk(Vector2i.UP + Vector2i.RIGHT)
-	%World.create_chunk(Vector2i.DOWN + Vector2i.LEFT)
-	%World.create_chunk(Vector2i.DOWN + Vector2i.RIGHT)
 
 	# Main camera setup.
 	%MainCamera2D.make_current()
@@ -38,7 +29,10 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	pass
+	var camera_chunk_position: Vector2i = %MainCamera2D.get_chunk_position()
+	for neighbor_chunk in %World.get_neigboring_chunks(camera_chunk_position):
+		if not %World.is_chunk_generated(neighbor_chunk):
+			%World.create_chunk(neighbor_chunk)
 
 
 func _input(event: InputEvent) -> void:
