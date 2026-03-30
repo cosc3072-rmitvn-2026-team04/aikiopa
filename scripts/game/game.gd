@@ -15,6 +15,11 @@ enum GameModes {
 
 func _ready() -> void:
 	%MainCamera2D.make_current()
+	%MainCamera2D.position = %World.get_chunk_center_position()
+	%MainCamera2D.reset_smoothing()
+
+	%DebugCamera2D.position = %World.get_chunk_center_position()
+	%DebugCamera2D.reset_smoothing()
 
 
 func _input(event: InputEvent) -> void:

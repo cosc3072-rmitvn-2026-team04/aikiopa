@@ -102,6 +102,18 @@ func _ready() -> void:
 #region Public methods
 
 
+## Returns the position of the [b]center[/b] of the chunk at
+## [param chunk_offset].
+func get_chunk_center_position(chunk_offset: Vector2i = Vector2i.ZERO) -> Vector2:
+	var tile_size: Vector2 = Vector2(%TerrainTileMapLayer.tile_set.tile_size)
+	var chunk_size: Vector2 = Vector2(%WorldGenerator.chunk_size)
+	var x: float = tile_size.x * chunk_size.x / 2
+	x += tile_size.x * chunk_size.x * chunk_offset.x
+	var y: float = tile_size.y * chunk_size.y / 2
+	y += tile_size.y * chunk_size.y * chunk_offset.y
+	return Vector2(x, y)
+
+
 ## Returns the [code]TerrainTileMapLayer[/code] node.
 func get_terrain_tile_map_layer() -> TileMapLayer:
 	return %TerrainTileMapLayer
