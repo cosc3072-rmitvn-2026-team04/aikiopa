@@ -292,8 +292,12 @@ func _render_chunk(
 	# Render chunk_linear_data onto World.
 	for index in range(chunk_linear_data.size()):
 		var terrain_type: World.TerrainTypes = chunk_linear_data[index]
+		var coords: Vector2i = Globals.linear_index_to_coords_2d(index, chunk_size)
+		coords.x += chunk_offset.x * chunk_size.x
+		coords.y += chunk_offset.y * chunk_size.y
+
 		world.set_terrain_at(
-				Globals.linear_index_to_coords_2d(index, chunk_size) + chunk_offset,
+				coords,
 				terrain_type)
 
 
@@ -306,9 +310,10 @@ func _insert_chunk_shallow_water(
 	var tile_map: TileMapLayer = world.get_terrain_tile_map_layer()
 	for index in range(chunk_linear_data.size()):
 		if chunk_linear_data[index] == World.TerrainTypes.DeepWater:
-			var coords: Vector2i = (
-					Globals.linear_index_to_coords_2d(index, chunk_size)
-					+ chunk_offset)
+			var coords: Vector2i = Globals.linear_index_to_coords_2d(index, chunk_size)
+			coords.x += chunk_offset.x * chunk_size.x
+			coords.y += chunk_offset.y * chunk_size.y
+
 			var neighbors_coords: Array[Vector2i] = tile_map.get_surrounding_cells(coords)
 			for neighbor_coords in neighbors_coords:
 				var atlas_coords: Vector2i = tile_map.get_cell_atlas_coords(neighbor_coords)

@@ -16,6 +16,8 @@ enum GameModes {
 func _ready() -> void:
 	%World.generate_seeds()
 	%World.create_chunk(Vector2i.ZERO) # Create first chunk.
+	%World.create_chunk(Vector2i(1, 0))
+	%World.create_chunk(Vector2i(0, 1))
 
 	%MainCamera2D.make_current()
 	%MainCamera2D.position = %World.get_chunk_center_position()
