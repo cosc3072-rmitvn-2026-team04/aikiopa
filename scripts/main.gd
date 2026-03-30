@@ -8,6 +8,7 @@ var _current_scene: Node
 
 # ============================================================================ #
 #region Godot builtins
+
 func _ready() -> void:
 	get_window().set_min_size(Vector2i(
 			ProjectSettings.get_setting("display/window/size/viewport_width"),
@@ -22,6 +23,7 @@ func _process(_delta: float) -> void:
 		add_child(_current_scene)
 		move_child(_current_scene, 0)
 		_current_scene.scene_finished.connect(_on_scene_finished)
+
 #endregion
 # ============================================================================ #
 

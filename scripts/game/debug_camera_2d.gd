@@ -34,6 +34,7 @@ func _process(delta: float) -> void:
 # ============================================================================ #
 #region Signal listeners
 
+# Listens to GameplayEventBus.gameplay_debug_mode_toggled(value: bool).
 func _on_gameplay_debug_mode_toggled(value: bool) -> void:
 	if value:
 		make_current()

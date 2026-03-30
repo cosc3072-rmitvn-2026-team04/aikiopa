@@ -3,8 +3,10 @@ extends GameScene2D
 
 # ============================================================================ #
 #region Godot builtins
+
 func _ready() -> void:
 	%MainMenuUI.acted.connect(_on_main_menu_ui_acted)
+
 #endregion
 # ============================================================================ #
 

@@ -37,6 +37,7 @@ var gameplay_debug_mode_enabled: bool = false
 
 # ============================================================================ #
 #region Godot builtins
+
 func _ready() -> void:
 	var os_name: String = OS.get_name()
 	match os_name:
@@ -48,8 +49,10 @@ func _ready() -> void:
 
 	game_state = GameState.new()
 
+
 func _exit_tree() -> void:
 	game_state.queue_free()
+
 #endregion
 # ============================================================================ #
 
