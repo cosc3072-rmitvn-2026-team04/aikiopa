@@ -37,11 +37,14 @@ func _ready() -> void:
 	%DebugCamera2D.reset_smoothing()
 
 
+func _process(_delta: float) -> void:
+	pass
+
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_gameplay_debug_mode"):
 		Global.gameplay_debug_mode_enabled = not Global.gameplay_debug_mode_enabled
-		GameplayEventBus.gameplay_debug_mode_toggled.emit(
-				Global.gameplay_debug_mode_enabled)
+		GameplayEventBus.gameplay_debug_mode_toggled.emit(Global.gameplay_debug_mode_enabled)
 
 #endregion
 # ============================================================================ #

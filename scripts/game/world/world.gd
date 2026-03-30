@@ -88,16 +88,6 @@ var _terrain_feature_fishes: PackedScene =\
 
 
 # ============================================================================ #
-#region Godot builtins
-
-func _process(_delta: float) -> void:
-	pass
-
-#endregion
-# ============================================================================ #
-
-
-# ============================================================================ #
 #region Public methods
 
 ## Returns the [code]TerrainTileMapLayer[/code] node.
@@ -113,6 +103,11 @@ func get_terrain_features_layer() -> TileMapLayer:
 ## Returns the [code]BuildingLayer[/code] node.
 func get_buildings_layer() -> TileMapLayer:
 	return %BuildingLayer
+
+
+## Returns the size of generated world chunks.
+func get_chunk_size() -> Vector2i:
+	return %WorldGenerator.chunk_size
 
 
 ## Generates new [World] seeds, effectively creating a new world.

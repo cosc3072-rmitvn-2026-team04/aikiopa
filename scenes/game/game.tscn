@@ -13,12 +13,13 @@ unique_name_in_owner = true
 MainCamera = NodePath("../MainCamera2D")
 DebugCamera = NodePath("../DebugCamera2D")
 
-[node name="MainCamera2D" type="Camera2D" parent="." unique_id=2126184769]
+[node name="MainCamera2D" type="Camera2D" parent="." unique_id=2126184769 node_paths=PackedStringArray("world")]
 unique_name_in_owner = true
 limit_enabled = false
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 script = ExtResource("3_kelw5")
+world = NodePath("../World")
 
 [node name="ReferenceRect" type="ReferenceRect" parent="MainCamera2D" unique_id=1312999257]
 anchors_preset = 8
