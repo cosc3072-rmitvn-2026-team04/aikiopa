@@ -88,6 +88,16 @@ var _terrain_feature_fishes: PackedScene =\
 
 
 # ============================================================================ #
+#region Godot builtins
+
+func _process(_delta: float) -> void:
+	pass
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
 #region Public methods
 
 ## Returns the [code]TerrainTileMapLayer[/code] node.
@@ -127,11 +137,15 @@ func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 ## Returns the position of the [b]center[/b] of the chunk at
 ## [param chunk_offset].
 func get_chunk_center_position(chunk_offset: Vector2i = Vector2i.ZERO) -> Vector2:
-	var tile_size: Vector2 = Vector2(%TerrainTileMapLayer.tile_set.tile_size)
-	var chunk_size: Vector2 = Vector2(%WorldGenerator.chunk_size)
-	return Vector2(
-			tile_size.x * chunk_size.x * (0.5 + chunk_offset.x),
-			tile_size.y * chunk_size.y * (0.5 + chunk_offset.y))
+	@warning_ignore("integer_division")
+	var tile_size: Vector2i = get_terrain_tile_map_layer().tile_set.tile_size
+	var chunk_size: Vector2i = %WorldGenerator.chunk_size
+	var chunk_screen_offset: Vector2 = Vector2(
+			tile_size.x * chunk_size.x * chunk_offset.x,
+			tile_size.y * chunk_size.y * chunk_offset.y)
+	return (
+			get_terrain_tile_map_layer().map_to_local(chunk_size * 0.5)
+			+ chunk_screen_offset)
 
 
 ## Sets the terrain at [param coords] to one of [enum World.TerrainTypes].
