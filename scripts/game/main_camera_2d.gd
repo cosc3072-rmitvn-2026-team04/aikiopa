@@ -8,6 +8,11 @@ extends Camera2D
 # ============================================================================ #
 #region Godot builtins
 
+func _ready() -> void:
+	GameplayEventBus.gameplay_debug_mode_toggled.connect(
+			_on_gameplay_debug_mode_toggled)
+
+
 func _process(delta: float) -> void:
 	var movement: Vector2 = Input.get_vector(
 			"ui_left",
@@ -16,6 +21,20 @@ func _process(delta: float) -> void:
 			"ui_down")
 	if movement:
 		position += movement * pan_speed * delta
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Signal listeners
+
+func _on_gameplay_debug_mode_toggled(value: bool) -> void:
+	if value:
+		$ReferenceRect.editor_only = false
+	else:
+		make_current()
+		$ReferenceRect.editor_only = true
 
 #endregion
 # ============================================================================ #

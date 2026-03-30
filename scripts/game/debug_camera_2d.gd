@@ -8,6 +8,11 @@ extends Camera2D
 # ============================================================================ #
 #region Godot builtins
 
+func _ready() -> void:
+	GameplayEventBus.gameplay_debug_mode_toggled.connect(
+			_on_gameplay_debug_mode_toggled)
+
+
 func _process(delta: float) -> void:
 	if is_current():
 		var movement: Vector2 = Vector2.ZERO
@@ -21,6 +26,17 @@ func _process(delta: float) -> void:
 			movement += Vector2.DOWN
 		movement = movement.normalized()
 		position += movement * (pan_speed * 100 / zoom.x) * delta
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Signal listeners
+
+func _on_gameplay_debug_mode_toggled(value: bool) -> void:
+	if value:
+		make_current()
 
 #endregion
 # ============================================================================ #

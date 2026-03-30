@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 ## Global game scope data and functions.
 
 
@@ -26,6 +26,10 @@ const SAVE_DIR: String = "user://saves"
 ## [code]"Android Mobile"[/code].
 var os_platform: StringName
 var game_state: GameState
+
+## If [code]true[/code], debugging tools would be activated while the game is
+## running.
+var gameplay_debug_mode_enabled: bool = false
 
 #endregion
 # ============================================================================ #
