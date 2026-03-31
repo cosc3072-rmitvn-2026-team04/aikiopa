@@ -207,13 +207,13 @@ func _create_chunk_moisture_map(chunk_linear_data: Array[World.TerrainTypes]) ->
 				if noise_value < m_desert_height:
 					chunk_linear_data[index] = World.TerrainTypes.Desert
 				elif noise_value >= m_plain_height:
-					chunk_linear_data[index] = World.TerrainTypes.FertilePlain
+					chunk_linear_data[index] = World.TerrainTypes.Grassland
 
 			if chunk_linear_data[index] == World.TerrainTypes.PlainMountain:
 				if noise_value < m_desert_height:
 					chunk_linear_data[index] = World.TerrainTypes.DesertMountain
 				elif noise_value >= m_plain_height:
-					chunk_linear_data[index] = World.TerrainTypes.FertilePlainMountain
+					chunk_linear_data[index] = World.TerrainTypes.GrasslandMountain
 
 
 # 3rd Step.
@@ -232,8 +232,8 @@ func _create_chunk_chasm_map(chunk_linear_data: Array[World.TerrainTypes]) -> vo
 			match chunk_linear_data[index]:
 				World.TerrainTypes.PlainMountain:
 					chunk_linear_data[index] = World.TerrainTypes.PlainChasm
-				World.TerrainTypes.FertilePlainMountain:
-					chunk_linear_data[index] = World.TerrainTypes.FertilePlainChasm
+				World.TerrainTypes.GrasslandMountain:
+					chunk_linear_data[index] = World.TerrainTypes.GrasslandChasm
 				World.TerrainTypes.DesertMountain:
 					chunk_linear_data[index] = World.TerrainTypes.DesertChasm
 
@@ -271,8 +271,8 @@ func _create_chunk_forest_map(chunk_linear_data: Array[World.TerrainTypes]) -> v
 			match chunk_linear_data[index]:
 				World.TerrainTypes.Plain:
 					chunk_linear_data[index] = World.TerrainTypes.PlainForest
-				World.TerrainTypes.FertilePlain:
-					chunk_linear_data[index] = World.TerrainTypes.FertilePlainForest
+				World.TerrainTypes.Grassland:
+					chunk_linear_data[index] = World.TerrainTypes.Grassland
 
 
 # 6th Step.

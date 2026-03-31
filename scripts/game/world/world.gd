@@ -31,10 +31,10 @@ enum TerrainTypes {
 	PlainForest,
 	PlainMountain,
 	PlainChasm,
-	FertilePlain,
-	FertilePlainForest,
-	FertilePlainMountain,
-	FertilePlainChasm,
+	Grassland,
+	GrasslandForest,
+	GrasslandMountain,
+	GrasslandChasm,
 	Desert,
 	DesertDunes,
 	DesertMountain,
@@ -196,12 +196,12 @@ func set_terrain_at(coords: Vector2i, terrain_type: TerrainTypes) -> void:
 		get_terrain_tile_map_layer().SOURCE_ID,
 		get_terrain_tile_map_layer().ATLAS_COORDS[terrain_type])
 	match terrain_type:
-		TerrainTypes.PlainMountain, TerrainTypes.FertilePlainMountain, TerrainTypes.DesertMountain:
+		TerrainTypes.PlainMountain, TerrainTypes.GrasslandMountain, TerrainTypes.DesertMountain:
 			var mountain: Node2D = _terrain_feature_mountain.instantiate()
 			mountain.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(mountain)
-		TerrainTypes.PlainChasm, TerrainTypes.FertilePlainChasm, TerrainTypes.DesertChasm:
+		TerrainTypes.PlainChasm, TerrainTypes.GrasslandChasm, TerrainTypes.DesertChasm:
 			var chasm: Node2D = _terrain_feature_chasm.instantiate()
 			chasm.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
@@ -211,7 +211,7 @@ func set_terrain_at(coords: Vector2i, terrain_type: TerrainTypes) -> void:
 			sand_dunes.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(sand_dunes)
-		TerrainTypes.PlainForest, TerrainTypes.FertilePlainForest:
+		TerrainTypes.PlainForest, TerrainTypes.GrasslandForest:
 			var forest: Node2D = _terrain_feature_forest.instantiate()
 			forest.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
