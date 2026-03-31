@@ -167,7 +167,7 @@ func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 	_create_chunk_dunes_map(chunk_linear_data)
 	_create_chunk_forest_map(chunk_linear_data)
 	_render_chunk(chunk_linear_data, chunk_offset)
-	_insert_chunk_shallow_water(chunk_linear_data, chunk_offset)
+	# _insert_chunk_shallow_water(chunk_linear_data, chunk_offset)
 
 #endregion
 # ============================================================================ #
@@ -175,6 +175,27 @@ func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 
 # ============================================================================ #
 #region Private methods
+
+
+# Returns the [param coords]' surrounding noise map coordinates, adjusted for
+# Godot's TileMapLayer hex coordinate system (odd-r). C.f.
+# https://www.redblobgames.com/grids/hexagons/#coordinates-offset
+func _get_surrounding_noise_coords(coords: Vector2i) -> Array[Vector2i]:
+	var surrounding_coords: Array[Vector2i] = []
+
+	surrounding_coords.append(coords + Vector2i.LEFT)
+	surrounding_coords.append(coords + Vector2i.RIGHT)
+	surrounding_coords.append(coords + Vector2i.UP)
+	surrounding_coords.append(coords + Vector2i.DOWN)
+	if posmod(coords.y, 2) == 0: # Even rows.
+		surrounding_coords.append(coords + Vector2i.UP + Vector2i.LEFT)
+		surrounding_coords.append(coords + Vector2i.DOWN + Vector2i.LEFT)
+	else: # Odd rows.
+		surrounding_coords.append(coords + Vector2i.UP + Vector2i.RIGHT)
+		surrounding_coords.append(coords + Vector2i.DOWN + Vector2i.RIGHT)
+
+	return surrounding_coords
+
 
 # 1st Step.
 func _create_chunk_height_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
@@ -185,7 +206,18 @@ func _create_chunk_height_map(chunk_linear_data: Array[World.TerrainTypes]) -> v
 					y * h_noise_scale)
 
 			if noise_value < h_water_height:
-				chunk_linear_data.append(World.TerrainTypes.DeepWater)
+				var water_type: World.TerrainTypes = World.TerrainTypes.DeepWater
+
+				for neighbor_coords in _get_surrounding_noise_coords(Vector2i(x, y)):
+					var neighbor_noise_value: float = h_map.get_noise_2d(
+							neighbor_coords.x * h_noise_scale,
+							neighbor_coords.y * h_noise_scale)
+					if neighbor_noise_value >= h_water_height:
+						print(neighbor_noise_value, " ", h_water_height)
+						water_type = World.TerrainTypes.ShallowWater
+						break
+
+				chunk_linear_data.append(water_type)
 			elif noise_value < h_land_height:
 				chunk_linear_data.append(World.TerrainTypes.Plain)
 			else:
