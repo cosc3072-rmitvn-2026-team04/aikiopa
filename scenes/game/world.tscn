@@ -38,6 +38,7 @@ m_plain_height = 0.19999999999999996
 c_noise_scale = 0.9
 c_height = 0.72
 d_height = 0.19999999999999996
+t_noise_scale = 0.7999999999999999
 t_height = 0.17999999999999994
 f_height = 0.6600000000000001
 world = NodePath("..")
