@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://ccpo3uu672sqa"]
+
+[ext_resource type="Script" uid="uid://pp8fyccvy4i7" path="res://scripts/game/debug_camera_2d.gd" id="1_0s1lt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kelw5"]
+content_margin_left = 32.0
+content_margin_top = 20.0
+content_margin_right = 32.0
+content_margin_bottom = 20.0
+
+[node name="DebugCamera2D" type="Camera2D" unique_id=1889864583]
+zoom = Vector2(0.5, 0.5)
+limit_enabled = false
+position_smoothing_enabled = true
+position_smoothing_speed = 12.0
+script = ExtResource("1_0s1lt")
+
+[node name="DebugCanvasLayer" type="CanvasLayer" parent="." unique_id=1868002563]
+unique_name_in_owner = true
+
+[node name="CoordsControl" type="Control" parent="DebugCanvasLayer" unique_id=1453415602]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+grow_vertical = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="DebugCanvasLayer/CoordsControl" unique_id=431049863]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_kelw5")
+
+[node name="CameraMapCoordsLabel" type="Label" parent="DebugCanvasLayer/CoordsControl/PanelContainer" unique_id=559714081]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(6.835, 0)
+layout_direction = 2
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 38
+text = "(x, y)"
+
+[node name="ZoomControl" type="Control" parent="DebugCanvasLayer" unique_id=1486345354]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="DebugCanvasLayer/ZoomControl" unique_id=50300647]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -325.0
+offset_top = -107.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_kelw5")
+
+[node name="CameraZoomLabel" type="Label" parent="DebugCanvasLayer/ZoomControl/PanelContainer" unique_id=1403634692]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(6.835, 0)
+layout_direction = 3
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 38
+text = "Zoom: NaN"
+
+[node name="CenterContainer" type="CenterContainer" parent="DebugCanvasLayer" unique_id=995302263]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CameraCenterLabel" type="Label" parent="DebugCanvasLayer/CenterContainer" unique_id=1159361891]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 86
+text = "+"

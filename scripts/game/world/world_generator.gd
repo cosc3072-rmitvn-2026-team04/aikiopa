@@ -213,7 +213,6 @@ func _create_chunk_height_map(chunk_linear_data: Array[World.TerrainTypes]) -> v
 
 			if noise_value < h_water_height:
 				var water_type: World.TerrainTypes = World.TerrainTypes.DeepWater
-
 				for neighbor_coords in _get_surrounding_noise_coords(Vector2i(x, y)):
 					var neighbor_noise_value: float = h_map.get_noise_2d(
 							neighbor_coords.x * h_noise_scale,
@@ -221,7 +220,6 @@ func _create_chunk_height_map(chunk_linear_data: Array[World.TerrainTypes]) -> v
 					if neighbor_noise_value >= h_water_height:
 						water_type = World.TerrainTypes.ShallowWater
 						break
-
 				chunk_linear_data.append(water_type)
 			elif noise_value < h_land_height:
 				chunk_linear_data.append(World.TerrainTypes.Plain)

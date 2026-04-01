@@ -2,7 +2,7 @@ extends Camera2D
 
 
 ## Speed in pixels per second of the camera's panning.
-@export_range(500.0, 5000.0, 100.0, "suffix:px/s") var pan_speed: int = 2500
+@export_range(500.0, 5000.0, 50.0, "suffix:px/s") var pan_speed: int = 2500
 @export var world: World = null
 
 
@@ -30,12 +30,21 @@ func _process(delta: float) -> void:
 # ============================================================================ #
 #region Public methods
 
-func get_tile_position() -> Vector2i:
-	return world.get_terrain_tile_map_layer().local_to_map(position)
+## Returns the tile position of the camera on the map. Undefined behavior if
+## [member world] is not set.
+func get_tile_map_position() -> Vector2i:
+	if world:
+		return world.get_terrain_tile_map_layer().local_to_map(position)
+	return Vector2i(-1, -1)
 
 
+## Returns the chunk offset that the camera is in. Undefined behavior if
+## [member world] is not set.
 func get_chunk_position() -> Vector2i:
-	var map_position: Vector2 = Vector2(get_tile_position())
+	if get_tile_map_position() == Vector2i(INF, INF):
+		return get_tile_map_position()
+	var map_position: Vector2 = Vector2(get_tile_map_position())
+
 	var chunk_size: Vector2 = Vector2(world.get_chunk_size())
 	return Vector2i(
 			roundi(map_position.x / chunk_size.x - 0.5),
