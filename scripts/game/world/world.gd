@@ -172,7 +172,7 @@ func is_chunk_generated(chunk_offset: Vector2i) -> bool:
 	return _generated_chunks.has(chunk_offset)
 
 
-## Returns the 8 neighboring chunk offset coordinates of the chunk at
+## Returns the 8 neighboring offset coordinates of the chunk at
 ## [param chunk_offset].
 func get_neigboring_chunks(chunk_offset: Vector2i) -> Array[Vector2i]:
 	return [

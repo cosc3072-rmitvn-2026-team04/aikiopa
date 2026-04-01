@@ -10,7 +10,8 @@ extends Node
 
 # Height map generation noise algorithm. Produces Water / Plain / Mountain based
 # on noise values.
-@export var h_map: FastNoiseLite = preload("res://resources/world_generator/height_map_noise.tres")
+@export var h_map: FastNoiseLite = preload(
+		"res://resources/world_generator/height_map_noise.tres")
 
 ## Affects how large/small the generated biomes would be.
 @export_range(0.1, 10.0, 0.1, "or_greater") var h_noise_scale: float = 1.0
@@ -29,7 +30,8 @@ extends Node
 
 # Moisture map generation noise algorithm. Produces Desert / Plain / Fertile
 # Plain based on noise values.
-@export var m_map: FastNoiseLite = preload("res://resources/world_generator/moisture_map_noise.tres")
+@export var m_map: FastNoiseLite = preload(
+		"res://resources/world_generator/moisture_map_noise.tres")
 
 ## Affects how large/small the generated biomes would be.
 @export_range(0.1, 10.0, 0.1, "or_greater") var m_noise_scale: float = 1.0
@@ -46,7 +48,8 @@ extends Node
 @export_group("Chasm Map", "c")
 
 # Chasm map generation noise algorithm. Produces Chasm based on noise values.
-@export var c_map: FastNoiseLite = preload("res://resources/world_generator/chasm_map_noise.tres")
+@export var c_map: FastNoiseLite = preload(
+		"res://resources/world_generator/chasm_map_noise.tres")
 
 ## Affects how large/small the generated biomes would be.
 @export_range(0.1, 10.0, 0.1, "or_greater") var c_noise_scale: float = 1.0
@@ -59,7 +62,8 @@ extends Node
 @export_group("Dunes Map", "d")
 
 # Forest map generation noise algorithm. Produces Forest based on noise values.
-@export var d_map: FastNoiseLite = preload("res://resources/world_generator/dunes_map_noise.tres")
+@export var d_map: FastNoiseLite = preload(
+		"res://resources/world_generator/dunes_map_noise.tres")
 
 ## Affects how large/small the generated biomes would be.
 @export_range(0.1, 10.0, 0.1, "or_greater") var d_noise_scale: float = 1.0
@@ -72,7 +76,8 @@ extends Node
 @export_group("Forest Map", "t")
 
 # Forest map generation noise algorithm. Produces Forest based on noise values.
-@export var t_map: FastNoiseLite = preload("res://resources/world_generator/forest_map_noise.tres")
+@export var t_map: FastNoiseLite = preload(
+		"res://resources/world_generator/forest_map_noise.tres")
 
 ## Affects how large/small the generated biomes would be.
 @export_range(0.1, 10.0, 0.1, "or_greater") var t_noise_scale: float = 1.0
@@ -85,7 +90,8 @@ extends Node
 @export_group("Fish Map", "f")
 
 # Fish map generation noise algorithm. Produces Fish based on noise values.
-@export var f_map: FastNoiseLite = preload("res://resources/world_generator/fish_map_noise.tres")
+@export var f_map: FastNoiseLite = preload(
+		"res://resources/world_generator/fish_map_noise.tres")
 
 ## Affects how large/small the generated biomes would be.
 @export_range(0.1, 10.0, 0.1, "or_greater") var f_noise_scale: float = 1.0
@@ -213,7 +219,6 @@ func _create_chunk_height_map(chunk_linear_data: Array[World.TerrainTypes]) -> v
 							neighbor_coords.x * h_noise_scale,
 							neighbor_coords.y * h_noise_scale)
 					if neighbor_noise_value >= h_water_height:
-						print(neighbor_noise_value, " ", h_water_height)
 						water_type = World.TerrainTypes.ShallowWater
 						break
 
