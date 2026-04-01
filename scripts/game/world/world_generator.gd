@@ -190,8 +190,8 @@ func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 	_create_chunk_chasm_map(chunk_linear_data)
 	_create_chunk_dunes_map(chunk_linear_data)
 	_create_chunk_forest_map(chunk_linear_data)
+	_create_chunk_fish_map(chunk_linear_data)
 	_render_chunk(chunk_linear_data, chunk_offset)
-	_insert_chunk_fishes(chunk_linear_data, chunk_offset)
 
 #endregion
 # ============================================================================ #
@@ -329,6 +329,18 @@ func _create_chunk_forest_map(chunk_linear_data: Array[World.TerrainTypes]) -> v
 
 
 # 6th Step. Renders [param chunk_linear_data] onto [World].
+func _create_chunk_fish_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
+	for index in range(chunk_linear_data.size()):
+		if chunk_linear_data[index] == World.TerrainTypes.ShallowWater:
+			var coords: Vector2i = Global.linear_index_to_coords_2d(index, chunk_size)
+			var noise_value: float = f_map.get_noise_2d(
+					coords.x * f_noise_scale,
+					coords.y * f_noise_scale)
+			if noise_value >= f_height:
+				chunk_linear_data[index] = World.TerrainTypes.ShallowWaterFishes
+
+
+# 7th Step.
 func _render_chunk(
 		chunk_linear_data: Array[World.TerrainTypes],
 		chunk_offset: Vector2i = Vector2i.ZERO
