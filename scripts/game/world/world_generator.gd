@@ -354,7 +354,7 @@ func _create_chunk_forest_map(chunk_linear_data: Array[World.TerrainTypes]) -> v
 				World.TerrainTypes.Plain:
 					chunk_linear_data[index] = World.TerrainTypes.PlainForest
 				World.TerrainTypes.Grassland:
-					chunk_linear_data[index] = World.TerrainTypes.Grassland
+					chunk_linear_data[index] = World.TerrainTypes.GrasslandForest
 
 
 # 6th Step.
