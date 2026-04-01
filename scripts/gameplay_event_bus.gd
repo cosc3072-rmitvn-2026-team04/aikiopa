@@ -1,0 +1,23 @@
+extends Node
+## Autoload singleton bus for gameplay signals.[br]
+## [br]
+## Add your gameplay-related signals in here. Other scenes/objects can then have
+## global access to these signals. [br]
+## [br]
+## Remember to include necessary documentation and turn off the
+## [code]unused_signal[/code] warning with
+## [code]@warning_ignore("unused_signal")[/code] before the signal
+## declaration.[br]
+## [br]
+## Example:
+## [codeblock]
+## ## Emitted when the player health is reduced to [param health] amount.
+## @warning_ignore("unused_signal")
+## signal player_hurt(health: float)
+## [/codeblock]
+
+
+## Emitted when [member Global.gameplay_debug_mode_enabled] changes to
+## [param value].
+@warning_ignore("unused_signal")
+signal gameplay_debug_mode_toggled(value: bool)

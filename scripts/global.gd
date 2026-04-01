@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 ## Global game scope data and functions.
 
 
@@ -27,12 +27,17 @@ const SAVE_DIR: String = "user://saves"
 var os_platform: StringName
 var game_state: GameState
 
+## If [code]true[/code], debugging tools would be activated while the game is
+## running.
+var gameplay_debug_mode_enabled: bool = false
+
 #endregion
 # ============================================================================ #
 
 
 # ============================================================================ #
 #region Godot builtins
+
 func _ready() -> void:
 	var os_name: String = OS.get_name()
 	match os_name:
@@ -44,8 +49,10 @@ func _ready() -> void:
 
 	game_state = GameState.new()
 
+
 func _exit_tree() -> void:
 	game_state.queue_free()
+
 #endregion
 # ============================================================================ #
 

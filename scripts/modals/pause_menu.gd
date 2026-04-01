@@ -3,10 +3,12 @@ extends GameUI
 
 # ============================================================================ #
 #region Godot builtins
+
 func _ready() -> void:
 	%UnpauseButton.pressed.connect(_on_unpause_button_pressed)
 	%SaveButton.pressed.connect(_on_save_button_pressed)
 	%QuitToMainMenuButton.pressed.connect(_on_quit_to_main_menu_button_press)
+
 #endregion
 # ============================================================================ #
 
