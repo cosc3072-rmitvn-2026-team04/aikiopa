@@ -210,7 +210,7 @@ func set_terrain_at(coords: Vector2i, terrain_type: TerrainTypes) -> void:
 
 # TODO: Implement this.
 ## Returns the [enum World.TerrainTypes] at [param coords].
-func get_terrain_at(coords: Vector2i) -> TerrainTypes:
+func get_terrain_at(_coords: Vector2i) -> TerrainTypes:
 	assert(false, "Game.get_terrain_at() not implemented")
 	return TerrainTypes.None
 
