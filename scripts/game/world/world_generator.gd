@@ -104,7 +104,7 @@ extends Node
 
 ## The amount of tiles generated at once in a chunk. Given in [Vector2i]
 ## dimensions.
-@export var chunk_size: Vector2i = Vector2i(64, 64)
+@export var chunk_size: Vector2i = Vector2i(32, 33)
 
 ## The [World].
 @export var world: World = null
