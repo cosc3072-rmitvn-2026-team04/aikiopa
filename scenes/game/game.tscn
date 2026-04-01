@@ -8,8 +8,10 @@
 [node name="Game" type="Node2D" unique_id=1327406412]
 script = ExtResource("1_sul5r")
 
-[node name="World" parent="." unique_id=1513868058 instance=ExtResource("2_7h61r")]
+[node name="World" parent="." unique_id=1513868058 node_paths=PackedStringArray("MainCamera", "DebugCamera") instance=ExtResource("2_7h61r")]
 unique_name_in_owner = true
+MainCamera = NodePath("../MainCamera2D")
+DebugCamera = NodePath("../DebugCamera2D")
 
 [node name="MainCamera2D" parent="." unique_id=556469284 node_paths=PackedStringArray("world") instance=ExtResource("3_kelw5")]
 unique_name_in_owner = true

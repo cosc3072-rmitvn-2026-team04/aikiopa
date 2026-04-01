@@ -10,6 +10,8 @@ extends Camera2D
 #region Godot builtins
 
 func _ready() -> void:
+	$ReferenceRect.editor_only = true
+	$ReferenceRect/ReferenceLabel.visible = false
 	GameplayEventBus.gameplay_debug_mode_toggled.connect(
 			_on_gameplay_debug_mode_toggled)
 
@@ -61,9 +63,11 @@ func get_chunk_position() -> Vector2i:
 func _on_gameplay_debug_mode_toggled(value: bool) -> void:
 	if value:
 		$ReferenceRect.editor_only = false
+		$ReferenceRect/ReferenceLabel.visible = true
 	else:
 		make_current()
 		$ReferenceRect.editor_only = true
+		$ReferenceRect/ReferenceLabel.visible = false
 
 #endregion
 # ============================================================================ #

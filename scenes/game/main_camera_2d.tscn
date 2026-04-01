@@ -24,7 +24,7 @@ border_color = Color(1, 1, 1, 0.49803922)
 border_width = 16.0
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="ReferenceRect" unique_id=161865421]
+[node name="ReferenceLabel" type="Label" parent="ReferenceRect" unique_id=161865421]
 layout_mode = 1
 offset_left = -8.0
 offset_top = -53.0

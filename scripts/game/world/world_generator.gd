@@ -271,8 +271,8 @@ func _create_chunk_moisture_map(chunk_linear_data: Array[World.TerrainTypes]) ->
 
 # 3rd Step.
 func _create_chunk_chasm_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
-	for y in range(chunk_size.y):
-		for x in range(chunk_size.x):
+	for x in range(chunk_size.x):
+		for y in range(chunk_size.y):
 			var noise_value: float = c_map.get_noise_2d(
 					x * c_noise_scale,
 					y * c_noise_scale)
@@ -293,8 +293,8 @@ func _create_chunk_chasm_map(chunk_linear_data: Array[World.TerrainTypes]) -> vo
 
 # 4th Step.
 func _create_chunk_dunes_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
-	for y in range(chunk_size.y):
-		for x in range(chunk_size.x):
+	for x in range(chunk_size.x):
+		for y in range(chunk_size.y):
 			var noise_value: float = d_map.get_noise_2d(
 					x * d_noise_scale,
 					y * d_noise_scale)
@@ -310,8 +310,8 @@ func _create_chunk_dunes_map(chunk_linear_data: Array[World.TerrainTypes]) -> vo
 
 # 5th Step.
 func _create_chunk_forest_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
-	for y in range(chunk_size.y):
-		for x in range(chunk_size.x):
+	for x in range(chunk_size.x):
+		for y in range(chunk_size.y):
 			var noise_value: float = t_map.get_noise_2d(
 					x * t_noise_scale,
 					y * t_noise_scale)
