@@ -158,12 +158,30 @@ func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 	var chunk_linear_data: Array[World.TerrainTypes] = []
 
 	# Set chunk offset.
-	h_map.offset = Vector3(chunk_offset.x, chunk_offset.y, 0.0)
-	m_map.offset = Vector3(chunk_offset.x, chunk_offset.y, 0.0)
-	c_map.offset = Vector3(chunk_offset.x, chunk_offset.y, 0.0)
-	d_map.offset = Vector3(chunk_offset.x, chunk_offset.y, 0.0)
-	t_map.offset = Vector3(chunk_offset.x, chunk_offset.y, 0.0)
-	f_map.offset = Vector3(chunk_offset.x, chunk_offset.y, 0.0)
+	h_map.offset = Vector3(
+			chunk_offset.x * chunk_size.x * h_noise_scale,
+			chunk_offset.y * chunk_size.y * h_noise_scale,
+			0.0)
+	m_map.offset = Vector3(
+			chunk_offset.x * chunk_size.x * m_noise_scale,
+			chunk_offset.y * chunk_size.y * m_noise_scale,
+			0.0)
+	c_map.offset = Vector3(
+			chunk_offset.x * chunk_size.x * c_noise_scale,
+			chunk_offset.y * chunk_size.y * c_noise_scale,
+			0.0)
+	d_map.offset = Vector3(
+			chunk_offset.x * chunk_size.x * d_noise_scale,
+			chunk_offset.y * chunk_size.y * d_noise_scale,
+			0.0)
+	t_map.offset = Vector3(
+			chunk_offset.x * chunk_size.x * t_noise_scale,
+			chunk_offset.y * chunk_size.y * t_noise_scale,
+			0.0)
+	f_map.offset = Vector3(
+			chunk_offset.x * chunk_size.x * f_noise_scale,
+			chunk_offset.y * chunk_size.y * f_noise_scale,
+			0.0)
 
 	# WARNING: DO NOT RE-ORDER THE FOLLOWING PRIVATE METHOD CALLS. IT WILL BREAK
 	# THE PROCEDURAL GENERATION ALGORITHM.
@@ -173,7 +191,7 @@ func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 	_create_chunk_dunes_map(chunk_linear_data)
 	_create_chunk_forest_map(chunk_linear_data)
 	_render_chunk(chunk_linear_data, chunk_offset)
-	# _insert_chunk_shallow_water(chunk_linear_data, chunk_offset)
+	#_insert_chunk_shallow_water(chunk_linear_data, chunk_offset)
 
 #endregion
 # ============================================================================ #
@@ -205,8 +223,8 @@ func _get_surrounding_noise_coords(coords: Vector2i) -> Array[Vector2i]:
 
 # 1st Step.
 func _create_chunk_height_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
-	for x in range(chunk_size.x):
-		for y in range(chunk_size.y):
+	for y in range(chunk_size.y):
+		for x in range(chunk_size.x):
 			var noise_value: float = h_map.get_noise_2d(
 					x * h_noise_scale,
 					y * h_noise_scale)
@@ -229,8 +247,8 @@ func _create_chunk_height_map(chunk_linear_data: Array[World.TerrainTypes]) -> v
 
 # 2nd Step.
 func _create_chunk_moisture_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
-	for x in range(chunk_size.x):
-		for y in range(chunk_size.y):
+	for y in range(chunk_size.y):
+		for x in range(chunk_size.x):
 			var noise_value: float = m_map.get_noise_2d(
 					x * m_noise_scale,
 					y * m_noise_scale)
@@ -253,8 +271,8 @@ func _create_chunk_moisture_map(chunk_linear_data: Array[World.TerrainTypes]) ->
 
 # 3rd Step.
 func _create_chunk_chasm_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
-	for x in range(chunk_size.x):
-		for y in range(chunk_size.y):
+	for y in range(chunk_size.y):
+		for x in range(chunk_size.x):
 			var noise_value: float = c_map.get_noise_2d(
 					x * c_noise_scale,
 					y * c_noise_scale)
@@ -275,8 +293,8 @@ func _create_chunk_chasm_map(chunk_linear_data: Array[World.TerrainTypes]) -> vo
 
 # 4th Step.
 func _create_chunk_dunes_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
-	for x in range(chunk_size.x):
-		for y in range(chunk_size.y):
+	for y in range(chunk_size.y):
+		for x in range(chunk_size.x):
 			var noise_value: float = d_map.get_noise_2d(
 					x * d_noise_scale,
 					y * d_noise_scale)
@@ -292,8 +310,8 @@ func _create_chunk_dunes_map(chunk_linear_data: Array[World.TerrainTypes]) -> vo
 
 # 5th Step.
 func _create_chunk_forest_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
-	for x in range(chunk_size.x):
-		for y in range(chunk_size.y):
+	for y in range(chunk_size.y):
+		for x in range(chunk_size.x):
 			var noise_value: float = t_map.get_noise_2d(
 					x * t_noise_scale,
 					y * t_noise_scale)
@@ -310,12 +328,11 @@ func _create_chunk_forest_map(chunk_linear_data: Array[World.TerrainTypes]) -> v
 					chunk_linear_data[index] = World.TerrainTypes.Grassland
 
 
-# 6th Step.
+# 6th Step. Renders [param chunk_linear_data] onto [World].
 func _render_chunk(
 		chunk_linear_data: Array[World.TerrainTypes],
 		chunk_offset: Vector2i = Vector2i.ZERO
 ) -> void:
-	# Render chunk_linear_data onto World.
 	for index in range(chunk_linear_data.size()):
 		var terrain_type: World.TerrainTypes = chunk_linear_data[index]
 		var coords: Vector2i = Global.linear_index_to_coords_2d(index, chunk_size)
