@@ -191,7 +191,7 @@ func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 	_create_chunk_dunes_map(chunk_linear_data)
 	_create_chunk_forest_map(chunk_linear_data)
 	_render_chunk(chunk_linear_data, chunk_offset)
-	#_insert_chunk_shallow_water(chunk_linear_data, chunk_offset)
+	_insert_chunk_fishes(chunk_linear_data, chunk_offset)
 
 #endregion
 # ============================================================================ #
@@ -235,7 +235,7 @@ func _create_chunk_height_map(chunk_linear_data: Array[World.TerrainTypes]) -> v
 					var neighbor_noise_value: float = h_map.get_noise_2d(
 							neighbor_coords.x * h_noise_scale,
 							neighbor_coords.y * h_noise_scale)
-					if neighbor_noise_value >= h_water_height:
+					if not (neighbor_noise_value < h_water_height):
 						water_type = World.TerrainTypes.ShallowWater
 						break
 				chunk_linear_data.append(water_type)
@@ -345,41 +345,28 @@ func _render_chunk(
 
 
 # 7th Step.
-func _insert_chunk_shallow_water(
+func _insert_chunk_fishes(
 		chunk_linear_data: Array[World.TerrainTypes],
 		chunk_offset: Vector2i = Vector2i.ZERO
 ) -> void:
-	# Insert ShallowWater tiles.
-	var tile_map: TileMapLayer = world.get_terrain_tile_map_layer()
 	for index in range(chunk_linear_data.size()):
-		if chunk_linear_data[index] == World.TerrainTypes.DeepWater:
+		if chunk_linear_data[index] == World.TerrainTypes.ShallowWater:
 			var coords: Vector2i = Global.linear_index_to_coords_2d(index, chunk_size)
 			coords.x += chunk_offset.x * chunk_size.x
 			coords.y += chunk_offset.y * chunk_size.y
 
-			var neighbors_coords: Array[Vector2i] = tile_map.get_surrounding_cells(coords)
-			for neighbor_coords in neighbors_coords:
-				var atlas_coords: Vector2i = tile_map.get_cell_atlas_coords(neighbor_coords)
-				if atlas_coords not in [
-					tile_map.ATLAS_COORDS[World.TerrainTypes.None],
-					tile_map.ATLAS_COORDS[World.TerrainTypes.ShallowWater],
-					tile_map.ATLAS_COORDS[World.TerrainTypes.ShallowWaterFishes],
-					tile_map.ATLAS_COORDS[World.TerrainTypes.DeepWater],
-				]:
-					var f_noise_value: float = f_map.get_noise_2d(
-							coords.x * f_noise_scale,
-							coords.y * f_noise_scale)
+			var f_noise_value: float = f_map.get_noise_2d(
+					coords.x * f_noise_scale,
+					coords.y * f_noise_scale)
 
-					if f_noise_value < f_height: # No fish.
-						world.set_terrain_at(
-								coords,
-								World.TerrainTypes.ShallowWater)
-					else: # Has fish
-						world.set_terrain_at(
-								coords,
-								World.TerrainTypes.ShallowWaterFishes)
-
-					break
+			if f_noise_value < f_height: # No fish.
+				world.set_terrain_at(
+						coords,
+						World.TerrainTypes.ShallowWater)
+			else: # Has fish
+				world.set_terrain_at(
+						coords,
+						World.TerrainTypes.ShallowWaterFishes)
 
 #endregion
 # ============================================================================ #
