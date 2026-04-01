@@ -74,16 +74,7 @@ var _terrain_feature_fishes: PackedScene =\
 		preload("res://scenes/game/objects/terrain_features/fishes.tscn")
 
 var _generated_chunks: Dictionary[Vector2i, bool]
-
-#endregion
-# ============================================================================ #
-
-
-# ============================================================================ #
-#region Godot builtins
-
-func _ready() -> void:
-	_generated_chunks.clear()
+var _terrain_features: Dictionary[Vector2i, Node2D]
 
 #endregion
 # ============================================================================ #
@@ -187,69 +178,67 @@ func set_terrain_at(coords: Vector2i, terrain_type: TerrainTypes) -> void:
 	match terrain_type:
 		TerrainTypes.PlainMountain, TerrainTypes.GrasslandMountain, TerrainTypes.DesertMountain:
 			var mountain: Node2D = _terrain_feature_mountain.instantiate()
+			_terrain_features.set(coords, mountain)
 			mountain.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(mountain)
 		TerrainTypes.PlainChasm, TerrainTypes.GrasslandChasm, TerrainTypes.DesertChasm:
 			var chasm: Node2D = _terrain_feature_chasm.instantiate()
+			_terrain_features.set(coords, chasm)
 			chasm.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(chasm)
 		TerrainTypes.DesertDunes:
 			var sand_dunes: Node2D = _terrain_feature_sand_dunes.instantiate()
+			_terrain_features.set(coords, sand_dunes)
 			sand_dunes.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(sand_dunes)
 		TerrainTypes.PlainForest, TerrainTypes.GrasslandForest:
 			var forest: Node2D = _terrain_feature_forest.instantiate()
+			_terrain_features.set(coords, forest)
 			forest.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(forest)
 		TerrainTypes.ShallowWaterFishes:
 			var fishes: Node2D = _terrain_feature_fishes.instantiate()
+			_terrain_features.set(coords, fishes)
 			fishes.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(fishes)
 
 
+# TODO: Implement this.
 ## Returns the [enum World.TerrainTypes] at [param coords].
-@warning_ignore("unused_parameter") # Remove when this function is implemented.
 func get_terrain_at(coords: Vector2i) -> TerrainTypes:
-	## TODO: Implement this.
 	assert(false, "Game.get_terrain_at() not implemented")
 	return TerrainTypes.None
 
+
+# TODO: Implement this.
 ## Sets the building at [param coords] to one of [enum World.BuildingTypes].
 ## Automatically assign variation(s) at random.[br]
 ## [br]
 ## Returns [code]false[/code] if there is already an existing building at
 ## [param coords].
-@warning_ignore("unused_parameter") # Remove when this function is implemented.
-func set_building_at(coords: Vector2i, type: BuildingTypes) -> bool:
-	## TODO: Implement this.
+func set_building_at(_coords: Vector2i, _type: BuildingTypes) -> bool:
 	assert(false, "Game.set_building_at() not implemented")
-	if false:
-		building_added.emit(coords, type)
 	return false
 
 
+# TODO: Implement this.
 ## Removes the building at [param coords].[br]
 ## [br]
 ## Returns [code]false[/code] if there is no existing building at
 ## [param coords].
-@warning_ignore("unused_parameter") # Remove when this function is implemented.
-func remove_building_at(coords: Vector2i, type: BuildingTypes) -> bool:
-	## TODO: Implement this.
+func remove_building_at(_coords: Vector2i, _type: BuildingTypes) -> bool:
 	assert(false, "Game.remove_building_at() not implemented")
-	if false:
-		building_removed.emit(coords)
 	return false
 
 
+# TODO: Implement this.
 ## Returns the [enum World.BuildingTypes] at [param coords].
-@warning_ignore("unused_parameter") # Remove when this function is implemented.
-func get_building_at(coords: Vector2i) -> BuildingTypes:
-	## TODO: Implement this.
+func get_building_at(_coords: Vector2i) -> BuildingTypes:
 	assert(false, "Game.get_terrain_at() not implemented")
 	return BuildingTypes.None
 
