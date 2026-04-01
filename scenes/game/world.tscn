@@ -40,7 +40,6 @@ c_height = 0.72
 d_height = 0.19999999999999996
 t_height = 0.17999999999999994
 f_height = 0.6600000000000001
-chunk_size = Vector2i(16, 17)
 world = NodePath("..")
 
 [node name="TerrainTileMapLayer" type="TileMapLayer" parent="." unique_id=1094802460]

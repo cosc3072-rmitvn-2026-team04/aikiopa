@@ -185,7 +185,7 @@ func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 
 	# WARNING: DO NOT RE-ORDER THE FOLLOWING PRIVATE METHOD CALLS. IT WILL BREAK
 	# THE PROCEDURAL GENERATION ALGORITHM.
-	_create_chunk_height_map(chunk_linear_data)
+	_create_chunk_height_map(chunk_linear_data, chunk_offset)
 	_create_chunk_moisture_map(chunk_linear_data)
 	_create_chunk_chasm_map(chunk_linear_data)
 	_create_chunk_dunes_map(chunk_linear_data)
@@ -204,14 +204,17 @@ func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 # Returns the [param coords]' surrounding noise map coordinates, adjusted for
 # Godot's TileMapLayer hex coordinate system (odd-r). C.f.
 # https://www.redblobgames.com/grids/hexagons/#coordinates-offset
-func _get_surrounding_noise_coords(coords: Vector2i) -> Array[Vector2i]:
+func _get_surrounding_noise_coords(
+		coords: Vector2i,
+		chunk_offset: Vector2i = Vector2i.ZERO
+) -> Array[Vector2i]:
 	var surrounding_coords: Array[Vector2i] = []
 
 	surrounding_coords.append(coords + Vector2i.LEFT)
 	surrounding_coords.append(coords + Vector2i.RIGHT)
 	surrounding_coords.append(coords + Vector2i.UP)
 	surrounding_coords.append(coords + Vector2i.DOWN)
-	if posmod(coords.y, 2) == 0: # Even rows.
+	if posmod(chunk_offset.y * chunk_size.y + coords.y, 2) == 0: # Even rows.
 		surrounding_coords.append(coords + Vector2i.UP + Vector2i.LEFT)
 		surrounding_coords.append(coords + Vector2i.DOWN + Vector2i.LEFT)
 	else: # Odd rows.
@@ -222,7 +225,10 @@ func _get_surrounding_noise_coords(coords: Vector2i) -> Array[Vector2i]:
 
 
 # 1st Step.
-func _create_chunk_height_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
+func _create_chunk_height_map(
+		chunk_linear_data: Array[World.TerrainTypes],
+		chunk_offset: Vector2i
+) -> void:
 	for y in range(chunk_size.y):
 		for x in range(chunk_size.x):
 			var noise_value: float = h_map.get_noise_2d(
@@ -231,7 +237,7 @@ func _create_chunk_height_map(chunk_linear_data: Array[World.TerrainTypes]) -> v
 
 			if noise_value < h_water_height:
 				var water_type: World.TerrainTypes = World.TerrainTypes.DeepWater
-				for neighbor_coords in _get_surrounding_noise_coords(Vector2i(x, y)):
+				for neighbor_coords in _get_surrounding_noise_coords(Vector2i(x, y), chunk_offset):
 					var neighbor_noise_value: float = h_map.get_noise_2d(
 							neighbor_coords.x * h_noise_scale,
 							neighbor_coords.y * h_noise_scale)
@@ -269,7 +275,7 @@ func _create_chunk_moisture_map(chunk_linear_data: Array[World.TerrainTypes]) ->
 					chunk_linear_data[index] = World.TerrainTypes.GrasslandMountain
 
 
-# 3rd Step.
+# 3rd Step. x and y are swapped to produce more interesting features.
 func _create_chunk_chasm_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
 	for x in range(chunk_size.x):
 		for y in range(chunk_size.y):
@@ -291,7 +297,7 @@ func _create_chunk_chasm_map(chunk_linear_data: Array[World.TerrainTypes]) -> vo
 					chunk_linear_data[index] = World.TerrainTypes.DesertChasm
 
 
-# 4th Step.
+# 4th Step. x and y are swapped to produce more interesting features.
 func _create_chunk_dunes_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
 	for x in range(chunk_size.x):
 		for y in range(chunk_size.y):
@@ -308,7 +314,7 @@ func _create_chunk_dunes_map(chunk_linear_data: Array[World.TerrainTypes]) -> vo
 					chunk_linear_data[index] = World.TerrainTypes.DesertDunes
 
 
-# 5th Step.
+# 5th Step. x and y are swapped to produce more interesting features.
 func _create_chunk_forest_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
 	for x in range(chunk_size.x):
 		for y in range(chunk_size.y):
@@ -328,7 +334,7 @@ func _create_chunk_forest_map(chunk_linear_data: Array[World.TerrainTypes]) -> v
 					chunk_linear_data[index] = World.TerrainTypes.Grassland
 
 
-# 6th Step. Renders [param chunk_linear_data] onto [World].
+# 6th Step.
 func _create_chunk_fish_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
 	for index in range(chunk_linear_data.size()):
 		if chunk_linear_data[index] == World.TerrainTypes.ShallowWater:
@@ -340,10 +346,10 @@ func _create_chunk_fish_map(chunk_linear_data: Array[World.TerrainTypes]) -> voi
 				chunk_linear_data[index] = World.TerrainTypes.ShallowWaterFishes
 
 
-# 7th Step.
+# 7th Step. Renders [param chunk_linear_data] onto [World].
 func _render_chunk(
 		chunk_linear_data: Array[World.TerrainTypes],
-		chunk_offset: Vector2i = Vector2i.ZERO
+		chunk_offset: Vector2i
 ) -> void:
 	for index in range(chunk_linear_data.size()):
 		var terrain_type: World.TerrainTypes = chunk_linear_data[index]
@@ -354,31 +360,6 @@ func _render_chunk(
 		world.set_terrain_at(
 				coords,
 				terrain_type)
-
-
-# 7th Step.
-func _insert_chunk_fishes(
-		chunk_linear_data: Array[World.TerrainTypes],
-		chunk_offset: Vector2i = Vector2i.ZERO
-) -> void:
-	for index in range(chunk_linear_data.size()):
-		if chunk_linear_data[index] == World.TerrainTypes.ShallowWater:
-			var coords: Vector2i = Global.linear_index_to_coords_2d(index, chunk_size)
-			coords.x += chunk_offset.x * chunk_size.x
-			coords.y += chunk_offset.y * chunk_size.y
-
-			var f_noise_value: float = f_map.get_noise_2d(
-					coords.x * f_noise_scale,
-					coords.y * f_noise_scale)
-
-			if f_noise_value < f_height: # No fish.
-				world.set_terrain_at(
-						coords,
-						World.TerrainTypes.ShallowWater)
-			else: # Has fish
-				world.set_terrain_at(
-						coords,
-						World.TerrainTypes.ShallowWaterFishes)
 
 #endregion
 # ============================================================================ #
