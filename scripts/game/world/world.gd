@@ -179,7 +179,6 @@ func get_neigboring_chunks(chunk_offset: Vector2i) -> Array[Vector2i]:
 
 ## Sets the terrain at [param coords] to one of [enum World.TerrainTypes].
 ## Automatically assign terrain feature variation(s) at random.
-@warning_ignore("unused_parameter") # Remove when this function is implemented.
 func set_terrain_at(coords: Vector2i, terrain_type: TerrainTypes) -> void:
 	get_terrain_tile_map_layer().set_cell(
 		coords,
