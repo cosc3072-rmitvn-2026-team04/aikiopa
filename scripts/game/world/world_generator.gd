@@ -23,6 +23,9 @@ extends Node
 ## values above or equal to this generates Mountain.
 @export_range(-1.0, 1.0, 0.01) var h_land_height: float = 0.5
 
+## Radius of the guaranteed buildable area in the center of the first chunk,
+## where the player starts at.
+@export_range(2, 12, 1, "suffix:tiles") var h_guaranteed_buildable_radius: int = 3
 
 # Moisture map generation noise algorithm. Produces Fertile Plain / Desert based
 # on noise values.
@@ -224,6 +227,17 @@ func _get_surrounding_noise_coords(
 	return surrounding_coords
 
 
+# Ensures a buildable area in the center of the first chunk for the player to
+# start on.
+func _first_chunk_noise(noise_value: float, position: Vector2i) -> float:
+	var chunk_center: Vector2 = chunk_size * 0.5
+	var distance_to_chunk_center: float =\
+			(Vector2(position) - chunk_center).length_squared()
+	if distance_to_chunk_center <= pow(h_guaranteed_buildable_radius, 2):
+		return (h_water_height + h_land_height) / 2
+	return noise_value
+
+
 # 1st Step.
 func _create_chunk_height_map(
 		chunk_linear_data: Array[World.TerrainTypes],
@@ -234,6 +248,10 @@ func _create_chunk_height_map(
 			var noise_value: float = h_map.get_noise_2d(
 					x * h_noise_scale,
 					y * h_noise_scale)
+			if chunk_offset == Vector2i.ZERO:
+				noise_value = _first_chunk_noise(
+						noise_value,
+						Vector2i(x, y))
 
 			if noise_value < h_water_height:
 				var water_type: World.TerrainTypes = World.TerrainTypes.DeepWater
@@ -241,6 +259,11 @@ func _create_chunk_height_map(
 					var neighbor_noise_value: float = h_map.get_noise_2d(
 							neighbor_coords.x * h_noise_scale,
 							neighbor_coords.y * h_noise_scale)
+					if chunk_offset == Vector2i.ZERO:
+						neighbor_noise_value = _first_chunk_noise(
+								neighbor_noise_value,
+								neighbor_coords)
+
 					if not (neighbor_noise_value < h_water_height):
 						water_type = World.TerrainTypes.ShallowWater
 						break
