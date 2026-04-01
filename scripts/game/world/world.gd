@@ -60,16 +60,6 @@ enum BuildingTypes {
 
 
 # ============================================================================ #
-#region Export properties
-
-@export var MainCamera: Camera2D = null
-@export var DebugCamera: Camera2D = null
-
-#endregion
-# ============================================================================ #
-
-
-# ============================================================================ #
 #region Private variables
 
 var _terrain_feature_mountain: PackedScene =\
