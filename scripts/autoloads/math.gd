@@ -29,10 +29,48 @@ class Matrix extends Node:
 ## Hexagonal grid math libary.
 class HexGrid extends Node:
 
-	# TODO: Implement this.
-	static func oddr_to_cube(_coords: Vector2i) -> Vector3i:
-		return Vector3i.ZERO
+	# ======================================================================== #
+	#region Coordinate conversion
+	# TODO: Document these functions.
+
+	static func oddr_to_cube(coords: Vector2i) -> Vector3i:
+		var hex_col: int = coords.x
+		var hex_row: int = coords.y
+		var parity: int = coords.y & 0b01
+		
+		@warning_ignore("integer_division")
+		var cube_col: int = hex_col - int((hex_row - parity) / 2)
+		var cube_row: int = hex_row
+		var cube_slice: int = -(cube_col + cube_row)
+		return Vector3i(cube_col, cube_row, cube_slice)
 	
-	# TODO: Implement this.
-	static func evenr_to_cube(_coords: Vector2i) -> Vector3i:
-		return Vector3i.ZERO
+
+	static func cube_to_oddr(coords: Vector3i) -> Vector2i:
+		var parity: int = coords.y & 0b01
+		@warning_ignore("integer_division")
+		var col: int = coords.x + int((coords.y - parity) / 2)
+		var row: int = coords.y
+		return Vector2i(col, row)
+	
+
+	static func evenr_to_cube(coords: Vector2i) -> Vector3i:
+		var hex_col: int = coords.x
+		var hex_row: int = coords.y
+		var parity: int = coords.y & 0b01
+		
+		@warning_ignore("integer_division")
+		var cube_col: int = hex_col - int((hex_row + parity) / 2)
+		var cube_row: int = hex_row
+		var cube_slice: int = -(cube_col + cube_row)
+		return Vector3i(cube_col, cube_row, cube_slice)
+
+
+	static func cube_to_evenr(coords: Vector3i) -> Vector2i:
+		var parity: int = coords.y & 0b01
+		@warning_ignore("integer_division")
+		var col: int = coords.x + int((coords.y + parity) / 2)
+		var row: int = coords.y
+		return Vector2i(col, row)
+
+	#endregion
+	# ======================================================================== #
