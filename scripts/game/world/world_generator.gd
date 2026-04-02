@@ -281,7 +281,7 @@ func _create_chunk_moisture_map(chunk_linear_data: Array[World.TerrainTypes]) ->
 			var noise_value: float = m_map.get_noise_2d(
 					x * m_noise_scale,
 					y * m_noise_scale)
-			var index: int = Global.coords_2d_to_linear_index(
+			var index: int = Math.Matrix.coords_2d_to_linear_index(
 					Vector2i(x, y),
 					chunk_size)
 
@@ -308,7 +308,7 @@ func _create_chunk_chasm_map(chunk_linear_data: Array[World.TerrainTypes]) -> vo
 			if noise_value < c_height:
 				continue
 
-			var index: int = Global.coords_2d_to_linear_index(
+			var index: int = Math.Matrix.coords_2d_to_linear_index(
 					Vector2i(x, y),
 					chunk_size)
 			match chunk_linear_data[index]:
@@ -330,7 +330,7 @@ func _create_chunk_dunes_map(chunk_linear_data: Array[World.TerrainTypes]) -> vo
 			if noise_value < d_height:
 				continue
 
-			var index: int = Global.coords_2d_to_linear_index(
+			var index: int = Math.Matrix.coords_2d_to_linear_index(
 					Vector2i(x, y),
 					chunk_size)
 			if chunk_linear_data[index] == World.TerrainTypes.Desert:
@@ -347,7 +347,7 @@ func _create_chunk_forest_map(chunk_linear_data: Array[World.TerrainTypes]) -> v
 			if noise_value < t_height:
 				continue
 
-			var index: int = Global.coords_2d_to_linear_index(
+			var index: int = Math.Matrix.coords_2d_to_linear_index(
 					Vector2i(x, y),
 					chunk_size)
 			match chunk_linear_data[index]:
@@ -361,7 +361,7 @@ func _create_chunk_forest_map(chunk_linear_data: Array[World.TerrainTypes]) -> v
 func _create_chunk_fish_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
 	for index in range(chunk_linear_data.size()):
 		if chunk_linear_data[index] == World.TerrainTypes.ShallowWater:
-			var coords: Vector2i = Global.linear_index_to_coords_2d(index, chunk_size)
+			var coords: Vector2i = Math.Matrix.linear_index_to_coords_2d(index, chunk_size)
 			var noise_value: float = f_map.get_noise_2d(
 					coords.x * f_noise_scale,
 					coords.y * f_noise_scale)
@@ -376,7 +376,7 @@ func _render_chunk(
 ) -> void:
 	for index in range(chunk_linear_data.size()):
 		var terrain_type: World.TerrainTypes = chunk_linear_data[index]
-		var coords: Vector2i = Global.linear_index_to_coords_2d(index, chunk_size)
+		var coords: Vector2i = Math.Matrix.linear_index_to_coords_2d(index, chunk_size)
 		coords.x += chunk_offset.x * chunk_size.x
 		coords.y += chunk_offset.y * chunk_size.y
 

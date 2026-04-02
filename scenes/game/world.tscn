@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://dtslxw8hw6d1l" path="res://scripts/game/world/world.gd" id="1_t4al5"]
 [ext_resource type="Texture2D" uid="uid://b4p0nr7itoqnj" path="res://assets/tilesheets/terrains.png" id="2_g5t8f"]
 [ext_resource type="Script" uid="uid://brxq3lcgxk4g8" path="res://scripts/game/world/world_generator.gd" id="3_d8brc"]
-[ext_resource type="Script" uid="uid://bhw8kyxi04s7t" path="res://scripts/game/world/terrain_feature_layer.gd" id="3_qd3kh"]
-[ext_resource type="Script" uid="uid://c4me4d4ubdu7" path="res://scripts/game/world/terrain_tile_map_layer.gd" id="3_vn813"]
-[ext_resource type="Script" uid="uid://b2nle6lcx1mst" path="res://scripts/game/world/building_layer.gd" id="4_w1nur"]
+[ext_resource type="Script" path="res://scripts/game/world/terrain_feature_layer.gd" id="3_qd3kh"]
+[ext_resource type="Script" path="res://scripts/game/world/terrain_tile_map_layer.gd" id="3_vn813"]
+[ext_resource type="Script" path="res://scripts/game/world/building_layer.gd" id="4_w1nur"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d8brc"]
 resource_name = "terrains"
