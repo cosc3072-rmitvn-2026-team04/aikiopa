@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://cd8arcfp0nhyo"]
+
+[ext_resource type="Texture2D" uid="uid://7gur76lg1o76" path="res://assets/placeholder-card.png" id="1_wpmbf"]
+[ext_resource type="Texture2D" uid="uid://c8rhursgc3vrc" path="res://assets/objects/building_greenhouse.png" id="2_ghsv7"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wpmbf"]
+texture = ExtResource("1_wpmbf")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h608n"]
+bg_color = Color(0.32771316, 0.69168144, 0.40204206, 1)
+
+[node name="BuildingCard" type="Panel" unique_id=521348840]
+offset_right = 384.0
+offset_bottom = 216.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_wpmbf")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=488783996]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Panel" type="Panel" parent="MarginContainer" unique_id=159555462]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_h608n")
+
+[node name="Sprite2D" type="Sprite2D" parent="MarginContainer" unique_id=1263968844]
+scale = Vector2(1.1289064, 0.96730775)
+texture = ExtResource("2_ghsv7")
+
+[node name="Label" type="Label" parent="MarginContainer" unique_id=631276114]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+text = "jhbkjhgkjg"
+horizontal_alignment = 1
+vertical_alignment = 2

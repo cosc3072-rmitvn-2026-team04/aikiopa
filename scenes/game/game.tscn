@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://b7p1b85oyvfnp" path="res://scenes/game/world.tscn" id="2_7h61r"]
 [ext_resource type="PackedScene" uid="uid://bg72upkhtf1cg" path="res://scenes/game/main_camera_2d.tscn" id="3_kelw5"]
 [ext_resource type="PackedScene" uid="uid://ccpo3uu672sqa" path="res://scenes/game/debug_camera_2d.tscn" id="4_lfrn8"]
+[ext_resource type="PackedScene" uid="uid://cjhu160u42vae" path="res://scenes/game/game_hud.tscn" id="5_lfrn8"]
 
 [node name="Game" type="Node2D" unique_id=1327406412]
 script = ExtResource("1_sul5r")
@@ -20,3 +21,8 @@ world = NodePath("../World")
 unique_name_in_owner = true
 pan_speed = 5
 world = NodePath("../World")
+
+[node name="GameHUDCanvasLayer" type="CanvasLayer" parent="." unique_id=1835501581]
+
+[node name="GameHUD" parent="GameHUDCanvasLayer" unique_id=1279456757 instance=ExtResource("5_lfrn8")]
+unique_name_in_owner = true
