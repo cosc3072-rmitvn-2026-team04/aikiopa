@@ -57,10 +57,6 @@ Write-Host "- Artifact path: $archiveFolderPath" -ForegroundColor Yellow
 $buildModeText = $m.ToUpper()
 Write-Host " =====[ EXPORTING PROJECT (MODE: $buildModeText) ]===== " -ForegroundColor Black -BackgroundColor Magenta
 
-Write-Host "Importing project..." -ForegroundColor Yellow
-godot --headless --import --path $repositoryPath --quit | Out-Default
-
-Write-Host "Exporting project..." -ForegroundColor Magenta
 $exportPresetsFile = Join-Path -Path $repositoryPath -ChildPath "export_presets.cfg"
 $exportPresetsCfg = Get-Content -Path $exportPresetsFile -Raw
 $exportPresets = ($exportPresetsCfg | Select-String -Pattern '\n\nname="(.*)"' -AllMatches).Matches | ForEach-Object {
@@ -81,7 +77,7 @@ foreach ($exportPreset in $exportPresets) {
         New-Item -ItemType Directory -Path $exportDirectory | Out-Null
     }
 
-    Write-Host "Exporting project ($exportPreset) ..." -ForegroundColor Yellow
+    Write-Host "Exporting $exportPreset ..." -ForegroundColor Yellow
     godot --headless --path $repositoryPath $godotExportFlag $exportPreset | Out-Default
 
     $zipFileName = "${projectName}_$exportPreset.zip"
@@ -92,7 +88,7 @@ foreach ($exportPreset in $exportPresets) {
     if (Test-Path -Path $zipFilePath) {
         Remove-Item -Path $zipFilePath -Force
     }
-    Write-Host "Archiving project ($exportPreset) from $exportDirectory into $zipFilePath" -ForegroundColor Yellow
+    Write-Host "Archiving $exportPreset from $exportDirectory into $zipFilePath" -ForegroundColor Yellow
     Write-Host "- Source: $exportDirectory" -ForegroundColor Yellow
     Write-Host "- Target: $zipFilePath" -ForegroundColor Yellow
     Invoke-Expression -Command "zip -jr -0 '$zipFilePath' $exportDirectory"
