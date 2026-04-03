@@ -153,8 +153,9 @@ class HexGrid extends Node:
 		var cube_coords: Vector3i = offset_to_cube(coords, offset_layout)
 		var cube_surrounding_neighbors: Array[Vector3i] =\
 				get_cube_surrounding_neighbors(cube_coords)
-		return cube_surrounding_neighbors.map(func (neighbor: Vector3i):
-				return cube_to_offset(neighbor, offset_layout))
+		return Array(cube_surrounding_neighbors.map(func (neighbor: Vector3i):
+				return cube_to_offset(neighbor, offset_layout)),
+				TYPE_VECTOR2I, "", null)
 
 
 	## Returns the neighboring cube coordinates to [param coords], identified by
@@ -165,8 +166,9 @@ class HexGrid extends Node:
 
 	## Returns the list of all neighboring cube coordinates to [param coords].
 	static func get_cube_surrounding_neighbors(coords: Vector3i) -> Array[Vector3i]:
-		return CUBE_UNIT_VECTORS.keys().map(func (direction: Direction):
-				return coords + CUBE_UNIT_VECTORS[direction])
+		return Array(CUBE_UNIT_VECTORS.keys().map(func (direction: Direction):
+				return coords + CUBE_UNIT_VECTORS[direction]),
+				TYPE_VECTOR3I, "", null)
 
 	#endregion
 	# ======================================================================== #
