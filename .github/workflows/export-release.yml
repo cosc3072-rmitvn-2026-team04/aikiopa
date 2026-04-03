@@ -42,9 +42,12 @@ jobs:
           Expand-Archive -Path $target -DestinationPath $templates_dir -Force
           Rename-Item -Path $templates_dir/templates -NewName "$($env:GODOT_VERSION).stable" -Force
 
-          Write-Output "Installing Godot editor configuration."
+          $user_data_dir = "~/AppData/Roaming/Godot/app_user_data"
+          New-Item -ItemType Directory -Force $user_data_dir | Out-Null
+          Write-Output "Created Godot user data directory."
+
           Copy-Item ./.github/dist/editor_settings-4.6.tres -Destination ~/AppData/Roaming/Godot
-          Write-Output "Godot editor configuration installed."
+          Write-Output "Installed Godot editor configuration."
       - name: Export Project
         run: ./build.ps1 -c -m release
       - name: Upload Artifact
