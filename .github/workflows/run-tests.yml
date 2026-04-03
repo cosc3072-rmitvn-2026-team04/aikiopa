@@ -31,6 +31,15 @@ jobs:
           scoop bucket add extras
           scoop install extras/godot@$env:GODOT_VERSION
 
+          Write-Output "Installing Godot Export Templates"
+          $url = "https://github.com/godotengine/godot/releases/download/$env:GODOT_VERSION-stable/Godot_v$env:GODOT_VERSION-stable_export_templates.tpz"
+          $target = "~/Godot_v$env:GODOT_VERSION-stable_export_templates.tpz"
+          $templates_dir = "~/scoop/apps/godot/current/editor_data/export_templates"
+          New-Item -ItemType Directory -Force $templates_dir | Out-Null
+          Invoke-WebRequest -Uri $url -OutFile $target
+          Expand-Archive -Path $target -DestinationPath $templates_dir -Force
+          Rename-Item -Path $templates_dir/templates -NewName "$($env:GODOT_VERSION).stable" -Force
+
           Write-Output "Installing Godot editor configuration"
           Copy-Item ./.github/dist/editor_settings-4.6.tres -Destination ~/AppData/Roaming/Godot
       - name: Run Tests
