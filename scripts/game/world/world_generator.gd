@@ -4,7 +4,7 @@ extends Node
 
 
 # ============================================================================ #
-#region Exported propertoes
+#region Exported properties
 
 @export_group("Height Map", "h")
 

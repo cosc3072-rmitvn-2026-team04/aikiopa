@@ -12,6 +12,7 @@ class TestLinearIndexToCoords2D extends GutTest:
 				[41, Vector2i(6, 7), Vector2i(5, 6)],
 			])
 
+
 	func test_linear_index_to_coords_2d_valid_params(
 			params: Variant = use_parameters(valid_params)
 	):
@@ -36,6 +37,7 @@ class TestCoords2DToLinearIndex extends GutTest:
 				[Vector2i(2, 3), Vector2i(6, 7), 20],
 				[Vector2i(5, 6), Vector2i(6, 7), 41],
 			])
+
 
 	func test_coords_2d_to_linear_index_valid_params(
 			params: Variant = use_parameters(valid_params)
