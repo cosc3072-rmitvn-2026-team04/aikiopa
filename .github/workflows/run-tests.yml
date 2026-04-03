@@ -31,6 +31,9 @@ jobs:
           scoop bucket add extras
           scoop install extras/godot@"$env:GODOT_VERSION"
 
+          $user_data_dir = "~/AppData/Roaming/Godot/app_user_data"
+          New-Item -ItemType Directory -Force $user_data_dir | Out-Null
+
           Write-Output "Installing Godot editor configuration."
           Copy-Item ./.github/dist/editor_settings-4.6.tres -Destination ~/AppData/Roaming/Godot
           Write-Output "Godot editor configuration installed."
