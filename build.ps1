@@ -8,7 +8,6 @@
 
 [CmdletBinding()] param(
     [string]$m,
-    [string]$e,
     [switch]$c,
     [switch]$h
 )
@@ -17,7 +16,6 @@ if ($h.IsPresent) {
     Write-Output "Syntax: build.ps1 [Options] -m <build-mode>"
     Write-Output "Options:"
     Write-Output "  -m Specify build mode. Accepted values are 'release' and 'debug'."
-    Write-Output "  -e (Optional) Exclude projects (regex pattern, case sensitive). Defaults '^template$'."
     Write-Output "  -c (Optional) Clean build folders."
     Write-Output "  -h (Optional) Display this help and exit."
     exit 0
@@ -25,7 +23,7 @@ if ($h.IsPresent) {
 
 if ($c.IsPresent) {
     Write-Host " =====[ CLEANING BUILD DIRS ]===== " -ForegroundColor Black -BackgroundColor Magenta
-    git clean -dxf -e ".godot"
+    git clean -dxf -e ".godot" -e "test_results"
     Write-Host "[ DONE ]" -ForegroundColor Magenta
 }
 

@@ -39,6 +39,7 @@ For Linux/Mac users, you are suggested to run a Windows virtual machine.
 ├── .gitattributes
 ├── .gitignore
 ├── build.ps1           # Export/build automation script
+├── test.ps1            # Unit test automation script
 ├── export_presets.cfg  # Godot export config
 ├── icon.svg            # Project icon
 ├── project.godot       # Godot project config
