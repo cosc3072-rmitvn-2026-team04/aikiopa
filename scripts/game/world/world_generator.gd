@@ -158,7 +158,7 @@ func get_seeds() -> Dictionary[String, int]:
 ## chunks to the bottom relative to the chunk at origin.
 func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 	# Row-major mapping of the 2D terrain chunk.
-	var chunk_linear_data: Array[World.TerrainTypes] = []
+	var chunk_linear_data: Array[World.TerrainType] = []
 
 	# Set chunk offset.
 	h_map.offset = Vector3(
@@ -240,7 +240,7 @@ func _first_chunk_noise(noise_value: float, position: Vector2i) -> float:
 
 # 1st Step.
 func _create_chunk_height_map(
-		chunk_linear_data: Array[World.TerrainTypes],
+		chunk_linear_data: Array[World.TerrainType],
 		chunk_offset: Vector2i
 ) -> void:
 	for y in range(chunk_size.y):
@@ -254,7 +254,7 @@ func _create_chunk_height_map(
 						Vector2i(x, y))
 
 			if noise_value < h_water_height:
-				var water_type: World.TerrainTypes = World.TerrainTypes.DeepWater
+				var water_type: World.TerrainType = World.TerrainType.DeepWater
 				for neighbor_coords in _get_surrounding_noise_coords(Vector2i(x, y), chunk_offset):
 					var neighbor_noise_value: float = h_map.get_noise_2d(
 							neighbor_coords.x * h_noise_scale,
@@ -265,17 +265,17 @@ func _create_chunk_height_map(
 								neighbor_coords)
 
 					if not (neighbor_noise_value < h_water_height):
-						water_type = World.TerrainTypes.ShallowWater
+						water_type = World.TerrainType.ShallowWater
 						break
 				chunk_linear_data.append(water_type)
 			elif noise_value < h_land_height:
-				chunk_linear_data.append(World.TerrainTypes.Plain)
+				chunk_linear_data.append(World.TerrainType.Plain)
 			else:
-				chunk_linear_data.append(World.TerrainTypes.PlainMountain)
+				chunk_linear_data.append(World.TerrainType.PlainMountain)
 
 
 # 2nd Step.
-func _create_chunk_moisture_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
+func _create_chunk_moisture_map(chunk_linear_data: Array[World.TerrainType]) -> void:
 	for y in range(chunk_size.y):
 		for x in range(chunk_size.x):
 			var noise_value: float = m_map.get_noise_2d(
@@ -285,21 +285,21 @@ func _create_chunk_moisture_map(chunk_linear_data: Array[World.TerrainTypes]) ->
 					Vector2i(x, y),
 					chunk_size)
 
-			if chunk_linear_data[index] == World.TerrainTypes.Plain:
+			if chunk_linear_data[index] == World.TerrainType.Plain:
 				if noise_value < m_desert_height:
-					chunk_linear_data[index] = World.TerrainTypes.Desert
+					chunk_linear_data[index] = World.TerrainType.Desert
 				elif noise_value >= m_plain_height:
-					chunk_linear_data[index] = World.TerrainTypes.Grassland
+					chunk_linear_data[index] = World.TerrainType.Grassland
 
-			if chunk_linear_data[index] == World.TerrainTypes.PlainMountain:
+			if chunk_linear_data[index] == World.TerrainType.PlainMountain:
 				if noise_value < m_desert_height:
-					chunk_linear_data[index] = World.TerrainTypes.DesertMountain
+					chunk_linear_data[index] = World.TerrainType.DesertMountain
 				elif noise_value >= m_plain_height:
-					chunk_linear_data[index] = World.TerrainTypes.GrasslandMountain
+					chunk_linear_data[index] = World.TerrainType.GrasslandMountain
 
 
 # 3rd Step. x and y are swapped to produce more interesting features.
-func _create_chunk_chasm_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
+func _create_chunk_chasm_map(chunk_linear_data: Array[World.TerrainType]) -> void:
 	for x in range(chunk_size.x):
 		for y in range(chunk_size.y):
 			var noise_value: float = c_map.get_noise_2d(
@@ -312,16 +312,16 @@ func _create_chunk_chasm_map(chunk_linear_data: Array[World.TerrainTypes]) -> vo
 					Vector2i(x, y),
 					chunk_size)
 			match chunk_linear_data[index]:
-				World.TerrainTypes.PlainMountain:
-					chunk_linear_data[index] = World.TerrainTypes.PlainChasm
-				World.TerrainTypes.GrasslandMountain:
-					chunk_linear_data[index] = World.TerrainTypes.GrasslandChasm
-				World.TerrainTypes.DesertMountain:
-					chunk_linear_data[index] = World.TerrainTypes.DesertChasm
+				World.TerrainType.PlainMountain:
+					chunk_linear_data[index] = World.TerrainType.PlainChasm
+				World.TerrainType.GrasslandMountain:
+					chunk_linear_data[index] = World.TerrainType.GrasslandChasm
+				World.TerrainType.DesertMountain:
+					chunk_linear_data[index] = World.TerrainType.DesertChasm
 
 
 # 4th Step. x and y are swapped to produce more interesting features.
-func _create_chunk_dunes_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
+func _create_chunk_dunes_map(chunk_linear_data: Array[World.TerrainType]) -> void:
 	for x in range(chunk_size.x):
 		for y in range(chunk_size.y):
 			var noise_value: float = d_map.get_noise_2d(
@@ -333,12 +333,12 @@ func _create_chunk_dunes_map(chunk_linear_data: Array[World.TerrainTypes]) -> vo
 			var index: int = Math.Matrix.coords_2d_to_linear_index(
 					Vector2i(x, y),
 					chunk_size)
-			if chunk_linear_data[index] == World.TerrainTypes.Desert:
-					chunk_linear_data[index] = World.TerrainTypes.DesertDunes
+			if chunk_linear_data[index] == World.TerrainType.Desert:
+					chunk_linear_data[index] = World.TerrainType.DesertDunes
 
 
 # 5th Step. x and y are swapped to produce more interesting features.
-func _create_chunk_forest_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
+func _create_chunk_forest_map(chunk_linear_data: Array[World.TerrainType]) -> void:
 	for x in range(chunk_size.x):
 		for y in range(chunk_size.y):
 			var noise_value: float = t_map.get_noise_2d(
@@ -351,31 +351,31 @@ func _create_chunk_forest_map(chunk_linear_data: Array[World.TerrainTypes]) -> v
 					Vector2i(x, y),
 					chunk_size)
 			match chunk_linear_data[index]:
-				World.TerrainTypes.Plain:
-					chunk_linear_data[index] = World.TerrainTypes.PlainForest
-				World.TerrainTypes.Grassland:
-					chunk_linear_data[index] = World.TerrainTypes.GrasslandForest
+				World.TerrainType.Plain:
+					chunk_linear_data[index] = World.TerrainType.PlainForest
+				World.TerrainType.Grassland:
+					chunk_linear_data[index] = World.TerrainType.GrasslandForest
 
 
 # 6th Step.
-func _create_chunk_fish_map(chunk_linear_data: Array[World.TerrainTypes]) -> void:
+func _create_chunk_fish_map(chunk_linear_data: Array[World.TerrainType]) -> void:
 	for index in range(chunk_linear_data.size()):
-		if chunk_linear_data[index] == World.TerrainTypes.ShallowWater:
+		if chunk_linear_data[index] == World.TerrainType.ShallowWater:
 			var coords: Vector2i = Math.Matrix.linear_index_to_coords_2d(index, chunk_size)
 			var noise_value: float = f_map.get_noise_2d(
 					coords.x * f_noise_scale,
 					coords.y * f_noise_scale)
 			if noise_value >= f_height:
-				chunk_linear_data[index] = World.TerrainTypes.ShallowWaterFishes
+				chunk_linear_data[index] = World.TerrainType.ShallowWaterFishes
 
 
 # 7th Step. Renders [param chunk_linear_data] onto [World].
 func _render_chunk(
-		chunk_linear_data: Array[World.TerrainTypes],
+		chunk_linear_data: Array[World.TerrainType],
 		chunk_offset: Vector2i
 ) -> void:
 	for index in range(chunk_linear_data.size()):
-		var terrain_type: World.TerrainTypes = chunk_linear_data[index]
+		var terrain_type: World.TerrainType = chunk_linear_data[index]
 		var coords: Vector2i = Math.Matrix.linear_index_to_coords_2d(index, chunk_size)
 		coords.x += chunk_offset.x * chunk_size.x
 		coords.y += chunk_offset.y * chunk_size.y
