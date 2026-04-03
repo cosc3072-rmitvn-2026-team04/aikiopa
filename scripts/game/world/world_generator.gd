@@ -205,26 +205,20 @@ func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 
 
 # Returns the [param coords]' surrounding noise map coordinates, adjusted for
-# Godot's TileMapLayer hex coordinate system (odd-r). C.f.
-# https://www.redblobgames.com/grids/hexagons/#coordinates-offset
-func _get_surrounding_noise_coords(
+# [param chunk_offset] in relation to Godot's TileMapLayer hex coordinate system
+# (odd-r). C.f. https://www.redblobgames.com/grids/hexagons/#coordinates-offset
+func _get_chunk_surrounding_noise_coords(
 		coords: Vector2i,
-		chunk_offset: Vector2i = Vector2i.ZERO
+		chunk_offset: Vector2i
 ) -> Array[Vector2i]:
-	var surrounding_coords: Array[Vector2i] = []
-
-	surrounding_coords.append(coords + Vector2i.LEFT)
-	surrounding_coords.append(coords + Vector2i.RIGHT)
-	surrounding_coords.append(coords + Vector2i.UP)
-	surrounding_coords.append(coords + Vector2i.DOWN)
-	if posmod(chunk_offset.y * chunk_size.y + coords.y, 2) == 0: # Even rows.
-		surrounding_coords.append(coords + Vector2i.UP + Vector2i.LEFT)
-		surrounding_coords.append(coords + Vector2i.DOWN + Vector2i.LEFT)
-	else: # Odd rows.
-		surrounding_coords.append(coords + Vector2i.UP + Vector2i.RIGHT)
-		surrounding_coords.append(coords + Vector2i.DOWN + Vector2i.RIGHT)
-
-	return surrounding_coords
+	return (
+			Math.HexGrid.get_offset_surrounding_neighbors(
+				coords,
+				Math.HexGrid.OffsetLayout.ODD_R) if chunk_offset.y & 0b1 == 0
+			else
+			Math.HexGrid.get_offset_surrounding_neighbors(
+				coords,
+				Math.HexGrid.OffsetLayout.EVEN_R))
 
 
 # Ensures a buildable area in the center of the first chunk for the player to
@@ -260,7 +254,7 @@ func _create_chunk_height_map(
 
 			if noise_value < h_water_height:
 				var water_type: World.TerrainType = World.TerrainType.DeepWater
-				for neighbor_coords in _get_surrounding_noise_coords(Vector2i(x, y), chunk_offset):
+				for neighbor_coords in _get_chunk_surrounding_noise_coords(Vector2i(x, y), chunk_offset):
 					var neighbor_noise_value: float = h_map.get_noise_2d(
 							neighbor_coords.x * h_noise_scale,
 							neighbor_coords.y * h_noise_scale)
