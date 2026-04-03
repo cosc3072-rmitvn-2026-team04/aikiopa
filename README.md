@@ -34,6 +34,7 @@ For Linux/Mac users, you are suggested to run a Windows virtual machine.
 ├── 📂shaders/          # Shader files (`.gdshader`)
 ├── 📂tests/            # GUT tests (`.gd`)
 ├── 📂build/            # Export artifacts (`.exe`)
+├── 📂test_results/     # JUnit XML test reports (`.xml`)
 ├── .editorconfig
 ├── .gitattributes
 ├── .gitignore
