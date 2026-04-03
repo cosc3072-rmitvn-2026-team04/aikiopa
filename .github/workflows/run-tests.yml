@@ -31,8 +31,9 @@ jobs:
           scoop bucket add extras
           scoop install extras/godot@"$env:GODOT_VERSION"
 
-          Write-Output "Installing Godot editor configuration"
+          Write-Output "Installing Godot editor configuration."
           Copy-Item ./.github/dist/editor_settings-4.6.tres -Destination ~/AppData/Roaming/Godot
+          Write-Output "Godot editor configuration installed."
       - name: Run Tests
         run: |
           ./test.ps1 -c
