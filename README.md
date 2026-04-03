@@ -6,8 +6,8 @@ COSC3072 Games Studio 1 Project, Team 04, RMIT Vietnam 2026.
 
 ## 📦 Dependencies
 
-- Godot 4.6-stable
-- Godot Export Template 4.6.stable
+- Godot 4.6.2-stable
+- Godot Export Template 4.6.2-stable
 - Git
 - Windows 10 and above (x64)
 
