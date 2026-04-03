@@ -13,7 +13,7 @@ on:
       - '*'
 
 env:
-  GODOT_VERSION: 4.6
+  GODOT_VERSION: 4.6.2
 
 jobs:
   export:
@@ -29,7 +29,7 @@ jobs:
           Join-Path (Resolve-Path ~).Path "scoop\shims" >> $Env:GITHUB_PATH
 
           scoop bucket add extras
-          scoop install extras/godot@$env:GODOT_VERSION
+          scoop install extras/godot@"$env:GODOT_VERSION"
           scoop install main/rcedit
           scoop install main/zip
 
