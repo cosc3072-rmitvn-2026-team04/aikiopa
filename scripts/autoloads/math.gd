@@ -27,7 +27,11 @@ class Matrix extends Node:
 
 ## Hexagonal grid math libary. Since the game exclusively implements
 ## [constant TileSet.TileOffsetAxis.TILE_OFFSET_AXIS_HORIZONTAL], no algorithm
-## is provided for vertical offset axis.
+## is provided for vertical offset axis.[br]
+## [br]
+## [u]Note:[/u] This library does not provide algorithms to find distances,
+## areas, intersection, etc. Please refer to the Online Tutorials below for
+## impelemtation details.
 ## @tutorial(Hexagonal Grids from Red Blob Games): https://www.redblobgames.com/grids/hexagons
 class HexGrid extends Node:
 
@@ -52,6 +56,23 @@ class HexGrid extends Node:
 
 	#endregion
 	# ======================================================================== #
+
+
+	# ======================================================================== #
+	#region Constants
+
+	const CUBE_UNIT_VECTORS: Dictionary[Direction, Vector3i] = {
+		Direction.RIGHT: Vector3i(1, 0, -1),
+		Direction.TOP_RIGHT: Vector3i(1, -1, 0),
+		Direction.TOP_LEFT: Vector3i(0, -1, 1),
+		Direction.LEFT: Vector3i(-1, 0 ,1),
+		Direction.BOTTOM_LEFT: Vector3i(-1, 1, 0),
+		Direction.BOTTOM_RIGHT: Vector3i(0, 1, -1),
+	}
+
+	#endregion
+	# ======================================================================== #
+
 
 	# ======================================================================== #
 	#region Coordinate conversion
@@ -97,54 +118,40 @@ class HexGrid extends Node:
 	# ======================================================================== #
 	#region Neighbors
 
-	## Returns a list surrounding neighbors for [param coords] in offset
-	## coordinates.
-	func get_offset_surrounding_neighbors(
+	## Returns the neighboring offset coordinates to [param coords], identified
+	## by [param direction] and adjusted for [param offset_layout].
+	static func get_offset_neighbor(
+			coords: Vector2i,
+			direction: Direction,
+			offset_layout: OffsetLayout
+	) -> Vector2i:
+		var cube_coords: Vector3i = offset_to_cube(coords, offset_layout)
+		return cube_to_offset(get_cube_neighbor(cube_coords, direction), offset_layout)
+
+
+	## Returns the list of all neighboring offset coordinates to [param coords]
+	## in [param offset_layout].
+	static func get_offset_surrounding_neighbors(
 			coords: Vector2i,
 			offset_layout: OffsetLayout
 	) -> Array[Vector2i]:
-		const NEIGHBOR_DIRECTIONS: Array[Array] = [
-			[
-				Vector2i.LEFT,
-				Vector2i.RIGHT,
-				Vector2i.UP,
-				Vector2i.DOWN,
-				Vector2i.UP + Vector2i.LEFT,
-				Vector2i.DOWN + Vector2i.LEFT,
-			],
-			[
-				Vector2i.LEFT,
-				Vector2i.RIGHT,
-				Vector2i.UP,
-				Vector2i.DOWN,
-				Vector2i.UP + Vector2i.RIGHT,
-				Vector2i.DOWN + Vector2i.RIGHT,
-			],
-		]
-
-		var parity: int = 0
-		match offset_layout:
-			OffsetLayout.ODD_R:
-				parity = coords.y & 0b1
-			OffsetLayout.EVEN_R:
-				parity = coords.y & 0b1 ^ 0b1
-
-		return NEIGHBOR_DIRECTIONS[parity].map(func (direction: Vector2i):
-				return coords + direction
-		)
+		var cube_coords: Vector3i = offset_to_cube(coords, offset_layout)
+		var cube_surrounding_neighbors: Array[Vector3i] =\
+				get_cube_surrounding_neighbors(cube_coords)
+		return cube_surrounding_neighbors.map(func (neighbor: Vector3i):
+				return cube_to_offset(neighbor, offset_layout))
 
 
-	## Returns a list surrounding neighbors for [param coords] in cube
-	## coordinates.
-	func get_cube_surrounding_neighbors(coords: Vector3i) -> Array[Vector3i]:
-		return [
-			coords + Vector3i(1, 0, -1), # Right.
-			coords + Vector3i(1, -1, 0), # Top Right.
-			coords + Vector3i(0, -1, 1), # Top Left.
-			coords + Vector3i(-1, 0 ,1), # Left.
-			coords + Vector3i(-1, 1, 0), # Bottom Left.
-			coords + Vector3i(0, 1, -1), # Bottom Right.
-		]
+	## Returns the neighboring cube coordinates to [param coords], identified by
+	## [param direction].
+	static func get_cube_neighbor(coords: Vector3i, direction: Direction) -> Vector3i:
+		return coords + CUBE_UNIT_VECTORS[direction]
+
+
+	## Returns the list of all neighboring cube coordinates to [param coords].
+	static func get_cube_surrounding_neighbors(coords: Vector3i) -> Array[Vector3i]:
+		return CUBE_UNIT_VECTORS.keys().map(func (direction: Direction):
+				return coords + CUBE_UNIT_VECTORS[direction])
 
 	#endregion
 	# ======================================================================== #
