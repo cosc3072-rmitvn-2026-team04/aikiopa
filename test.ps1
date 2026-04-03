@@ -28,7 +28,7 @@ if ($c.IsPresent) {
 $projectName = "AIKIOPA"
 
 $repositoryPath = $PSScriptRoot
-$artifactFolderPath = Join-Path -Path $repositoryPath -ChildPath "test_results"
+$artifactDirectory = Join-Path -Path $repositoryPath -ChildPath "test_results"
 
 Write-Host " =====[ GODOT PROJECT REPOSITORY INFORMATION ]===== " -ForegroundColor Black -BackgroundColor Yellow
 Write-Host "- Repository path: $repositoryPath" -ForegroundColor Yellow
@@ -40,6 +40,9 @@ Write-Host "Importing project..." -ForegroundColor Yellow
 godot --headless --import --path $repositoryPath --quit | Out-Default
 
 Write-Host "Running tests..." -ForegroundColor Magenta
+if (-not (Test-Path -Path $artifactDirectory)) {
+    New-Item -ItemType Directory -Path $artifactDirectory | Out-Null
+}
 godot --headless --debug --path $repositoryPath --script addons/gut/gut_cmdln.gd | Out-Default
 
 Write-Host "[ DONE ]" -ForegroundColor Black -BackgroundColor Magenta
