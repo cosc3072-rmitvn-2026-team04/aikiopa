@@ -13,7 +13,7 @@
 if ($h.IsPresent) {
     Write-Output "Syntax: test.ps1 [Options]"
     Write-Output "Options:"
-    Write-Output "  -c (Optional) Clean test_result folders."
+    Write-Output "  -c (Optional) Clean test_result folders and exit."
     Write-Output "  -h (Optional) Display this help and exit."
     exit 0
 }
