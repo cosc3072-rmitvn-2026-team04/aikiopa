@@ -6,12 +6,18 @@ extends Node
 ## Matrix-related utility library.
 class Matrix extends Node:
 
-	## Converts the linear mapping row-major [param index] to its corresponding 2D
-	## space coordinates.[br]
+	## Converts the linear mapping row-major [param index] to its corresponding
+	## 2D space coordinates.[br]
 	## [br]
-	## [param size_2d] is the dimensions (rows x columns) of the target 2D space.
+	## [param size_2d] is the dimensions (rows x columns) of the target 2D
+	## space.[br]
+	## [br]
+	## Pushes error and returns [code]Vector2i(-1, -1)[/code] if [param index]
+	## is out of bounds. Does not handle negative indexes.
 	static func linear_index_to_coords_2d(index: int, size_2d: Vector2i) -> Vector2i:
-		assert(index < size_2d.x * size_2d.y, "Index out of range.")
+		if (index < 0) or (index >= size_2d.x * size_2d.y):
+			push_error("Index out of matrix bounds.")
+			return Vector2i(-1, -1)
 		@warning_ignore("integer_division")
 		return Vector2i(index % size_2d.x, int(index / size_2d.x))
 
@@ -19,9 +25,18 @@ class Matrix extends Node:
 	## Converts the 2D space [param coords] to its corresponding linear mapping
 	## row-major index.[br]
 	## [br]
-	## [param size_2d] is the dimensions (rows x columns) of the source 2D space.
+	## [param size_2d] is the dimensions (rows x columns) of the source 2D
+	## space.[br]
+	## [br]
+	## Pushes error and returns [code]-1[/code] if [param coords] is out of
+	## bounds. Does not handle negative coordinates.
 	static func coords_2d_to_linear_index(coords: Vector2i, size_2d: Vector2i) -> int:
-		assert(coords.x < size_2d.x and coords.y < size_2d.y, "Coordinates out of range.")
+		if (
+				(coords.x < 0 or coords.y < 0)
+				or (coords.x >= size_2d.x or coords.y >= size_2d.y)
+		):
+			push_error("Coordinates out of matrix bounds.")
+			return -1
 		return coords.y * size_2d.x + coords.x
 
 
