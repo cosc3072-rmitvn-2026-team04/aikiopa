@@ -43,6 +43,6 @@ Write-Host "Running tests..." -ForegroundColor Magenta
 if (-not (Test-Path -Path $artifactDirectory)) {
     New-Item -ItemType Directory -Path $artifactDirectory | Out-Null
 }
-godot --headless --debug --path $repositoryPath --script addons/gut/gut_cmdln.gd | Out-Default
+godot --headless --path $repositoryPath --script addons/gut/gut_cmdln.gd | Out-Default
 
 Write-Host "[ DONE ]" -ForegroundColor Black -BackgroundColor Magenta
