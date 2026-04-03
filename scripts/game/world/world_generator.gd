@@ -230,9 +230,14 @@ func _get_surrounding_noise_coords(
 # Ensures a buildable area in the center of the first chunk for the player to
 # start on.
 func _first_chunk_noise(noise_value: float, position: Vector2i) -> float:
-	var chunk_center: Vector2 = chunk_size * 0.5
+	var cube_center: Vector3 = Vector3(Math.HexGrid.offset_to_cube(
+			chunk_size * 0.5,
+			Math.HexGrid.OffsetLayout.ODD_R))
+	var cube_position: Vector3 = Vector3(Math.HexGrid.offset_to_cube(
+			position,
+			Math.HexGrid.OffsetLayout.ODD_R))
 	var distance_to_chunk_center: float =\
-			(Vector2(position) - chunk_center).length_squared()
+			(cube_position - cube_center).length_squared()
 	if distance_to_chunk_center <= pow(h_guaranteed_buildable_radius, 2):
 		return (h_water_height + h_land_height) / 2
 	return noise_value
