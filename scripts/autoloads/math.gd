@@ -13,8 +13,11 @@ class Matrix extends Node:
 	## space.[br]
 	## [br]
 	## Pushes error and returns [code]Vector2i(-1, -1)[/code] if [param index]
-	## is out of bounds. Does not handle negative indexes.
+	## is out of bounds. Does not handle negative indexes and matrix sizes.
 	static func linear_index_to_coords_2d(index: int, size_2d: Vector2i) -> Vector2i:
+		if (size_2d.x <= 0) or (size_2d.y) <= 0:
+			push_error("Invalid matrix size.")
+			return Vector2i(-1, -1)
 		if (index < 0) or (index >= size_2d.x * size_2d.y):
 			push_error("Index out of matrix bounds.")
 			return Vector2i(-1, -1)
@@ -29,8 +32,11 @@ class Matrix extends Node:
 	## space.[br]
 	## [br]
 	## Pushes error and returns [code]-1[/code] if [param coords] is out of
-	## bounds. Does not handle negative coordinates.
+	## bounds. Does not handle negative coordinates and matrix sizes.
 	static func coords_2d_to_linear_index(coords: Vector2i, size_2d: Vector2i) -> int:
+		if (size_2d.x <= 0) or (size_2d.y) <= 0:
+			push_error("Invalid matrix size.")
+			return -1
 		if (
 				(coords.x < 0 or coords.y < 0)
 				or (coords.x >= size_2d.x or coords.y >= size_2d.y)
