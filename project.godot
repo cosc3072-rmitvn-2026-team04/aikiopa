@@ -33,14 +33,19 @@ window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/size/mode.editor=0
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gut/plugin.cfg")
+
 [file_customization]
 
 folder_colors={
 "res://assets/": "red",
-"res://resources/": "pink",
+"res://resources/": "orange",
 "res://scenes/": "blue",
 "res://scripts/": "purple",
-"res://shaders/": "green"
+"res://shaders/": "green",
+"res://tests/": "pink"
 }
 
 [input]
