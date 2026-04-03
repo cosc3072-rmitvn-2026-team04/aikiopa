@@ -12,6 +12,9 @@ on:
     tags:
       - '*'
 
+permissions:
+  checks: write
+
 env:
   GODOT_VERSION: 4.6.2
 
