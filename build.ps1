@@ -57,6 +57,10 @@ Write-Host "- Artifact path: $archiveFolderPath" -ForegroundColor Yellow
 $buildModeText = $m.ToUpper()
 Write-Host " =====[ EXPORTING PROJECT (MODE: $buildModeText) ]===== " -ForegroundColor Black -BackgroundColor Magenta
 
+Write-Host "Importing project..." -ForegroundColor Yellow
+godot --headless --import --path $repositoryPath --quit | Out-Default
+
+Write-Host "Exporting project..." -ForegroundColor Yellow
 $exportPresetsFile = Join-Path -Path $repositoryPath -ChildPath "export_presets.cfg"
 $exportPresetsCfg = Get-Content -Path $exportPresetsFile -Raw
 $exportPresets = ($exportPresetsCfg | Select-String -Pattern '\n\nname="(.*)"' -AllMatches).Matches | ForEach-Object {

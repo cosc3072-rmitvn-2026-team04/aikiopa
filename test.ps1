@@ -36,6 +36,12 @@ Write-Host "- Artifact path: $artifactDirectory" -ForegroundColor Yellow
 
 Write-Host " =====[ RUNNING PROJECT TESTS ]===== " -ForegroundColor Black -BackgroundColor Magenta
 
+Write-Host "Importing project..." -ForegroundColor Yellow
+godot --headless --import --path $repositoryPath --quit | Out-Default
+
+Write-Host "Running tests..." -ForegroundColor Yellow
+godot --headless --import --path $repositoryPath --quit | Out-Default
+
 if (-not (Test-Path -Path $artifactDirectory)) {
     New-Item -ItemType Directory -Path $artifactDirectory | Out-Null
 }
