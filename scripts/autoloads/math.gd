@@ -26,38 +26,36 @@ class Matrix extends Node:
 		return coords.y * size_2d.x + coords.x
 
 
-## Hexagonal grid math libary.
+## Hexagonal grid math libary. Since the game exclusively implements
+## [constant TileSet.TileOffsetAxis.TILE_OFFSET_AXIS_HORIZONTAL], no algorithm
+## is provided for vertical offset axis.
+## @tutorial(Hexagonal Grids from Red Blob Games): https://www.redblobgames.com/grids/hexagons
 class HexGrid extends Node:
+
+	## Layout types of offset coordinates for hexagonal grids.
+	enum OffsetLayout {
+		ODD_R, ## Odd rows get shoved to the right.
+		EVEN_R, ## Even rows get shoved to the right.
+	}
 
 	# ======================================================================== #
 	#region Coordinate conversion
-	# TODO: Document these functions.
 
-	static func oddr_to_cube(coords: Vector2i) -> Vector3i:
+	## Converts offset coordinates [param coords] of [param offset_layout] to
+	## their equivalent cube coordinates.
+	static func offset_to_cube(
+			coords: Vector2i,
+			offset_layout: OffsetLayout
+	) -> Vector3i:
 		var hex_col: int = coords.x
 		var hex_row: int = coords.y
-		var parity: int = coords.y & 0b01
-		
-		@warning_ignore("integer_division")
-		var cube_col: int = hex_col - int((hex_row - parity) / 2)
-		var cube_row: int = hex_row
-		var cube_slice: int = -(cube_col + cube_row)
-		return Vector3i(cube_col, cube_row, cube_slice)
-	
+		var parity: int = 0
+		match offset_layout:
+			OffsetLayout.ODD_R:
+				parity = -(coords.y & 0b01)
+			OffsetLayout.EVEN_R:
+				parity = coords.y & 0b01
 
-	static func cube_to_oddr(coords: Vector3i) -> Vector2i:
-		var parity: int = coords.y & 0b01
-		@warning_ignore("integer_division")
-		var col: int = coords.x + int((coords.y - parity) / 2)
-		var row: int = coords.y
-		return Vector2i(col, row)
-	
-
-	static func evenr_to_cube(coords: Vector2i) -> Vector3i:
-		var hex_col: int = coords.x
-		var hex_row: int = coords.y
-		var parity: int = coords.y & 0b01
-		
 		@warning_ignore("integer_division")
 		var cube_col: int = hex_col - int((hex_row + parity) / 2)
 		var cube_row: int = hex_row
@@ -65,8 +63,19 @@ class HexGrid extends Node:
 		return Vector3i(cube_col, cube_row, cube_slice)
 
 
-	static func cube_to_evenr(coords: Vector3i) -> Vector2i:
-		var parity: int = coords.y & 0b01
+	## Converts cube coordinates [param coords] to their equivalent offset
+	## coordinates of [param offset_layout].
+	static func cube_to_offset(
+			coords: Vector3i,
+			offset_layout: OffsetLayout
+	) -> Vector2i:
+		var parity: int = 0
+		match offset_layout:
+			OffsetLayout.ODD_R:
+				parity = -(coords.y & 0b01)
+			OffsetLayout.EVEN_R:
+				parity = coords.y & 0b01
+
 		@warning_ignore("integer_division")
 		var col: int = coords.x + int((coords.y + parity) / 2)
 		var row: int = coords.y
