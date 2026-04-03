@@ -5,7 +5,7 @@ extends GameUI
 #region Godot builtins
 
 func _ready() -> void:
-	%UnpauseButton.pressed.connect(_on_unpause_button_pressed)
+	%ResumeButton.pressed.connect(_on_resume_button_pressed)
 	%SaveButton.pressed.connect(_on_save_button_pressed)
 	%QuitToMainMenuButton.pressed.connect(_on_quit_to_main_menu_button_press)
 
@@ -16,9 +16,9 @@ func _ready() -> void:
 # ============================================================================ #
 #region Signal listeners
 
-# Listens to %UnpauseButton.pressed.connect().
-func _on_unpause_button_pressed() -> void:
-	acted.emit(&"unpause")
+# Listens to %ResumeButton.pressed.connect().
+func _on_resume_button_pressed() -> void:
+	acted.emit(&"resume")
 
 
 # Listens to %SaveButton.pressed.connect().
