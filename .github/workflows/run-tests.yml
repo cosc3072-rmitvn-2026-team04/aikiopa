@@ -48,5 +48,5 @@ jobs:
         uses: mikepenz/action-junit-report@v6
         if: success() || failure()
         with:
-          report_paths: '**/test-results/results_*.xml'
+          report_paths: '**/test-results/result_*.xml'
           fail_on_failure: true
