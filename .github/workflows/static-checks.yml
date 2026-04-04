@@ -12,6 +12,9 @@ on:
     tags:
       - '*'
 
+permissions:
+   pull-requests: write
+
 jobs:
   static-checks:
     name: Static Checks
@@ -27,3 +30,7 @@ jobs:
         run: |
           ./cc_check.sh -c
           ./cc_check.sh
+      - name: PR comment with file
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          file-path: ./cc_check_reports/report_*.json
