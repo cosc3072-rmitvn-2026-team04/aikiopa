@@ -3,16 +3,15 @@
 project_directory="$PWD"
 artifact_directory="cc_check_reports"
 report_file="report"
-timestamp=$EPOCHSECONDS
-report_temp_path="${project_directory%/}/${artifact_directory#/}/${report_file}_${timestamp}.temp"
-report_json_path="${project_directory%/}/${artifact_directory#/}/${report_file}_${timestamp}.json"
+timestamp=""
 
 help() {
   # Display help
-  echo "Generate project cyclomatic complexity report. Exported reports can be found in ./${artifact_directory#/}/"
+  echo "Generate project cyclomatic complexity report. Exported report(s) can be found in ./${artifact_directory#/}/"
   echo
   echo "Syntax: cc_check.sh [-c|h]"
   echo "Options:"
+  echo "t     Include a timestamp in the filename so that each run gets its own report file."
   echo "c     Clean cc_check_reports folder and exit."
   echo "h     Print this Help and exit."
   echo
@@ -25,8 +24,10 @@ clean() {
   echo "[ DONE ]"
 }
 
-while getopts ":ch" option; do
+while getopts ":tch" option; do
   case $option in
+    t)
+      timestamp="_${EPOCHSECONDS}";;
     c)
       clean
       exit;;
@@ -44,6 +45,9 @@ done
 if [ ! -d "${project_directory%/}/${artifact_directory#/}" ]; then
   mkdir "${project_directory%/}/${artifact_directory#/}"
 fi
+
+report_temp_path="${project_directory%/}/${artifact_directory#/}/${report_file}${timestamp}.temp"
+report_json_path="${project_directory%/}/${artifact_directory#/}/${report_file}${timestamp}.json"
 
 echo "Running cyclomatic complexity analysis..."
 bash -c "gdradon cc scripts tests | tee ${report_temp_path}"
