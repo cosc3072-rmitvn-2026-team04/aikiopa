@@ -86,7 +86,7 @@ class HexGrid extends Node:
 		Direction.RIGHT: Vector3i(1, 0, -1),
 		Direction.TOP_RIGHT: Vector3i(1, -1, 0),
 		Direction.TOP_LEFT: Vector3i(0, -1, 1),
-		Direction.LEFT: Vector3i(-1, 0 ,1),
+		Direction.LEFT: Vector3i(-1, 0,1),
 		Direction.BOTTOM_LEFT: Vector3i(-1, 1, 0),
 		Direction.BOTTOM_RIGHT: Vector3i(0, 1, -1),
 	}

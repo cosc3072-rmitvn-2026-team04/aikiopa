@@ -23,36 +23,36 @@ signal building_removed(coords: Vector2i)
 
 ## Terrain types (including terrain features) in the game.
 enum TerrainType {
-	None,
-	ShallowWater,
-	ShallowWaterFishes,
-	DeepWater,
-	Plain,
-	PlainForest,
-	PlainMountain,
-	PlainChasm,
-	Grassland,
-	GrasslandForest,
-	GrasslandMountain,
-	GrasslandChasm,
-	Desert,
-	DesertDunes,
-	DesertMountain,
-	DesertChasm,
+	NONE,
+	SHALLOW_WATER,
+	SHALLOW_WATER_FISHES,
+	DEEP_WATER,
+	PLAIN,
+	PLAIN_FOREST,
+	PLAIN_MOUNTAIN,
+	PLAIN_CHASM,
+	GRASSLAND,
+	GRASSLAND_FOREST,
+	GRASSLAND_MOUNTAIN,
+	GRASSLAND_CHASM,
+	DESERT,
+	DESERT_DUNES,
+	DESERT_MOUNTAIN,
+	DESERT_CHASM,
 }
 
 ## The building types available in the game.
 enum BuildingTypes {
-	None,
-	LandingSite,
-	Housing,
-	SolarFarm,
-	WindFarm,
-	NuclearReactor,
-	Greenhouse,
-	Ranch,
-	Fishery,
-	Factory,
+	NONE,
+	LANDING_SITE,
+	HOUSING,
+	SOLAR_FARM,
+	WIND_FARM,
+	NUCLEAR_REACTOR,
+	GREENHOUSE,
+	RANCH,
+	FISHERY,
+	FACTORY,
 }
 
 #endregion
@@ -176,31 +176,31 @@ func set_terrain_at(coords: Vector2i, terrain_type: TerrainType) -> void:
 		get_terrain_tile_map_layer().SOURCE_ID,
 		get_terrain_tile_map_layer().ATLAS_COORDS[terrain_type])
 	match terrain_type:
-		TerrainType.PlainMountain, TerrainType.GrasslandMountain, TerrainType.DesertMountain:
+		TerrainType.PLAIN_MOUNTAIN, TerrainType.GRASSLAND_MOUNTAIN, TerrainType.DESERT_MOUNTAIN:
 			var mountain: Node2D = _terrain_feature_mountain.instantiate()
 			_terrain_features.set(coords, mountain)
 			mountain.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(mountain)
-		TerrainType.PlainChasm, TerrainType.GrasslandChasm, TerrainType.DesertChasm:
+		TerrainType.PLAIN_CHASM, TerrainType.GRASSLAND_CHASM, TerrainType.DESERT_CHASM:
 			var chasm: Node2D = _terrain_feature_chasm.instantiate()
 			_terrain_features.set(coords, chasm)
 			chasm.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(chasm)
-		TerrainType.DesertDunes:
+		TerrainType.DESERT_DUNES:
 			var sand_dunes: Node2D = _terrain_feature_sand_dunes.instantiate()
 			_terrain_features.set(coords, sand_dunes)
 			sand_dunes.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(sand_dunes)
-		TerrainType.PlainForest, TerrainType.GrasslandForest:
+		TerrainType.PLAIN_FOREST, TerrainType.GRASSLAND_FOREST:
 			var forest: Node2D = _terrain_feature_forest.instantiate()
 			_terrain_features.set(coords, forest)
 			forest.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(forest)
-		TerrainType.ShallowWaterFishes:
+		TerrainType.SHALLOW_WATER_FISHES:
 			var fishes: Node2D = _terrain_feature_fishes.instantiate()
 			_terrain_features.set(coords, fishes)
 			fishes.position = get_terrain_tile_map_layer()\
@@ -212,7 +212,7 @@ func set_terrain_at(coords: Vector2i, terrain_type: TerrainType) -> void:
 ## Returns the [enum World.TerrainType] at [param coords].
 func get_terrain_at(_coords: Vector2i) -> TerrainType:
 	assert(false, "Game.get_terrain_at() not implemented")
-	return TerrainType.None
+	return TerrainType.NONE
 
 
 # TODO: Implement this.
@@ -240,7 +240,7 @@ func remove_building_at(_coords: Vector2i, _type: BuildingTypes) -> bool:
 ## Returns the [enum World.BuildingTypes] at [param coords].
 func get_building_at(_coords: Vector2i) -> BuildingTypes:
 	assert(false, "Game.get_terrain_at() not implemented")
-	return BuildingTypes.None
+	return BuildingTypes.NONE
 
 #endregion
 # ============================================================================ #
