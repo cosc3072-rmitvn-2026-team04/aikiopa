@@ -34,4 +34,4 @@ jobs:
         uses: thollander/actions-comment-pull-request@v3
         with:
           file-path: ./cc_check_reports/report.md
-          mode: recreate
+          comment-tag: cc-check-report
