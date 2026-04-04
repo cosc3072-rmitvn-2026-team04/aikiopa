@@ -29,8 +29,8 @@ jobs:
       - name: Cyclomatic Complexity Check
         run: |
           ./cc_check.sh -c
-          ./cc_check.sh
+          ./cc_check.sh -m
       - name: PR comment with file
         uses: thollander/actions-comment-pull-request@v3
         with:
-          file-path: ./cc_check_reports/report.json
+          file-path: ./cc_check_reports/report.md
