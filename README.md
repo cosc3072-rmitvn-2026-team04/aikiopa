@@ -36,11 +36,13 @@ For Linux/Mac users, you are suggested to run a Windows virtual machine.
 ├── 📂tests/            # GUT tests (`.gd`)
 ├── 📂build/            # Export artifacts (`.exe`)
 ├── 📂test_results/     # JUnit XML test reports (`.xml`)
+├── .gdlintrc
 ├── .editorconfig
 ├── .gitattributes
 ├── .gitignore
 ├── build.ps1           # Export/build automation script
 ├── test.ps1            # Unit test automation script
+├── cc_check.sh         # Cyclomatic complexity analysis (gdradon) automation script
 ├── export_presets.cfg  # Godot export config
 ├── icon.svg            # Project icon
 ├── project.godot       # Godot project config
