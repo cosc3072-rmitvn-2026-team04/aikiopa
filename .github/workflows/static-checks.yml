@@ -30,8 +30,9 @@ jobs:
         run: |
           ./cc_check.sh -c
           ./cc_check.sh -m
-      - name: PR comment with file
+      - name: Generate Cyclomatic Complexity Report
         uses: thollander/actions-comment-pull-request@v3
         with:
           file-path: ./cc_check_reports/report.md
           comment-tag: cc-check-report
+          mode: recreate
