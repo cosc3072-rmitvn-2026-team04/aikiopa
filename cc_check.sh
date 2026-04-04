@@ -180,5 +180,4 @@ else
     }' "${report_temp_path}" > "${report_json_path}"
   echo "Report exported to ${report_json_path}"
 fi
-
 rm "${report_temp_path}"
