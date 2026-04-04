@@ -12,12 +12,26 @@ on:
     tags:
       - '*'
 
+permissions:
+  pull-requests: write
+
 jobs:
   static-checks:
-    name: 'Static Checks'
+    name: Static Checks
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout Code
+        uses: actions/checkout@v6
       - uses: Scony/godot-gdscript-toolkit@master
-      - run: gdlint .
-      - run: gdradon cc scripts tests
+      - name: Linting
+        run: gdlint .
+      - name: Cyclomatic Complexity Check
+        run: |
+          ./cc_check.sh -c
+          ./cc_check.sh
+      - name: Publish Cyclomatic Complexity Report
+        id: annotate
+        if: always()
+        uses: granodigital/report-annotate@v3
+        with:
+          reports: cc_check_reports/report_*.json
