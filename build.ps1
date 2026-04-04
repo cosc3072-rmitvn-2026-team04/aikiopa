@@ -23,7 +23,7 @@ if ($h.IsPresent) {
 
 if ($c.IsPresent) {
     Write-Host " =====[ CLEANING BUILD DIRS ]===== " -ForegroundColor Black -BackgroundColor Magenta
-    git clean -dxf -e ".godot" -e "test_results"
+    git clean -dxf -e ".godot" -e "test_results" -e "cc_check_reports"
     Write-Host "[ DONE ]" -ForegroundColor Magenta
 }
 

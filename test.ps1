@@ -13,14 +13,14 @@
 if ($h.IsPresent) {
     Write-Output "Syntax: test.ps1 [Options]"
     Write-Output "Options:"
-    Write-Output "  -c (Optional) Clean test_result folders and exit."
+    Write-Output "  -c (Optional) Clean test_results folder and exit."
     Write-Output "  -h (Optional) Display this help and exit."
     exit 0
 }
 
 if ($c.IsPresent) {
-    Write-Host " =====[ CLEANING TEST RESULTS DIRS ]===== " -ForegroundColor Black -BackgroundColor Magenta
-    git clean -dxf -e ".godot" -e "build" -e "artifact"
+    Write-Host " =====[ CLEANING TEST RESULTS DIR ]===== " -ForegroundColor Black -BackgroundColor Magenta
+    git clean -dxf -e ".godot" -e "build" -e "artifact" -e "cc_check_reports"
     Write-Host "[ DONE ]" -ForegroundColor Magenta
     exit 0
 }
