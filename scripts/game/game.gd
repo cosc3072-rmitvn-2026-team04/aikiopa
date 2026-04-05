@@ -9,15 +9,40 @@ enum GameModes {
 
 @export var game_mode: GameModes = GameModes.FREE_PLAY
 
+@onready var _building_stack_controller: Node = %BuildingStackController
+
 
 # ============================================================================ #
 #region Godot builtins
 
 func _ready() -> void:
-	# World setup.
+	_init_world()
+	_init_cameras()
+
+
+func _process(_delta: float) -> void:
+	_process_auto_world_gen()
+
+
+func _input(event: InputEvent) -> void:
+	_input_update_gameplay_debug_mode(event)
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Private methods
+
+
+#region _ready()
+
+func _init_world() -> void:
 	%World.generate_seeds()
 	%World.create_chunk(Vector2i.ZERO)
 
+
+func _init_cameras() -> void:
 	# Main camera setup.
 	%MainCamera2D.make_current()
 	%MainCamera2D.position = %World.get_chunk_center_position()
@@ -27,18 +52,28 @@ func _ready() -> void:
 	%DebugCamera2D.position = %World.get_chunk_center_position()
 	%DebugCamera2D.reset_smoothing()
 
+#endregion
 
-func _process(_delta: float) -> void:
+
+#region _process()
+
+func _process_auto_world_gen() -> void:
 	var camera_chunk_position: Vector2i = %MainCamera2D.get_chunk_position()
 	for neighbor_chunk in %World.get_neigboring_chunks(camera_chunk_position):
 		if not %World.is_chunk_generated(neighbor_chunk):
 			%World.create_chunk(neighbor_chunk)
 
+#endregion
 
-func _input(event: InputEvent) -> void:
+
+#region _input()
+
+func _input_update_gameplay_debug_mode(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_gameplay_debug_mode"):
 		Global.gameplay_debug_mode_enabled = not Global.gameplay_debug_mode_enabled
 		GameplayEventBus.gameplay_debug_mode_toggled.emit(Global.gameplay_debug_mode_enabled)
+
+#endregion
 
 #endregion
 # ============================================================================ #
