@@ -7,9 +7,15 @@ enum GameModes {
 	FREE_PLAY,
 }
 
+# ============================================================================ #
+#region Variables
+
 @export var game_mode: GameModes = GameModes.FREE_PLAY
 
 @onready var _building_stack_controller: Node = %BuildingStackController
+
+#endregion
+# ============================================================================ #
 
 
 # ============================================================================ #
@@ -34,12 +40,15 @@ func _input(event: InputEvent) -> void:
 # ============================================================================ #
 #region Private methods
 
-
 #region _ready()
 
 func _init_world() -> void:
-	%World.generate_seeds()
+	%World.initialize()
 	%World.create_chunk(Vector2i.ZERO)
+
+
+func _init_building_stack() -> void:
+	_building_stack_controller.generate_seed()
 
 
 func _init_cameras() -> void:

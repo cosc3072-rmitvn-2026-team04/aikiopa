@@ -129,8 +129,14 @@ var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 # ============================================================================ #
 #region Public methods
 
-## Generates new seeds for the generator, effectively creating a new world.
-func generate_seeds() -> void:
+## Generates new random seeds for the generator's internal terrain map modules,
+## effectively creating a new world. Accepts an optional parameter
+## [param rng_seed] to deterministically restore a world using the given seed.
+func generate_seeds(rng_seed: Variant = null) -> void:
+	if rng_seed:
+		_rng.seed = rng_seed as int
+	else:
+		_rng.randomize()
 	h_map.seed = _rng.randi()
 	m_map.seed = _rng.randi()
 	c_map.seed = _rng.randi()
@@ -139,9 +145,16 @@ func generate_seeds() -> void:
 	f_map.seed = _rng.randi()
 
 
-## Returns the current world's seeds.
-func get_seeds() -> Dictionary[String, int]:
+## Returns the current world's seed. Useful for saving a game session's world.
+func get_seed() -> int:
+	return _rng.seed
+
+
+## Returns the current world's seed and its corresponding internal terrain
+## module seeds. Useful for debugging.
+func get_internal_seeds() -> Dictionary[String, int]:
 	return {
+		"master": _rng.seed,
 		"height_map_seed": h_map.seed,
 		"moisture_map_seed": m_map.seed,
 		"chasm_map_seed": c_map.seed,

@@ -103,15 +103,21 @@ func get_chunk_size() -> Vector2i:
 	return %WorldGenerator.chunk_size
 
 
-## Generates new [World] seeds, effectively creating a new world.
-func generate_seeds() -> void:
-	%WorldGenerator.generate_seeds()
+## Initializes a new randomized world if the optional parameter
+## [param world_seed] is not given or is [code]null[/code]. Otherwise
+## initializes a world with the given seed.
+func initialize(world_seed: Variant = null) -> void:
+	if world_seed and typeof(world_seed) != TYPE_INT:
+		push_error(
+				"Invalid parameter type for 'world_seed'. Must be int or null.")
+		return
+	%WorldGenerator.generate_seeds(world_seed)
 	_generated_chunks.clear()
 
 
-## Returns the current world's seeds.
-func get_seeds() -> Dictionary[String, int]:
-	return %WorldGenerator.get_seeds()
+## Returns the current world's seed.
+func get_seed() -> int:
+	return %WorldGenerator.get_seed()
 
 
 ## Generates new world chunk at [param chunk_offset]. [param chunk_offset]
