@@ -22,7 +22,14 @@ enum GameModes {
 #region Godot builtins
 
 func _ready() -> void:
+	# TODO: Add world restore functionality by providing world_seed when needed.
+	# Implement in #11.
 	_init_world()
+
+	# TODO: Add building stack restore functionality by providing session_seed
+	# and session_state when needed. Implement in #11.
+	_init_building_stack([])
+
 	_init_cameras()
 
 
@@ -42,13 +49,20 @@ func _input(event: InputEvent) -> void:
 
 #region _ready()
 
-func _init_world() -> void:
-	%World.initialize()
+func _init_world(world_seed: Variant = null) -> void:
+	%World.initialize(world_seed)
 	%World.create_chunk(Vector2i.ZERO)
 
 
-func _init_building_stack() -> void:
-	_building_stack_controller.generate_seed()
+func _init_building_stack(
+		building_queue: Array[World.BuildingType],
+		session_seed: Variant = null,
+		session_state: Variant = null
+) -> void:
+	_building_stack_controller.initialize_session(
+			building_queue,
+			session_seed,
+			session_state)
 
 
 func _init_cameras() -> void:

@@ -8,7 +8,7 @@ extends Node2D
 
 ## Emitted when a building is successfully added.
 @warning_ignore("unused_signal")
-signal building_added(coords: Vector2i, type: BuildingTypes)
+signal building_added(coords: Vector2i, type: BuildingType)
 
 ## Emitted when a building is successfully removed.
 @warning_ignore("unused_signal")
@@ -42,7 +42,7 @@ enum TerrainType {
 }
 
 ## The building types available in the game.
-enum BuildingTypes {
+enum BuildingType {
 	NONE,
 	LANDING_SITE,
 	HOUSING,
@@ -222,12 +222,12 @@ func get_terrain_at(_coords: Vector2i) -> TerrainType:
 
 
 # TODO: Implement this.
-## Sets the building at [param coords] to one of [enum World.BuildingTypes].
+## Sets the building at [param coords] to one of [enum World.BuildingType].
 ## Automatically assign variation(s) at random.[br]
 ## [br]
 ## Returns [code]false[/code] if there is already an existing building at
 ## [param coords].
-func set_building_at(_coords: Vector2i, _type: BuildingTypes) -> bool:
+func set_building_at(_coords: Vector2i, _type: BuildingType) -> bool:
 	assert(false, "Game.set_building_at() not implemented")
 	return false
 
@@ -237,16 +237,16 @@ func set_building_at(_coords: Vector2i, _type: BuildingTypes) -> bool:
 ## [br]
 ## Returns [code]false[/code] if there is no existing building at
 ## [param coords].
-func remove_building_at(_coords: Vector2i, _type: BuildingTypes) -> bool:
+func remove_building_at(_coords: Vector2i, _type: BuildingType) -> bool:
 	assert(false, "Game.remove_building_at() not implemented")
 	return false
 
 
 # TODO: Implement this.
-## Returns the [enum World.BuildingTypes] at [param coords].
-func get_building_at(_coords: Vector2i) -> BuildingTypes:
+## Returns the [enum World.BuildingType] at [param coords].
+func get_building_at(_coords: Vector2i) -> BuildingType:
 	assert(false, "Game.get_terrain_at() not implemented")
-	return BuildingTypes.NONE
+	return BuildingType.NONE
 
 #endregion
 # ============================================================================ #
