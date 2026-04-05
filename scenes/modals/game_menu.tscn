@@ -1,15 +1,15 @@
 [gd_scene format=3 uid="uid://873u2m0dhb0d"]
 
-[ext_resource type="Script" uid="uid://btlo4kj56j4q1" path="res://scripts/modals/pause_menu.gd" id="1_j2n1f"]
+[ext_resource type="Script" uid="uid://btlo4kj56j4q1" path="res://scripts/modals/game_menu.gd" id="1_k7vw1"]
 
-[node name="PauseMenu" type="Control" unique_id=650760349]
+[node name="GameMenu" type="Control" unique_id=650760349]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_j2n1f")
+script = ExtResource("1_k7vw1")
 metadata/_custom_type_script = "uid://cupvablkoadik"
 
 [node name="OverlayColorRect" type="ColorRect" parent="." unique_id=1260311588]
@@ -35,15 +35,15 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PauseMenuLabel" type="Label" parent="OverlayColorRect/VBoxContainer" unique_id=994679446]
+[node name="GameMenuLabel" type="Label" parent="OverlayColorRect/VBoxContainer" unique_id=994679446]
 layout_mode = 2
-text = "PAUSED"
+text = "Game Menu"
 horizontal_alignment = 1
 
-[node name="UnpauseButton" type="Button" parent="OverlayColorRect/VBoxContainer" unique_id=185200360]
+[node name="ResumeButton" type="Button" parent="OverlayColorRect/VBoxContainer" unique_id=185200360]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Unpause"
+text = "Resume"
 
 [node name="SaveButton" type="Button" parent="OverlayColorRect/VBoxContainer" unique_id=70006967]
 unique_name_in_owner = true

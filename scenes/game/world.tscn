@@ -1,27 +1,11 @@
 [gd_scene format=3 uid="uid://b7p1b85oyvfnp"]
 
 [ext_resource type="Script" uid="uid://dtslxw8hw6d1l" path="res://scripts/game/world/world.gd" id="1_t4al5"]
-[ext_resource type="Texture2D" uid="uid://b4p0nr7itoqnj" path="res://assets/tilesheets/terrains.png" id="2_g5t8f"]
 [ext_resource type="Script" uid="uid://brxq3lcgxk4g8" path="res://scripts/game/world/world_generator.gd" id="3_d8brc"]
+[ext_resource type="TileSet" uid="uid://coa56ippaoyox" path="res://resources/terrain_tile_set.tres" id="3_q5tta"]
 [ext_resource type="Script" uid="uid://bhw8kyxi04s7t" path="res://scripts/game/world/terrain_feature_layer.gd" id="3_qd3kh"]
 [ext_resource type="Script" uid="uid://c4me4d4ubdu7" path="res://scripts/game/world/terrain_tile_map_layer.gd" id="3_vn813"]
 [ext_resource type="Script" uid="uid://b2nle6lcx1mst" path="res://scripts/game/world/building_layer.gd" id="4_w1nur"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d8brc"]
-resource_name = "terrains"
-texture = ExtResource("2_g5t8f")
-texture_region_size = Vector2i(160, 130)
-use_texture_padding = false
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_7h61r"]
-tile_shape = 3
-tile_size = Vector2i(160, 130)
-sources/0 = SubResource("TileSetAtlasSource_d8brc")
 
 [node name="World" type="Node2D" unique_id=1513868058]
 script = ExtResource("1_t4al5")
@@ -45,7 +29,7 @@ world = NodePath("..")
 
 [node name="TerrainTileMapLayer" type="TileMapLayer" parent="." unique_id=1094802460]
 unique_name_in_owner = true
-tile_set = SubResource("TileSet_7h61r")
+tile_set = ExtResource("3_q5tta")
 script = ExtResource("3_vn813")
 
 [node name="TerrainFeatureLayer" type="Node2D" parent="." unique_id=614560681]

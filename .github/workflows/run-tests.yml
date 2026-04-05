@@ -1,0 +1,52 @@
+name: "Run Tests"
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+    branches:
+      - main
+      - dev
+  push:
+    tags:
+      - '*'
+
+permissions:
+  checks: write
+
+env:
+  GODOT_VERSION: 4.6.2
+
+jobs:
+  unit_test:
+    name: Run Tests
+    runs-on: windows-2025
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+      - name: Setup
+        run: |
+          Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+          Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+          Join-Path (Resolve-Path ~).Path "scoop\shims" >> $Env:GITHUB_PATH
+
+          scoop bucket add extras
+          scoop install extras/godot@"$env:GODOT_VERSION"
+
+          $user_data_dir = "~/AppData/Roaming/Godot/app_user_data"
+          New-Item -ItemType Directory -Force $user_data_dir | Out-Null
+          Write-Output "Created Godot user data directory."
+
+          Copy-Item ./.github/dist/editor_settings-4.6.tres -Destination ~/AppData/Roaming/Godot
+          Write-Output "Godot editor configuration installed."
+      - name: Run Tests
+        run: |
+          ./test.ps1 -c
+          ./test.ps1
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v6
+        if: success() || failure()
+        with:
+          report_paths: '**/test_results/result_*.xml'
+          fail_on_failure: true
