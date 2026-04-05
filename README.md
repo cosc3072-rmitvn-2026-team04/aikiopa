@@ -4,6 +4,13 @@ AIKIOΠA
 
 COSC3072 Games Studio 1 Project, Team 04, RMIT Vietnam 2026.
 
+<a href="https://github.com/cosc3072-rmitvn-2026-team04/aikiopa/releases/latest">
+    <img alt="Download Button" src="https://img.shields.io/badge/%E2%87%A9%20download-latest-00A36C?style=for-the-badge">
+</a>
+
+Other versions: [Releases](https://github.com/cosc3072-rmitvn-2026-team04/aikiopa/releases)
+
+
 ## 📦 Dependencies
 
 - Godot 4.6.2-stable
@@ -12,14 +19,9 @@ COSC3072 Games Studio 1 Project, Team 04, RMIT Vietnam 2026.
 - Git
 - Windows 10 and above (x64)
 
-Make sure you have installed these dependencies before continuing.
+Make sure these dependencies are installed before continuing. Using a package manager is recommended: [winget](https://github.com/microsoft/winget-cli), [chocolatey](https://chocolatey.org/), or [scoop](https://scoop.sh/).
 
-You might want to use a package manager. My recommendations are: [winget](https://github.com/microsoft/winget-cli), [chocolatey](https://chocolatey.org/), or [scoop](https://scoop.sh/).
-
-For Linux/Mac users, you are suggested to run a Windows virtual machine.
-
-**Note**: Our project targets Windows 10 and above (x64) PCs only, and our development environment is set up entirely around the Windows ecosystem.
-
+**Note**: This project targets Windows 10 and above (x64) PCs only, and the development environment is set up entirely around the Windows ecosystem. For Linux/Mac users, please use a Windows virtual machine.
 
 ## 🧩 Project Structure
 
