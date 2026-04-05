@@ -12,7 +12,7 @@ script = ExtResource("1_sul5r")
 [node name="World" parent="." unique_id=1513868058 instance=ExtResource("2_7h61r")]
 unique_name_in_owner = true
 
-[node name="MainCamera2D" parent="." unique_id=556469284 node_paths=PackedStringArray("world") instance=ExtResource("3_kelw5")]
+[node name="PlayerCamera2D" parent="." unique_id=556469284 node_paths=PackedStringArray("world") instance=ExtResource("3_kelw5")]
 unique_name_in_owner = true
 pan_speed = 2000
 world = NodePath("../World")
