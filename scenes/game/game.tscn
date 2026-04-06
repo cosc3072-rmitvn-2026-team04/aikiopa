@@ -14,20 +14,6 @@ script = ExtResource("1_sul5r")
 [node name="World" parent="." unique_id=1513868058 instance=ExtResource("2_7h61r")]
 unique_name_in_owner = true
 
-[node name="PlayerCamera2D" parent="." unique_id=556469284 node_paths=PackedStringArray("world") instance=ExtResource("3_kelw5")]
-unique_name_in_owner = true
-pan_speed = 2000
-world = NodePath("../World")
-
-[node name="DebugCamera2D" parent="." unique_id=1889864583 node_paths=PackedStringArray("world") instance=ExtResource("4_lfrn8")]
-unique_name_in_owner = true
-pan_speed = 5
-world = NodePath("../World")
-
-[node name="GameHUDCanvasLayer" type="CanvasLayer" parent="." unique_id=1835501581]
-
-[node name="GameHUD" parent="GameHUDCanvasLayer" unique_id=1279456757 instance=ExtResource("5_5i0tg")]
-
 [node name="BuildingStackController" type="Node" parent="." unique_id=1349143746]
 unique_name_in_owner = true
 script = ExtResource("5_lfrn8")
@@ -35,3 +21,18 @@ script = ExtResource("5_lfrn8")
 [node name="PopulationController" type="Node" parent="." unique_id=153495353]
 unique_name_in_owner = true
 script = ExtResource("6_5i0tg")
+
+[node name="GameHUDCanvasLayer" type="CanvasLayer" parent="." unique_id=1835501581]
+
+[node name="GameHUD" parent="GameHUDCanvasLayer" unique_id=1279456757 instance=ExtResource("5_5i0tg")]
+
+[node name="PlayerCamera2D" parent="." unique_id=556469284 node_paths=PackedStringArray("world") instance=ExtResource("3_kelw5")]
+unique_name_in_owner = true
+pan_speed = 2000
+world = NodePath("../World")
+
+[node name="DebugCamera2D" parent="." unique_id=1889864583 node_paths=PackedStringArray("world", "building_stack_controller") instance=ExtResource("4_lfrn8")]
+unique_name_in_owner = true
+pan_speed = 5
+world = NodePath("../World")
+building_stack_controller = NodePath("../BuildingStackController")
