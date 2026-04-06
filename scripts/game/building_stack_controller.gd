@@ -78,5 +78,17 @@ func pop_building() -> World.BuildingType:
 func get_building_queue() -> Array:
 	return _building_queue
 
+
+## Returns the number of building in the building stack. Empty building stack
+## always returns [code]0[/code]. See also [method is_empty].
+func size() -> int:
+	return _building_queue.size()
+
+
+## Returns [code]true[/code] if the building stack is empty ([code][][/code]).
+## See also [method size].
+func is_empty() -> bool:
+	return _building_queue.is_empty()
+
 #endregion
 # ============================================================================ #
