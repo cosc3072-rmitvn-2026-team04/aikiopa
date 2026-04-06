@@ -45,6 +45,7 @@ func initialize_session(
 		_rng.randomize()
 
 	_building_queue = building_queue
+	GameplayEventBus.building_stack_size_changed.emit(-1, size())
 
 
 ## Returns the seed of the internal [RandomNumberGenerator]. Useful for saving
@@ -64,8 +65,9 @@ func get_session_state() -> int:
 func add_building() -> void:
 	var new_building_type: World.BuildingType = _rng.randi_range(
 			1, World.BuildingType.size() - 1) as World.BuildingType
-	GameplayEventBus.building_stack_building_added.emit(new_building_type)
 	_building_queue.push_front(new_building_type)
+	GameplayEventBus.building_stack_building_added.emit(new_building_type)
+	GameplayEventBus.building_stack_size_changed.emit(size() - 1, size())
 
 
 ## Pops and returns the building type at the top of the building stack. Returns
@@ -75,6 +77,7 @@ func pop_building() -> World.BuildingType:
 		return World.BuildingType.NONE
 	var building_type: World.BuildingType = _building_queue.pop_back()
 	GameplayEventBus.building_stack_building_popped.emit(building_type)
+	GameplayEventBus.building_stack_size_changed.emit(size() + 1, size())
 	return building_type
 
 
@@ -85,7 +88,9 @@ func get_building_queue() -> Array:
 
 ## Removes all buildings from the building stack.
 func clear_building_queue() -> void:
+	var old_size: int = size()
 	_building_queue.clear()
+	GameplayEventBus.building_stack_size_changed.emit(old_size, size())
 
 
 ## Returns the number of building in the building stack. Empty building stack

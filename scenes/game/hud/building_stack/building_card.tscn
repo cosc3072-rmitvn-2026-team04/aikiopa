@@ -9,7 +9,6 @@
 script = ExtResource("1_qw75a")
 
 [node name="CardBackgroundSprite2D" type="Sprite2D" parent="." unique_id=229039851]
-unique_name_in_owner = true
 scale = Vector2(0.7357143, 0.73571426)
 texture = ExtResource("2_556cu")
 
