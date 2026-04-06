@@ -26,6 +26,10 @@ func _ready() -> void:
 	# Implement in #11.
 	_init_world()
 
+	# TODO: Add population restore functionality when restoring a session.
+	# Implement in #11.
+	_init_population()
+
 	# TODO: Add building stack restore functionality by providing session_seed
 	# and session_state when needed. Implement in #11.
 	_init_building_stack([])
@@ -52,6 +56,10 @@ func _input(event: InputEvent) -> void:
 func _init_world(world_seed: Variant = null) -> void:
 	%World.initialize(world_seed)
 	%World.create_chunk(Vector2i.ZERO)
+
+
+func _init_population() -> void:
+	%PopulationController.set_population(0)
 
 
 func _init_building_stack(

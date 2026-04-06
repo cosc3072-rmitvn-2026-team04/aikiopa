@@ -30,6 +30,12 @@ signal building_stack_building_added(building: World.BuildingType)
 signal building_stack_building_popped(building: World.BuildingType)
 
 
+## Emitted when the population has just been changed from [param old_amount] to
+## [param new_amount].
+@warning_ignore("unused_signal")
+signal population_changed(old_amount: int, new_amount: int)
+
+
 ## Emitted when [member Global.gameplay_debug_mode_enabled] changes to
 ## [param value].
 @warning_ignore("unused_signal")
