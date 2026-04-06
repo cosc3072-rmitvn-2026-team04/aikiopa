@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bg72upkhtf1cg" path="res://scenes/game/main_camera_2d.tscn" id="3_kelw5"]
 [ext_resource type="PackedScene" uid="uid://ccpo3uu672sqa" path="res://scenes/game/debug_camera_2d.tscn" id="4_lfrn8"]
 [ext_resource type="Script" uid="uid://0nisd2iu4boj" path="res://scripts/game/building_stack_controller.gd" id="5_lfrn8"]
+[ext_resource type="Script" uid="uid://lsdd5r28sxlv" path="res://scripts/game/population_controller.gd" id="6_5i0tg"]
 
 [node name="Game" type="Node2D" unique_id=1327406412]
 script = ExtResource("1_sul5r")
@@ -25,3 +26,8 @@ world = NodePath("../World")
 [node name="BuildingStackController" type="Node" parent="." unique_id=1349143746]
 unique_name_in_owner = true
 script = ExtResource("5_lfrn8")
+
+[node name="PopulationController" type="Node" parent="." unique_id=1075218116]
+unique_name_in_owner = true
+script = ExtResource("6_5i0tg")
+metadata/_custom_type_script = "uid://lsdd5r28sxlv"
