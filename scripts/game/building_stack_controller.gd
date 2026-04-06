@@ -1,0 +1,94 @@
+class_name BuildingStackController
+extends Node
+## Manages the player's building card stack. In computer science terms, this
+## works as a
+## [url=https://en.wikipedia.org/wiki/Queue_(abstract_data_type)]queue[/url].
+
+
+# ============================================================================ #
+#region Private variables
+
+var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
+var _building_queue: Array[World.BuildingType]
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Public methods
+
+## Initializes the building stack generator, or restore a previous state by
+## providing [param building_queue] [param session_seed], and
+## [param session_state] with non empty values.[br]
+## [br]
+## [b]Note:[/b] Do not set [param session_state] to arbitrary values, since the
+## internal [RandomNumberGenerator] requires its state to have certain qualities
+## to behave properly. It should only be set to values that came from
+## [method get_session_state].
+func initialize_session(
+		building_queue: Array[World.BuildingType],
+		session_seed: Variant = null,
+		session_state: Variant = null
+) -> void:
+	if (
+			(not session_seed and session_state)
+			or (session_seed and not session_state)
+	):
+		push_error("Both 'session_seed' and 'session_state' must be set.")
+
+	if session_seed and session_state:
+		_rng.seed = session_seed
+		_rng.state = session_state
+	else:
+		_rng.randomize()
+
+	_building_queue = building_queue
+
+
+## Returns the seed of the internal [RandomNumberGenerator]. Useful for saving
+## and restoring game sessions.
+func get_session_seed() -> int:
+	return _rng.seed
+
+
+## Returns the state of the internal [RandomNumberGenerator]. Useful for saving
+## and restoring game sessions.
+func get_session_state() -> int:
+	return _rng.state
+
+
+## Adds a random [enum World.BuildingType] to the bottom of the building stack,
+## then returns that building type.
+func add_building() -> void:
+	var new_building_type: World.BuildingType = _rng.randi_range(
+			0, World.BuildingType.size()) as World.BuildingType
+	GameplayEventBus.building_stack_building_added.emit(new_building_type)
+	_building_queue.push_front(new_building_type)
+
+
+## Pops and returns the building type at the top of the building stack.
+func pop_building() -> World.BuildingType:
+	var building_type: World.BuildingType = _building_queue.pop_back()
+	GameplayEventBus.building_stack_building_popped.emit(building_type)
+	return building_type
+
+
+## Returns the current building stack content.
+func get_building_queue() -> Array:
+	return _building_queue
+
+
+## Returns the number of building in the building stack. Empty building stack
+## always returns [code]0[/code]. See also [method is_empty].
+func size() -> int:
+	return _building_queue.size()
+
+
+## Returns [code]true[/code] if the building stack is empty ([code][][/code]).
+## See also [method size].
+func is_empty() -> bool:
+	return _building_queue.is_empty()
+
+#endregion
+# ============================================================================ #

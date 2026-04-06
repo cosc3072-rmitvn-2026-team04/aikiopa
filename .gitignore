@@ -121,3 +121,4 @@ addons/godot-git-plugin/
 **/build/*
 **/artifact/*
 **/test_results/*
+**/cc_check_reports/*
