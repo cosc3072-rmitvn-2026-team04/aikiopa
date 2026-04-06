@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://873u2m0dhb0d"]
 
 [ext_resource type="Script" uid="uid://btlo4kj56j4q1" path="res://scripts/modals/game_menu.gd" id="1_k7vw1"]
+[ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://assets/theme/soft_retro/soft_retro.tres" id="1_wifwp"]
 
 [node name="GameMenu" type="Control" unique_id=650760349]
 layout_mode = 3
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_wifwp")
 script = ExtResource("1_k7vw1")
 metadata/_custom_type_script = "uid://cupvablkoadik"
 

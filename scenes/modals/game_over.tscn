@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://c2jk4roqpaohs"]
 
+[ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://assets/theme/soft_retro/soft_retro.tres" id="1_18j6f"]
 [ext_resource type="Script" uid="uid://fh4lfcav0lye" path="res://scripts/modals/game_over.gd" id="1_n68tj"]
 
 [node name="GameOver" type="Control" unique_id=1463684322]
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_18j6f")
 script = ExtResource("1_n68tj")
 metadata/_custom_type_script = "uid://cupvablkoadik"
 
