@@ -8,7 +8,7 @@
 [node name="BuildingCard" type="Node2D" unique_id=1572232253]
 script = ExtResource("1_qw75a")
 
-[node name="CardBackgroudnSprite2D" type="Sprite2D" parent="." unique_id=229039851]
+[node name="CardBackgroundSprite2D" type="Sprite2D" parent="." unique_id=229039851]
 scale = Vector2(0.7357143, 0.73571426)
 texture = ExtResource("2_556cu")
 
@@ -16,10 +16,10 @@ texture = ExtResource("2_556cu")
 scale = Vector2(0.78333336, 0.78333336)
 texture = ExtResource("3_eb2xf")
 
-[node name="CardBuildingSprite2D" type="Sprite2D" parent="." unique_id=754960362]
+[node name="BuildingSprite2D" type="Sprite2D" parent="." unique_id=754960362]
 texture = ExtResource("4_556cu")
 
-[node name="BuildingTypeLabel" type="Label" parent="." unique_id=2033516656]
+[node name="BuildingNameLabel" type="Label" parent="." unique_id=2033516656]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
