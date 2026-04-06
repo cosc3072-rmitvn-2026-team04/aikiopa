@@ -1,11 +1,7 @@
 [gd_scene format=3 uid="uid://csffjo6oq4r5m"]
 
-[ext_resource type="PackedScene" uid="uid://cbg7jm82if8yt" path="res://scenes/game/building_card.tscn" id="1_a2eni"]
-[ext_resource type="Script" uid="uid://dvq70xagotyu0" path="res://scripts/core/building_stack_ui.gd" id="1_als84"]
-
-[sub_resource type="Curve" id="Curve_als84"]
-_data = [Vector2(0, 0.75), inf, 0.0, 1, 0, Vector2(0, 0), 0.0, inf, 0, 1]
-point_count = 2
+[ext_resource type="Script" uid="uid://dvq70xagotyu0" path="res://scripts/game/hud/building_stack/building_stack_ui.gd" id="1_8yw7d"]
+[ext_resource type="PackedScene" uid="uid://r1yjn2jyu7k4" path="res://scenes/game/hud/building_stack/building_card.tscn" id="2_l8etm"]
 
 [node name="BuildingStackUI" type="Control" unique_id=776021788]
 layout_mode = 3
@@ -14,8 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_als84")
-stack_line = SubResource("Curve_als84")
+script = ExtResource("1_8yw7d")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=822009139]
 layout_mode = 1
@@ -30,11 +25,11 @@ layout_mode = 2
 size_flags_horizontal = 2
 size_flags_vertical = 10
 
-[node name="BuildingCard" parent="HBoxContainer/VBoxContainer" unique_id=879746246 instance=ExtResource("1_a2eni")]
-layout_mode = 2
+[node name="BuildingCard" parent="HBoxContainer/VBoxContainer" unique_id=1572232253 instance=ExtResource("2_l8etm")]
 
 [node name="StackCountLabel" type="Label" parent="HBoxContainer" unique_id=707642239]
 layout_mode = 2
 size_flags_horizontal = 2
 size_flags_vertical = 8
+theme_override_font_sizes/font_size = 32
 text = "NaN"

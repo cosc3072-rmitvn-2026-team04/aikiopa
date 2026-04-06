@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://r1yjn2jyu7k4"]
+
+[ext_resource type="Script" uid="uid://cqpexnwf8xpcb" path="res://scripts/game/hud/building_stack/building_card.gd" id="1_qw75a"]
+
+[node name="BuildingCard" type="Node2D" unique_id=1572232253]
+script = ExtResource("1_qw75a")

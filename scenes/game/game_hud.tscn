@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cjhu160u42vae"]
 
 [ext_resource type="Script" uid="uid://cupvablkoadik" path="res://scripts/core/game_ui.gd" id="1_umjp7"]
-[ext_resource type="PackedScene" uid="uid://ceidjllo3lsnq" path="res://scenes/game/building_stack_ui.tscn" id="2_snjka"]
+[ext_resource type="PackedScene" uid="uid://csffjo6oq4r5m" path="res://scenes/game/hud/building_stack/building_stack_ui.tscn" id="2_snjka"]
 
 [node name="GameHUD" type="Control" unique_id=1279456757]
 layout_mode = 3
@@ -30,7 +30,5 @@ theme_override_font_sizes/font_size = 40
 text = "NaN"
 horizontal_alignment = 2
 
-[node name="BuildingStackUI" parent="VBoxContainer" unique_id=776021788 instance=ExtResource("2_snjka")]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 10
+[node name="BuildingStackUI" parent="." unique_id=776021788 instance=ExtResource("2_snjka")]
+layout_mode = 1
