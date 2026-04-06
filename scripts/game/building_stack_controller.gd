@@ -63,13 +63,16 @@ func get_session_state() -> int:
 ## then returns that building type.
 func add_building() -> void:
 	var new_building_type: World.BuildingType = _rng.randi_range(
-			0, World.BuildingType.size()) as World.BuildingType
+			1, World.BuildingType.size() - 1) as World.BuildingType
 	GameplayEventBus.building_stack_building_added.emit(new_building_type)
 	_building_queue.push_front(new_building_type)
 
 
-## Pops and returns the building type at the top of the building stack.
+## Pops and returns the building type at the top of the building stack. Returns
+## [constant World.BuildingType.NONE] if the building stack is already empty.
 func pop_building() -> World.BuildingType:
+	if is_empty():
+		return World.BuildingType.NONE
 	var building_type: World.BuildingType = _building_queue.pop_back()
 	GameplayEventBus.building_stack_building_popped.emit(building_type)
 	return building_type
