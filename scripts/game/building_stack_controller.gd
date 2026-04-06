@@ -36,6 +36,7 @@ func initialize_session(
 			or (session_seed and not session_state)
 	):
 		push_error("Both 'session_seed' and 'session_state' must be set.")
+		return
 
 	if session_seed and session_state:
 		_rng.seed = session_seed
@@ -77,6 +78,11 @@ func pop_building() -> World.BuildingType:
 ## Returns the current building stack content.
 func get_building_queue() -> Array:
 	return _building_queue
+
+
+## Removes all buildings from the building stack.
+func clear_building_queue() -> void:
+	_building_queue.clear()
 
 
 ## Returns the number of building in the building stack. Empty building stack
