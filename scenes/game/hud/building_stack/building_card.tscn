@@ -1,18 +1,18 @@
 [gd_scene format=3 uid="uid://r1yjn2jyu7k4"]
 
 [ext_resource type="Script" uid="uid://cqpexnwf8xpcb" path="res://scripts/game/hud/building_stack/building_card.gd" id="1_qw75a"]
-[ext_resource type="Texture2D" uid="uid://7gur76lg1o76" path="res://assets/placeholder_card.png" id="2_0a03e"]
+[ext_resource type="Texture2D" uid="uid://da2bkj7jo73c4" path="res://assets/cardbackground.png" id="2_556cu"]
 [ext_resource type="Texture2D" uid="uid://cdd2qh0mo4cfc" path="res://assets/objects/building_landing_site.png" id="3_556cu"]
+[ext_resource type="Texture2D" uid="uid://duymi0vx3cagj" path="res://assets/cardforeground.png" id="3_eb2xf"]
 
 [node name="BuildingCard" type="Node2D" unique_id=1572232253]
 script = ExtResource("1_qw75a")
 
 [node name="CardBackgroudnSprite2D" type="Sprite2D" parent="." unique_id=229039851]
-texture = ExtResource("2_0a03e")
+texture = ExtResource("2_556cu")
 
 [node name="CardForegroundSprite2D" type="Sprite2D" parent="." unique_id=51360371]
-scale = Vector2(0.74885845, 0.74885845)
-texture = ExtResource("2_0a03e")
+texture = ExtResource("3_eb2xf")
 
 [node name="CardBuildingSprite2D" type="Sprite2D" parent="." unique_id=754960362]
 texture = ExtResource("3_556cu")
