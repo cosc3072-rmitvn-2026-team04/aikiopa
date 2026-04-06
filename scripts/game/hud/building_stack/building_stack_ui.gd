@@ -26,7 +26,7 @@ func _ready() -> void:
 
 func _on_building_stack_building_added(building: World.BuildingType) -> void:
 	var building_card: Node2D = _building_card_scene.instantiate()
-	building_card.position += building_card.size * 2
+	building_card.position += building_card.get_size() / 2
 	%BuildingStack.add_child(building_card)
 	print("building added: %s" % [World.BuildingType.keys()[building]])
 
