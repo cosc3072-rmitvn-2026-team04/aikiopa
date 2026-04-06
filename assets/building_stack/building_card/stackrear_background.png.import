@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://drsmsbinxipa8"
-path="res://.godot/imported/placeholder.png-98e7930e828c35923f039562160474e1.ctex"
+uid="uid://da2bkj7jo73c4"
+path="res://.godot/imported/stackrear_background.png-b0a08b927f43fce5fda64e41f0dc4903.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/placeholder.png"
-dest_files=["res://.godot/imported/placeholder.png-98e7930e828c35923f039562160474e1.ctex"]
+source_file="res://assets/building_stack/building_card/stackrear_background.png"
+dest_files=["res://.godot/imported/stackrear_background.png-b0a08b927f43fce5fda64e41f0dc4903.ctex"]
 
 [params]
 
