@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://r1yjn2jyu7k4"]
 
 [ext_resource type="Script" uid="uid://cqpexnwf8xpcb" path="res://scripts/game/hud/building_stack/building_card.gd" id="1_qw75a"]
-[ext_resource type="Texture2D" uid="uid://da2bkj7jo73c4" path="res://assets/building_stack/building_card/stackrear_background.png" id="2_556cu"]
+[ext_resource type="Texture2D" uid="uid://da2bkj7jo73c4" path="res://assets/building_stack/building_card/bg.png" id="2_556cu"]
 [ext_resource type="Texture2D" uid="uid://duymi0vx3cagj" path="res://assets/building_stack/building_card/food_fg.png" id="3_eb2xf"]
 [ext_resource type="Texture2D" uid="uid://blv8s18o0w2uu" path="res://assets/objects/building_factory.png" id="4_556cu"]
 
@@ -9,14 +9,13 @@
 script = ExtResource("1_qw75a")
 
 [node name="CardBackgroundSprite2D" type="Sprite2D" parent="." unique_id=229039851]
-scale = Vector2(0.7357143, 0.73571426)
 texture = ExtResource("2_556cu")
 
 [node name="CardForegroundSprite2D" type="Sprite2D" parent="." unique_id=51360371]
-scale = Vector2(0.78333336, 0.78333336)
 texture = ExtResource("3_eb2xf")
 
 [node name="BuildingSprite2D" type="Sprite2D" parent="." unique_id=754960362]
+position = Vector2(0, -8)
 texture = ExtResource("4_556cu")
 
 [node name="BuildingNameLabel" type="Label" parent="." unique_id=2033516656]
@@ -25,12 +24,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -59.5
-offset_top = 75.0
-offset_right = 59.5
-offset_bottom = 98.0
+offset_left = -58.0
+offset_top = 58.0
+offset_right = 61.0
+offset_bottom = 81.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "<BuildingType>"
 horizontal_alignment = 1
 vertical_alignment = 1

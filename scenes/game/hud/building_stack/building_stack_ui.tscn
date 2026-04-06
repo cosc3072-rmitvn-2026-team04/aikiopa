@@ -12,6 +12,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8yw7d")
+card_separation = 16
+container_padding = Vector2i(16, 16)
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1622802902]
 layout_mode = 1
@@ -28,7 +30,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 48
 theme_override_styles/focus = SubResource("StyleBoxEmpty_bfcrc")
 text = "NaN"
 horizontal_alignment = 1
@@ -38,3 +40,4 @@ vertical_alignment = 1
 unique_name_in_owner = true
 
 [node name="PlaceholderBuildingCard" parent="BuildingStack" unique_id=1572232253 instance_placeholder="res://scenes/game/hud/building_stack/building_card.tscn"]
+position = Vector2(150, 110)

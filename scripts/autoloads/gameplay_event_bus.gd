@@ -30,12 +30,6 @@ signal building_stack_building_added(building: World.BuildingType)
 signal building_stack_building_popped(building: World.BuildingType)
 
 
-## Emitted when the mount of building card in the building stack has just
-## changed.
-@warning_ignore("unused_signal")
-signal building_stack_size_changed(old_count: int, new_count: int)
-
-
 ## Emitted when the population has just been changed from [param old_amount] to
 ## [param new_amount].
 @warning_ignore("unused_signal")

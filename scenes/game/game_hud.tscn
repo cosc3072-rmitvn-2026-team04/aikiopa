@@ -4,9 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://csffjo6oq4r5m" path="res://scenes/game/hud/building_stack/building_stack_ui.tscn" id="2_snjka"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_snjka"]
-content_margin_left = 32.0
+content_margin_left = 48.0
 content_margin_top = 24.0
-content_margin_right = 32.0
+content_margin_right = 48.0
 content_margin_bottom = 24.0
 
 [node name="GameHUD" type="Control" unique_id=1279456757]
@@ -35,7 +35,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_stretch_ratio = 88.8
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 64
 theme_override_styles/normal = SubResource("StyleBoxEmpty_snjka")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_snjka")
 text = "NaN"
