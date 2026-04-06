@@ -8,7 +8,7 @@ extends Node2D
 
 ## Emitted when a building is successfully added.
 @warning_ignore("unused_signal")
-signal building_added(coords: Vector2i, type: BuildingTypes)
+signal building_added(coords: Vector2i, type: BuildingType)
 
 ## Emitted when a building is successfully removed.
 @warning_ignore("unused_signal")
@@ -23,36 +23,36 @@ signal building_removed(coords: Vector2i)
 
 ## Terrain types (including terrain features) in the game.
 enum TerrainType {
-	None,
-	ShallowWater,
-	ShallowWaterFishes,
-	DeepWater,
-	Plain,
-	PlainForest,
-	PlainMountain,
-	PlainChasm,
-	Grassland,
-	GrasslandForest,
-	GrasslandMountain,
-	GrasslandChasm,
-	Desert,
-	DesertDunes,
-	DesertMountain,
-	DesertChasm,
+	NONE,
+	SHALLOW_WATER,
+	SHALLOW_WATER_FISHES,
+	DEEP_WATER,
+	PLAIN,
+	PLAIN_FOREST,
+	PLAIN_MOUNTAIN,
+	PLAIN_CHASM,
+	GRASSLAND,
+	GRASSLAND_FOREST,
+	GRASSLAND_MOUNTAIN,
+	GRASSLAND_CHASM,
+	DESERT,
+	DESERT_DUNES,
+	DESERT_MOUNTAIN,
+	DESERT_CHASM,
 }
 
 ## The building types available in the game.
-enum BuildingTypes {
-	None,
-	LandingSite,
-	Housing,
-	SolarFarm,
-	WindFarm,
-	NuclearReactor,
-	Greenhouse,
-	Ranch,
-	Fishery,
-	Factory,
+enum BuildingType {
+	NONE,
+	LANDING_SITE,
+	HOUSING,
+	SOLAR_FARM,
+	WIND_FARM,
+	NUCLEAR_REACTOR,
+	GREENHOUSE,
+	RANCH,
+	FISHERY,
+	FACTORY,
 }
 
 #endregion
@@ -103,15 +103,21 @@ func get_chunk_size() -> Vector2i:
 	return %WorldGenerator.chunk_size
 
 
-## Generates new [World] seeds, effectively creating a new world.
-func generate_seeds() -> void:
-	%WorldGenerator.generate_seeds()
+## Initializes a new randomized world if the optional parameter
+## [param world_seed] is not given or is [code]null[/code]. Otherwise
+## initializes a world with the given seed.
+func initialize(world_seed: Variant = null) -> void:
+	if world_seed and typeof(world_seed) != TYPE_INT:
+		push_error(
+				"Invalid parameter type for 'world_seed'. Must be int or null.")
+		return
+	%WorldGenerator.generate_seeds(world_seed)
 	_generated_chunks.clear()
 
 
-## Returns the current world's seeds.
-func get_seeds() -> Dictionary[String, int]:
-	return %WorldGenerator.get_seeds()
+## Returns the current world's seed.
+func get_seed() -> int:
+	return %WorldGenerator.get_seed()
 
 
 ## Generates new world chunk at [param chunk_offset]. [param chunk_offset]
@@ -176,31 +182,31 @@ func set_terrain_at(coords: Vector2i, terrain_type: TerrainType) -> void:
 		get_terrain_tile_map_layer().SOURCE_ID,
 		get_terrain_tile_map_layer().ATLAS_COORDS[terrain_type])
 	match terrain_type:
-		TerrainType.PlainMountain, TerrainType.GrasslandMountain, TerrainType.DesertMountain:
+		TerrainType.PLAIN_MOUNTAIN, TerrainType.GRASSLAND_MOUNTAIN, TerrainType.DESERT_MOUNTAIN:
 			var mountain: Node2D = _terrain_feature_mountain.instantiate()
 			_terrain_features.set(coords, mountain)
 			mountain.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(mountain)
-		TerrainType.PlainChasm, TerrainType.GrasslandChasm, TerrainType.DesertChasm:
+		TerrainType.PLAIN_CHASM, TerrainType.GRASSLAND_CHASM, TerrainType.DESERT_CHASM:
 			var chasm: Node2D = _terrain_feature_chasm.instantiate()
 			_terrain_features.set(coords, chasm)
 			chasm.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(chasm)
-		TerrainType.DesertDunes:
+		TerrainType.DESERT_DUNES:
 			var sand_dunes: Node2D = _terrain_feature_sand_dunes.instantiate()
 			_terrain_features.set(coords, sand_dunes)
 			sand_dunes.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(sand_dunes)
-		TerrainType.PlainForest, TerrainType.GrasslandForest:
+		TerrainType.PLAIN_FOREST, TerrainType.GRASSLAND_FOREST:
 			var forest: Node2D = _terrain_feature_forest.instantiate()
 			_terrain_features.set(coords, forest)
 			forest.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(forest)
-		TerrainType.ShallowWaterFishes:
+		TerrainType.SHALLOW_WATER_FISHES:
 			var fishes: Node2D = _terrain_feature_fishes.instantiate()
 			_terrain_features.set(coords, fishes)
 			fishes.position = get_terrain_tile_map_layer()\
@@ -212,16 +218,16 @@ func set_terrain_at(coords: Vector2i, terrain_type: TerrainType) -> void:
 ## Returns the [enum World.TerrainType] at [param coords].
 func get_terrain_at(_coords: Vector2i) -> TerrainType:
 	assert(false, "Game.get_terrain_at() not implemented")
-	return TerrainType.None
+	return TerrainType.NONE
 
 
 # TODO: Implement this.
-## Sets the building at [param coords] to one of [enum World.BuildingTypes].
+## Sets the building at [param coords] to one of [enum World.BuildingType].
 ## Automatically assign variation(s) at random.[br]
 ## [br]
 ## Returns [code]false[/code] if there is already an existing building at
 ## [param coords].
-func set_building_at(_coords: Vector2i, _type: BuildingTypes) -> bool:
+func set_building_at(_coords: Vector2i, _type: BuildingType) -> bool:
 	assert(false, "Game.set_building_at() not implemented")
 	return false
 
@@ -231,16 +237,16 @@ func set_building_at(_coords: Vector2i, _type: BuildingTypes) -> bool:
 ## [br]
 ## Returns [code]false[/code] if there is no existing building at
 ## [param coords].
-func remove_building_at(_coords: Vector2i, _type: BuildingTypes) -> bool:
+func remove_building_at(_coords: Vector2i, _type: BuildingType) -> bool:
 	assert(false, "Game.remove_building_at() not implemented")
 	return false
 
 
 # TODO: Implement this.
-## Returns the [enum World.BuildingTypes] at [param coords].
-func get_building_at(_coords: Vector2i) -> BuildingTypes:
+## Returns the [enum World.BuildingType] at [param coords].
+func get_building_at(_coords: Vector2i) -> BuildingType:
 	assert(false, "Game.get_terrain_at() not implemented")
-	return BuildingTypes.None
+	return BuildingType.NONE
 
 #endregion
 # ============================================================================ #

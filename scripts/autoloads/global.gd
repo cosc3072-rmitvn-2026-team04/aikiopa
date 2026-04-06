@@ -69,6 +69,7 @@ func _exit_tree() -> void:
 ## Game state data. Contains relevant information on the current state of the
 ## game.
 class GameState extends Node:
+	# gdlint:ignore = unnecessary-pass
 	pass
 
 #endregion
