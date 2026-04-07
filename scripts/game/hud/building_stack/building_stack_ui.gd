@@ -5,8 +5,8 @@ extends Control
 #region Exported properties
 
 @export var revealed_card_spread_curve: Curve
-@export_range(0, 250, 1, "suffix:px") var revealed_card_max_separation: int = 0
-@export_range(0, 250, 1, "suffix:px") var collapsed_card_separation: int = 0
+@export_range(0, 520, 1, "suffix:px") var max_revealed_card_offset: int = 0
+@export_range(0, 250, 1, "suffix:px") var collapsed_card_offset: int = 0
 @export_range(0, 720, 1, "suffix:px") var container_height: int = 520
 @export_range(1, 10, 1, "suffix:cards") var max_revealed_card_count: int = 1
 @export var container_padding: Vector2i = Vector2i.ZERO
@@ -58,19 +58,26 @@ func _update_building_card_positions() -> void:
 				building_card_size.x * 0.5,
 				size.y - building_card_size.y * 0.5
 		)
-		if building_card_count >= max_revealed_card_count:
-			building_card.position.y -= collapsed_card_separation * index
-			if index >= building_card_count - max_revealed_card_count:
-				building_card.position.y -= building_card_size.y
+
+		if index < building_card_count - max_revealed_card_count:
+			building_card.position.y -= collapsed_card_offset * index
 		else:
-			building_card.position = Vector2(
-					building_card_size.x * 0.5,
-					size.y - building_card_size.y * 0.5
-			)
+			var collapsed_card_stack_height: float = max(
+					(
+							collapsed_card_offset
+							* (building_card_count - max_revealed_card_count - 1)
+					), 0)
+			var revealed_card_index: int = min(
+					(
+							-building_card_count
+							+ max_revealed_card_count
+							+ index
+					), index)
+			building_card.position.y -= collapsed_card_stack_height
 			building_card.position.y -= (
-					revealed_card_max_separation
+					max_revealed_card_offset
 					* revealed_card_spread_curve.sample(
-							float(index + 1) / max_revealed_card_count)
+							float(revealed_card_index) / (max_revealed_card_count - 1))
 			)
 
 		# Add padding.
