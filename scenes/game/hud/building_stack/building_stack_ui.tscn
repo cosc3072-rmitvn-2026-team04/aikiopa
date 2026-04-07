@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://csffjo6oq4r5m"]
 
 [ext_resource type="Script" uid="uid://dvq70xagotyu0" path="res://scripts/game/hud/building_stack/building_stack_ui.gd" id="1_8yw7d"]
+[ext_resource type="Curve" uid="uid://c7mvftrliarys" path="res://resources/building_stack/revealed_card_spread_curve.tres" id="2_8yw7d"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bfcrc"]
 
@@ -12,8 +13,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8yw7d")
-card_separation = 16
-container_padding = Vector2i(16, 16)
+revealed_card_spread_curve = ExtResource("2_8yw7d")
+revealed_card_max_separation = 250
+collapsed_card_separation = 12
+max_revealed_card_count = 3
+container_padding = Vector2i(12, 12)
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1622802902]
 layout_mode = 1
@@ -22,7 +26,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 400
+theme_override_constants/margin_left = 348
 theme_override_constants/margin_bottom = 32
 
 [node name="BuildingStackCountLabel" type="Label" parent="MarginContainer" unique_id=707642239]

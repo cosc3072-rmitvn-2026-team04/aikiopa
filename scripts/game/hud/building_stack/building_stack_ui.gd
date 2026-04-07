@@ -4,9 +4,11 @@ extends Control
 # ============================================================================ #
 #region Exported properties
 
-@export var card_spread_curve: Curve
-@export_range(0, 120, 1, "suffix:px") var card_separation: int = 0
+@export var revealed_card_spread_curve: Curve
+@export_range(0, 250, 1, "suffix:px") var revealed_card_max_separation: int = 0
+@export_range(0, 250, 1, "suffix:px") var collapsed_card_separation: int = 0
 @export_range(0, 720, 1, "suffix:px") var container_height: int = 520
+@export_range(1, 10, 1, "suffix:cards") var max_revealed_card_count: int = 1
 @export var container_padding: Vector2i = Vector2i.ZERO
 
 #endregion
@@ -55,8 +57,21 @@ func _update_building_card_positions() -> void:
 		building_card.position = Vector2(
 				building_card_size.x * 0.5,
 				size.y - building_card_size.y * 0.5
-				- (building_card_size.y + card_separation) * index
 		)
+		if building_card_count >= max_revealed_card_count:
+			building_card.position.y -= collapsed_card_separation * index
+			if index >= building_card_count - max_revealed_card_count:
+				building_card.position.y -= building_card_size.y
+		else:
+			building_card.position = Vector2(
+					building_card_size.x * 0.5,
+					size.y - building_card_size.y * 0.5
+			)
+			building_card.position.y -= (
+					revealed_card_max_separation
+					* revealed_card_spread_curve.sample(
+							float(index + 1) / max_revealed_card_count)
+			)
 
 		# Add padding.
 		building_card.position += Vector2(
@@ -76,6 +91,7 @@ func _on_building_stack_building_added(building: World.BuildingType) -> void:
 	var building_card: BuildingCard = _building_card_scene.instantiate()
 	building_card.set_type(building)
 	%BuildingStack.add_child(building_card)
+	%BuildingStack.move_child(building_card, 0)
 	%BuildingStackCountLabel.text = "%d" % Global.game_state.building_stack.size()
 	_update_building_card_positions()
 
@@ -83,7 +99,7 @@ func _on_building_stack_building_added(building: World.BuildingType) -> void:
 # Listens to
 # GameplayEventBus.building_stack_building_popped(building: World.BuildingType).
 func _on_building_stack_building_popped(_building: World.BuildingType) -> void:
-	var top_building_card: BuildingCard = %BuildingStack.get_child(0)
+	var top_building_card: BuildingCard = %BuildingStack.get_child(-1)
 	%BuildingStack.remove_child(top_building_card)
 	%BuildingStackCountLabel.text = "%d" % Global.game_state.building_stack.size()
 	_update_building_card_positions()
