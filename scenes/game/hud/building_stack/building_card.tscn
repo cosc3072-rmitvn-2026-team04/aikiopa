@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cqpexnwf8xpcb" path="res://scripts/game/hud/building_stack/building_card.gd" id="1_qw75a"]
 [ext_resource type="Texture2D" uid="uid://da2bkj7jo73c4" path="res://assets/building_stack/building_card/bg.png" id="2_556cu"]
 [ext_resource type="Texture2D" uid="uid://duymi0vx3cagj" path="res://assets/building_stack/building_card/food_fg.png" id="3_eb2xf"]
-[ext_resource type="Texture2D" uid="uid://blv8s18o0w2uu" path="res://assets/objects/building_factory.png" id="4_556cu"]
+[ext_resource type="Texture2D" uid="uid://c55vc5m23tmso" path="res://assets/objects/building_ranch.png" id="4_556cu"]
 
 [node name="BuildingCard" type="Node2D" unique_id=1572232253]
 script = ExtResource("1_qw75a")
