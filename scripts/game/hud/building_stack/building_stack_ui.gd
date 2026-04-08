@@ -7,7 +7,7 @@ extends Control
 @export var revealed_card_spread_curve: Curve
 @export_range(0, 520, 1, "suffix:px") var max_revealed_card_offset: int = 0
 @export_range(0, 250, 1, "suffix:px") var collapsed_card_offset: int = 0
-@export_range(0, 720, 1, "suffix:px") var container_height: int = 520
+@export_range(0, 1080, 1, "suffix:px") var max_container_height: int = 1080
 @export_range(1, 10, 1, "suffix:cards") var max_revealed_card_count: int = 1
 @export var container_padding: Vector2i = Vector2i.ZERO
 
@@ -18,7 +18,8 @@ extends Control
 # ============================================================================ #
 #region Private variables
 
-var _building_card_scene = preload("res://scenes/game/hud/building_stack/building_card.tscn")
+var _building_card_scene = preload(
+		"res://scenes/game/hud/building_stack/building_card.tscn")
 
 #endregion
 # ============================================================================ #
@@ -87,6 +88,26 @@ func _update_building_card_positions() -> void:
 				container_padding.x,
 				-container_padding.y)
 
+
+func _update_building_stack_position() -> void:
+	%BuildingStack.position = Vector2.ZERO
+
+	var building_card_count: int = %BuildingStack.get_child_count()
+	if building_card_count == 0:
+		return
+
+	var top_building_card: BuildingCard = %BuildingStack.get_child(-1)
+	var bottom_building_card: BuildingCard = %BuildingStack.get_child(0)
+	var container_height: float = (
+			bottom_building_card.position.y + bottom_building_card.get_size().y
+			- top_building_card.position.y + top_building_card.get_size().y
+	)
+	if container_height > max_container_height:
+		%BuildingStack.position.y += (
+				container_height - max_container_height
+				- container_padding.y
+		)
+
 #endregion
 # ============================================================================ #
 
@@ -103,6 +124,7 @@ func _on_building_stack_building_added(building: World.BuildingType) -> void:
 	%BuildingStack.move_child(building_card, 0)
 	%BuildingStackCountLabel.text = "%d" % Global.game_state.building_stack.size()
 	_update_building_card_positions()
+	_update_building_stack_position()
 
 
 # Listens to
@@ -112,6 +134,7 @@ func _on_building_stack_building_popped(_building: World.BuildingType) -> void:
 	%BuildingStack.remove_child(top_building_card)
 	%BuildingStackCountLabel.text = "%d" % Global.game_state.building_stack.size()
 	_update_building_card_positions()
+	_update_building_stack_position()
 	top_building_card.queue_free()
 
 #endregion

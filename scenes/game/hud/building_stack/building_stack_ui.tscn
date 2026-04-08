@@ -16,6 +16,7 @@ script = ExtResource("1_8yw7d")
 revealed_card_spread_curve = ExtResource("2_8yw7d")
 max_revealed_card_offset = 132
 collapsed_card_offset = 16
+max_container_height = 620
 max_revealed_card_count = 3
 container_padding = Vector2i(12, 12)
 
