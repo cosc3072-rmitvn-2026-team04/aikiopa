@@ -26,6 +26,11 @@ const BUILDING_ASSET_PATH = "res://assets/objects/"
 ## player. See [method is_picked].
 @export_range(0, 200, 1, "suffix:%") var picked_scale: int = 100
 
+## The visual "pop-up" offset when a building card is picked up by the player.
+## See [method is_picked]. This is to give extra emphasis that the card is
+## being picked up.
+@export_range(0, 128, 1, "suffix:px") var picked_offset: int = 0
+
 #endregion
 # ============================================================================ #
 
@@ -50,23 +55,25 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if not _is_pickable:
+	if not is_pickable():
 		return
-	if not _is_picked and event is InputEventMouseMotion:
+
+	if not is_picked() and event is InputEventMouseMotion:
 		if $CardBackgroundSprite2D.get_rect().has_point(to_local(event.position)):
 			_set_hovered()
 		else:
 			_unset_hovered()
+
 	if event is InputEventMouseButton and event.pressed:
-		if (
-				event.button_index == MOUSE_BUTTON_LEFT
-				and $CardBackgroundSprite2D.get_rect().has_point(
-						to_local(event.position))
-		):
-			GameplayEventBus.building_card_picked.emit(get_building_type())
-			set_picked()
-		elif event.button_index == MOUSE_BUTTON_RIGHT:
-			GameplayEventBus.building_card_dropped.emit(get_building_type())
+		var is_event_inside: bool =\
+				$CardBackgroundSprite2D.get_rect().has_point(to_local(event.position))
+
+		if is_event_inside and event.button_index == MOUSE_BUTTON_LEFT:
+			if not is_picked():
+				set_picked()
+			else:
+				unset_picked()
+		elif event.button_index == MOUSE_BUTTON_RIGHT and is_picked():
 			unset_picked()
 
 #endregion
@@ -116,14 +123,18 @@ func is_picked() -> bool:
 ## [method is_picked].
 func set_picked() -> void:
 	_is_picked = true
+	GameplayEventBus.building_card_picked.emit(get_building_type())
 	scale = Vector2.ONE * (float(picked_scale) / 100)
+	position.y -= picked_offset
 
 
 ## Sets this building card as NOT being picked up by the player. See
 ## [method is_picked].
 func unset_picked() -> void:
 	_is_picked = false
+	GameplayEventBus.building_card_dropped.emit(get_building_type())
 	scale = Vector2.ONE * (float(pickable_scale) / 100)
+	position.y += picked_offset
 
 
 ## Update the visual elements for this building card to match [param building].
