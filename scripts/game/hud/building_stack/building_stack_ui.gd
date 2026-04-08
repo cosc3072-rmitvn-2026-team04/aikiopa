@@ -79,6 +79,8 @@ func _update_building_card_positions() -> void:
 					* revealed_card_spread_curve.sample(
 							float(revealed_card_index) / (max_revealed_card_count - 1))
 			)
+			if building_card_count > max_revealed_card_count:
+				building_card.position.y -= collapsed_card_offset
 
 		# Add padding.
 		building_card.position += Vector2(
