@@ -9,11 +9,12 @@ const BUILDING_ASSET_PATH = "res://assets/objects/"
 # ============================================================================ #
 #region Public methods
 
+## Returns the screen size of this building card.
 func get_size() -> Vector2i:
 	return $CardBackgroundSprite2D.get_rect().size
 
 
-## Change type for CardForegroundSprite2D, BuildingSprite2D, BuildingNameLabel
+## Update the visual elements for this building card to match [param building].
 func set_type(building: World.BuildingType) -> void:
 	match building:
 		World.BuildingType.HOUSING:
