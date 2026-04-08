@@ -5,13 +5,9 @@ extends Node
 ## [url=https://en.wikipedia.org/wiki/Queue_(abstract_data_type)]queue[/url].
 
 
-# ============================================================================ #
-#region Private variables
+const GENERATED_BUILDING_TYPES_START_INDEX: int = 2
 
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
-
-#endregion
-# ============================================================================ #
 
 
 # ============================================================================ #
@@ -62,7 +58,8 @@ func get_session_state() -> int:
 ## then returns that building type.
 func add_building() -> void:
 	var new_building_type: World.BuildingType = _rng.randi_range(
-			1, World.BuildingType.size() - 1) as World.BuildingType
+			GENERATED_BUILDING_TYPES_START_INDEX,
+			World.BuildingType.size() - 1) as World.BuildingType
 	Global.game_state.building_stack.push_front(new_building_type)
 	GameplayEventBus.building_stack_building_added.emit(new_building_type)
 
