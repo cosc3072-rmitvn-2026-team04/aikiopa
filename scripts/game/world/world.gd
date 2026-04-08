@@ -60,6 +60,26 @@ enum BuildingType {
 
 
 # ============================================================================ #
+#region Constants
+
+const BUILDING_NAME: Dictionary[BuildingType, String] = {
+	BuildingType.NONE: "",
+	BuildingType.LANDING_SITE: "Landing Site",
+	BuildingType.HOUSING: "Housing",
+	BuildingType.SOLAR_FARM: "Solar Farm",
+	BuildingType.WIND_FARM: "Wind Farm",
+	BuildingType.NUCLEAR_REACTOR: "Nuclear Reactor",
+	BuildingType.GREENHOUSE: "Greenhouse",
+	BuildingType.RANCH: "Ranch",
+	BuildingType.FISHERY: "Fishery",
+	BuildingType.FACTORY: "Factory",
+}
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
 #region Private variables
 
 var _terrain_feature_mountain: PackedScene =\
