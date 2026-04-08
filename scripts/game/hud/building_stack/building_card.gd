@@ -134,21 +134,6 @@ func set_type(building: World.BuildingType) -> void:
 					CARD_ASSET_PATH.path_join("housing_fg.png"))
 			$BuildingSprite2D.texture = load(
 					BUILDING_ASSET_PATH.path_join("building_housing.png"))
-		World.BuildingType.SOLAR_FARM:
-			$CardForegroundSprite2D.texture = load(
-					CARD_ASSET_PATH.path_join("energy_fg.png"))
-			$BuildingSprite2D.texture = load(
-					BUILDING_ASSET_PATH.path_join("building_solar_farm.png"))
-		World.BuildingType.WIND_FARM:
-			$CardForegroundSprite2D.texture = load(
-					CARD_ASSET_PATH.path_join("energy_fg.png"))
-			$BuildingSprite2D.texture = load(
-					BUILDING_ASSET_PATH.path_join("building_wind_farm.png"))
-		World.BuildingType.NUCLEAR_REACTOR:
-			$CardForegroundSprite2D.texture = load(
-					CARD_ASSET_PATH.path_join("energy_fg.png"))
-			$BuildingSprite2D.texture = load(
-					BUILDING_ASSET_PATH.path_join("building_nuclear_reactor.png"))
 		World.BuildingType.GREENHOUSE:
 			$CardForegroundSprite2D.texture = load(
 					CARD_ASSET_PATH.path_join("food_fg.png"))
@@ -164,6 +149,21 @@ func set_type(building: World.BuildingType) -> void:
 					CARD_ASSET_PATH.path_join("food_fg.png"))
 			$BuildingSprite2D.texture = load(
 					BUILDING_ASSET_PATH.path_join("building_fishery.png"))
+		World.BuildingType.SOLAR_FARM:
+			$CardForegroundSprite2D.texture = load(
+					CARD_ASSET_PATH.path_join("energy_fg.png"))
+			$BuildingSprite2D.texture = load(
+					BUILDING_ASSET_PATH.path_join("building_solar_farm.png"))
+		World.BuildingType.WIND_FARM:
+			$CardForegroundSprite2D.texture = load(
+					CARD_ASSET_PATH.path_join("energy_fg.png"))
+			$BuildingSprite2D.texture = load(
+					BUILDING_ASSET_PATH.path_join("building_wind_farm.png"))
+		World.BuildingType.NUCLEAR_REACTOR:
+			$CardForegroundSprite2D.texture = load(
+					CARD_ASSET_PATH.path_join("energy_fg.png"))
+			$BuildingSprite2D.texture = load(
+					BUILDING_ASSET_PATH.path_join("building_nuclear_reactor.png"))
 		World.BuildingType.FACTORY:
 			$CardForegroundSprite2D.texture = load(
 					CARD_ASSET_PATH.path_join("industry_fg.png"))

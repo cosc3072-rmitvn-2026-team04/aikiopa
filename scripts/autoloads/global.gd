@@ -71,10 +71,14 @@ func _exit_tree() -> void:
 class GameState extends Node:
 
 	## The population in the current game session.
-	var population: int
+	var population: int = 0
 
-	## The building stack in the current game sessin.
-	var building_stack: Array[World.BuildingType]
+	## The building stack in the current game session.
+	var building_stack: Array[World.BuildingType] = []
+
+	## The building card currently on the player's hand to be placed down in the
+	## [World].
+	var picked_building: World.BuildingType = World.BuildingType.NONE
 
 #endregion
 # ============================================================================ #

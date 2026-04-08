@@ -5,6 +5,29 @@ extends Node
 ## [url=https://en.wikipedia.org/wiki/Queue_(abstract_data_type)]queue[/url].
 
 
+## The non-uniform weights used for random building generation. Building types
+## with higher weights appear more often than those with lower weights.[br]
+## [br]
+## Used as input for the internal [method RandomNumberGenerator.rand_weighted]
+## calls in this [BuildingStackController].[br]
+## [br]
+## [b]Note:[/b] Setting a weight to [code]0[/code] means the corresponding
+## building would never appear.[br]
+## [br]
+## [color=red][b]WARNING: Do not add any new Key/Value pair into this
+## property in the Godot Editor. Doing so will result in undefined
+## behavior.[/b][/color]
+@export var building_type_weights: Dictionary[World.BuildingType, float] = {
+	World.BuildingType.HOUSING: 1.0,
+	World.BuildingType.GREENHOUSE: 1.0,
+	World.BuildingType.RANCH: 1.0,
+	World.BuildingType.FISHERY: 1.0,
+	World.BuildingType.SOLAR_FARM: 1.0,
+	World.BuildingType.WIND_FARM: 1.0,
+	World.BuildingType.NUCLEAR_REACTOR: 1.0,
+	World.BuildingType.FACTORY: 1.0,
+}
+
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 
@@ -55,8 +78,10 @@ func get_session_state() -> int:
 ## Adds a random [enum World.BuildingType] to the bottom of the building stack,
 ## then returns that building type.
 func add_building() -> void:
-	var new_building_type: World.BuildingType = _rng.randi_range(
-			0, World.GENERATED_BUILDING_TYPES.size() - 1) as World.BuildingType
+	var new_building_type_index: int =_rng.rand_weighted(
+			PackedFloat32Array(building_type_weights.values()))
+	var new_building_type: World.BuildingType =\
+			World.GENERATED_BUILDING_TYPES[new_building_type_index]
 	Global.game_state.building_stack.push_front(new_building_type)
 	GameplayEventBus.building_stack_building_added.emit(new_building_type)
 
