@@ -65,7 +65,9 @@ func set_type(building: World.BuildingType) -> void:
 					BUILDING_ASSET_PATH.path_join("building_factory.png"))
 			$BuildingNameLabel.text = World.BUILDING_NAME[building]
 		_:
-			push_error("Unrecognized building type: '%s'." % [World.BuildingType.keys()[building]])
+			push_error("Unrecognized building type: '%s'." % [
+				World.BuildingType.keys()[building]
+			])
 
 #endregion
 # ============================================================================ #
