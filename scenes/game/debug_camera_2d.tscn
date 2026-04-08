@@ -47,26 +47,7 @@ theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 38
 text = "+"
 
-[node name="CameraMapCoordsPanelContainer" type="PanelContainer" parent="DebugCanvasLayer" unique_id=431049863]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -93.0
-offset_right = 149.0
-grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_kelw5")
-
-[node name="CameraMapCoordsLabel" type="Label" parent="DebugCanvasLayer/CameraMapCoordsPanelContainer" unique_id=559714081]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(6.835, 0)
-layout_direction = 2
-layout_mode = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 38
-text = "(x, y)"
-
-[node name="CameraZoomPanelContainer" type="PanelContainer" parent="DebugCanvasLayer" unique_id=50300647]
+[node name="PositionInfoPanelContainer" type="PanelContainer" parent="DebugCanvasLayer" unique_id=50300647]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -78,37 +59,71 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_kelw5")
 
-[node name="CameraZoomLabel" type="Label" parent="DebugCanvasLayer/CameraZoomPanelContainer" unique_id=1403634692]
+[node name="VBoxContainer" type="VBoxContainer" parent="DebugCanvasLayer/PositionInfoPanelContainer" unique_id=161447109]
+layout_mode = 2
+
+[node name="CameraMapCoordsLabel" type="Label" parent="DebugCanvasLayer/PositionInfoPanelContainer/VBoxContainer" unique_id=559714081]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(6.835, 0)
 layout_direction = 3
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 38
+theme_override_font_sizes/font_size = 36
+text = "(x, y)"
+
+[node name="CameraZoomLabel" type="Label" parent="DebugCanvasLayer/PositionInfoPanelContainer/VBoxContainer" unique_id=1403634692]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(6.835, 0)
+layout_direction = 3
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 28
 text = "Zoom: NaN"
 
-[node name="InfoPanelContainer" type="PanelContainer" parent="DebugCanvasLayer" unique_id=986242407]
-anchors_preset = 15
+[node name="ControlPanelContainer" type="PanelContainer" parent="DebugCanvasLayer" unique_id=986242407]
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
+offset_bottom = 164.0
 grow_horizontal = 2
-grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_0s1lt")
 
-[node name="InfoRichTextLabel" type="RichTextLabel" parent="DebugCanvasLayer/InfoPanelContainer" unique_id=2074387811]
+[node name="HBoxContainer" type="HBoxContainer" parent="DebugCanvasLayer/ControlPanelContainer" unique_id=80082195]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="ShortcutsRichTextLabel" type="RichTextLabel" parent="DebugCanvasLayer/ControlPanelContainer/HBoxContainer" unique_id=2074387811]
 unique_name_in_owner = true
 layout_direction = 2
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
 theme_override_font_sizes/normal_font_size = 24
 theme_override_font_sizes/bold_font_size = 24
 theme_override_font_sizes/bold_italics_font_size = 24
 theme_override_font_sizes/italics_font_size = 24
 theme_override_font_sizes/mono_font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_0s1lt")
+theme_override_styles/focus = SubResource("StyleBoxFlat_0s1lt")
 text = "Pan: H, J, K, L
 Zoom: U, I"
 fit_content = true
 autowrap_mode = 0
+
+[node name="BuildingStackControlContainer" type="VBoxContainer" parent="DebugCanvasLayer/ControlPanelContainer/HBoxContainer" unique_id=271214521]
+layout_mode = 2
+
+[node name="AddBuildingButton" type="Button" parent="DebugCanvasLayer/ControlPanelContainer/HBoxContainer/BuildingStackControlContainer" unique_id=312910407]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 24
+text = "Add
+Building"
+
+[node name="PlaceBuildingButton" type="Button" parent="DebugCanvasLayer/ControlPanelContainer/HBoxContainer/BuildingStackControlContainer" unique_id=833915139]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 24
+text = "Place
+Building"

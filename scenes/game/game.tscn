@@ -4,8 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://b7p1b85oyvfnp" path="res://scenes/game/world.tscn" id="2_7h61r"]
 [ext_resource type="PackedScene" uid="uid://bg72upkhtf1cg" path="res://scenes/game/main_camera_2d.tscn" id="3_kelw5"]
 [ext_resource type="PackedScene" uid="uid://ccpo3uu672sqa" path="res://scenes/game/debug_camera_2d.tscn" id="4_lfrn8"]
+[ext_resource type="PackedScene" uid="uid://cjhu160u42vae" path="res://scenes/game/game_hud.tscn" id="5_5i0tg"]
 [ext_resource type="Script" uid="uid://0nisd2iu4boj" path="res://scripts/game/building_stack_controller.gd" id="5_lfrn8"]
-[ext_resource type="Script" uid="uid://lsdd5r28sxlv" path="res://scripts/game/population_controller.gd" id="6_5i0tg"]
+[ext_resource type="Script" uid="uid://cauurnggrdqh0" path="res://scripts/game/population_controller.gd" id="6_5i0tg"]
 
 [node name="Game" type="Node2D" unique_id=1327406412]
 script = ExtResource("1_sul5r")
@@ -13,21 +14,25 @@ script = ExtResource("1_sul5r")
 [node name="World" parent="." unique_id=1513868058 instance=ExtResource("2_7h61r")]
 unique_name_in_owner = true
 
+[node name="BuildingStackController" type="Node" parent="." unique_id=1349143746]
+unique_name_in_owner = true
+script = ExtResource("5_lfrn8")
+
+[node name="PopulationController" type="Node" parent="." unique_id=153495353]
+unique_name_in_owner = true
+script = ExtResource("6_5i0tg")
+
+[node name="GameHUDCanvasLayer" type="CanvasLayer" parent="." unique_id=1835501581]
+
+[node name="GameHUD" parent="GameHUDCanvasLayer" unique_id=1279456757 instance=ExtResource("5_5i0tg")]
+
 [node name="PlayerCamera2D" parent="." unique_id=556469284 node_paths=PackedStringArray("world") instance=ExtResource("3_kelw5")]
 unique_name_in_owner = true
 pan_speed = 2000
 world = NodePath("../World")
 
-[node name="DebugCamera2D" parent="." unique_id=1889864583 node_paths=PackedStringArray("world") instance=ExtResource("4_lfrn8")]
+[node name="DebugCamera2D" parent="." unique_id=1889864583 node_paths=PackedStringArray("world", "building_stack_controller") instance=ExtResource("4_lfrn8")]
 unique_name_in_owner = true
 pan_speed = 5
 world = NodePath("../World")
-
-[node name="BuildingStackController" type="Node" parent="." unique_id=1349143746]
-unique_name_in_owner = true
-script = ExtResource("5_lfrn8")
-
-[node name="PopulationController" type="Node" parent="." unique_id=1075218116]
-unique_name_in_owner = true
-script = ExtResource("6_5i0tg")
-metadata/_custom_type_script = "uid://lsdd5r28sxlv"
+building_stack_controller = NodePath("../BuildingStackController")

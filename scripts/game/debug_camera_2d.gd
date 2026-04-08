@@ -9,6 +9,7 @@ const ZOOM_SPEED: float = 0.01
 ## Camera panning speed (scaled to [member Camera2D.zoom]).
 @export var pan_speed: int = 15
 @export var world: World = null
+@export var building_stack_controller: BuildingStackController = null
 
 
 # ============================================================================ #
@@ -18,6 +19,8 @@ func _ready() -> void:
 	%DebugCanvasLayer.visible = false
 	GameplayEventBus.gameplay_debug_mode_toggled.connect(
 			_on_gameplay_debug_mode_toggled)
+	%AddBuildingButton.pressed.connect(_on_add_building_button_pressed)
+	%PlaceBuildingButton.pressed.connect(_on_place_building_button_pressed)
 
 
 func _process(delta: float) -> void:
@@ -61,6 +64,16 @@ func _on_gameplay_debug_mode_toggled(value: bool) -> void:
 		%DebugCanvasLayer.visible = true
 	else:
 		%DebugCanvasLayer.visible = false
+
+
+# Listens to %AddBuildingButton.pressed.
+func _on_add_building_button_pressed() -> void:
+	building_stack_controller.add_building()
+
+
+# Listens to %PopBuildingButton.pressed.
+func _on_place_building_button_pressed() -> void:
+	building_stack_controller.pop_building()
 
 #endregion
 # ============================================================================ #

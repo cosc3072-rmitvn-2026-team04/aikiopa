@@ -5,14 +5,9 @@ extends Node
 ## [url=https://en.wikipedia.org/wiki/Queue_(abstract_data_type)]queue[/url].
 
 
-# ============================================================================ #
-#region Private variables
+const GENERATED_BUILDING_TYPES_START_INDEX: int = 2
 
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
-var _building_queue: Array[World.BuildingType]
-
-#endregion
-# ============================================================================ #
 
 
 # ============================================================================ #
@@ -44,7 +39,7 @@ func initialize_session(
 	else:
 		_rng.randomize()
 
-	_building_queue = building_queue
+	Global.game_state.building_stack = building_queue
 
 
 ## Returns the seed of the internal [RandomNumberGenerator]. Useful for saving
@@ -63,38 +58,38 @@ func get_session_state() -> int:
 ## then returns that building type.
 func add_building() -> void:
 	var new_building_type: World.BuildingType = _rng.randi_range(
-			0, World.BuildingType.size()) as World.BuildingType
+			GENERATED_BUILDING_TYPES_START_INDEX,
+			World.BuildingType.size() - 1) as World.BuildingType
+	Global.game_state.building_stack.push_front(new_building_type)
 	GameplayEventBus.building_stack_building_added.emit(new_building_type)
-	_building_queue.push_front(new_building_type)
 
 
-## Pops and returns the building type at the top of the building stack.
+## Pops and returns the building type at the top of the building stack. Returns
+## [constant World.BuildingType.NONE] if the building stack is already empty.
 func pop_building() -> World.BuildingType:
-	var building_type: World.BuildingType = _building_queue.pop_back()
+	if is_empty():
+		return World.BuildingType.NONE
+	var building_type: World.BuildingType =\
+			Global.game_state.building_stack.pop_back()
 	GameplayEventBus.building_stack_building_popped.emit(building_type)
 	return building_type
 
 
-## Returns the current building stack content.
-func get_building_queue() -> Array:
-	return _building_queue
-
-
 ## Removes all buildings from the building stack.
 func clear_building_queue() -> void:
-	_building_queue.clear()
+	Global.game_state.building_stack.clear()
 
 
 ## Returns the number of building in the building stack. Empty building stack
 ## always returns [code]0[/code]. See also [method is_empty].
 func size() -> int:
-	return _building_queue.size()
+	return Global.game_state.building_stack.size()
 
 
 ## Returns [code]true[/code] if the building stack is empty ([code][][/code]).
 ## See also [method size].
 func is_empty() -> bool:
-	return _building_queue.is_empty()
+	return Global.game_state.building_stack.is_empty()
 
 #endregion
 # ============================================================================ #
