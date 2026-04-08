@@ -122,6 +122,7 @@ func _on_building_stack_building_added(building: World.BuildingType) -> void:
 	building_card.set_type(building)
 	%BuildingStack.add_child(building_card)
 	%BuildingStack.move_child(building_card, 0)
+	%BuildingStack.get_child(-1).set_pickable()
 	%BuildingStackCountLabel.text = "%d" % Global.game_state.building_stack.size()
 	_update_building_card_positions()
 	_update_building_stack_position()
@@ -132,6 +133,8 @@ func _on_building_stack_building_added(building: World.BuildingType) -> void:
 func _on_building_stack_building_popped(_building: World.BuildingType) -> void:
 	var top_building_card: BuildingCard = %BuildingStack.get_child(-1)
 	%BuildingStack.remove_child(top_building_card)
+	if %BuildingStack.get_child_count() != 0:
+		%BuildingStack.get_child(-1).set_pickable()
 	%BuildingStackCountLabel.text = "%d" % Global.game_state.building_stack.size()
 	_update_building_card_positions()
 	_update_building_stack_position()

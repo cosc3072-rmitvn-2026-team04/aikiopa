@@ -9,6 +9,9 @@
 
 [node name="BuildingCard" type="Node2D" unique_id=1572232253]
 script = ExtResource("1_qw75a")
+pickable_scale = 106
+hover_scale = 104
+picked_scale = 110
 
 [node name="CardBackgroundSprite2D" type="Sprite2D" parent="." unique_id=229039851]
 texture = ExtResource("2_556cu")

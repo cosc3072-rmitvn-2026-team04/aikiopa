@@ -30,6 +30,17 @@ signal building_stack_building_added(building: World.BuildingType)
 signal building_stack_building_popped(building: World.BuildingType)
 
 
+## Emitted when the player picks up a [param building] card.
+@warning_ignore("unused_signal")
+signal building_card_picked(building: World.BuildingType)
+
+
+## Emitted when the player drops the [param building] card back to the building
+## stack.
+@warning_ignore("unused_signal")
+signal building_card_dropped(building: World.BuildingType)
+
+
 ## Emitted when the population has just been changed from [param old_amount] to
 ## [param new_amount].
 @warning_ignore("unused_signal")

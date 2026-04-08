@@ -20,7 +20,7 @@ max_revealed_card_offset = 132
 collapsed_card_offset = 16
 max_container_height = 620
 max_revealed_card_count = 3
-container_padding = Vector2i(12, 12)
+container_padding = Vector2i(16, 16)
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1622802902]
 layout_mode = 1
