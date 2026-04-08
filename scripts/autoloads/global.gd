@@ -69,6 +69,11 @@ func _exit_tree() -> void:
 ## Game state data. Contains relevant information on the current state of the
 ## game.
 class GameState extends Node:
+
+	## The population in the current game session.
+	var population: int
+
+	## The building stack in the current game sessin.
 	var building_stack: Array[World.BuildingType]
 
 #endregion

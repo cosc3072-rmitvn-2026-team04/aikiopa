@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cjhu160u42vae"]
 
-[ext_resource type="Script" uid="uid://cupvablkoadik" path="res://scripts/core/game_ui.gd" id="1_umjp7"]
+[ext_resource type="Script" uid="uid://dwbowd2ej7gmq" path="res://scripts/game/hud/game_hud.gd" id="1_snjka"]
 [ext_resource type="PackedScene" uid="uid://csffjo6oq4r5m" path="res://scenes/game/hud/building_stack/building_stack_ui.tscn" id="2_snjka"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_snjka"]
@@ -16,7 +16,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_umjp7")
+script = ExtResource("1_snjka")
 metadata/_custom_type_script = "uid://cupvablkoadik"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1194083038]
@@ -28,6 +28,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="RewardProgressBar" type="ProgressBar" parent="VBoxContainer" unique_id=2068041148]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="PopulationLabel" type="Label" parent="VBoxContainer" unique_id=867692794]
