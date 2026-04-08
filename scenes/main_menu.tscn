@@ -41,6 +41,7 @@ layout_mode = 2
 
 [node name="GameNameLabel" type="Label" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=1638659751]
 layout_mode = 2
+theme_override_font_sizes/font_size = 100
 text = "AIKIOΠA"
 horizontal_alignment = 1
 
