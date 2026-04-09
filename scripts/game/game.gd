@@ -125,7 +125,7 @@ func _on_building_placement_requested(
 		building: Building.BuildingType) -> void:
 	var map_coords: Vector2i = %World.get_terrain_tile_map_layer().local_to_map(
 			screen_position + %PlayerCamera2D.position)
-			
+
 	print("Trying to place building %s at (%d, %d) - screen pos: (%d, %d)" % [
 		Building.BuildingType.keys()[building],
 		map_coords.x, map_coords.y,
