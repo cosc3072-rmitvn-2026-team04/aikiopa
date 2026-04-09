@@ -46,16 +46,6 @@ var _terrain_feature_fishes: PackedScene =\
 
 var _generated_chunks: Dictionary[Vector2i, bool]
 
-# Data schema: Dictionary[Vector2i, Dictionary[TerrainType, Node2D]]. The Node2D
-# field should point to the corresponding instance of the matching terrain
-# feature scene.
-var _terrain_features: Dictionary[Vector2i, TerrainFeature]
-
-# Data schema: Dictionary[Vector2i, Dictionary[BuildingType, Node2D]]. The
-# Node2D field should point to the corresponding instance of the matching
-# building scene.
-var _buildings: Dictionary[Vector2i, Dictionary]
-
 #endregion
 # ============================================================================ #
 
@@ -157,38 +147,42 @@ func get_neigboring_chunks(chunk_offset: Vector2i) -> Array[Vector2i]:
 ## Sets the terrain at [param coords] to one of [enum World.TerrainType].
 ## Automatically assign terrain feature variation(s) at random.
 func set_terrain_at(coords: Vector2i, terrain_type: TerrainType) -> void:
-	get_terrain_tile_map_layer().set_cell(
+	var terrain_tile_map_layer: TileMapLayer = get_terrain_tile_map_layer()
+	var terrain_features_layer: Node2D = get_terrain_features_layer()
+
+	terrain_tile_map_layer.set_cell(
 		coords,
 		get_terrain_tile_map_layer().SOURCE_ID,
 		get_terrain_tile_map_layer().ATLAS_COORDS[terrain_type])
+
 	match terrain_type:
 		TerrainType.PLAIN_MOUNTAIN, TerrainType.GRASSLAND_MOUNTAIN, TerrainType.DESERT_MOUNTAIN:
 			var mountain: TerrainFeature = _terrain_feature_mountain.instantiate()
-			_terrain_features.set(coords, mountain)
+			terrain_features_layer.terrain_features.set(coords, mountain)
 			mountain.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(mountain)
 		TerrainType.PLAIN_CHASM, TerrainType.GRASSLAND_CHASM, TerrainType.DESERT_CHASM:
 			var chasm: TerrainFeature = _terrain_feature_chasm.instantiate()
-			_terrain_features.set(coords, chasm)
+			terrain_features_layer.terrain_features.set(coords, chasm)
 			chasm.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(chasm)
 		TerrainType.DESERT_DUNES:
 			var sand_dunes: TerrainFeature = _terrain_feature_sand_dunes.instantiate()
-			_terrain_features.set(coords, sand_dunes)
+			terrain_features_layer.terrain_features.set(coords, sand_dunes)
 			sand_dunes.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(sand_dunes)
 		TerrainType.PLAIN_FOREST, TerrainType.GRASSLAND_FOREST:
 			var forest: TerrainFeature = _terrain_feature_forest.instantiate()
-			_terrain_features.set(coords, forest)
+			terrain_features_layer.terrain_features.set(coords, forest)
 			forest.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(forest)
 		TerrainType.SHALLOW_WATER_FISHES:
 			var fishes: TerrainFeature = _terrain_feature_fishes.instantiate()
-			_terrain_features.set(coords, fishes)
+			terrain_features_layer.terrain_features.set(coords, fishes)
 			fishes.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
 			get_terrain_features_layer().add_child(fishes)
