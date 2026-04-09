@@ -35,7 +35,7 @@ func _input(event: InputEvent) -> void:
 
 # Listens to UIEventBus.building_card_picked(building: Building.BuildingType).
 func _on_building_card_picked(building: Building.BuildingType) -> void:
-	_picked_building = building	
+	_picked_building = building
 
 
 # Listens to building_card_dropped(building: Building.BuildingType).

@@ -54,6 +54,15 @@ func _update_building_card_positions() -> void:
 		var building_card: BuildingCard = building_cards[index]
 		var building_card_size: Vector2i = building_card.get_size()
 
+		# Make sure all card positions are uniform, since picked building cards
+		# has an offset y position. See [member BuildingCard.picked_offset].
+		#
+		# Without this, the unset_picked behavior would work incorrectly when
+		# new cards are added while the player is still picking up a building
+		# card.
+		if building_card.is_picked():
+			building_card.unset_picked()
+
 		# Set position.
 		building_card.position = Vector2(
 				building_card_size.x * 0.5,
