@@ -27,3 +27,16 @@ signal building_card_picked(building: Building.BuildingType)
 ## stack in the Game HUD.
 @warning_ignore("unused_signal")
 signal building_card_dropped(building: Building.BuildingType)
+
+
+## Emitted when the player attempts to use the building card they have on hand
+## (picked up) to place [param building] at [param screen_position].[br]
+## [br]
+## [b]Note:[/b] [param screen_position] is NOT the corresponding tile position
+## in the [World]. Use the [code]TerrainTileMapLayer[/code] -
+## [method TileMapLayer.local_to_map] to convert it to the correct world
+## coordinates.
+@warning_ignore("unused_signal")
+signal building_placement_requested(
+        screen_position: Vector2,
+        building: Building.BuildingType)

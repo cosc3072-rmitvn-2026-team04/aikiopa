@@ -85,9 +85,5 @@ class GameState extends Node:
 	## The building stack in the current game session.
 	var building_stack: Array[Building.BuildingType] = []
 
-	## The building card currently on the player's hand to be placed down in the
-	## [World].
-	var picked_building: Building.BuildingType = Building.BuildingType.NONE
-
 #endregion
 # ============================================================================ #

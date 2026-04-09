@@ -59,7 +59,7 @@ func get_type() -> BuildingType:
 ## [br]
 ## Schema:[br]
 ## [codeblock]
-##     # TODO: Develop a schema and implement this function in children classes.
+##	# TODO: Develop a schema and implement this function in children classes.
 ## [/codeblock]
 func serialized() -> Dictionary[StringName, Variant]:
 	push_warning("Calling method 'serialized()' on generic 'Building' instance.")

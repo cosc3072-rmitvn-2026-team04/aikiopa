@@ -73,6 +73,7 @@ func _input(event: InputEvent) -> void:
 				set_picked()
 			else:
 				unset_picked()
+			get_viewport().set_input_as_handled()
 		elif event.button_index == MOUSE_BUTTON_RIGHT and is_picked():
 			unset_picked()
 

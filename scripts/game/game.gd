@@ -36,6 +36,9 @@ func _ready() -> void:
 
 	_init_cameras()
 
+	UIEventBus.building_placement_requested.connect(
+			_on_building_placement_requested)
+
 
 func _process(_delta: float) -> void:
 	_process_auto_world_gen()
@@ -105,6 +108,29 @@ func _input_update_gameplay_debug_mode(event: InputEvent) -> void:
 		GameplayEventBus.gameplay_debug_mode_toggled.emit(Global.gameplay_debug_mode_enabled)
 
 #endregion
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Signal listeners
+
+# Listens to
+# UIEventBus.building_placement_requested(
+#		screen_position: Vector2,
+#		building: Building.BuildingType)
+func _on_building_placement_requested(
+		screen_position: Vector2,
+		building: Building.BuildingType) -> void:
+	var map_coords: Vector2i = %World.get_terrain_tile_map_layer().local_to_map(
+			screen_position + %PlayerCamera2D.position)
+			
+	print("Trying to place building %s at (%d, %d) - screen pos: (%d, %d)" % [
+		Building.BuildingType.keys()[building],
+		map_coords.x, map_coords.y,
+		screen_position.x, screen_position.y,
+	])
 
 #endregion
 # ============================================================================ #
