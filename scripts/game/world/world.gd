@@ -59,12 +59,12 @@ func get_terrain_tile_map_layer() -> TileMapLayer:
 
 
 ## Returns the [code]TerrainFeatureLayer[/code] node.
-func get_terrain_feature_layer() -> TileMapLayer:
+func get_terrain_feature_layer() -> Node2D:
 	return %TerrainFeatureLayer
 
 
 ## Returns the [code]BuildingLayer[/code] node.
-func get_building_layer() -> TileMapLayer:
+func get_building_layer() -> Node2D:
 	return %BuildingLayer
 
 
@@ -83,10 +83,8 @@ func initialize(world_seed: Variant = null) -> void:
 		return
 	%WorldGenerator.generate_seeds(world_seed)
 	get_terrain_tile_map_layer().clear()
-
-	# TODO: The next two lines crashes the game silently. Find out why.
-	#get_terrain_feature_layer().clear()
-	#get_building_layer().clear()
+	get_terrain_feature_layer().clear()
+	get_building_layer().clear()
 
 	_generated_chunks.clear()
 
