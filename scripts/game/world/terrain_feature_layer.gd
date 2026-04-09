@@ -18,9 +18,10 @@ var terrain_features: Dictionary[Vector2i, TerrainFeature]
 
 ## Removes all terrain features (child nodes).
 func clear() -> void:
-	for child: Node2D in get_children():
-		remove_child(child)
-		child.queue_free()
+	if get_child_count() > 0:
+		for terrain_feature: TerrainFeature in get_children():
+			remove_child(terrain_feature)
+			terrain_feature.queue_free()
 	terrain_features.clear()
 
 #endregion

@@ -59,12 +59,12 @@ func get_terrain_tile_map_layer() -> TileMapLayer:
 
 
 ## Returns the [code]TerrainFeatureLayer[/code] node.
-func get_terrain_features_layer() -> TileMapLayer:
+func get_terrain_feature_layer() -> TileMapLayer:
 	return %TerrainFeatureLayer
 
 
 ## Returns the [code]BuildingLayer[/code] node.
-func get_buildings_layer() -> TileMapLayer:
+func get_building_layer() -> TileMapLayer:
 	return %BuildingLayer
 
 
@@ -82,6 +82,12 @@ func initialize(world_seed: Variant = null) -> void:
 				"Invalid parameter type for 'world_seed'. Must be int or null.")
 		return
 	%WorldGenerator.generate_seeds(world_seed)
+	get_terrain_tile_map_layer().clear()
+
+	# TODO: The next two lines crashes the game silently. Find out why.
+	#get_terrain_feature_layer().clear()
+	#get_building_layer().clear()
+
 	_generated_chunks.clear()
 
 
@@ -148,7 +154,7 @@ func get_neigboring_chunks(chunk_offset: Vector2i) -> Array[Vector2i]:
 ## Automatically assign terrain feature variation(s) at random.
 func set_terrain_at(coords: Vector2i, terrain_type: TerrainType) -> void:
 	var terrain_tile_map_layer: TileMapLayer = get_terrain_tile_map_layer()
-	var terrain_features_layer: Node2D = get_terrain_features_layer()
+	var terrain_features_layer: Node2D = get_terrain_feature_layer()
 
 	terrain_tile_map_layer.set_cell(
 		coords,
@@ -161,31 +167,31 @@ func set_terrain_at(coords: Vector2i, terrain_type: TerrainType) -> void:
 			terrain_features_layer.terrain_features.set(coords, mountain)
 			mountain.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
-			get_terrain_features_layer().add_child(mountain)
+			get_terrain_feature_layer().add_child(mountain)
 		TerrainType.PLAIN_CHASM, TerrainType.GRASSLAND_CHASM, TerrainType.DESERT_CHASM:
 			var chasm: TerrainFeature = _terrain_feature_chasm.instantiate()
 			terrain_features_layer.terrain_features.set(coords, chasm)
 			chasm.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
-			get_terrain_features_layer().add_child(chasm)
+			get_terrain_feature_layer().add_child(chasm)
 		TerrainType.DESERT_DUNES:
 			var sand_dunes: TerrainFeature = _terrain_feature_sand_dunes.instantiate()
 			terrain_features_layer.terrain_features.set(coords, sand_dunes)
 			sand_dunes.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
-			get_terrain_features_layer().add_child(sand_dunes)
+			get_terrain_feature_layer().add_child(sand_dunes)
 		TerrainType.PLAIN_FOREST, TerrainType.GRASSLAND_FOREST:
 			var forest: TerrainFeature = _terrain_feature_forest.instantiate()
 			terrain_features_layer.terrain_features.set(coords, forest)
 			forest.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
-			get_terrain_features_layer().add_child(forest)
+			get_terrain_feature_layer().add_child(forest)
 		TerrainType.SHALLOW_WATER_FISHES:
 			var fishes: TerrainFeature = _terrain_feature_fishes.instantiate()
 			terrain_features_layer.terrain_features.set(coords, fishes)
 			fishes.position = get_terrain_tile_map_layer()\
 					.map_to_local(coords)
-			get_terrain_features_layer().add_child(fishes)
+			get_terrain_feature_layer().add_child(fishes)
 
 
 # TODO: Implement this.
