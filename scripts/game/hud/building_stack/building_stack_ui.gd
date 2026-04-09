@@ -116,8 +116,8 @@ func _update_building_stack_position() -> void:
 #region Signal listeners
 
 # Listens to
-# GameplayEventBus.building_stack_building_added(building: World.BuildingType).
-func _on_building_stack_building_added(building: World.BuildingType) -> void:
+# GameplayEventBus.building_stack_building_added(building: Building.BuildingType).
+func _on_building_stack_building_added(building: Building.BuildingType) -> void:
 	var building_card: BuildingCard = _building_card_scene.instantiate()
 	building_card.set_type(building)
 	%BuildingStack.add_child(building_card)
@@ -129,8 +129,8 @@ func _on_building_stack_building_added(building: World.BuildingType) -> void:
 
 
 # Listens to
-# GameplayEventBus.building_stack_building_popped(building: World.BuildingType).
-func _on_building_stack_building_popped(_building: World.BuildingType) -> void:
+# GameplayEventBus.building_stack_building_popped(building: Building.BuildingType).
+func _on_building_stack_building_popped(_building: Building.BuildingType) -> void:
 	var top_building_card: BuildingCard = %BuildingStack.get_child(-1)
 	%BuildingStack.remove_child(top_building_card)
 	if %BuildingStack.get_child_count() != 0:

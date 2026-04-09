@@ -40,7 +40,7 @@ const BUILDING_ASSET_PATH = "res://assets/objects/"
 
 var _is_pickable: bool = false
 var _is_picked: bool = false
-var _building_type: World.BuildingType = World.BuildingType.NONE
+var _building_type: Building.BuildingType = Building.BuildingType.NONE
 
 #endregion
 # ============================================================================ #
@@ -88,8 +88,8 @@ func get_size() -> Vector2i:
 	return $CardBackgroundSprite2D.get_rect().size
 
 
-## Returns the [enum World.BuildingType] of this building card.
-func get_building_type() -> World.BuildingType:
+## Returns the [enum Building.BuildingType] of this building card.
+func get_building_type() -> Building.BuildingType:
 	return _building_type
 
 
@@ -123,7 +123,7 @@ func is_picked() -> bool:
 ## [method is_picked].
 func set_picked() -> void:
 	_is_picked = true
-	GameplayEventBus.building_card_picked.emit(get_building_type())
+	UIEventBus.building_card_picked.emit(get_building_type())
 	scale = Vector2.ONE * (float(picked_scale) / 100)
 	position.y -= picked_offset
 
@@ -132,61 +132,61 @@ func set_picked() -> void:
 ## [method is_picked].
 func unset_picked() -> void:
 	_is_picked = false
-	GameplayEventBus.building_card_dropped.emit(get_building_type())
+	UIEventBus.building_card_dropped.emit(get_building_type())
 	scale = Vector2.ONE * (float(pickable_scale) / 100)
 	position.y += picked_offset
 
 
 ## Update the visual elements for this building card to match [param building].
-func set_type(building: World.BuildingType) -> void:
+func set_type(building: Building.BuildingType) -> void:
 	match building:
-		World.BuildingType.HOUSING:
+		Building.BuildingType.HOUSING:
 			$CardForegroundSprite2D.texture = load(
 					CARD_ASSET_PATH.path_join("housing_fg.png"))
 			$BuildingSprite2D.texture = load(
 					BUILDING_ASSET_PATH.path_join("building_housing.png"))
-		World.BuildingType.GREENHOUSE:
+		Building.BuildingType.GREENHOUSE:
 			$CardForegroundSprite2D.texture = load(
 					CARD_ASSET_PATH.path_join("food_fg.png"))
 			$BuildingSprite2D.texture = load(
 					BUILDING_ASSET_PATH.path_join("building_greenhouse.png"))
-		World.BuildingType.RANCH:
+		Building.BuildingType.RANCH:
 			$CardForegroundSprite2D.texture = load(
 					CARD_ASSET_PATH.path_join("food_fg.png"))
 			$BuildingSprite2D.texture = load(
 					BUILDING_ASSET_PATH.path_join("building_ranch.png"))
-		World.BuildingType.FISHERY:
+		Building.BuildingType.FISHERY:
 			$CardForegroundSprite2D.texture = load(
 					CARD_ASSET_PATH.path_join("food_fg.png"))
 			$BuildingSprite2D.texture = load(
 					BUILDING_ASSET_PATH.path_join("building_fishery.png"))
-		World.BuildingType.SOLAR_FARM:
+		Building.BuildingType.SOLAR_FARM:
 			$CardForegroundSprite2D.texture = load(
 					CARD_ASSET_PATH.path_join("energy_fg.png"))
 			$BuildingSprite2D.texture = load(
 					BUILDING_ASSET_PATH.path_join("building_solar_farm.png"))
-		World.BuildingType.WIND_FARM:
+		Building.BuildingType.WIND_FARM:
 			$CardForegroundSprite2D.texture = load(
 					CARD_ASSET_PATH.path_join("energy_fg.png"))
 			$BuildingSprite2D.texture = load(
 					BUILDING_ASSET_PATH.path_join("building_wind_farm.png"))
-		World.BuildingType.NUCLEAR_REACTOR:
+		Building.BuildingType.NUCLEAR_REACTOR:
 			$CardForegroundSprite2D.texture = load(
 					CARD_ASSET_PATH.path_join("energy_fg.png"))
 			$BuildingSprite2D.texture = load(
 					BUILDING_ASSET_PATH.path_join("building_nuclear_reactor.png"))
-		World.BuildingType.FACTORY:
+		Building.BuildingType.FACTORY:
 			$CardForegroundSprite2D.texture = load(
 					CARD_ASSET_PATH.path_join("industry_fg.png"))
 			$BuildingSprite2D.texture = load(
 					BUILDING_ASSET_PATH.path_join("building_factory.png"))
 		_:
 			push_error("Unrecognized building type: '%s'." % [
-				World.BuildingType.keys()[building]
+				Building.BuildingType.keys()[building]
 			])
 			return
 
-	$BuildingNameLabel.text = World.BUILDING_NAME[building]
+	$BuildingNameLabel.text = Building.BUILDING_NAME[building]
 	_building_type = building
 
 #endregion

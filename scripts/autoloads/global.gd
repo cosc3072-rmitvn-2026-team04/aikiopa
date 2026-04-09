@@ -11,8 +11,17 @@ extends Node
 # ============================================================================ #
 #region Constants
 
+## Game asset location for [BuildingCard].
+const BUILDING_CARD_ASSETS_DIR = "res://assets/building_stack/building_card/"
+
+## Game scene location for [TerrainFeature].
+const TERRAIN_FEATURE_SCENES_DIR = "res://scenes/game/objects/terrain_features/"
+
+## Game scene location for [Building].
+const BUILDING_SCENES_DIR = "res://scenes/game/objects/buildings/"
+
 ## Savegame location.
-const SAVE_DIR: String = "user://saves"
+const SAVE_DIR: String = "user://saves/"
 
 #endregion
 # ============================================================================ #
@@ -74,11 +83,11 @@ class GameState extends Node:
 	var population: int = 0
 
 	## The building stack in the current game session.
-	var building_stack: Array[World.BuildingType] = []
+	var building_stack: Array[Building.BuildingType] = []
 
 	## The building card currently on the player's hand to be placed down in the
 	## [World].
-	var picked_building: World.BuildingType = World.BuildingType.NONE
+	var picked_building: Building.BuildingType = Building.BuildingType.NONE
 
 #endregion
 # ============================================================================ #

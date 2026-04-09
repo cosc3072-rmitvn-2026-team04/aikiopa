@@ -63,7 +63,7 @@ func _init_population() -> void:
 
 
 func _init_building_stack(
-		building_queue: Array[World.BuildingType],
+		building_queue: Array[Building.BuildingType],
 		session_seed: Variant = null,
 		session_state: Variant = null
 ) -> void:

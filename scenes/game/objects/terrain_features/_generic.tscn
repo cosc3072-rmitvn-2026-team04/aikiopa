@@ -1,5 +1,8 @@
 [gd_scene format=3 uid="uid://blvhcx1c6kpg7"]
 
+[ext_resource type="Script" uid="uid://cvlwfuvwabya6" path="res://scripts/game/objects/terrain_feature.gd" id="1_2ltyc"]
+
 [node name="_generic" type="Node2D" unique_id=609911264]
+script = ExtResource("1_2ltyc")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=929203464]

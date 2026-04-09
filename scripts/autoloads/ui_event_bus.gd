@@ -15,3 +15,15 @@ extends Node
 ## @warning_ignore("unused_signal")
 ## signal inventory_opened
 ## [/codeblock]
+
+
+## Emitted when the player picks up a [param building] card from the building
+## stack in the Game HUD.
+@warning_ignore("unused_signal")
+signal building_card_picked(building: Building.BuildingType)
+
+
+## Emitted when the player drops the [param building] card back to the building
+## stack in the Game HUD.
+@warning_ignore("unused_signal")
+signal building_card_dropped(building: Building.BuildingType)

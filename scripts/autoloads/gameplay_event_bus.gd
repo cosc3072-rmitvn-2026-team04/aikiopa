@@ -18,27 +18,28 @@ extends Node
 
 
 ## Emitted when a new random building is added to the bottom of the building
-## stack. [param building] identifies the [World.BuildingType] the added
+## stack. [param building] identifies the [enum Building.BuildingType] the added
 ## building.
 @warning_ignore("unused_signal")
-signal building_stack_building_added(building: World.BuildingType)
+signal building_stack_building_added(building: Building.BuildingType)
 
 
 ## Emitted when the building at the top of the building stack is popped off.
-## [param building] identifies the [World.BuildingType] of the popped building.
+## [param building] identifies the [enum Building.BuildingType] of the popped
+## building.
 @warning_ignore("unused_signal")
-signal building_stack_building_popped(building: World.BuildingType)
+signal building_stack_building_popped(building: Building.BuildingType)
 
 
-## Emitted when the player picks up a [param building] card.
+## Emitted when a [Building] of [param type] is successfully added at
+## [param coords] in the [World].
 @warning_ignore("unused_signal")
-signal building_card_picked(building: World.BuildingType)
+signal building_placed(coords: Vector2i, type: Building.BuildingType)
 
 
-## Emitted when the player drops the [param building] card back to the building
-## stack.
+## Emitted when a [Building] of [param type] at [param coords] is destroyed.
 @warning_ignore("unused_signal")
-signal building_card_dropped(building: World.BuildingType)
+signal building_destroyed(coords: Vector2i, type: Building.BuildingType)
 
 
 ## Emitted when the population has just been changed from [param old_amount] to
