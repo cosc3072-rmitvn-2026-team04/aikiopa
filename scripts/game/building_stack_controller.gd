@@ -46,6 +46,16 @@ var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 
 # ============================================================================ #
+#region Godot builtins
+
+func _ready() -> void:
+	GameplayEventBus.building_placed.connect(_on_building_placed)
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
 #region Public methods
 
 ## Initializes the building stack generator, or restore a previous state by
@@ -126,6 +136,32 @@ func size() -> int:
 ## See also [method size].
 func is_empty() -> bool:
 	return Global.game_state.building_stack.is_empty()
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Signal listeners
+
+# Listens to
+# GameplayEventBus.building_placed(
+#		coords: Vector2i,
+#		building_type: Building.BuildingType).
+func _on_building_placed(
+		_coords: Vector2i,
+		building_type: Building.BuildingType
+) -> void:
+	var building_stack_top: Building.BuildingType =\
+			Global.game_state.building_stack.back()
+	if building_stack_top != building_type:
+		push_error("Top building card (%s) does not match placed building (%s)" % [
+			Building.BuildingType.keys()[building_stack_top],
+			Building.BuildingType.keys()[building_type],
+		])
+		return
+
+	pop_building()
 
 #endregion
 # ============================================================================ #

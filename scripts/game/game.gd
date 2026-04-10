@@ -116,6 +116,7 @@ func _input_update_gameplay_debug_mode(event: InputEvent) -> void:
 # ============================================================================ #
 #region Signal listeners
 
+# TODO: Move this into [RulesetComponent]. See #17.
 # Listens to
 # UIEventBus.building_placement_requested(
 #		mouse_position: Vector2,

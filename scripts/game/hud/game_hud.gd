@@ -14,6 +14,7 @@ var _picked_building: Building.BuildingType = Building.BuildingType.NONE
 func _ready() -> void:
 	UIEventBus.building_card_picked.connect(_on_building_card_picked)
 	UIEventBus.building_card_dropped.connect(_on_building_card_dropped)
+	GameplayEventBus.building_placed.connect(_on_building_placed)
 	GameplayEventBus.population_changed.connect(_on_population_changed)
 
 
@@ -42,6 +43,23 @@ func _on_building_card_picked(building: Building.BuildingType) -> void:
 
 # Listens to building_card_dropped(building: Building.BuildingType).
 func _on_building_card_dropped(_building: Building.BuildingType) -> void:
+	_picked_building = Building.BuildingType.NONE
+
+
+# Listens to
+# GameplayEventBus.building_placed(
+#		coords: Vector2i,
+#		building_type: Building.BuildingType).
+func _on_building_placed(
+		_coords: Vector2i,
+		building_type: Building.BuildingType
+) -> void:
+	if _picked_building != building_type:
+		push_error("Picked building (%s) does not match placed building (%s)" % [
+			Building.BuildingType.keys()[_picked_building],
+			Building.BuildingType.keys()[building_type],
+		])
+		return
 	_picked_building = Building.BuildingType.NONE
 
 
