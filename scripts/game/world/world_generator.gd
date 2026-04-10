@@ -219,7 +219,7 @@ func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 
 # Returns the [param coords]' surrounding noise map coordinates, adjusted for
 # [param chunk_offset] in relation to Godot's TileMapLayer hex coordinate system
-# (odd-r). C.f. https://www.redblobgames.com/grids/hexagons/#coordinates-offset
+# (odd-r). Cf. https://www.redblobgames.com/grids/hexagons/#coordinates-offset
 func _get_chunk_surrounding_noise_coords(
 		coords: Vector2i,
 		chunk_offset: Vector2i

@@ -125,10 +125,13 @@ func _update_building_stack_position() -> void:
 #region Signal listeners
 
 # Listens to
-# GameplayEventBus.building_stack_building_added(building: Building.BuildingType).
-func _on_building_stack_building_added(building: Building.BuildingType) -> void:
+# GameplayEventBus.building_stack_building_added(
+#		building_type: Building.BuildingType).
+func _on_building_stack_building_added(
+		building_type: Building.BuildingType
+) -> void:
 	var building_card: BuildingCard = _building_card_scene.instantiate()
-	building_card.set_type(building)
+	building_card.set_type(building_type)
 	%BuildingStack.add_child(building_card)
 	%BuildingStack.move_child(building_card, 0)
 	%BuildingStack.get_child(-1).set_pickable()

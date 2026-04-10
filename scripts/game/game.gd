@@ -41,7 +41,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	_process_auto_world_gen()
+	_process_auto_world_generation()
 
 
 func _input(event: InputEvent) -> void:
@@ -91,7 +91,7 @@ func _init_cameras() -> void:
 
 #region _process()
 
-func _process_auto_world_gen() -> void:
+func _process_auto_world_generation() -> void:
 	var camera_chunk_position: Vector2i = %PlayerCamera2D.get_chunk_position()
 	for neighbor_chunk in %World.get_neigboring_chunks(camera_chunk_position):
 		if not %World.is_chunk_generated(neighbor_chunk):

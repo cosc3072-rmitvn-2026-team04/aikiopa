@@ -139,8 +139,8 @@ func unset_picked() -> void:
 
 
 ## Update the visual elements for this building card to match [param building].
-func set_type(building: Building.BuildingType) -> void:
-	match building:
+func set_type(building_type: Building.BuildingType) -> void:
+	match building_type:
 		Building.BuildingType.HOUSING:
 			$CardForegroundSprite2D.texture = load(
 					CARD_ASSET_PATH.path_join("housing_fg.png"))
@@ -183,12 +183,12 @@ func set_type(building: Building.BuildingType) -> void:
 					BUILDING_ASSET_PATH.path_join("building_factory.png"))
 		_:
 			push_error("Unrecognized building type: '%s'." % [
-				Building.BuildingType.keys()[building]
+				Building.BuildingType.keys()[building_type]
 			])
 			return
 
-	$BuildingNameLabel.text = Building.BUILDING_NAME[building]
-	_building_type = building
+	$BuildingNameLabel.text = Building.BUILDING_NAME[building_type]
+	_building_type = building_type
 
 #endregion
 # ============================================================================ #

@@ -72,9 +72,9 @@ func set_feature_at(
 		TerrainFeature.FeatureType.CHASM:
 			terrain_feature = _chasm_scene.instantiate()
 		_:
-			push_error("Unrecognized 'feature_type' %d. Unable to set terrain feature at (%d, %d)." % [
+			push_error("Unable to set terrain feature at (%d, %d): Unknown 'feature_type' %d." % [
+				coords.x, coords.y,
 				feature_type,
-				coords.x, coords.y
 			])
 			return
 

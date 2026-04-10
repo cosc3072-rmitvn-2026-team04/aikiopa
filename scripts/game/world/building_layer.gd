@@ -53,22 +53,30 @@ func clear() -> void:
 
 
 ## Returns the [enum Building.BuildingType] at [param coords].
-func get_building_at(coords) -> Building.BuildingType:
-	if not _buildings.has(coords):
+func get_building_at(coords: Vector2i) -> Building.BuildingType:
+	if not has_building_at(coords):
 		return Building.BuildingType.NONE
 	return _buildings[coords].get_type()
+
+
+## Returns [code]true[/code] if there is a building at [param coords].
+func has_building_at(coords: Vector2i) -> bool:
+	return _buildings.has(coords)
 
 
 ## Sets the building at [param coords] to one of [enum Building.BuildingType].
 ## TODO: Deterministically assign variation(s) at random.[br]
 ## [br]
-## Returns [code]false[/code] if [param coords] is blocked by terrain or another
-## building; or if [param building_type] is unrecognized.
+## Returns [code]false[/code] and prints an error if [param coords] is blocked
+## by another building or [param building_type] is unknown.
 func set_building_at(
 		coords: Vector2i,
 		building_type: Building.BuildingType
 ) -> bool:
-	if _buildings.has(coords):
+	if has_building_at(coords):
+		push_error("Unable to set building at (%d, %d): Cell blocked by existing building." % [
+				coords.x, coords.y
+		])
 		return false
 
 	var building: Building = null
@@ -92,9 +100,9 @@ func set_building_at(
 		Building.BuildingType.FACTORY:
 			building = _factory_scene.instantiate()
 		_:
-			push_error("Unrecognized 'building_type' %d. Unable to set building at (%d, %d)." % [
+			push_error("Unable to set building at (%d, %d): Unknown 'building_type' %d." % [
+				coords.x, coords.y,
 				building_type,
-				coords.x, coords.y
 			])
 			return false
 
@@ -103,6 +111,7 @@ func set_building_at(
 	building.position = terrain_tile_map_layer.map_to_local(coords)
 	add_child(building)
 
+	GameplayEventBus.building_placed.emit(coords, building_type)
 	return true
 
 
