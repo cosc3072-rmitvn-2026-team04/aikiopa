@@ -24,10 +24,11 @@ func clear() -> void:
 	_buildings.clear()
 
 
-# TODO: Implement this.
 ## Returns the [enum Building.BuildingType] at [param coords].
-func get_building_at(_coords) -> Building.BuildingType:
-	return Building.BuildingType.NONE
+func get_building_at(coords) -> Building.BuildingType:
+	if not _buildings.has(coords):
+		return Building.BuildingType.NONE
+	return _buildings[coords].get_type()
 
 
 # TODO: Implement this.
