@@ -30,13 +30,13 @@ signal building_card_dropped(building: Building.BuildingType)
 
 
 ## Emitted when the player attempts to use the building card they have on hand
-## (picked up) to place [param building] at [param screen_position].[br]
+## (picked up) to place [param building_type] at [param mouse_position].[br]
 ## [br]
-## [b]Note:[/b] [param screen_position] is NOT the corresponding tile position
-## in the [World]. Use the [code]TerrainTileMapLayer[/code] -
+## [b]Note:[/b] [param mouse_position] is NOT the corresponding tile position
+## in the [World]. Use [code]TerrainTileMapLayer[/code] -
 ## [method TileMapLayer.local_to_map] to convert it to the correct world
 ## coordinates.
 @warning_ignore("unused_signal")
 signal building_placement_requested(
         mouse_position: Vector2,
-        building: Building.BuildingType)
+        building_type: Building.BuildingType)

@@ -31,9 +31,29 @@ enum TerrainType {
 
 
 # ============================================================================ #
+#region Exported properties
+
+@export var building_ruleset_engine: BuildingRulesetEngine = null
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
 #region Private variables
 
 var _generated_chunks: Dictionary[Vector2i, bool]
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Godot builtins
+
+func _ready() -> void:
+	UIEventBus.building_placement_requested.connect(
+			_on_building_placement_requested)
 
 #endregion
 # ============================================================================ #
@@ -241,6 +261,31 @@ func place_building_at(
 ## game systems. Useful for scripted game events.
 func destroy_building_at(coords: Vector2i) -> bool:
 	return get_building_layer().destroy_building_at(coords)
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Signal listeners
+
+# Listens to
+# UIEventBus.building_placement_requested(
+#		mouse_position: Vector2,
+#		building_type: Building.BuildingType).
+func _on_building_placement_requested(
+		mouse_position: Vector2,
+		building_type: Building.BuildingType) -> void:
+	var world_coords: Vector2i = %World.get_terrain_tile_map_layer().local_to_map(
+			mouse_position)
+	var parse_result: Dictionary[StringName, Variant] =\
+			building_ruleset_engine.parse_rules(world_coords, building_type)
+
+	if (
+			parse_result.placement_check_status
+			== BuildingRulesetEngine.PlacementCheckStatus.ALLOWED
+	):
+		place_building_at(world_coords, building_type)
 
 #endregion
 # ============================================================================ #

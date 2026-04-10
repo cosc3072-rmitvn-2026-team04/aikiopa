@@ -12,8 +12,9 @@
 [node name="Game" type="Node2D" unique_id=1327406412]
 script = ExtResource("1_sul5r")
 
-[node name="World" parent="." unique_id=1513868058 instance=ExtResource("2_7h61r")]
+[node name="World" parent="." unique_id=1513868058 node_paths=PackedStringArray("building_ruleset_engine") instance=ExtResource("2_7h61r")]
 unique_name_in_owner = true
+building_ruleset_engine = NodePath("../BuildingRulesetEngine")
 
 [node name="BuildingStackController" type="Node" parent="." unique_id=1349143746]
 unique_name_in_owner = true
