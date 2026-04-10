@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://1imx5ewcp0ot"
-path="res://.godot/imported/Dalek.ttf-0e2e25cbd46cc58d52d51fc9c31875c0.fontdata"
+uid="uid://b01m2c7c53uks"
+path="res://.godot/imported/CWDRKAGE.TTF-c7560093184920eb62a59ab23e11a23c.fontdata"
 
 [deps]
 
-source_file="res://assets/theme/Righteous/Dalek.ttf"
-dest_files=["res://.godot/imported/Dalek.ttf-0e2e25cbd46cc58d52d51fc9c31875c0.fontdata"]
+source_file="res://assets/theme/fonts/CWDRKAGE.TTF"
+dest_files=["res://.godot/imported/CWDRKAGE.TTF-c7560093184920eb62a59ab23e11a23c.fontdata"]
 
 [params]
 
