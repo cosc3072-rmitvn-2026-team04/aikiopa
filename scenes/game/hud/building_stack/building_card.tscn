@@ -4,6 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://da2bkj7jo73c4" path="res://assets/building_stack/building_card/bg.png" id="2_556cu"]
 [ext_resource type="Texture2D" uid="uid://duymi0vx3cagj" path="res://assets/building_stack/building_card/food_fg.png" id="3_eb2xf"]
 [ext_resource type="Texture2D" uid="uid://cdd2qh0mo4cfc" path="res://assets/objects/building_landing_site.png" id="4_556cu"]
+[ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="5_eb2xf"]
+[ext_resource type="FontFile" uid="uid://dgw3768nro5hb" path="res://assets/themes/fonts/DalekPinpointBold.ttf" id="6_40xcq"]
 
 [node name="BuildingCard" type="Node2D" unique_id=1572232253]
 script = ExtResource("1_qw75a")
@@ -30,7 +32,9 @@ offset_right = 61.0
 offset_bottom = 81.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("5_eb2xf")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_40xcq")
 text = "<BuildingType>"
 horizontal_alignment = 1
 vertical_alignment = 1
