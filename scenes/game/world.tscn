@@ -32,10 +32,14 @@ unique_name_in_owner = true
 tile_set = ExtResource("3_q5tta")
 script = ExtResource("3_vn813")
 
-[node name="TerrainFeatureLayer" type="Node2D" parent="." unique_id=614560681]
+[node name="TerrainFeatureLayer" type="Node2D" parent="." unique_id=614560681 node_paths=PackedStringArray("world")]
 unique_name_in_owner = true
+y_sort_enabled = true
 script = ExtResource("3_qd3kh")
+world = NodePath("..")
 
-[node name="BuildingLayer" type="Node2D" parent="." unique_id=357589614]
+[node name="BuildingLayer" type="Node2D" parent="." unique_id=357589614 node_paths=PackedStringArray("world")]
 unique_name_in_owner = true
+y_sort_enabled = true
 script = ExtResource("4_w1nur")
+world = NodePath("..")

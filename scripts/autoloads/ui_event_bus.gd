@@ -15,3 +15,28 @@ extends Node
 ## @warning_ignore("unused_signal")
 ## signal inventory_opened
 ## [/codeblock]
+
+
+## Emitted when the player picks up a [param building] card from the building
+## stack in the Game HUD.
+@warning_ignore("unused_signal")
+signal building_card_picked(building: Building.BuildingType)
+
+
+## Emitted when the player drops the [param building] card back to the building
+## stack in the Game HUD.
+@warning_ignore("unused_signal")
+signal building_card_dropped(building: Building.BuildingType)
+
+
+## Emitted when the player attempts to use the building card they have on hand
+## (picked up) to place [param building_type] at [param mouse_position].[br]
+## [br]
+## [b]Note:[/b] [param mouse_position] is NOT the corresponding tile position
+## in the [World]. Use [code]TerrainTileMapLayer[/code] -
+## [method TileMapLayer.local_to_map] to convert it to the correct world
+## coordinates.
+@warning_ignore("unused_signal")
+signal building_placement_requested(
+        mouse_position: Vector2,
+        building_type: Building.BuildingType)

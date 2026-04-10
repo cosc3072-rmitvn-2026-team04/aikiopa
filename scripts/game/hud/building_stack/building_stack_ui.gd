@@ -54,6 +54,15 @@ func _update_building_card_positions() -> void:
 		var building_card: BuildingCard = building_cards[index]
 		var building_card_size: Vector2i = building_card.get_size()
 
+		# Make sure all card positions are uniform, since picked building cards
+		# has an offset y position. See [member BuildingCard.picked_offset].
+		#
+		# Without this, the unset_picked behavior would work incorrectly when
+		# new cards are added while the player is still picking up a building
+		# card.
+		if building_card.is_picked():
+			building_card.unset_picked()
+
 		# Set position.
 		building_card.position = Vector2(
 				building_card_size.x * 0.5,
@@ -116,22 +125,28 @@ func _update_building_stack_position() -> void:
 #region Signal listeners
 
 # Listens to
-# GameplayEventBus.building_stack_building_added(building: World.BuildingType).
-func _on_building_stack_building_added(building: World.BuildingType) -> void:
+# GameplayEventBus.building_stack_building_added(
+#		building_type: Building.BuildingType).
+func _on_building_stack_building_added(
+		building_type: Building.BuildingType
+) -> void:
 	var building_card: BuildingCard = _building_card_scene.instantiate()
-	building_card.set_type(building)
+	building_card.set_type(building_type)
 	%BuildingStack.add_child(building_card)
 	%BuildingStack.move_child(building_card, 0)
+	%BuildingStack.get_child(-1).set_pickable()
 	%BuildingStackCountLabel.text = "%d" % Global.game_state.building_stack.size()
 	_update_building_card_positions()
 	_update_building_stack_position()
 
 
 # Listens to
-# GameplayEventBus.building_stack_building_popped(building: World.BuildingType).
-func _on_building_stack_building_popped(_building: World.BuildingType) -> void:
+# GameplayEventBus.building_stack_building_popped(building: Building.BuildingType).
+func _on_building_stack_building_popped(_building: Building.BuildingType) -> void:
 	var top_building_card: BuildingCard = %BuildingStack.get_child(-1)
 	%BuildingStack.remove_child(top_building_card)
+	if %BuildingStack.get_child_count() != 0:
+		%BuildingStack.get_child(-1).set_pickable()
 	%BuildingStackCountLabel.text = "%d" % Global.game_state.building_stack.size()
 	_update_building_card_positions()
 	_update_building_stack_position()

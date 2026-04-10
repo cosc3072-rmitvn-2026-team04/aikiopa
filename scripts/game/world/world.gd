@@ -4,21 +4,6 @@ extends Node2D
 
 
 # ============================================================================ #
-#region Signals
-
-## Emitted when a building is successfully added.
-@warning_ignore("unused_signal")
-signal building_added(coords: Vector2i, type: BuildingType)
-
-## Emitted when a building is successfully removed.
-@warning_ignore("unused_signal")
-signal building_removed(coords: Vector2i)
-
-#endregion
-# ============================================================================ #
-
-
-# ============================================================================ #
 #region Enums
 
 ## Terrain types (including terrain features) in the game.
@@ -36,23 +21,9 @@ enum TerrainType {
 	GRASSLAND_MOUNTAIN,
 	GRASSLAND_CHASM,
 	DESERT,
-	DESERT_DUNES,
+	DESERT_SAND_DUNES,
 	DESERT_MOUNTAIN,
 	DESERT_CHASM,
-}
-
-## The building types available in the game.
-enum BuildingType {
-	NONE,
-	LANDING_SITE,
-	HOUSING,
-	SOLAR_FARM,
-	WIND_FARM,
-	NUCLEAR_REACTOR,
-	GREENHOUSE,
-	RANCH,
-	FISHERY,
-	FACTORY,
 }
 
 #endregion
@@ -60,20 +31,9 @@ enum BuildingType {
 
 
 # ============================================================================ #
-#region Constants
+#region Exported properties
 
-const BUILDING_NAME: Dictionary[BuildingType, String] = {
-	BuildingType.NONE: "",
-	BuildingType.LANDING_SITE: "Landing Site",
-	BuildingType.HOUSING: "Housing",
-	BuildingType.SOLAR_FARM: "Solar Farm",
-	BuildingType.WIND_FARM: "Wind Farm",
-	BuildingType.NUCLEAR_REACTOR: "Nuclear Reactor",
-	BuildingType.GREENHOUSE: "Greenhouse",
-	BuildingType.RANCH: "Ranch",
-	BuildingType.FISHERY: "Fishery",
-	BuildingType.FACTORY: "Factory",
-}
+@export var building_ruleset_engine: BuildingRulesetEngine = null
 
 #endregion
 # ============================================================================ #
@@ -82,19 +42,18 @@ const BUILDING_NAME: Dictionary[BuildingType, String] = {
 # ============================================================================ #
 #region Private variables
 
-var _terrain_feature_mountain: PackedScene =\
-		preload("res://scenes/game/objects/terrain_features/mountain.tscn")
-var _terrain_feature_chasm: PackedScene =\
-		preload("res://scenes/game/objects/terrain_features/chasm.tscn")
-var _terrain_feature_sand_dunes: PackedScene =\
-		preload("res://scenes/game/objects/terrain_features/sand_dunes.tscn")
-var _terrain_feature_forest: PackedScene =\
-		preload("res://scenes/game/objects/terrain_features/forest.tscn")
-var _terrain_feature_fishes: PackedScene =\
-		preload("res://scenes/game/objects/terrain_features/fishes.tscn")
-
 var _generated_chunks: Dictionary[Vector2i, bool]
-var _terrain_features: Dictionary[Vector2i, Node2D]
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Godot builtins
+
+func _ready() -> void:
+	UIEventBus.building_placement_requested.connect(
+			_on_building_placement_requested)
 
 #endregion
 # ============================================================================ #
@@ -109,12 +68,12 @@ func get_terrain_tile_map_layer() -> TileMapLayer:
 
 
 ## Returns the [code]TerrainFeatureLayer[/code] node.
-func get_terrain_features_layer() -> TileMapLayer:
+func get_terrain_feature_layer() -> Node2D:
 	return %TerrainFeatureLayer
 
 
 ## Returns the [code]BuildingLayer[/code] node.
-func get_buildings_layer() -> TileMapLayer:
+func get_building_layer() -> Node2D:
 	return %BuildingLayer
 
 
@@ -132,6 +91,10 @@ func initialize(world_seed: Variant = null) -> void:
 				"Invalid parameter type for 'world_seed'. Must be int or null.")
 		return
 	%WorldGenerator.generate_seeds(world_seed)
+	get_terrain_tile_map_layer().clear()
+	get_terrain_feature_layer().clear()
+	get_building_layer().clear()
+
 	_generated_chunks.clear()
 
 
@@ -194,79 +157,135 @@ func get_neigboring_chunks(chunk_offset: Vector2i) -> Array[Vector2i]:
 	]
 
 
-## Sets the terrain at [param coords] to one of [enum World.TerrainType].
-## Automatically assign terrain feature variation(s) at random.
+## Returns the [enum TerrainType] at [param coords].
+func get_terrain_at(coords: Vector2i) -> TerrainType:
+	var terrain_feature_layer: Node2D = get_terrain_feature_layer()
+
+	var base_terrain_type: TerrainType = get_terrain_tile_map_layer()\
+			.get_cell_tile_data(coords)\
+			.get_custom_data("base_terrain_type")
+	var terrain_feature_type: TerrainFeature.FeatureType =\
+			terrain_feature_layer.get_feature_at(coords)
+
+	var base_terrain_type_str: String =\
+			TerrainType.keys()[base_terrain_type]
+	if terrain_feature_type == TerrainFeature.FeatureType.NONE:
+		return TerrainType.get(base_terrain_type_str)
+
+	var terrain_feature_type_str: String =\
+			TerrainFeature.FeatureType.keys()[terrain_feature_type]
+	return TerrainType.get("%s_%s" % [
+		base_terrain_type_str,
+		terrain_feature_type_str,
+	])
+
+
+## Sets the terrain at [param coords] to one of [enum TerrainType].
 func set_terrain_at(coords: Vector2i, terrain_type: TerrainType) -> void:
-	get_terrain_tile_map_layer().set_cell(
+	var terrain_tile_map_layer: TileMapLayer = get_terrain_tile_map_layer()
+	var terrain_features_layer: Node2D = get_terrain_feature_layer()
+
+	terrain_tile_map_layer.set_cell(
 		coords,
 		get_terrain_tile_map_layer().SOURCE_ID,
 		get_terrain_tile_map_layer().ATLAS_COORDS[terrain_type])
+
 	match terrain_type:
-		TerrainType.PLAIN_MOUNTAIN, TerrainType.GRASSLAND_MOUNTAIN, TerrainType.DESERT_MOUNTAIN:
-			var mountain: Node2D = _terrain_feature_mountain.instantiate()
-			_terrain_features.set(coords, mountain)
-			mountain.position = get_terrain_tile_map_layer()\
-					.map_to_local(coords)
-			get_terrain_features_layer().add_child(mountain)
-		TerrainType.PLAIN_CHASM, TerrainType.GRASSLAND_CHASM, TerrainType.DESERT_CHASM:
-			var chasm: Node2D = _terrain_feature_chasm.instantiate()
-			_terrain_features.set(coords, chasm)
-			chasm.position = get_terrain_tile_map_layer()\
-					.map_to_local(coords)
-			get_terrain_features_layer().add_child(chasm)
-		TerrainType.DESERT_DUNES:
-			var sand_dunes: Node2D = _terrain_feature_sand_dunes.instantiate()
-			_terrain_features.set(coords, sand_dunes)
-			sand_dunes.position = get_terrain_tile_map_layer()\
-					.map_to_local(coords)
-			get_terrain_features_layer().add_child(sand_dunes)
-		TerrainType.PLAIN_FOREST, TerrainType.GRASSLAND_FOREST:
-			var forest: Node2D = _terrain_feature_forest.instantiate()
-			_terrain_features.set(coords, forest)
-			forest.position = get_terrain_tile_map_layer()\
-					.map_to_local(coords)
-			get_terrain_features_layer().add_child(forest)
 		TerrainType.SHALLOW_WATER_FISHES:
-			var fishes: Node2D = _terrain_feature_fishes.instantiate()
-			_terrain_features.set(coords, fishes)
-			fishes.position = get_terrain_tile_map_layer()\
-					.map_to_local(coords)
-			get_terrain_features_layer().add_child(fishes)
+			terrain_features_layer.set_feature_at(
+					coords,
+					TerrainFeature.FeatureType.FISHES)
+		TerrainType.PLAIN_FOREST, TerrainType.GRASSLAND_FOREST:
+			terrain_features_layer.set_feature_at(
+					coords,
+					TerrainFeature.FeatureType.FOREST)
+		TerrainType.DESERT_SAND_DUNES:
+			terrain_features_layer.set_feature_at(
+					coords,
+					TerrainFeature.FeatureType.SAND_DUNES)
+		TerrainType.PLAIN_MOUNTAIN, TerrainType.GRASSLAND_MOUNTAIN, TerrainType.DESERT_MOUNTAIN:
+			terrain_features_layer.set_feature_at(
+					coords,
+					TerrainFeature.FeatureType.MOUNTAIN)
+		TerrainType.PLAIN_CHASM, TerrainType.GRASSLAND_CHASM, TerrainType.DESERT_CHASM:
+			terrain_features_layer.set_feature_at(
+					coords,
+					TerrainFeature.FeatureType.CHASM)
 
 
-# TODO: Implement this.
-## Returns the [enum World.TerrainType] at [param coords].
-func get_terrain_at(_coords: Vector2i) -> TerrainType:
-	assert(false, "Game.get_terrain_at() not implemented")
-	return TerrainType.NONE
+## Returns [code]true[/code] if there is a [TerrainFeature] at [param coords].
+func has_terrain_feature_at(coords: Vector2i) -> bool:
+	return get_terrain_feature_layer().has_feature_at(coords)
 
 
-# TODO: Implement this.
-## Sets the building at [param coords] to one of [enum World.BuildingType].
-## Automatically assign variation(s) at random.[br]
+## Returns and destroys the terrain feature at [param coords].[br]
 ## [br]
-## Returns [code]false[/code] if there is already an existing building at
-## [param coords].
-func set_building_at(_coords: Vector2i, _type: BuildingType) -> bool:
-	assert(false, "Game.set_building_at() not implemented")
-	return false
+## Returns [constant TerrainFeature.FeatureType.NONE] if there is no terrain
+## feature at [param coords].
+func remove_terrain_feature_at(coords: Vector2i) -> TerrainFeature.FeatureType:
+	return get_terrain_feature_layer().remove_feature_at(coords)
 
 
-# TODO: Implement this.
-## Removes the building at [param coords].[br]
+## Returns the [enum Building.BuildingType] at [param coords].
+func get_building_at(coords: Vector2i) -> Building.BuildingType:
+	return get_building_layer().get_building_at(coords)
+
+
+## Returns [code]true[/code] if there is a [Building] at [param coords].
+func has_building_at(coords: Vector2i) -> bool:
+	return get_building_layer().has_building_at(coords)
+
+
+## Sets the building at [param coords] to one of [enum Building.BuildingType].
+## [color=orange][b][u]Warning:[/u] This will replace any existing
+## building.[/b][/color][br]
 ## [br]
-## Returns [code]false[/code] if there is no existing building at
+## Prints an error and do nothing if [param building_type] is unknown.[br]
+## [br]
+## Set [param quiet] to [code]true[/code] to execute without notifying other
+## game systems. Useful for scripted game events.
+func place_building_at(
+		coords: Vector2i,
+		building_type: Building.BuildingType,
+		quiet: bool = false
+) -> void:
+	get_building_layer().place_building_at(coords, building_type, quiet)
+
+
+## Returns and destroys the building at [param coords].[br]
+## [br]
+## Returns [constant Building.BuildingType.NONE] if there is no building at
 ## [param coords].
-func remove_building_at(_coords: Vector2i, _type: BuildingType) -> bool:
-	assert(false, "Game.remove_building_at() not implemented")
-	return false
+## [br]
+## Set [param quiet] to [code]true[/code] to execute without notifying other
+## game systems. Useful for scripted game events.
+func destroy_building_at(coords: Vector2i) -> bool:
+	return get_building_layer().destroy_building_at(coords)
+
+#endregion
+# ============================================================================ #
 
 
-# TODO: Implement this.
-## Returns the [enum World.BuildingType] at [param coords].
-func get_building_at(_coords: Vector2i) -> BuildingType:
-	assert(false, "Game.get_terrain_at() not implemented")
-	return BuildingType.NONE
+# ============================================================================ #
+#region Signal listeners
+
+# Listens to
+# UIEventBus.building_placement_requested(
+#		mouse_position: Vector2,
+#		building_type: Building.BuildingType).
+func _on_building_placement_requested(
+		mouse_position: Vector2,
+		building_type: Building.BuildingType) -> void:
+	var world_coords: Vector2i = %World.get_terrain_tile_map_layer().local_to_map(
+			mouse_position)
+	var parse_result: Dictionary[StringName, Variant] =\
+			building_ruleset_engine.parse_rules(world_coords, building_type)
+
+	if (
+			parse_result.placement_check_status
+			== BuildingRulesetEngine.PlacementCheckStatus.ALLOWED
+	):
+		place_building_at(world_coords, building_type)
 
 #endregion
 # ============================================================================ #

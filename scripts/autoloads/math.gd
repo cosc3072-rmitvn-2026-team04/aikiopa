@@ -46,7 +46,7 @@ class Matrix extends Node:
 		return coords.y * size_2d.x + coords.x
 
 
-## Hexagonal grid math libary. Since the game exclusively implements
+## Hexagonal grid math libary. Since this game exclusively implements
 ## [constant TileSet.TileOffsetAxis.TILE_OFFSET_AXIS_HORIZONTAL], no algorithm
 ## is provided for vertical offset axis.[br]
 ## [br]
@@ -61,8 +61,13 @@ class HexGrid extends Node:
 
 	## Layout types of offset coordinates for the game's hexagonal grid.
 	enum OffsetLayout {
-		ODD_R, ## Odd rows get shoved to the right.
-		EVEN_R, ## Even rows get shoved to the right.
+		## Odd rows get shoved to the right. Same as Godot's
+		## [constant TileSet.TileLayout.TILE_LAYOUT_STACKED].
+		ODD_R,
+
+		## Even rows get shoved to the right. Same as Godot's
+		## [constant TileSet.TileLayout.TILE_LAYOUT_STACKED_OFFSET].
+		EVEN_R,
 	}
 
 	## Valid directions of travel in the game's hexagonal grid.

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://6lexlgkglwls" path="res://scripts/game/main_camera_2d.gd" id="1_f2esr"]
 
-[node name="MainCamera2D" type="Camera2D" unique_id=556469284]
+[node name="PlayerCamera2D" type="Camera2D" unique_id=556469284]
 limit_enabled = false
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0

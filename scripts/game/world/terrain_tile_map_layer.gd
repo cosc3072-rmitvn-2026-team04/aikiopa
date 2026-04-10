@@ -19,7 +19,7 @@ const ATLAS_COORDS: Dictionary[World.TerrainType, Vector2i] = {
 	World.TerrainType.GRASSLAND_MOUNTAIN: Vector2i(1, 1),
 	World.TerrainType.GRASSLAND_CHASM: Vector2i(1, 1),
 	World.TerrainType.DESERT: Vector2i(2, 0),
-	World.TerrainType.DESERT_DUNES: Vector2i(2, 0),
+	World.TerrainType.DESERT_SAND_DUNES: Vector2i(2, 0),
 	World.TerrainType.DESERT_MOUNTAIN: Vector2i(2, 0),
 	World.TerrainType.DESERT_CHASM: Vector2i(2, 0),
 }

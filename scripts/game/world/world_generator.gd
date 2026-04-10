@@ -219,7 +219,7 @@ func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 
 # Returns the [param coords]' surrounding noise map coordinates, adjusted for
 # [param chunk_offset] in relation to Godot's TileMapLayer hex coordinate system
-# (odd-r). C.f. https://www.redblobgames.com/grids/hexagons/#coordinates-offset
+# (odd-r). Cf. https://www.redblobgames.com/grids/hexagons/#coordinates-offset
 func _get_chunk_surrounding_noise_coords(
 		coords: Vector2i,
 		chunk_offset: Vector2i
@@ -346,7 +346,7 @@ func _create_chunk_dunes_map(chunk_linear_data: Array[World.TerrainType]) -> voi
 					Vector2i(x, y),
 					chunk_size)
 			if chunk_linear_data[index] == World.TerrainType.DESERT:
-					chunk_linear_data[index] = World.TerrainType.DESERT_DUNES
+					chunk_linear_data[index] = World.TerrainType.DESERT_SAND_DUNES
 
 
 # 5th Step. x and y are swapped to produce more interesting features.

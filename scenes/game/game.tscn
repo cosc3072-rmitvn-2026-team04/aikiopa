@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dhh27y8ixdvyk" path="res://scripts/game/game.gd" id="1_sul5r"]
 [ext_resource type="PackedScene" uid="uid://b7p1b85oyvfnp" path="res://scenes/game/world.tscn" id="2_7h61r"]
-[ext_resource type="PackedScene" uid="uid://bg72upkhtf1cg" path="res://scenes/game/main_camera_2d.tscn" id="3_kelw5"]
+[ext_resource type="PackedScene" uid="uid://bg72upkhtf1cg" path="res://scenes/game/player_camera_2d.tscn" id="3_kelw5"]
+[ext_resource type="Script" uid="uid://goc0ooup6fxp" path="res://scripts/game/building_ruleset_engine.gd" id="4_87uf6"]
 [ext_resource type="PackedScene" uid="uid://ccpo3uu672sqa" path="res://scenes/game/debug_camera_2d.tscn" id="4_lfrn8"]
 [ext_resource type="PackedScene" uid="uid://c8uldsfm820ug" path="res://scenes/game/game_hud.tscn" id="5_5i0tg"]
 [ext_resource type="Script" uid="uid://0nisd2iu4boj" path="res://scripts/game/building_stack_controller.gd" id="5_lfrn8"]
@@ -11,12 +12,19 @@
 [node name="Game" type="Node2D" unique_id=1327406412]
 script = ExtResource("1_sul5r")
 
-[node name="World" parent="." unique_id=1513868058 instance=ExtResource("2_7h61r")]
+[node name="World" parent="." unique_id=1513868058 node_paths=PackedStringArray("building_ruleset_engine") instance=ExtResource("2_7h61r")]
 unique_name_in_owner = true
+building_ruleset_engine = NodePath("../BuildingRulesetEngine")
 
 [node name="BuildingStackController" type="Node" parent="." unique_id=1349143746]
 unique_name_in_owner = true
 script = ExtResource("5_lfrn8")
+starting_building_count = 10
+
+[node name="BuildingRulesetEngine" type="Node" parent="." unique_id=924936073 node_paths=PackedStringArray("world")]
+unique_name_in_owner = true
+script = ExtResource("4_87uf6")
+world = NodePath("../World")
 
 [node name="PopulationController" type="Node" parent="." unique_id=153495353]
 unique_name_in_owner = true
@@ -24,11 +32,13 @@ script = ExtResource("6_5i0tg")
 
 [node name="GameHUDCanvasLayer" type="CanvasLayer" parent="." unique_id=1835501581]
 
-[node name="GameHUD" parent="GameHUDCanvasLayer" unique_id=1279456757 instance=ExtResource("5_5i0tg")]
+[node name="GameHUD" parent="GameHUDCanvasLayer" unique_id=1279456757 node_paths=PackedStringArray("world") instance=ExtResource("5_5i0tg")]
+world = NodePath("../../World")
 
 [node name="PlayerCamera2D" parent="." unique_id=556469284 node_paths=PackedStringArray("world") instance=ExtResource("3_kelw5")]
 unique_name_in_owner = true
-pan_speed = 2000
+position_smoothing_speed = 6.5
+pan_speed = 900
 world = NodePath("../World")
 
 [node name="DebugCamera2D" parent="." unique_id=1889864583 node_paths=PackedStringArray("world", "building_stack_controller") instance=ExtResource("4_lfrn8")]

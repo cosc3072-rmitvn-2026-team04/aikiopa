@@ -38,7 +38,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	_process_auto_world_gen()
+	_process_auto_world_generation()
 
 
 func _input(event: InputEvent) -> void:
@@ -57,13 +57,20 @@ func _init_world(world_seed: Variant = null) -> void:
 	%World.initialize(world_seed)
 	%World.create_chunk(Vector2i.ZERO)
 
+	var center_coords: Vector2i = %World.get_chunk_size() / 2
+	%World.remove_terrain_feature_at(center_coords)
+	%World.place_building_at(
+			center_coords,
+			Building.BuildingType.LANDING_SITE,
+			true) # Quiet placement.
+
 
 func _init_population() -> void:
 	%PopulationController.set_population(0)
 
 
 func _init_building_stack(
-		building_queue: Array[World.BuildingType],
+		building_queue: Array[Building.BuildingType],
 		session_seed: Variant = null,
 		session_state: Variant = null
 ) -> void:
@@ -88,7 +95,7 @@ func _init_cameras() -> void:
 
 #region _process()
 
-func _process_auto_world_gen() -> void:
+func _process_auto_world_generation() -> void:
 	var camera_chunk_position: Vector2i = %PlayerCamera2D.get_chunk_position()
 	for neighbor_chunk in %World.get_neigboring_chunks(camera_chunk_position):
 		if not %World.is_chunk_generated(neighbor_chunk):

@@ -12,7 +12,7 @@ extends Node
 #region Constants
 
 ## Savegame location.
-const SAVE_DIR: String = "user://saves"
+const SAVE_DIR: String = "user://saves/"
 
 #endregion
 # ============================================================================ #
@@ -71,10 +71,10 @@ func _exit_tree() -> void:
 class GameState extends Node:
 
 	## The population in the current game session.
-	var population: int
+	var population: int = 0
 
-	## The building stack in the current game sessin.
-	var building_stack: Array[World.BuildingType]
+	## The building stack in the current game session.
+	var building_stack: Array[Building.BuildingType] = []
 
 #endregion
 # ============================================================================ #

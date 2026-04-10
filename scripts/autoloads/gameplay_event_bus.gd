@@ -17,17 +17,28 @@ extends Node
 ## [/codeblock]
 
 
-## Emitted when a new random building is added to the bottom of the building
-## stack. [param building] identifies the [World.BuildingType] the added
-## building.
+## Emitted when a [param building_type] is added to the bottom of the building
+## stack. See [BuildingStackController].
 @warning_ignore("unused_signal")
-signal building_stack_building_added(building: World.BuildingType)
+signal building_stack_building_added(building_type: Building.BuildingType)
 
 
-## Emitted when the building at the top of the building stack is popped off.
-## [param building] identifies the [World.BuildingType] of the popped building.
+## Emitted when the [param_building_type] at the top of the building stack is
+## popped off. See [BuildingStackController].
 @warning_ignore("unused_signal")
-signal building_stack_building_popped(building: World.BuildingType)
+signal building_stack_building_popped(building_type: Building.BuildingType)
+
+
+## Emitted when a [Building] of [param building_type] is successfully added at
+## [param coords] in the [World].
+@warning_ignore("unused_signal")
+signal building_placed(coords: Vector2i, building_type: Building.BuildingType)
+
+
+## Emitted when a [Building] of [param building_type] at [param coords] is
+## destroyed.
+@warning_ignore("unused_signal")
+signal building_destroyed(coords: Vector2i, building_type: Building.BuildingType)
 
 
 ## Emitted when the population has just been changed from [param old_amount] to

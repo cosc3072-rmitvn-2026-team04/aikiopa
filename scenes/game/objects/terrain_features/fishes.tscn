@@ -2,8 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://blvhcx1c6kpg7" path="res://scenes/game/objects/terrain_features/_generic.tscn" id="1_h7clm"]
 [ext_resource type="Texture2D" uid="uid://dti3722xw4pdt" path="res://assets/objects/terrain_feature_fishes.png" id="2_b7m4h"]
+[ext_resource type="Script" uid="uid://brv62yu5y6t0n" path="res://scripts/game/objects/terrain_features/fishes.gd" id="2_xd8ni"]
 
 [node name="Fish" unique_id=609911264 instance=ExtResource("1_h7clm")]
+script = ExtResource("2_xd8ni")
 
 [node name="Sprite2D" parent="." index="0" unique_id=929203464]
 texture = ExtResource("2_b7m4h")

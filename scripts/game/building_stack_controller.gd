@@ -5,9 +5,57 @@ extends Node
 ## [url=https://en.wikipedia.org/wiki/Queue_(abstract_data_type)]queue[/url].
 
 
-const GENERATED_BUILDING_TYPES_START_INDEX: int = 2
+# ============================================================================ #
+#region Exported properties
+
+## The non-uniform weights used for random building generation. Building types
+## with higher weights appear more often than those with lower weights.[br]
+## [br]
+## Used as input for the internal [method RandomNumberGenerator.rand_weighted]
+## calls in this [BuildingStackController].[br]
+## [br]
+## [b]Note:[/b] Setting a weight to [code]0[/code] means the corresponding
+## building would never appear.[br]
+## [br]
+## [color=red][b]WARNING: Do not add/remove any Key/Value pair into this
+## property in the Godot Editor. Doing so will result in undefined
+## behavior.[/b][/color]
+@export var building_type_weights: Dictionary[Building.BuildingType, float] = {
+	Building.BuildingType.LANDING_SITE: 0.0,
+	Building.BuildingType.HOUSING: 1.0,
+	Building.BuildingType.GREENHOUSE: 1.0,
+	Building.BuildingType.RANCH: 1.0,
+	Building.BuildingType.FISHERY: 1.0,
+	Building.BuildingType.SOLAR_FARM: 1.0,
+	Building.BuildingType.WIND_FARM: 1.0,
+	Building.BuildingType.NUCLEAR_REACTOR: 1.0,
+	Building.BuildingType.FACTORY: 1.0,
+}
+
+## The number of [BuildingCard]s that the player receives in each new session.
+@export_range(1, 50, 1) var starting_building_count: int = 1
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Variables
 
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Godot builtins
+
+func _ready() -> void:
+	GameplayEventBus.building_placed.connect(_on_building_placed)
+
+#endregion
+# ============================================================================ #
 
 
 # ============================================================================ #
@@ -22,7 +70,7 @@ var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 ## to behave properly. It should only be set to values that came from
 ## [method get_session_state].
 func initialize_session(
-		building_queue: Array[World.BuildingType],
+		building_queue: Array[Building.BuildingType],
 		session_seed: Variant = null,
 		session_state: Variant = null
 ) -> void:
@@ -36,10 +84,17 @@ func initialize_session(
 	if session_seed and session_state:
 		_rng.seed = session_seed
 		_rng.state = session_state
+		Global.game_state.building_stack = building_queue
 	else:
 		_rng.randomize()
-
-	Global.game_state.building_stack = building_queue
+		for i in range(starting_building_count):
+			add_building()
+			# TODO: Workaround: Without this line, the rapid adding of buildings
+			# would make the building stack UI put its cards at the wrong
+			# positions. We may have to keep this. But find out where to put the
+			# hard-coded 0.1 seconds into an exported property, or as a Global
+			# constant.
+			await get_tree().create_timer(0.1).timeout
 
 
 ## Returns the seed of the internal [RandomNumberGenerator]. Useful for saving
@@ -54,22 +109,23 @@ func get_session_state() -> int:
 	return _rng.state
 
 
-## Adds a random [enum World.BuildingType] to the bottom of the building stack,
-## then returns that building type.
+## Adds a random [enum Building.BuildingType] to the bottom of the building
+## stack, then returns that building type.
 func add_building() -> void:
-	var new_building_type: World.BuildingType = _rng.randi_range(
-			GENERATED_BUILDING_TYPES_START_INDEX,
-			World.BuildingType.size() - 1) as World.BuildingType
+	var new_building_type: Building.BuildingType = (
+			_rng.rand_weighted(PackedFloat32Array(building_type_weights.values()))
+			+ 1 # Skip Building.BuildingType.NONE.
+	) as Building.BuildingType
 	Global.game_state.building_stack.push_front(new_building_type)
 	GameplayEventBus.building_stack_building_added.emit(new_building_type)
 
 
 ## Pops and returns the building type at the top of the building stack. Returns
-## [constant World.BuildingType.NONE] if the building stack is already empty.
-func pop_building() -> World.BuildingType:
+## [constant Building.BuildingType.NONE] if the building stack is already empty.
+func pop_building() -> Building.BuildingType:
 	if is_empty():
-		return World.BuildingType.NONE
-	var building_type: World.BuildingType =\
+		return Building.BuildingType.NONE
+	var building_type: Building.BuildingType =\
 			Global.game_state.building_stack.pop_back()
 	GameplayEventBus.building_stack_building_popped.emit(building_type)
 	return building_type
@@ -90,6 +146,32 @@ func size() -> int:
 ## See also [method size].
 func is_empty() -> bool:
 	return Global.game_state.building_stack.is_empty()
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Signal listeners
+
+# Listens to
+# GameplayEventBus.building_placed(
+#		coords: Vector2i,
+#		building_type: Building.BuildingType).
+func _on_building_placed(
+		_coords: Vector2i,
+		building_type: Building.BuildingType
+) -> void:
+	var building_stack_top: Building.BuildingType =\
+			Global.game_state.building_stack.back()
+	if building_stack_top != building_type:
+		push_error("Top building card (%s) does not match placed building (%s)" % [
+			Building.BuildingType.keys()[building_stack_top],
+			Building.BuildingType.keys()[building_type],
+		])
+		return
+
+	pop_building()
 
 #endregion
 # ============================================================================ #
