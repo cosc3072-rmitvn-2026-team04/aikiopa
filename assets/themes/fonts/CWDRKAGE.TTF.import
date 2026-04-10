@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://b01m2c7c53uks"
-path="res://.godot/imported/CWDRKAGE.TTF-c7560093184920eb62a59ab23e11a23c.fontdata"
+path="res://.godot/imported/CWDRKAGE.TTF-2c12653bd5ab6ba418ad68b3ea9e8969.fontdata"
 
 [deps]
 
-source_file="res://assets/theme/fonts/CWDRKAGE.TTF"
-dest_files=["res://.godot/imported/CWDRKAGE.TTF-c7560093184920eb62a59ab23e11a23c.fontdata"]
+source_file="res://assets/themes/fonts/CWDRKAGE.TTF"
+dest_files=["res://.godot/imported/CWDRKAGE.TTF-2c12653bd5ab6ba418ad68b3ea9e8969.fontdata"]
 
 [params]
 

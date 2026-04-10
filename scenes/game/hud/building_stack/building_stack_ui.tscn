@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://csffjo6oq4r5m"]
 
 [ext_resource type="Script" uid="uid://dvq70xagotyu0" path="res://scripts/game/hud/building_stack/building_stack_ui.gd" id="1_8yw7d"]
-[ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/theme/main_ui.tres" id="1_l8etm"]
+[ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="1_l8etm"]
 [ext_resource type="Curve" uid="uid://c7mvftrliarys" path="res://resources/building_stack/revealed_card_spread_curve.tres" id="2_8yw7d"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bfcrc"]

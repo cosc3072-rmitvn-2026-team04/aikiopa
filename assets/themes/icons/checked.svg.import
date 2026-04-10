@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c70cn8fmycaor"
-path="res://.godot/imported/unchecked.svg-6a3c9e5d4f11cfd16aa333858e5d1524.ctex"
+uid="uid://c0brij1831fn3"
+path="res://.godot/imported/checked.svg-c1fb2d34900c41b430959cb1c21af5b0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/theme/icons/unchecked.svg"
-dest_files=["res://.godot/imported/unchecked.svg-6a3c9e5d4f11cfd16aa333858e5d1524.ctex"]
+source_file="res://assets/themes/icons/checked.svg"
+dest_files=["res://.godot/imported/checked.svg-c1fb2d34900c41b430959cb1c21af5b0.ctex"]
 
 [params]
 

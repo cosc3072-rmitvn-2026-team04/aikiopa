@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://eor6gtwayiou"
-path="res://.godot/imported/toggle_off.svg-45aaf26796c662baa531bf391b2ead82.ctex"
+path="res://.godot/imported/toggle_off.svg-27ab7a4bdffdd42b4f4e7135f9a89eb8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/theme/icons/toggle_off.svg"
-dest_files=["res://.godot/imported/toggle_off.svg-45aaf26796c662baa531bf391b2ead82.ctex"]
+source_file="res://assets/themes/icons/toggle_off.svg"
+dest_files=["res://.godot/imported/toggle_off.svg-27ab7a4bdffdd42b4f4e7135f9a89eb8.ctex"]
 
 [params]
 

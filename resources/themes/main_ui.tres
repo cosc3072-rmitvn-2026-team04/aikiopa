@@ -1,13 +1,13 @@
 [gd_resource type="Theme" format=3 uid="uid://b3klx57slj0l3"]
 
-[ext_resource type="FontFile" uid="uid://b01m2c7c53uks" path="res://assets/theme/fonts/CWDRKAGE.TTF" id="1_e1wgc"]
-[ext_resource type="Texture2D" uid="uid://c0brij1831fn3" path="res://assets/theme/icons/checked.svg" id="2_ytsfs"]
-[ext_resource type="Texture2D" uid="uid://c70cn8fmycaor" path="res://assets/theme/icons/unchecked.svg" id="3_fgipk"]
-[ext_resource type="Texture2D" uid="uid://dwie7mj1y2n2k" path="res://assets/theme/icons/toggle_on.svg" id="4_g1dnq"]
-[ext_resource type="Texture2D" uid="uid://eor6gtwayiou" path="res://assets/theme/icons/toggle_off.svg" id="5_f2ecf"]
-[ext_resource type="Texture2D" uid="uid://bffgupthx51e2" path="res://assets/theme/icons/slider_grabber.svg" id="6_jpk5x"]
-[ext_resource type="FontFile" uid="uid://1imx5ewcp0ot" path="res://assets/theme/fonts/Dalek.ttf" id="7_f5yd7"]
-[ext_resource type="FontFile" uid="uid://dgw3768nro5hb" path="res://assets/theme/fonts/DalekPinpointBold.ttf" id="8_vcnfv"]
+[ext_resource type="FontFile" uid="uid://b01m2c7c53uks" path="res://assets/themes/fonts/CWDRKAGE.TTF" id="1_e1wgc"]
+[ext_resource type="Texture2D" uid="uid://c0brij1831fn3" path="res://assets/themes/icons/checked.svg" id="2_ytsfs"]
+[ext_resource type="Texture2D" uid="uid://c70cn8fmycaor" path="res://assets/themes/icons/unchecked.svg" id="3_fgipk"]
+[ext_resource type="Texture2D" uid="uid://dwie7mj1y2n2k" path="res://assets/themes/icons/toggle_on.svg" id="4_g1dnq"]
+[ext_resource type="Texture2D" uid="uid://eor6gtwayiou" path="res://assets/themes/icons/toggle_off.svg" id="5_f2ecf"]
+[ext_resource type="Texture2D" uid="uid://bffgupthx51e2" path="res://assets/themes/icons/slider_grabber.svg" id="6_jpk5x"]
+[ext_resource type="FontFile" uid="uid://1imx5ewcp0ot" path="res://assets/themes/fonts/Dalek.ttf" id="7_f5yd7"]
+[ext_resource type="FontFile" uid="uid://dgw3768nro5hb" path="res://assets/themes/fonts/DalekPinpointBold.ttf" id="8_vcnfv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k0c1y"]
 bg_color = Color(0.9411765, 0.45882353, 0.6666667, 1)

@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://1imx5ewcp0ot"
-path="res://.godot/imported/Dalek.ttf-3e4d8a1df52cd68b9aad426a08cd78b4.fontdata"
+path="res://.godot/imported/Dalek.ttf-61ba28712694e31f522060221249a252.fontdata"
 
 [deps]
 
-source_file="res://assets/theme/fonts/Dalek.ttf"
-dest_files=["res://.godot/imported/Dalek.ttf-3e4d8a1df52cd68b9aad426a08cd78b4.fontdata"]
+source_file="res://assets/themes/fonts/Dalek.ttf"
+dest_files=["res://.godot/imported/Dalek.ttf-61ba28712694e31f522060221249a252.fontdata"]
 
 [params]
 
