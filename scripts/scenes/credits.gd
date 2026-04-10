@@ -107,10 +107,10 @@ func _on_resized() -> void:
 	set_header_and_footer()
 	_current_scroll_position = float(scroll_container.scroll_vertical)
 
-
-func _input(event):
+func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+		scroll_paused = true
+		scene_finished.emit(SceneKey.MAIN_MENU)
 
 #endregion
 # ============================================================================ #
