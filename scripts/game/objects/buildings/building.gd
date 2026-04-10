@@ -59,7 +59,7 @@ func get_type() -> BuildingType:
 ## [br]
 ## Schema:
 ## [codeblock]
-##	# TODO: Develop a schema and implement this function in children classes.
+##     # TODO: Develop a schema and implement this function in children classes.
 ## [/codeblock]
 ## [br]
 ## Override this method in children scenes to provide the appropriate return

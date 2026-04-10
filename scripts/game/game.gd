@@ -65,7 +65,7 @@ func _init_world(world_seed: Variant = null) -> void:
 	%World.place_building_at(
 			center_coords,
 			Building.BuildingType.LANDING_SITE,
-			true)
+			true) # Quiet placement.
 
 
 func _init_population() -> void:

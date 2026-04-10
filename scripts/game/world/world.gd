@@ -137,6 +137,29 @@ func get_neigboring_chunks(chunk_offset: Vector2i) -> Array[Vector2i]:
 	]
 
 
+## Returns the [enum TerrainType] at [param coords].
+func get_terrain_at(coords: Vector2i) -> TerrainType:
+	var terrain_feature_layer: Node2D = get_terrain_feature_layer()
+
+	var base_terrain_type: TerrainType = get_terrain_tile_map_layer()\
+			.get_cell_tile_data(coords)\
+			.get_custom_data("base_terrain_type")
+	var terrain_feature_type: TerrainFeature.FeatureType =\
+			terrain_feature_layer.get_feature_at(coords)
+
+	var base_terrain_type_str: String =\
+			TerrainType.keys()[base_terrain_type]
+	if terrain_feature_type == TerrainFeature.FeatureType.NONE:
+		return TerrainType.get(base_terrain_type_str)
+
+	var terrain_feature_type_str: String =\
+			TerrainFeature.FeatureType.keys()[terrain_feature_type]
+	return TerrainType.get("%s_%s" % [
+		base_terrain_type_str,
+		terrain_feature_type_str,
+	])
+
+
 ## Sets the terrain at [param coords] to one of [enum TerrainType].
 func set_terrain_at(coords: Vector2i, terrain_type: TerrainType) -> void:
 	var terrain_tile_map_layer: TileMapLayer = get_terrain_tile_map_layer()
@@ -170,27 +193,9 @@ func set_terrain_at(coords: Vector2i, terrain_type: TerrainType) -> void:
 					TerrainFeature.FeatureType.CHASM)
 
 
-## Returns the [enum TerrainType] at [param coords].
-func get_terrain_at(coords: Vector2i) -> TerrainType:
-	var terrain_feature_layer: Node2D = get_terrain_feature_layer()
-
-	var base_terrain_type: TerrainType = get_terrain_tile_map_layer()\
-			.get_cell_tile_data(coords)\
-			.get_custom_data("base_terrain_type")
-	var terrain_feature_type: TerrainFeature.FeatureType =\
-			terrain_feature_layer.get_feature_at(coords)
-
-	var base_terrain_type_str: String =\
-			TerrainType.keys()[base_terrain_type]
-	if terrain_feature_type == TerrainFeature.FeatureType.NONE:
-		return TerrainType.get(base_terrain_type_str)
-
-	var terrain_feature_type_str: String =\
-			TerrainFeature.FeatureType.keys()[terrain_feature_type]
-	return TerrainType.get("%s_%s" % [
-		base_terrain_type_str,
-		terrain_feature_type_str,
-	])
+## Returns [code]true[/code] if there is a [TerrainFeature] at [param coords].
+func has_terrain_feature_at(coords: Vector2i) -> bool:
+	return get_terrain_feature_layer().has_feature_at(coords)
 
 
 ## Returns and destroys the terrain feature at [param coords].[br]
@@ -201,32 +206,41 @@ func remove_terrain_feature_at(coords: Vector2i) -> TerrainFeature.FeatureType:
 	return get_terrain_feature_layer().remove_feature_at(coords)
 
 
+## Returns the [enum Building.BuildingType] at [param coords].
+func get_building_at(coords: Vector2i) -> Building.BuildingType:
+	return get_building_layer().get_building_at(coords)
+
+
+## Returns [code]true[/code] if there is a [Building] at [param coords].
+func has_building_at(coords: Vector2i) -> bool:
+	return get_building_layer().has_building_at(coords)
+
+
 ## Sets the building at [param coords] to one of [enum Building.BuildingType].
+## [color=orange][b][u]Warning:[/u] This will replace any existing
+## building.[/b][/color][br]
 ## [br]
-## Returns [code]false[/code] if [param coords] is blocked by terrain or another
-## building.[br]
+## Prints an error and do nothing if [param building_type] is unknown.[br]
 ## [br]
-## Set [param quiet] to [code]true[/code] to execute the placement without
-## notifying other game systems. Useful for scripted game events.
+## Set [param quiet] to [code]true[/code] to execute without notifying other
+## game systems. Useful for scripted game events.
 func place_building_at(
 		coords: Vector2i,
 		building_type: Building.BuildingType,
 		quiet: bool = false
-) -> bool:
-	return get_building_layer().place_building_at(coords, building_type, quiet)
+) -> void:
+	get_building_layer().place_building_at(coords, building_type, quiet)
 
 
-## Destroy the building at [param coords].[br]
+## Returns and destroys the building at [param coords].[br]
 ## [br]
-## Returns [code]false[/code] if there is no existing building at
+## Returns [constant Building.BuildingType.NONE] if there is no building at
 ## [param coords].
+## [br]
+## Set [param quiet] to [code]true[/code] to execute without notifying other
+## game systems. Useful for scripted game events.
 func destroy_building_at(coords: Vector2i) -> bool:
 	return get_building_layer().destroy_building_at(coords)
-
-
-## Returns the [enum Building.BuildingType] at [param coords].
-func get_building_at(coords: Vector2i) -> Building.BuildingType:
-	return get_building_layer().get_building_at(coords)
 
 #endregion
 # ============================================================================ #

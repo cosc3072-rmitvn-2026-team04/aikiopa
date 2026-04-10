@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dhh27y8ixdvyk" path="res://scripts/game/game.gd" id="1_sul5r"]
 [ext_resource type="PackedScene" uid="uid://b7p1b85oyvfnp" path="res://scenes/game/world.tscn" id="2_7h61r"]
 [ext_resource type="PackedScene" uid="uid://bg72upkhtf1cg" path="res://scenes/game/player_camera_2d.tscn" id="3_kelw5"]
+[ext_resource type="Script" uid="uid://goc0ooup6fxp" path="res://scripts/game/ruleset_component.gd" id="4_87uf6"]
 [ext_resource type="PackedScene" uid="uid://ccpo3uu672sqa" path="res://scenes/game/debug_camera_2d.tscn" id="4_lfrn8"]
 [ext_resource type="PackedScene" uid="uid://c8uldsfm820ug" path="res://scenes/game/game_hud.tscn" id="5_5i0tg"]
 [ext_resource type="Script" uid="uid://0nisd2iu4boj" path="res://scripts/game/building_stack_controller.gd" id="5_lfrn8"]
@@ -18,6 +19,9 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 script = ExtResource("5_lfrn8")
 starting_building_count = 10
+
+[node name="RulesetComponent" type="Node" parent="." unique_id=924936073]
+script = ExtResource("4_87uf6")
 
 [node name="PopulationController" type="Node" parent="." unique_id=153495353]
 unique_name_in_owner = true

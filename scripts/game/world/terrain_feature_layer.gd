@@ -59,7 +59,7 @@ func has_feature_at(coords: Vector2i) -> bool:
 ## Sets the terrain feature at [param coords] to one of
 ## [enum TerrainFeature.FeatureType].[br]
 ## [br]
-## TODO: Deterministically assign terrain feature variations at random.
+## TODO: Deterministically assign random variations.
 func set_feature_at(
 		coords: Vector2i,
 		feature_type: TerrainFeature.FeatureType
