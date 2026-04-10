@@ -2,7 +2,6 @@ class_name BuildingRulesetEngine
 extends Node
 ## Evaluates the core interactions between building and terrain in the game
 ## through stateless validation methods.
-# TODO: Add more documentation for this class.
 
 
 # ============================================================================ #
@@ -98,35 +97,40 @@ func parse_rules(
 			&"interaction_result": null,
 		}
 
-	var parse_result: Dictionary[StringName, Variant] = {}
-
-	var bvt_parse_result: Array[Variant] = _bvt_rules[[
-		world.get_terrain_at(coords), building_type
-	]]
-	if bvt_parse_result[0] != PlacementCheckStatus.ALLOWED:
-		return {
-			&"placement_check_status": bvt_parse_result[0],
-			&"interaction_result": bvt_parse_result[1],
-		}
-	parse_result = {
-		&"placement_check_status": bvt_parse_result[0],
-		&"interaction_result": bvt_parse_result[1],
+	# TODO: Implement this.
+	return {
+		&"placement_check_status": PlacementCheckStatus.ALLOWED,
+		&"interaction_result": InteractionResult.new(0, 0),
 	}
+	#var parse_result: Dictionary[StringName, Variant] = {}
 
-	var bvb_parse_result: Array[Variant] = _bvb_rules[[
-		world.get_terrain_at(coords), building_type
-	]]
-	if bvb_parse_result[0] != PlacementCheckStatus.ALLOWED:
-		return {
-			&"placement_check_status": bvb_parse_result[0],
-			&"interaction_result": bvb_parse_result[1],
-		}
-	parse_result = {
-		&"placement_check_status": bvb_parse_result[0],
-		&"interaction_result": bvb_parse_result[1],
-	}
+	#var bvt_parse_result: Array[Variant] = _bvt_rules[[
+	#	world.get_terrain_at(coords), building_type
+	#]]
+	#if bvt_parse_result[0] != PlacementCheckStatus.ALLOWED:
+	#	return {
+	#		&"placement_check_status": bvt_parse_result[0],
+	#		&"interaction_result": bvt_parse_result[1],
+	#	}
+	#parse_result = {
+	#	&"placement_check_status": bvt_parse_result[0],
+	#	&"interaction_result": bvt_parse_result[1],
+	#}
 
-	return parse_result
+	#var bvb_parse_result: Array[Variant] = _bvb_rules[[
+	#	world.get_terrain_at(coords), building_type
+	#]]
+	#if bvb_parse_result[0] != PlacementCheckStatus.ALLOWED:
+	#	return {
+	#		&"placement_check_status": bvb_parse_result[0],
+	#		&"interaction_result": bvb_parse_result[1],
+	#	}
+	#parse_result = {
+	#	&"placement_check_status": bvb_parse_result[0],
+	#	&"interaction_result": bvb_parse_result[1],
+	#}
+
+	#return parse_result
 
 #endregion
 # ============================================================================ #
