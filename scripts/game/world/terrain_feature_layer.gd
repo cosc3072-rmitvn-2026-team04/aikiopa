@@ -11,29 +11,22 @@ extends Node2D
 
 
 # ============================================================================ #
-#region Public variables
-
-## The [TerrainFeature] instances in the game. Identified by their [Vector2i]
-## coordinates.
-var _terrain_features: Dictionary[Vector2i, TerrainFeature]
-
-#endregion
-# ============================================================================ #
-
-
-# ============================================================================ #
 #region Private variables
 
-var _terrain_feature_fishes: PackedScene =\
+var _fishes_scene: PackedScene =\
 		preload("res://scenes/game/objects/terrain_features/fishes.tscn")
-var _terrain_feature_forest: PackedScene =\
+var _forest_scene: PackedScene =\
 		preload("res://scenes/game/objects/terrain_features/forest.tscn")
-var _terrain_feature_sand_dunes: PackedScene =\
+var _sand_dunes_scene: PackedScene =\
 		preload("res://scenes/game/objects/terrain_features/sand_dunes.tscn")
-var _terrain_feature_mountain: PackedScene =\
+var _mountain_scene: PackedScene =\
 		preload("res://scenes/game/objects/terrain_features/mountain.tscn")
-var _terrain_feature_chasm: PackedScene =\
+var _chasm_scene: PackedScene =\
 		preload("res://scenes/game/objects/terrain_features/chasm.tscn")
+
+# The [TerrainFeature] instances in the game. Identified by their [Vector2i]
+# coordinates.
+var _terrain_features: Dictionary[Vector2i, TerrainFeature]
 
 #endregion
 # ============================================================================ #
@@ -66,38 +59,29 @@ func set_feature_at(
 		coords: Vector2i,
 		feature_type: TerrainFeature.FeatureType
 ) -> void:
-	var terrain_tile_map_layer: TileMapLayer = world.get_terrain_tile_map_layer()
-
+	var terrain_feature: TerrainFeature = null
 	match feature_type:
 		TerrainFeature.FeatureType.FISHES:
-			var fishes: TerrainFeature = _terrain_feature_fishes.instantiate()
-			_terrain_features.set(coords, fishes)
-			fishes.position = terrain_tile_map_layer.map_to_local(coords)
-			add_child(fishes)
+			terrain_feature = _fishes_scene.instantiate()
 		TerrainFeature.FeatureType.FOREST:
-			var forest: TerrainFeature = _terrain_feature_forest.instantiate()
-			_terrain_features.set(coords, forest)
-			forest.position = terrain_tile_map_layer.map_to_local(coords)
-			add_child(forest)
+			terrain_feature = _forest_scene.instantiate()
 		TerrainFeature.FeatureType.SAND_DUNES:
-			var sand_dunes: TerrainFeature = _terrain_feature_sand_dunes.instantiate()
-			_terrain_features.set(coords, sand_dunes)
-			sand_dunes.position = terrain_tile_map_layer.map_to_local(coords)
-			add_child(sand_dunes)
+			terrain_feature = _sand_dunes_scene.instantiate()
 		TerrainFeature.FeatureType.MOUNTAIN:
-			var mountain: TerrainFeature = _terrain_feature_mountain.instantiate()
-			_terrain_features.set(coords, mountain)
-			mountain.position = terrain_tile_map_layer.map_to_local(coords)
-			add_child(mountain)
+			terrain_feature = _mountain_scene.instantiate()
 		TerrainFeature.FeatureType.CHASM:
-			var chasm: TerrainFeature = _terrain_feature_chasm.instantiate()
-			_terrain_features.set(coords, chasm)
-			chasm.position = terrain_tile_map_layer.map_to_local(coords)
-			add_child(chasm)
+			terrain_feature = _chasm_scene.instantiate()
 		_:
-			push_error("Incorrect feature_type. Unable to set terrain feature at (%d, %d)." % [
+			push_error("Unrecognized 'feature_type' %d. Unable to set terrain feature at (%d, %d)." % [
+				feature_type,
 				coords.x, coords.y
 			])
+			return
+
+	var terrain_tile_map_layer: TileMapLayer = world.get_terrain_tile_map_layer()
+	_terrain_features.set(coords, terrain_feature)
+	terrain_feature.position = terrain_tile_map_layer.map_to_local(coords)
+	add_child(terrain_feature)
 
 #endregion
 # ============================================================================ #

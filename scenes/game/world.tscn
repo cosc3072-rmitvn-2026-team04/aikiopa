@@ -37,6 +37,7 @@ unique_name_in_owner = true
 script = ExtResource("3_qd3kh")
 world = NodePath("..")
 
-[node name="BuildingLayer" type="Node2D" parent="." unique_id=357589614]
+[node name="BuildingLayer" type="Node2D" parent="." unique_id=357589614 node_paths=PackedStringArray("world")]
 unique_name_in_owner = true
 script = ExtResource("4_w1nur")
+world = NodePath("..")

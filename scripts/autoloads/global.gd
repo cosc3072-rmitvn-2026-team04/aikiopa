@@ -11,15 +11,6 @@ extends Node
 # ============================================================================ #
 #region Constants
 
-## Game asset location for [BuildingCard].
-const BUILDING_CARD_ASSETS_DIR = "res://assets/building_stack/building_card/"
-
-## Game scene location for [TerrainFeature].
-const TERRAIN_FEATURE_SCENES_DIR = "res://scenes/game/objects/terrain_features/"
-
-## Game scene location for [Building].
-const BUILDING_SCENES_DIR = "res://scenes/game/objects/buildings/"
-
 ## Savegame location.
 const SAVE_DIR: String = "user://saves/"
 
