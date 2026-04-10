@@ -193,12 +193,27 @@ func get_terrain_at(coords: Vector2i) -> TerrainType:
 	])
 
 
+## Returns and destroys the terrain feature at [param coords].[br]
+## [br]
+## Returns [constant TerrainFeature.FeatureType.NONE] if there is no terrain
+## feature at [param coords].
+func remove_terrain_feature_at(coords: Vector2i) -> TerrainFeature.FeatureType:
+	return get_terrain_feature_layer().remove_feature_at(coords)
+
+
 ## Sets the building at [param coords] to one of [enum Building.BuildingType].
 ## [br]
 ## Returns [code]false[/code] if [param coords] is blocked by terrain or another
-## building.
-func set_building_at(coords: Vector2i, building_type: Building.BuildingType) -> bool:
-	return get_building_layer().set_building_at(coords, building_type)
+## building.[br]
+## [br]
+## Set [param quiet] to [code]true[/code] to execute the placement without
+## notifying other game systems. Useful for scripted game events.
+func place_building_at(
+		coords: Vector2i,
+		building_type: Building.BuildingType,
+		quiet: bool = false
+) -> bool:
+	return get_building_layer().place_building_at(coords, building_type, quiet)
 
 
 ## Destroy the building at [param coords].[br]

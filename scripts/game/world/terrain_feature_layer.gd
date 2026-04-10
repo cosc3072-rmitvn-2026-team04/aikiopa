@@ -46,9 +46,14 @@ func clear() -> void:
 
 ## Returns the [enum TerrainFeature.FeatureType] at [param coords].
 func get_feature_at(coords: Vector2i) -> TerrainFeature.FeatureType:
-	if not _terrain_features.has(coords):
+	if not has_feature_at(coords):
 		return TerrainFeature.FeatureType.NONE
 	return _terrain_features[coords].get_type()
+
+
+## Returns [code]true[/code] if there is a terrain feature at [param coords].
+func has_feature_at(coords: Vector2i) -> bool:
+	return _terrain_features.has(coords)
 
 
 ## Sets the terrain feature at [param coords] to one of
@@ -82,6 +87,23 @@ func set_feature_at(
 	_terrain_features.set(coords, terrain_feature)
 	terrain_feature.position = terrain_tile_map_layer.map_to_local(coords)
 	add_child(terrain_feature)
+
+
+## Returns and destroys the terrain feature at [param coords].[br]
+## [br]
+## Returns [constant TerrainFeature.FeatureType.NONE] if there is no terrain
+## feature at [param coords].
+func remove_feature_at(coords: Vector2i) -> TerrainFeature.FeatureType:
+	if not has_feature_at(coords):
+		return TerrainFeature.FeatureType.NONE
+
+	var terrain_feature: TerrainFeature = _terrain_features[coords]
+	var terrain_feature_type: TerrainFeature.FeatureType = terrain_feature.get_type()
+	_terrain_features.erase(coords)
+	remove_child(terrain_feature)
+	terrain_feature.queue_free()
+
+	return terrain_feature_type
 
 #endregion
 # ============================================================================ #

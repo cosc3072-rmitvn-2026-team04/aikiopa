@@ -68,10 +68,14 @@ func has_building_at(coords: Vector2i) -> bool:
 ## TODO: Deterministically assign variation(s) at random.[br]
 ## [br]
 ## Returns [code]false[/code] and prints an error if [param coords] is blocked
-## by another building or [param building_type] is unknown.
-func set_building_at(
+## by another building or [param building_type] is unknown.[br]
+## [br]
+## Set [param quiet] to [code]true[/code] to execute the placement without
+## notifying other game systems. Useful for scripted game events.
+func place_building_at(
 		coords: Vector2i,
-		building_type: Building.BuildingType
+		building_type: Building.BuildingType,
+		quiet: bool = false
 ) -> bool:
 	if has_building_at(coords):
 		push_error("Unable to set building at (%d, %d): Cell blocked by existing building." % [
@@ -111,17 +115,19 @@ func set_building_at(
 	building.position = terrain_tile_map_layer.map_to_local(coords)
 	add_child(building)
 
-	GameplayEventBus.building_placed.emit(coords, building_type)
+	if not quiet:
+		GameplayEventBus.building_placed.emit(coords, building_type)
 	return true
 
 
-# TODO: Implement this.
-## Destroys the building at [param coords].[br]
+# TODO: Implement this in #87.
+## Returns and destroys the building at [param coords].[br]
 ## [br]
-## Returns [code]false[/code] if there is no building at [param coords].
-func destroy_building_at(_coords: Vector2i) -> bool:
+## Returns [constant Building.BuildingType.NONE] if there is no building at
+## [param coords].
+func destroy_building_at(_coords: Vector2i) -> Building.BuildingType:
 	push_error("Not implemented.")
-	return false
+	return Building.BuildingType.NONE
 
 #endregion
 # ============================================================================ #

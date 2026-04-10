@@ -60,6 +60,13 @@ func _init_world(world_seed: Variant = null) -> void:
 	%World.initialize(world_seed)
 	%World.create_chunk(Vector2i.ZERO)
 
+	var center_coords: Vector2i = %World.get_chunk_size() / 2
+	%World.remove_terrain_feature_at(center_coords)
+	%World.place_building_at(
+			center_coords,
+			Building.BuildingType.LANDING_SITE,
+			true)
+
 
 func _init_population() -> void:
 	%PopulationController.set_population(0)
@@ -126,7 +133,7 @@ func _on_building_placement_requested(
 		building: Building.BuildingType) -> void:
 	var map_coords: Vector2i = %World.get_terrain_tile_map_layer().local_to_map(
 			mouse_position)
-	%World.set_building_at(map_coords, building)
+	%World.place_building_at(map_coords, building)
 
 #endregion
 # ============================================================================ #
