@@ -1,5 +1,8 @@
 extends GameScene2D
+## Credits.
 
+# ============================================================================ #
+#region Public variables
 
 var auto_scroll_speed: float = 60.0
 var input_scroll_speed: float = 400.0
@@ -13,6 +16,12 @@ var _current_scroll_position: float = 0.0
 @onready var rich_text_label: RichTextLabel = %RichTextLabel
 @onready var header_space: Control = %HeaderSpaceControl
 @onready var footer_space: Control = %FooterSpaceControl
+
+#endregion
+# ============================================================================ #
+
+# ============================================================================ #
+#region Godot builtins
 
 func _ready() -> void:
 	# Timer
@@ -39,6 +48,12 @@ func _process(delta: float) -> void:
 	else:
 		# auto scrolling
 		_apply_scroll(auto_scroll_speed * delta)
+
+#endregion
+# ============================================================================ #
+
+# ============================================================================ #
+#region Public methods
 
 func _apply_scroll(amount: float) -> void:
 	_current_scroll_position += amount
@@ -96,3 +111,6 @@ func _on_resized() -> void:
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+
+#endregion
+# ============================================================================ #
