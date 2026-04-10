@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c8uldsfm820ug"]
 
-[ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://assets/theme/soft_retro/main_ui.tres" id="1_lsjxn"]
+[ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/theme/main_ui.tres" id="1_lsjxn"]
 [ext_resource type="Script" uid="uid://dwbowd2ej7gmq" path="res://scripts/game/hud/game_hud.gd" id="1_snjka"]
 [ext_resource type="PackedScene" uid="uid://csffjo6oq4r5m" path="res://scenes/game/hud/building_stack/building_stack_ui.tscn" id="2_snjka"]
 

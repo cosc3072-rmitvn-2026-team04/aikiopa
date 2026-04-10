@@ -1,13 +1,13 @@
 [gd_resource type="Theme" format=3 uid="uid://b3klx57slj0l3"]
 
-[ext_resource type="FontFile" uid="uid://dgw3768nro5hb" path="res://assets/theme/soft_retro/Righteous/DalekPinpointBold.ttf" id="1_erfda"]
-[ext_resource type="FontFile" uid="uid://b01m2c7c53uks" path="res://assets/theme/soft_retro/Righteous/CWDRKAGE.TTF" id="1_tx0c4"]
-[ext_resource type="Texture2D" uid="uid://udawlj7nryla" path="res://assets/theme/soft_retro/art/checked.svg" id="2_k0c1y"]
-[ext_resource type="Texture2D" uid="uid://dl5qlemud0d4j" path="res://assets/theme/soft_retro/art/toggle_on.svg" id="2_myavk"]
-[ext_resource type="Texture2D" uid="uid://gameaex7fm1g" path="res://assets/theme/soft_retro/art/toggle_off.svg" id="3_208pi"]
-[ext_resource type="Texture2D" uid="uid://cbwip815aqfhq" path="res://assets/theme/soft_retro/art/unchecked.svg" id="3_cwkfx"]
-[ext_resource type="Texture2D" uid="uid://bbl50qp6b1eq8" path="res://assets/theme/soft_retro/art/slider_grabber.svg" id="6_cwkfx"]
-[ext_resource type="FontFile" uid="uid://1imx5ewcp0ot" path="res://assets/theme/soft_retro/Righteous/Dalek.ttf" id="7_kheo6"]
+[ext_resource type="FontFile" uid="uid://b01m2c7c53uks" path="res://assets/theme/Righteous/CWDRKAGE.TTF" id="1_e1wgc"]
+[ext_resource type="Texture2D" uid="uid://dr4ryrqcjnc8a" path="res://assets/theme/art/checked.svg" id="2_ytsfs"]
+[ext_resource type="Texture2D" uid="uid://dqdx6xbs5858q" path="res://assets/theme/art/unchecked.svg" id="3_fgipk"]
+[ext_resource type="Texture2D" uid="uid://5aluy5346diw" path="res://assets/theme/art/toggle_on.svg" id="4_g1dnq"]
+[ext_resource type="Texture2D" uid="uid://cg5p2m0v85qa5" path="res://assets/theme/art/toggle_off.svg" id="5_f2ecf"]
+[ext_resource type="Texture2D" uid="uid://c4kkjtrx6vqk5" path="res://assets/theme/art/slider_grabber.svg" id="6_jpk5x"]
+[ext_resource type="FontFile" uid="uid://1imx5ewcp0ot" path="res://assets/theme/Righteous/Dalek.ttf" id="7_f5yd7"]
+[ext_resource type="FontFile" uid="uid://dgw3768nro5hb" path="res://assets/theme/Righteous/DalekPinpointBold.ttf" id="8_vcnfv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k0c1y"]
 bg_color = Color(0.9411765, 0.45882353, 0.6666667, 1)
@@ -59,6 +59,33 @@ corner_radius_top_right = 10
 expand_margin_left = 5.0
 expand_margin_right = 5.0
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jpk5x"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f5yd7"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fmcpx"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nas17"]
@@ -100,6 +127,18 @@ corner_radius_top_right = 5
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_k0c1y"]
 color = Color(1, 0.87058824, 0.58431375, 1)
 thickness = 2
+
+[sub_resource type="DPITexture" id="DPITexture_vcnfv"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"#fefefe\" fill-opacity=\".37\"/></svg>
+"
+
+[sub_resource type="DPITexture" id="DPITexture_5xax4"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"#fefefe\"/></svg>
+"
+
+[sub_resource type="DPITexture" id="DPITexture_8rml2"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"4\" height=\"8\"><path fill=\"#fff\" fill-opacity=\".25\" d=\"M1 0h2v16H1z\"/></svg>
+"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cwkfx"]
 bg_color = Color(0.61960787, 0.8, 0.6431373, 1)
@@ -230,6 +269,10 @@ color = Color(1, 0.87058824, 0.58431375, 1)
 thickness = 2
 vertical = true
 
+[sub_resource type="DPITexture" id="DPITexture_snb71"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"8\" height=\"4\"><path fill=\"#fff\" fill-opacity=\".25\" d=\"M0 3V1h16v2z\"/></svg>
+"
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g2lif"]
 bg_color = Color(0.61960787, 0.8, 0.6431373, 1)
 corner_radius_top_left = 5
@@ -256,20 +299,30 @@ Button/colors/font_hover_color = Color(0.12156863, 0.26666668, 0.11764706, 1)
 Button/colors/font_hover_pressed_color = Color(1, 0.87058824, 0.58431375, 1)
 Button/colors/font_pressed_color = Color(1, 0.87058824, 0.58431375, 1)
 Button/font_sizes/font_size = 20
-Button/fonts/font = ExtResource("1_tx0c4")
+Button/fonts/font = ExtResource("1_e1wgc")
 Button/styles/disabled = SubResource("StyleBoxFlat_k0c1y")
 Button/styles/focus = SubResource("StyleBoxEmpty_lopid")
 Button/styles/hover = SubResource("StyleBoxFlat_myavk")
 Button/styles/normal = SubResource("StyleBoxFlat_lopid")
 Button/styles/pressed = SubResource("StyleBoxFlat_208pi")
+CheckBox/colors/checkbox_checked_color = Color(1, 1, 1, 1)
+CheckBox/colors/checkbox_unchecked_color = Color(1, 1, 1, 1)
 CheckBox/colors/font_color = Color(1, 0.87058824, 0.58431375, 1)
+CheckBox/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
 CheckBox/colors/font_focus_color = Color(1, 0.87058824, 0.58431375, 1)
 CheckBox/colors/font_hover_color = Color(1, 0.87058824, 0.58431375, 1)
 CheckBox/colors/font_hover_pressed_color = Color(1, 0.87058824, 0.58431375, 1)
+CheckBox/colors/font_outline_color = Color(0, 0, 0, 1)
 CheckBox/colors/font_pressed_color = Color(1, 0.87058824, 0.58431375, 1)
+CheckBox/constants/check_v_offset = 0
+CheckBox/constants/h_separation = 4
+CheckBox/constants/outline_size = 0
 CheckBox/font_sizes/font_size = 20
-CheckBox/icons/checked = ExtResource("2_k0c1y")
-CheckBox/icons/unchecked = ExtResource("3_cwkfx")
+CheckBox/fonts/font = ExtResource("1_e1wgc")
+CheckBox/icons/checked = ExtResource("2_ytsfs")
+CheckBox/icons/unchecked = ExtResource("3_fgipk")
+CheckBox/styles/disabled = SubResource("StyleBoxEmpty_jpk5x")
+CheckBox/styles/focus = SubResource("StyleBoxFlat_f5yd7")
 CheckBox/styles/hover = SubResource("StyleBoxEmpty_fmcpx")
 CheckBox/styles/hover_pressed = SubResource("StyleBoxEmpty_nas17")
 CheckBox/styles/normal = SubResource("StyleBoxEmpty_adq26")
@@ -279,9 +332,9 @@ CheckButton/colors/font_focus_color = Color(1, 0.87058824, 0.58431375, 1)
 CheckButton/colors/font_hover_color = Color(1, 0.87058824, 0.58431375, 1)
 CheckButton/colors/font_hover_pressed_color = Color(1, 0.87058824, 0.58431375, 1)
 CheckButton/colors/font_pressed_color = Color(1, 0.87058824, 0.58431375, 1)
-CheckButton/fonts/font = ExtResource("1_tx0c4")
-CheckButton/icons/checked = ExtResource("2_myavk")
-CheckButton/icons/unchecked = ExtResource("3_208pi")
+CheckButton/fonts/font = ExtResource("1_e1wgc")
+CheckButton/icons/checked = ExtResource("4_g1dnq")
+CheckButton/icons/unchecked = ExtResource("5_f2ecf")
 CheckButton/styles/focus = SubResource("StyleBoxEmpty_k0c1y")
 CheckButton/styles/hover = SubResource("StyleBoxEmpty_cwkfx")
 CheckButton/styles/hover_pressed = SubResource("StyleBoxEmpty_1b0k0")
@@ -292,13 +345,19 @@ HScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_adq26")
 HScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_wjpxi")
 HScrollBar/styles/scroll = SubResource("StyleBoxFlat_s6qsw")
 HSeparator/styles/separator = SubResource("StyleBoxLine_k0c1y")
-HSlider/icons/grabber = ExtResource("6_cwkfx")
+HSlider/constants/center_grabber = 0
+HSlider/constants/grabber_offset = 0
+HSlider/constants/tick_offset = 0
+HSlider/icons/grabber = ExtResource("6_jpk5x")
+HSlider/icons/grabber_disabled = SubResource("DPITexture_vcnfv")
+HSlider/icons/grabber_highlight = SubResource("DPITexture_5xax4")
+HSlider/icons/tick = SubResource("DPITexture_8rml2")
 HSlider/styles/grabber_area = SubResource("StyleBoxFlat_cwkfx")
 HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_1b0k0")
 HSlider/styles/slider = SubResource("StyleBoxFlat_14r85")
 Label/colors/font_color = Color(1, 0.87058824, 0.58431375, 1)
 Label/font_sizes/font_size = 20
-Label/fonts/font = ExtResource("7_kheo6")
+Label/fonts/font = ExtResource("7_f5yd7")
 LineEdit/colors/caret_color = Color(1, 0.87058824, 0.58431375, 1)
 LineEdit/colors/clear_button_color_pressed = Color(1, 0.87058824, 0.58431375, 1)
 LineEdit/colors/font_color = Color(1, 0.87058824, 0.58431375, 1)
@@ -306,14 +365,14 @@ LineEdit/colors/font_placeholder_color = Color(1, 0.933333, 0.8, 0.392157)
 LineEdit/colors/font_selected_color = Color(1, 0.87058824, 0.58431375, 1)
 LineEdit/colors/selection_color = Color(0.7372549, 0.3529412, 0.5803922, 1)
 LineEdit/font_sizes/font_size = 20
-LineEdit/fonts/font = ExtResource("1_tx0c4")
+LineEdit/fonts/font = ExtResource("1_e1wgc")
 LineEdit/styles/focus = SubResource("StyleBoxEmpty_b3cdw")
 LineEdit/styles/normal = SubResource("StyleBoxFlat_rga2m")
 LineEdit/styles/read_only = SubResource("StyleBoxFlat_41273")
 Panel/styles/panel = SubResource("StyleBoxFlat_uaw8g")
 ProgressBar/colors/font_color = Color(1, 0.933333, 0.8, 1)
 ProgressBar/font_sizes/font_size = 20
-ProgressBar/fonts/font = ExtResource("1_erfda")
+ProgressBar/fonts/font = ExtResource("8_vcnfv")
 ProgressBar/styles/background = SubResource("StyleBoxFlat_hbuoo")
 ProgressBar/styles/extra_fill = SubResource("StyleBoxFlat_eln6t")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_fmcpx")
@@ -323,7 +382,7 @@ TabContainer/colors/font_hovered_color = Color(1, 0.933333, 0.8, 1)
 TabContainer/colors/font_selected_color = Color(1, 0.933333, 0.8, 1)
 TabContainer/colors/font_unselected_color = Color(1, 0.933333, 0.8, 1)
 TabContainer/font_sizes/font_size = 20
-TabContainer/fonts/font = ExtResource("1_erfda")
+TabContainer/fonts/font = ExtResource("8_vcnfv")
 TabContainer/styles/panel = SubResource("StyleBoxFlat_rnlxr")
 TabContainer/styles/tab_disabled = SubResource("StyleBoxFlat_mdn0p")
 TabContainer/styles/tab_focus = SubResource("StyleBoxEmpty_g2lif")
@@ -339,13 +398,13 @@ TextEdit/colors/font_selected_color = Color(1, 0.87058824, 0.58431375, 1)
 TextEdit/colors/search_result_color = Color(0.9411765, 0.45882353, 0.6666667, 1)
 TextEdit/colors/selection_color = Color(0.9411765, 0.45882353, 0.6666667, 1)
 TextEdit/font_sizes/font_size = 20
-TextEdit/fonts/font = ExtResource("1_tx0c4")
+TextEdit/fonts/font = ExtResource("1_e1wgc")
 TextEdit/styles/focus = SubResource("StyleBoxEmpty_l34ym")
 TextEdit/styles/normal = SubResource("StyleBoxFlat_7o6pk")
 Tree/font_sizes/font_size = 20
 Tree/font_sizes/title_button_font_size = 20
-Tree/fonts/font = ExtResource("1_tx0c4")
-Tree/fonts/title_button_font = ExtResource("1_erfda")
+Tree/fonts/font = ExtResource("1_e1wgc")
+Tree/fonts/title_button_font = ExtResource("8_vcnfv")
 VBoxContainer/constants/separation = 4
 VScrollBar/styles/grabber = SubResource("StyleBoxFlat_y214y")
 VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_h653x")
@@ -353,7 +412,13 @@ VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_erami")
 VScrollBar/styles/scroll = SubResource("StyleBoxFlat_c7d7l")
 VScrollBar/styles/scroll_focus = SubResource("StyleBoxEmpty_s6qsw")
 VSeparator/styles/separator = SubResource("StyleBoxLine_cwkfx")
-VSlider/icons/grabber = ExtResource("6_cwkfx")
+VSlider/constants/center_grabber = 0
+VSlider/constants/grabber_offset = 0
+VSlider/constants/tick_offset = 0
+VSlider/icons/grabber = ExtResource("6_jpk5x")
+VSlider/icons/grabber_disabled = SubResource("DPITexture_vcnfv")
+VSlider/icons/grabber_highlight = SubResource("DPITexture_5xax4")
+VSlider/icons/tick = SubResource("DPITexture_snb71")
 VSlider/styles/grabber_area = SubResource("StyleBoxFlat_g2lif")
 VSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_b3cdw")
 VSlider/styles/slider = SubResource("StyleBoxFlat_l34ym")

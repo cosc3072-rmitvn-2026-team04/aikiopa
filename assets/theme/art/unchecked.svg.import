@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbl50qp6b1eq8"
-path="res://.godot/imported/slider_grabber.svg-c6dba4d2eb9beb775874371e2e0d7a23.ctex"
+uid="uid://c70cn8fmycaor"
+path="res://.godot/imported/unchecked.svg-072d6554f7c4c42766b7463c9c51b195.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/theme/soft_retro/art/slider_grabber.svg"
-dest_files=["res://.godot/imported/slider_grabber.svg-c6dba4d2eb9beb775874371e2e0d7a23.ctex"]
+source_file="res://assets/theme/art/unchecked.svg"
+dest_files=["res://.godot/imported/unchecked.svg-072d6554f7c4c42766b7463c9c51b195.ctex"]
 
 [params]
 

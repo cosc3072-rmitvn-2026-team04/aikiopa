@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://dgw3768nro5hb"
-path="res://.godot/imported/DalekPinpointBold.ttf-554b022823440321c370fad392fdfcea.fontdata"
+uid="uid://b01m2c7c53uks"
+path="res://.godot/imported/CWDRKAGE.TTF-4c03a557b19d5b655fc0b3e8a002980c.fontdata"
 
 [deps]
 
-source_file="res://assets/theme/soft_retro/Righteous/DalekPinpointBold.ttf"
-dest_files=["res://.godot/imported/DalekPinpointBold.ttf-554b022823440321c370fad392fdfcea.fontdata"]
+source_file="res://assets/theme/Righteous/CWDRKAGE.TTF"
+dest_files=["res://.godot/imported/CWDRKAGE.TTF-4c03a557b19d5b655fc0b3e8a002980c.fontdata"]
 
 [params]
 

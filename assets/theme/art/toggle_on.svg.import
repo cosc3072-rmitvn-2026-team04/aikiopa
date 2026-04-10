@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gameaex7fm1g"
-path="res://.godot/imported/toggle_off.svg-bd47c4106f16cf5c4dd5f5bdbabfd653.ctex"
+uid="uid://dwie7mj1y2n2k"
+path="res://.godot/imported/toggle_on.svg-2f3fd704783e9e46978add96eaacc17c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/theme/soft_retro/art/toggle_off.svg"
-dest_files=["res://.godot/imported/toggle_off.svg-bd47c4106f16cf5c4dd5f5bdbabfd653.ctex"]
+source_file="res://assets/theme/art/toggle_on.svg"
+dest_files=["res://.godot/imported/toggle_on.svg-2f3fd704783e9e46978add96eaacc17c.ctex"]
 
 [params]
 
