@@ -193,32 +193,25 @@ func get_terrain_at(coords: Vector2i) -> TerrainType:
 	])
 
 
-# TODO: Implement this.
 ## Sets the building at [param coords] to one of [enum Building.BuildingType].
-## Automatically assign variation(s) at random.[br]
 ## [br]
-## Returns [code]false[/code] if there is already an existing building at
-## [param coords].
-func set_building_at(_coords: Vector2i, _type: Building.BuildingType) -> bool:
-	push_error("Not implemented.")
-	return false
+## Returns [code]false[/code] if [param coords] is blocked by terrain or another
+## building.
+func set_building_at(coords: Vector2i, building_type: Building.BuildingType) -> bool:
+	return get_building_layer().set_building_at(coords, building_type)
 
 
-# TODO: Implement this.
-## Removes the building at [param coords].[br]
+## Destroy the building at [param coords].[br]
 ## [br]
 ## Returns [code]false[/code] if there is no existing building at
 ## [param coords].
-func remove_building_at(_coords: Vector2i, _type: Building.BuildingType) -> bool:
-	push_error("Not implemented.")
-	return false
+func destroy_building_at(coords: Vector2i) -> bool:
+	return get_building_layer().destroy_building_at(coords)
 
 
-# TODO: Implement this.
 ## Returns the [enum Building.BuildingType] at [param coords].
-func get_building_at(_coords: Vector2i) -> Building.BuildingType:
-	push_error("Not implemented.")
-	return Building.BuildingType.NONE
+func get_building_at(coords: Vector2i) -> Building.BuildingType:
+	return get_building_layer().get_building_at(coords)
 
 #endregion
 # ============================================================================ #
