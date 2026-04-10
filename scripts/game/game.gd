@@ -36,9 +36,6 @@ func _ready() -> void:
 
 	_init_cameras()
 
-	UIEventBus.building_placement_requested.connect(
-			_on_building_placement_requested)
-
 
 func _process(_delta: float) -> void:
 	_process_auto_world_generation()
@@ -115,25 +112,6 @@ func _input_update_gameplay_debug_mode(event: InputEvent) -> void:
 		GameplayEventBus.gameplay_debug_mode_toggled.emit(Global.gameplay_debug_mode_enabled)
 
 #endregion
-
-#endregion
-# ============================================================================ #
-
-
-# ============================================================================ #
-#region Signal listeners
-
-# TODO: Move this into [RulesetComponent]. See #17.
-# Listens to
-# UIEventBus.building_placement_requested(
-#		mouse_position: Vector2,
-#		building: Building.BuildingType).
-func _on_building_placement_requested(
-		mouse_position: Vector2,
-		building: Building.BuildingType) -> void:
-	var map_coords: Vector2i = %World.get_terrain_tile_map_layer().local_to_map(
-			mouse_position)
-	%World.place_building_at(map_coords, building)
 
 #endregion
 # ============================================================================ #
