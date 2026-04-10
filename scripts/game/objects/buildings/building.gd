@@ -47,7 +47,6 @@ const BUILDING_NAME: Dictionary[BuildingType, String] = {
 # ============================================================================ #
 #region Public methods
 
-# TODO: Implement this in children classes.
 ## Returns the [enum Building.BuildingType] of this [Building] instance.
 func get_type() -> BuildingType:
 	push_warning("Calling method 'get_type()' on generic 'Building' instance.")

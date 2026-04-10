@@ -2,11 +2,10 @@ extends Node2D
 
 
 # ============================================================================ #
-#region Public methods
+#region Public variables
 
-# Data schema: Dictionary[Vector2i, Dictionary[BuildingType, Node2D]]. The
-# Node2D field should point to the corresponding instance of the matching
-# building scene.
+## The [Building] instances in the game. Identified by their [Vector2i]
+## coordinates.
 var buildings: Dictionary[Vector2i, Dictionary]
 
 #endregion

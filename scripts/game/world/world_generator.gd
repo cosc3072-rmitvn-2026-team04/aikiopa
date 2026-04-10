@@ -346,7 +346,7 @@ func _create_chunk_dunes_map(chunk_linear_data: Array[World.TerrainType]) -> voi
 					Vector2i(x, y),
 					chunk_size)
 			if chunk_linear_data[index] == World.TerrainType.DESERT:
-					chunk_linear_data[index] = World.TerrainType.DESERT_DUNES
+					chunk_linear_data[index] = World.TerrainType.DESERT_SAND_DUNES
 
 
 # 5th Step. x and y are swapped to produce more interesting features.

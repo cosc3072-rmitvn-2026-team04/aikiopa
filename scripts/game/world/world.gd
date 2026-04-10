@@ -21,7 +21,7 @@ enum TerrainType {
 	GRASSLAND_MOUNTAIN,
 	GRASSLAND_CHASM,
 	DESERT,
-	DESERT_DUNES,
+	DESERT_SAND_DUNES,
 	DESERT_MOUNTAIN,
 	DESERT_CHASM,
 }
@@ -32,17 +32,6 @@ enum TerrainType {
 
 # ============================================================================ #
 #region Private variables
-
-var _terrain_feature_mountain: PackedScene =\
-		preload("res://scenes/game/objects/terrain_features/mountain.tscn")
-var _terrain_feature_chasm: PackedScene =\
-		preload("res://scenes/game/objects/terrain_features/chasm.tscn")
-var _terrain_feature_sand_dunes: PackedScene =\
-		preload("res://scenes/game/objects/terrain_features/sand_dunes.tscn")
-var _terrain_feature_forest: PackedScene =\
-		preload("res://scenes/game/objects/terrain_features/forest.tscn")
-var _terrain_feature_fishes: PackedScene =\
-		preload("res://scenes/game/objects/terrain_features/fishes.tscn")
 
 var _generated_chunks: Dictionary[Vector2i, bool]
 
@@ -148,8 +137,7 @@ func get_neigboring_chunks(chunk_offset: Vector2i) -> Array[Vector2i]:
 	]
 
 
-## Sets the terrain at [param coords] to one of [enum World.TerrainType].
-## Automatically assign terrain feature variation(s) at random.
+## Sets the terrain at [param coords] to one of [enum TerrainType].
 func set_terrain_at(coords: Vector2i, terrain_type: TerrainType) -> void:
 	var terrain_tile_map_layer: TileMapLayer = get_terrain_tile_map_layer()
 	var terrain_features_layer: Node2D = get_terrain_feature_layer()
@@ -160,43 +148,49 @@ func set_terrain_at(coords: Vector2i, terrain_type: TerrainType) -> void:
 		get_terrain_tile_map_layer().ATLAS_COORDS[terrain_type])
 
 	match terrain_type:
-		TerrainType.PLAIN_MOUNTAIN, TerrainType.GRASSLAND_MOUNTAIN, TerrainType.DESERT_MOUNTAIN:
-			var mountain: TerrainFeature = _terrain_feature_mountain.instantiate()
-			terrain_features_layer.terrain_features.set(coords, mountain)
-			mountain.position = get_terrain_tile_map_layer()\
-					.map_to_local(coords)
-			get_terrain_feature_layer().add_child(mountain)
-		TerrainType.PLAIN_CHASM, TerrainType.GRASSLAND_CHASM, TerrainType.DESERT_CHASM:
-			var chasm: TerrainFeature = _terrain_feature_chasm.instantiate()
-			terrain_features_layer.terrain_features.set(coords, chasm)
-			chasm.position = get_terrain_tile_map_layer()\
-					.map_to_local(coords)
-			get_terrain_feature_layer().add_child(chasm)
-		TerrainType.DESERT_DUNES:
-			var sand_dunes: TerrainFeature = _terrain_feature_sand_dunes.instantiate()
-			terrain_features_layer.terrain_features.set(coords, sand_dunes)
-			sand_dunes.position = get_terrain_tile_map_layer()\
-					.map_to_local(coords)
-			get_terrain_feature_layer().add_child(sand_dunes)
-		TerrainType.PLAIN_FOREST, TerrainType.GRASSLAND_FOREST:
-			var forest: TerrainFeature = _terrain_feature_forest.instantiate()
-			terrain_features_layer.terrain_features.set(coords, forest)
-			forest.position = get_terrain_tile_map_layer()\
-					.map_to_local(coords)
-			get_terrain_feature_layer().add_child(forest)
 		TerrainType.SHALLOW_WATER_FISHES:
-			var fishes: TerrainFeature = _terrain_feature_fishes.instantiate()
-			terrain_features_layer.terrain_features.set(coords, fishes)
-			fishes.position = get_terrain_tile_map_layer()\
-					.map_to_local(coords)
-			get_terrain_feature_layer().add_child(fishes)
+			terrain_features_layer.set_feature_at(
+					coords,
+					TerrainFeature.FeatureType.FISHES)
+		TerrainType.PLAIN_FOREST, TerrainType.GRASSLAND_FOREST:
+			terrain_features_layer.set_feature_at(
+					coords,
+					TerrainFeature.FeatureType.FOREST)
+		TerrainType.DESERT_SAND_DUNES:
+			terrain_features_layer.set_feature_at(
+					coords,
+					TerrainFeature.FeatureType.SAND_DUNES)
+		TerrainType.PLAIN_MOUNTAIN, TerrainType.GRASSLAND_MOUNTAIN, TerrainType.DESERT_MOUNTAIN:
+			terrain_features_layer.set_feature_at(
+					coords,
+					TerrainFeature.FeatureType.MOUNTAIN)
+		TerrainType.PLAIN_CHASM, TerrainType.GRASSLAND_CHASM, TerrainType.DESERT_CHASM:
+			terrain_features_layer.set_feature_at(
+					coords,
+					TerrainFeature.FeatureType.CHASM)
 
 
-# TODO: Implement this.
-## Returns the [enum World.TerrainType] at [param coords].
-func get_terrain_at(_coords: Vector2i) -> TerrainType:
-	push_error("Not implemented.")
-	return TerrainType.NONE
+## Returns the [enum TerrainType] at [param coords].
+func get_terrain_at(coords: Vector2i) -> TerrainType:
+	var terrain_feature_layer: Node2D = get_terrain_feature_layer()
+
+	var base_terrain_type: TerrainType = get_terrain_tile_map_layer()\
+			.get_cell_tile_data(coords)\
+			.get_custom_data("base_terrain_type")
+	var terrain_feature_type: TerrainFeature.FeatureType =\
+			terrain_feature_layer.get_feature_at(coords)
+
+	var base_terrain_type_str: String =\
+			TerrainType.keys()[base_terrain_type]
+	if terrain_feature_type == TerrainFeature.FeatureType.NONE:
+		return TerrainType.get(base_terrain_type_str)
+
+	var terrain_feature_type_str: String =\
+			TerrainFeature.FeatureType.keys()[terrain_feature_type]
+	return TerrainType.get("%s_%s" % [
+		base_terrain_type_str,
+		terrain_feature_type_str,
+	])
 
 
 # TODO: Implement this.

@@ -126,10 +126,14 @@ func _on_building_placement_requested(
 	var map_coords: Vector2i = %World.get_terrain_tile_map_layer().local_to_map(
 			mouse_position)
 
-	print("Trying to place building %s at (%d, %d) - screen pos: (%d, %d)" % [
+	# TODO: Implement this.
+	print("Requesting to place building %s at (%d, %d) - screen pos: (%d, %d)" % [
 		Building.BuildingType.keys()[building],
 		map_coords.x, map_coords.y,
 		mouse_position.x, mouse_position.y,
+	])
+	print("Terrain here is %s" % [
+			World.TerrainType.keys()[%World.get_terrain_at(map_coords)]
 	])
 
 #endregion
