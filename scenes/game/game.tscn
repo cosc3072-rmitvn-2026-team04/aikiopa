@@ -30,7 +30,8 @@ world = NodePath("../../World")
 
 [node name="PlayerCamera2D" parent="." unique_id=556469284 node_paths=PackedStringArray("world") instance=ExtResource("3_kelw5")]
 unique_name_in_owner = true
-pan_speed = 2000
+position_smoothing_speed = 6.5
+pan_speed = 900
 world = NodePath("../World")
 
 [node name="DebugCamera2D" parent="." unique_id=1889864583 node_paths=PackedStringArray("world", "building_stack_controller") instance=ExtResource("4_lfrn8")]
