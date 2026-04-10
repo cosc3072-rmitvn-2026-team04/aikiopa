@@ -1,7 +1,32 @@
-class_name RulesetEngine
+class_name BuildingRulesetEngine
 extends Node
 ## Evaluates the core interactions between building and terrain in the game
 ## through stateless validation methods.
+# TODO: Add more documentation for this class.
+
+
+# ============================================================================ #
+#region Enums
+
+enum PlacementCheckStatus {
+	## Placement is allowed.
+	ALLOWED = 0,
+
+	## Placement blocked: Not adjacent to existing building(s).
+	BLOCKED_BY_DISCONNECTION = -1,
+
+	## Placement blocked: On invalid terrain.
+	BLOCKED_BY_TERRAIN = -2,
+
+	## Placement blocked: Existing building is in the way.
+	BLOCKED_BY_BUILDING = -3,
+
+	## Placement blocked: Not allowed by adjacent building(s).
+	BLOCKED_BY_ADJACENT_BUILDING = -4,
+}
+
+#endregion
+# ============================================================================ #
 
 
 # ============================================================================ #
@@ -73,6 +98,17 @@ func _on_building_placement_requested(
 
 	if has_adjacent_building(world_coords) and is_clear(world_coords):
 		world.place_building_at(world_coords, building)
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Inner classes
+
+class Reward extends Object:
+	# gdlint:ignore = unnecessary-pass
+	pass
 
 #endregion
 # ============================================================================ #

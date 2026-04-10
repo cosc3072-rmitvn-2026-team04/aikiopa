@@ -17,6 +17,11 @@ extends Node
 ## [/codeblock]
 
 
+@warning_ignore("unused_signal")
+signal building_ruleset_engine_checked(
+		placement_status: BuildingRulesetEngine.PlacementCheckStatus)
+
+
 ## Emitted when a [param building_type] is added to the bottom of the building
 ## stack. See [BuildingStackController].
 @warning_ignore("unused_signal")
