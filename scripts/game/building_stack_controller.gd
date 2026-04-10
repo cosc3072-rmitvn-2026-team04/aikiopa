@@ -32,6 +32,9 @@ extends Node
 	Building.BuildingType.FACTORY: 1.0,
 }
 
+## The number of [BuildingCard]s that the player receives in each new session.
+@export_range(1, 50, 1) var starting_building_count: int = 1
+
 #endregion
 # ============================================================================ #
 
@@ -81,10 +84,17 @@ func initialize_session(
 	if session_seed and session_state:
 		_rng.seed = session_seed
 		_rng.state = session_state
+		Global.game_state.building_stack = building_queue
 	else:
 		_rng.randomize()
-
-	Global.game_state.building_stack = building_queue
+		for i in range(starting_building_count):
+			add_building()
+			# TODO: Workaround: Without this line, the rapid adding of buildings
+			# would make the building stack UI put its cards at the wrong
+			# positions. We may have to keep this. But find out where to put the
+			# hard-coded 0.1 seconds into an exported property, or as a Global
+			# constant.
+			await get_tree().create_timer(0.1).timeout
 
 
 ## Returns the seed of the internal [RandomNumberGenerator]. Useful for saving

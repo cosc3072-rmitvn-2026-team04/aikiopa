@@ -17,6 +17,7 @@ unique_name_in_owner = true
 [node name="BuildingStackController" type="Node" parent="." unique_id=1349143746]
 unique_name_in_owner = true
 script = ExtResource("5_lfrn8")
+starting_building_count = 10
 
 [node name="PopulationController" type="Node" parent="." unique_id=153495353]
 unique_name_in_owner = true
