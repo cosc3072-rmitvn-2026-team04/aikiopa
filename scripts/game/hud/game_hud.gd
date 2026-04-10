@@ -1,6 +1,8 @@
 extends GameUI
 
 
+@export var world: World = null
+
 # The building card currently on the player's hand to be placed down in the
 # [World].
 var _picked_building: Building.BuildingType = Building.BuildingType.NONE
@@ -23,7 +25,7 @@ func _input(event: InputEvent) -> void:
 			and event.button_index == MOUSE_BUTTON_LEFT
 	):
 		UIEventBus.building_placement_requested.emit(
-				event.position,
+				world.get_local_mouse_position(),
 				_picked_building)
 
 #endregion

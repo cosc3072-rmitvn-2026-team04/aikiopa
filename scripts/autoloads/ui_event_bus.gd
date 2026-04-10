@@ -38,5 +38,5 @@ signal building_card_dropped(building: Building.BuildingType)
 ## coordinates.
 @warning_ignore("unused_signal")
 signal building_placement_requested(
-        screen_position: Vector2,
+        mouse_position: Vector2,
         building: Building.BuildingType)

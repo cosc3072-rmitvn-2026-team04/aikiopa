@@ -118,18 +118,18 @@ func _input_update_gameplay_debug_mode(event: InputEvent) -> void:
 
 # Listens to
 # UIEventBus.building_placement_requested(
-#		screen_position: Vector2,
-#		building: Building.BuildingType)
+#		mouse_position: Vector2,
+#		building: Building.BuildingType).
 func _on_building_placement_requested(
-		screen_position: Vector2,
+		mouse_position: Vector2,
 		building: Building.BuildingType) -> void:
 	var map_coords: Vector2i = %World.get_terrain_tile_map_layer().local_to_map(
-			screen_position + %PlayerCamera2D.position)
+			mouse_position)
 
 	print("Trying to place building %s at (%d, %d) - screen pos: (%d, %d)" % [
 		Building.BuildingType.keys()[building],
 		map_coords.x, map_coords.y,
-		screen_position.x, screen_position.y,
+		mouse_position.x, mouse_position.y,
 	])
 
 #endregion
