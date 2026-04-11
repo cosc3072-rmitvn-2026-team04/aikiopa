@@ -77,6 +77,11 @@ func get_building_layer() -> Node2D:
 	return %BuildingLayer
 
 
+## Returns the [code]ShroudTileMapLayer[/code] node.
+func get_shroud_tile_map_layer() -> TileMapLayer:
+	return %ShroudTileMapLayer
+
+
 ## Returns the size of generated world chunks.
 func get_chunk_size() -> Vector2i:
 	return %WorldGenerator.chunk_size

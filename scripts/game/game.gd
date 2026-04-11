@@ -57,10 +57,10 @@ func _init_world(world_seed: Variant = null) -> void:
 	%World.initialize(world_seed)
 	%World.create_chunk(Vector2i.ZERO)
 
-	var center_coords: Vector2i = %World.get_chunk_size() / 2
-	%World.remove_terrain_feature_at(center_coords)
+	var world_center_coords: Vector2i = %World.get_chunk_size() / 2
+	%World.remove_terrain_feature_at(world_center_coords)
 	%World.place_building_at(
-			center_coords,
+			world_center_coords,
 			Building.BuildingType.LANDING_SITE,
 			true) # Quiet placement.
 

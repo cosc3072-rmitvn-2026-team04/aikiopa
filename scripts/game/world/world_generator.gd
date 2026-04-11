@@ -145,7 +145,8 @@ func generate_seeds(rng_seed: Variant = null) -> void:
 	f_map.seed = _rng.randi()
 
 
-## Returns the current world's seed. Useful for saving a game session's world.
+## Returns the current world's seed. Useful for saving and restoring game
+## sessions.
 func get_seed() -> int:
 	return _rng.seed
 
