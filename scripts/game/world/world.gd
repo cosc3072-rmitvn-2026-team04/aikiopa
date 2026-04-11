@@ -267,6 +267,38 @@ func place_building_at(
 func destroy_building_at(coords: Vector2i) -> bool:
 	return get_building_layer().destroy_building_at(coords)
 
+
+## Resets The Shroud to reveal only around the initial coordinate at the center
+## of the [World].
+func reset_shroud() -> void:
+	get_shroud_tile_map_layer().reset()
+
+
+## Returns the [enum ShroudTileMapLayer.ShroudType] at [param coords].
+func get_shroud_at(coords: Vector2i) -> ShroudTileMapLayer.ShroudType:
+	return get_shroud_tile_map_layer().get_shroud_at(coords)
+
+
+## Returns The Shroud's internal data as a [Dictionary]. Useful for saving game
+## sessions.
+func get_shroud_data() -> Dictionary[StringName, Array]:
+	return get_shroud_tile_map_layer().get_shroud_data()
+
+
+## Sets The Shroud's internal data from [param shroud_data]. See
+## [method ShroudTileMapLayer.get_shroud_data] for its schema. Useful for
+## restoring game sessions.
+func set_shroud_data(shroud_data: Dictionary[StringName, Array]) -> void:
+	get_shroud_tile_map_layer().set_shroud_data(shroud_data)
+
+
+## Efficiently re-renders The Shroud around the [param camera_position] (See
+## [method Camera2D.position]). This method is optimized to only render the area
+## within the player's camera plus the
+## [member ShroudTileMapLayer.render_margin].
+func render_shroud(camera_position: Vector2) -> void:
+	get_shroud_tile_map_layer().render(camera_position)
+
 #endregion
 # ============================================================================ #
 

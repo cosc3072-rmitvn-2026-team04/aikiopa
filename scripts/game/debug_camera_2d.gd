@@ -20,7 +20,7 @@ func _ready() -> void:
 	GameplayEventBus.gameplay_debug_mode_toggled.connect(
 			_on_gameplay_debug_mode_toggled)
 	%AddBuildingButton.pressed.connect(_on_add_building_button_pressed)
-	%PlaceBuildingButton.pressed.connect(_on_place_building_button_pressed)
+	%PopBuildingButton.pressed.connect(_on_pop_building_button_pressed)
 
 
 func _process(delta: float) -> void:
@@ -72,7 +72,7 @@ func _on_add_building_button_pressed() -> void:
 
 
 # Listens to %PopBuildingButton.pressed.
-func _on_place_building_button_pressed() -> void:
+func _on_pop_building_button_pressed() -> void:
 	building_stack_controller.pop_building()
 
 #endregion

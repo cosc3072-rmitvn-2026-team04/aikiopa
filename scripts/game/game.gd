@@ -65,7 +65,7 @@ func _init_world(world_seed: Variant = null) -> void:
 			Building.BuildingType.LANDING_SITE,
 			true) # Quiet placement.
 
-	%World.get_shroud_tile_map_layer().reset()
+	%World.reset_shroud()
 
 
 func _init_population() -> void:
@@ -106,7 +106,7 @@ func _process_auto_world_generation() -> void:
 
 
 func _render_shroud() -> void:
-	%World.get_shroud_tile_map_layer().render(%PlayerCamera2D.position, 3)
+	%World.render_shroud(%PlayerCamera2D.position)
 
 #endregion
 

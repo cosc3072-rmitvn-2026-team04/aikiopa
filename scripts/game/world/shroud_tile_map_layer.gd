@@ -7,6 +7,7 @@ extends TileMapLayer
 #region Enums
 
 enum ShroudType {
+	CLEARED,
 	THIN,
 	THICK,
 }
@@ -37,6 +38,10 @@ const ATLAS_COORDS: Dictionary[ShroudType, Vector2i] = {
 ## The vision radius around the edge coordinates of the colony. The Shroud
 ## covers and hides coordinates beyond this range.
 @export_range(1, 10, 1, "suffix:tiles") var vision_range: int = 1
+
+## The expanded margin rendered outside of the viewport.
+@export_range(0, 10, 1, "suffix:tiles") var render_margin: int = 0
+
 @export var world: World = null
 
 #endregion
@@ -76,6 +81,15 @@ func reset() -> void:
 	_append_vision_area_from_range_at(world_center_coords)
 
 
+## Returns the [enum ShroudType] at [param coords].
+func get_shroud_at(coords: Vector2i) -> ShroudType:
+	var cell_shroud_type: Variant = \
+			get_cell_tile_data(coords).get_custom_data("shroud_type")
+	if not cell_shroud_type:
+		return ShroudType.CLEARED
+	return cell_shroud_type as ShroudType
+
+
 ## Returns The Shroud's internal data as a [Dictionary]. Useful for saving game
 ## sessions.
 func get_shroud_data() -> Dictionary[StringName, Array]:
@@ -94,14 +108,8 @@ func set_shroud_data(shroud_data: Dictionary[StringName, Array]) -> void:
 
 ## Efficiently re-renders The Shroud around the [param camera_position] (See
 ## [method Camera2D.position]). This method is optimized to only render the area
-## within the player's camera.[br]
-## [br]
-## Set [param margin] to a positive value to expand the rendered area by that
-## amount of tiles.
-func render(camera_position: Vector2, margin: int = 0) -> void:
-	if margin < 0:
-		push_warning("Parameter 'margin' should be greater or equal to 0. Using 0 instead.")
-	var calculated_margin: int = margin if margin >= 0 else 0
+## within the player's camera plus the [member render_margin].
+func render(camera_position: Vector2) -> void:
 
 	var viewport_rect_size: Vector2 = get_viewport_rect().size
 	var viewport_top_left: Vector2 = (
@@ -113,9 +121,9 @@ func render(camera_position: Vector2, margin: int = 0) -> void:
 			+ viewport_rect_size / 2
 	)
 	var top_left_map_coords: Vector2i = local_to_map(viewport_top_left)
-	top_left_map_coords -= Vector2i.ONE * calculated_margin
+	top_left_map_coords -= Vector2i.ONE * render_margin
 	var bottom_right_map_coords: Vector2i = local_to_map(viewport_bottom_right)
-	bottom_right_map_coords += Vector2i.ONE * calculated_margin
+	bottom_right_map_coords += Vector2i.ONE * render_margin
 
 	clear()
 	for x: int in range(top_left_map_coords.x, bottom_right_map_coords.x + 1):

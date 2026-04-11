@@ -19,6 +19,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	# Keyboard-controlled movement.
 	var movement: Vector2 = Input.get_vector(
 			"player_camera_left",
 			"player_camera_right",
@@ -26,6 +27,10 @@ func _process(delta: float) -> void:
 			"player_camera_down")
 	if movement:
 		position += movement * pan_speed * delta
+
+	# Camera panning limits.
+	var shroud_tile_map_layer: TileMapLayer = world.get_shroud_tile_map_layer()
+	var map_coords: Vector2i = shroud_tile_map_layer.local_to_map(position)
 
 #endregion
 # ============================================================================ #
