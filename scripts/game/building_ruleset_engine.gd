@@ -78,9 +78,7 @@ var _bvb_rules: Dictionary[Array, Array] = {}
 
 func _ready() -> void:
 	_bvt_rules = _load_ruleset_bvt()
-	print(_bvt_rules)
 	_bvb_rules = _load_ruleset_bvb()
-	print(_bvb_rules)
 
 #endregion
 # ============================================================================ #
@@ -116,7 +114,7 @@ func parse_rules(
 
 	# Step 1: Building versus Terrain check. Must pass before next step.
 	var bvt_parse_result: Array[Variant] = _bvt_rules[[
-		world.get_terrain_at(coords), building_type
+		building_type, world.get_terrain_at(coords)
 	]]
 	if bvt_parse_result[0] != PlacementCheckStatus.ALLOWED:
 		return {
@@ -128,19 +126,20 @@ func parse_rules(
 		&"interaction_result": bvt_parse_result[1],
 	}
 
+	# TODO: Implement this so that it checks all neighbors.
 	# Step 2: Building versus adjacent Building check. Previous step must pass.
-	var bvb_parse_result: Array[Variant] = _bvb_rules[[
-		world.get_terrain_at(coords), building_type
-	]]
-	if bvb_parse_result[0] != PlacementCheckStatus.ALLOWED:
-		return {
-			&"placement_check_status": bvb_parse_result[0],
-			&"interaction_result": null,
-		}
-	parse_result = {
-		&"placement_check_status": bvb_parse_result[0],
-		&"interaction_result": bvb_parse_result[1] + bvt_parse_result[1],
-	}
+	#var bvb_parse_result: Array[Variant] = _bvb_rules[[
+	#	building_type, building_type # TODO: This should be that of neighbors!
+	#]]
+	#if bvb_parse_result[0] != PlacementCheckStatus.ALLOWED:
+	#	return {
+	#		&"placement_check_status": bvb_parse_result[0],
+	#		&"interaction_result": null,
+	#	}
+	#parse_result = {
+	#	&"placement_check_status": bvb_parse_result[0],
+	#	&"interaction_result": bvb_parse_result[1] + bvt_parse_result[1],
+	#}
 
 	return parse_result
 
