@@ -11,6 +11,12 @@ extends Node
 # ============================================================================ #
 #region Constants
 
+## Ruleset - Building versus Terrain location.
+const BVT_RULESET_PATH = "res://resources/rulesets/bvt.csv"
+
+## Ruleset - Building versus adjacent Building location.
+const BVB_RULESET_PATH = "res://resources/rulesets/bvb.csv"
+
 ## Savegame location.
 const SAVE_DIR: String = "user://saves/"
 
