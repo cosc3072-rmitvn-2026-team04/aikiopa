@@ -14,11 +14,11 @@ enum PlacementCheckStatus {
 	## Placement is allowed.
 	ALLOWED = 0,
 
-	## Placement blocked: Not adjacent to existing building(s).
-	BLOCKED_BY_DISCONNECTION = -1,
-
 	## Placement blocked: On invalid terrain.
-	BLOCKED_BY_TERRAIN = -2,
+	BLOCKED_BY_TERRAIN = -1,
+
+	## Placement blocked: Not adjacent to existing building(s).
+	BLOCKED_BY_DISCONNECTION = -2,
 
 	## Placement blocked: Existing building is in the way.
 	BLOCKED_BY_BUILDING = -3,
@@ -52,7 +52,8 @@ enum PlacementCheckStatus {
 ##     ]: [PlacementCheckStatus, InteractionResult]
 ## }
 ## [/codeblock]
-## [color=red][b]Internal game mechanics. Do not modify during runtime.[/b][/color]
+## [color=red][b]Internal game mechanics loaded at [method Node._ready]. Do not
+## modify during runtime.[/b][/color]
 var _bvt_rules: Dictionary[Array, Array] = {}
 
 ## Building versus adjacent Building ruleset. Schema:
@@ -64,8 +65,20 @@ var _bvt_rules: Dictionary[Array, Array] = {}
 ##     ]: [PlacementCheckStatus, InteractionResult]
 ## }
 ## [/codeblock]
-## [color=red][b]Internal game mechanics. Do not modify during runtime.[/b][/color]
+## [color=red][b]Internal game mechanics loaded at [method Node._ready]. Do not
+## modify during runtime.[/b][/color]
 var _bvb_rules: Dictionary[Array, Array] = {}
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Godot builtins
+
+func _ready() -> void:
+	_bvt_rules = _load_ruleset_bvt()
+	_bvb_rules = _load_ruleset_bvb()
 
 #endregion
 # ============================================================================ #
@@ -97,40 +110,38 @@ func parse_rules(
 			&"interaction_result": null,
 		}
 
-	# TODO: Implement this.
-	return {
-		&"placement_check_status": PlacementCheckStatus.ALLOWED,
-		&"interaction_result": InteractionResult.new(0, 0),
+	var parse_result: Dictionary[StringName, Variant] = {}
+
+	# Step 1: Building versus Terrain check. Must pass before next step.
+	var bvt_parse_result: Array[Variant] = _bvt_rules[[
+		building_type, world.get_terrain_at(coords)
+	]]
+	if bvt_parse_result[0] != PlacementCheckStatus.ALLOWED:
+		return {
+			&"placement_check_status": bvt_parse_result[0],
+			&"interaction_result": null,
+		}
+	parse_result = {
+		&"placement_check_status": bvt_parse_result[0],
+		&"interaction_result": bvt_parse_result[1],
 	}
-	#var parse_result: Dictionary[StringName, Variant] = {}
 
-	#var bvt_parse_result: Array[Variant] = _bvt_rules[[
-	#	world.get_terrain_at(coords), building_type
-	#]]
-	#if bvt_parse_result[0] != PlacementCheckStatus.ALLOWED:
-	#	return {
-	#		&"placement_check_status": bvt_parse_result[0],
-	#		&"interaction_result": bvt_parse_result[1],
-	#	}
-	#parse_result = {
-	#	&"placement_check_status": bvt_parse_result[0],
-	#	&"interaction_result": bvt_parse_result[1],
-	#}
-
+	# TODO: Implement this so that it checks all neighbors.
+	# Step 2: Building versus adjacent Building check. Previous step must pass.
 	#var bvb_parse_result: Array[Variant] = _bvb_rules[[
-	#	world.get_terrain_at(coords), building_type
+	#	building_type, building_type # TODO: This should be that of neighbors!
 	#]]
 	#if bvb_parse_result[0] != PlacementCheckStatus.ALLOWED:
 	#	return {
 	#		&"placement_check_status": bvb_parse_result[0],
-	#		&"interaction_result": bvb_parse_result[1],
+	#		&"interaction_result": null,
 	#	}
 	#parse_result = {
 	#	&"placement_check_status": bvb_parse_result[0],
-	#	&"interaction_result": bvb_parse_result[1],
+	#	&"interaction_result": bvb_parse_result[1] + bvt_parse_result[1],
 	#}
 
-	#return parse_result
+	return parse_result
 
 #endregion
 # ============================================================================ #
@@ -138,6 +149,70 @@ func parse_rules(
 
 # ============================================================================ #
 #region Private methods
+
+func _load_ruleset_bvt() -> Dictionary[Array, Array]:
+	if not FileAccess.file_exists(Global.BVT_RULESET_PATH):
+		push_error("File not found: '%s'." % Global.BVT_RULESET_PATH)
+		return {}
+
+	var ruleset: Dictionary[Array, Array] = {}
+	var file: FileAccess = FileAccess.open(Global.BVT_RULESET_PATH, FileAccess.READ)
+	var csv_header: Array = Array(file.get_csv_line(","))
+
+	while file.get_position() < file.get_length():
+		var csv_line: Array = Array(file.get_csv_line(","))
+		if csv_line.size() != csv_header.size():
+			continue # Skip malformed lines.
+
+		var key: Array[int] = [
+			int(csv_line[0]) as Building.BuildingType,
+			int(csv_line[1]) as World.TerrainType]
+		var value: Array[Variant] = [
+			int(int(csv_line[2]) as PlacementCheckStatus),
+			null
+		]
+		if value[0] == PlacementCheckStatus.ALLOWED:
+			value[1] = InteractionResult.new(
+					int(csv_line[3]),
+					int(csv_line[4]))
+
+		ruleset.set(key, value)
+
+	file.close()
+	return ruleset
+
+
+func _load_ruleset_bvb() -> Dictionary[Array, Array]:
+	if not FileAccess.file_exists(Global.BVB_RULESET_PATH):
+		push_error("File not found: '%s'." % Global.BVB_RULESET_PATH)
+		return {}
+
+	var ruleset: Dictionary[Array, Array] = {}
+	var file: FileAccess = FileAccess.open(Global.BVB_RULESET_PATH, FileAccess.READ)
+	var csv_header: Array = Array(file.get_csv_line(","))
+
+	while file.get_position() < file.get_length():
+		var csv_line: Array = Array(file.get_csv_line(","))
+		if csv_line.size() != csv_header.size():
+			continue # Skip malformed lines.
+
+		var key: Array[int] = [
+			int(csv_line[0]) as Building.BuildingType,
+			int(csv_line[1]) as Building.BuildingType]
+		var value: Array[Variant] = [
+			int(int(csv_line[2]) as PlacementCheckStatus),
+			null
+		]
+		if value[0] == PlacementCheckStatus.ALLOWED:
+			value[1] = InteractionResult.new(
+					int(csv_line[3]),
+					int(csv_line[4]))
+
+		ruleset.set(key, value)
+
+	file.close()
+	return ruleset
+
 
 func _is_clear_of_building(coords: Vector2i) -> bool:
 	return not world.has_building_at(coords)

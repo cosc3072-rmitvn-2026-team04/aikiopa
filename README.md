@@ -30,8 +30,8 @@ Make sure these dependencies are installed before continuing. Using a package ma
 ├── 📂.github/          # GitHub Actions workflows
 ├── 📂.vscode/          # Visual Studio Code config
 ├── 📂addons/           # Project plugins
-├── 📂assets/           # Assets (art, music, sfx, etc.)
-├── 📂resources/        # Resource files (`.tres`)
+├── 📂assets/           # Assets (art, animation, music, sfx, vfx, fonts, icons, etc.)
+├── 📂resources/        # Resource files (`.tres`, `.csv`, `.tsv`, `.json`)
 ├── 📂scenes/           # Scene files (`.tscn`)
 ├── 📂scripts/          # GDScript files (`.gd`)
 ├── 📂shaders/          # Shader files (`.gdshader`)
