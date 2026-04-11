@@ -183,3 +183,47 @@ class HexGrid extends Node:
 
 	#endregion
 	# ======================================================================== #
+
+
+	# ======================================================================== #
+	#region Ranges
+
+	## Returns all offset coordinates within [param range_distance] of
+	## [param coords], adjusted for [param offset_layout].
+	static func get_offset_area_from_range_at(
+			coords: Vector2i,
+			range_distance: int,
+			offset_layout: OffsetLayout
+	) -> Array[Vector2i]:
+		var cube_coords: Vector3i = offset_to_cube(coords, offset_layout)
+		return Array(
+				get_cube_area_from_range_at(cube_coords, range_distance).map(
+						func (in_range_cube_coords: Vector3i):
+							return cube_to_offset(
+									in_range_cube_coords,
+									offset_layout)),
+				TYPE_VECTOR2I, "", null)
+
+
+	## Returns all cube coordinates within [param range_distance] of
+	## [param coords].
+	static func get_cube_area_from_range_at(
+			coords: Vector3i,
+			range_distance: int
+	) -> Array[Vector3i]:
+		if range_distance < 0:
+			push_error("Parameter 'range_distance' must not be negative.")
+			return []
+
+		var area: Array[Vector3i] = []
+		for col: int in range(-range_distance, range_distance + 1):
+			for row: int in range(
+					max(-range_distance, -col - range_distance),
+					min(range_distance, -col + range_distance) + 1
+			):
+				var slice: int = -col - row
+				area.append(coords + Vector3i(col, row, slice))
+		return area
+
+	#endregion
+	# ======================================================================== #

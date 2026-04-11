@@ -100,7 +100,7 @@ func _init_cameras() -> void:
 
 func _process_auto_world_generation() -> void:
 	var camera_chunk_position: Vector2i = %PlayerCamera2D.get_chunk_position()
-	for neighbor_chunk in %World.get_neigboring_chunks(camera_chunk_position):
+	for neighbor_chunk: Vector2i in %World.get_neigboring_chunks(camera_chunk_position):
 		if not %World.is_chunk_generated(neighbor_chunk):
 			%World.create_chunk(neighbor_chunk)
 

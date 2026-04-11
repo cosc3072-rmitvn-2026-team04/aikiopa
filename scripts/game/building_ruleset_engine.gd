@@ -148,7 +148,7 @@ func _has_adjacent_building(coords: Vector2i) -> bool:
 			Math.HexGrid.get_offset_surrounding_neighbors(
 					coords,
 					Math.HexGrid.OffsetLayout.ODD_R)
-	for neighbor_coords in surrounding_neighbor_coords:
+	for neighbor_coords: Vector2i in surrounding_neighbor_coords:
 		if world.has_building_at(neighbor_coords):
 			return true
 	return false
