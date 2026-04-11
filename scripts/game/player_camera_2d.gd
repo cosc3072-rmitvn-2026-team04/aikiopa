@@ -10,6 +10,8 @@ extends Camera2D
 #region Godot builtins
 
 func _ready() -> void:
+	GameplayEventBus.building_placed.connect(_on_building_placed)
+
 	$ReferenceRect.editor_only = true
 	$ReferenceRect/ReferenceLabel.visible = false
 	GameplayEventBus.gameplay_debug_mode_toggled.connect(
@@ -18,10 +20,10 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	var movement: Vector2 = Input.get_vector(
-			"ui_left",
-			"ui_right",
-			"ui_up",
-			"ui_down")
+			"player_camera_left",
+			"player_camera_right",
+			"player_camera_up",
+			"player_camera_down")
 	if movement:
 		position += movement * pan_speed * delta
 
@@ -58,6 +60,17 @@ func get_chunk_position() -> Vector2i:
 
 # ============================================================================ #
 #region Signal listeners
+
+# Listens to
+# GameplaEventBus.building_placed(
+#		coords: Vector2i,
+#		building_type: Building.BuildingType).
+func _on_building_placed(
+		coords: Vector2i,
+		_building_type: Building.BuildingType
+) -> void:
+	position = world.get_terrain_tile_map_layer().map_to_local(coords)
+
 
 # Listens to GameplayEventBus.gameplay_debug_mode_toggled(value: bool).
 func _on_gameplay_debug_mode_toggled(value: bool) -> void:
