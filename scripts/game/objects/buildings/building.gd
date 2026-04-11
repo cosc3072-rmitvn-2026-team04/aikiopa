@@ -47,8 +47,10 @@ const BUILDING_NAME: Dictionary[BuildingType, String] = {
 # ============================================================================ #
 #region Public methods
 
-## Returns the [enum Building.BuildingType] of this [Building] instance.
-## Override this method in children scenes to provide correct feature type.
+## Returns the [enum Building.BuildingType] of this [Building] instance.[br]
+## [br]
+## Virtual method. Override this method in children scenes to provide correct
+## building type.
 func get_type() -> BuildingType:
 	push_warning("Calling method 'get_type()' on generic 'Building' instance.")
 	return BuildingType.NONE
@@ -62,8 +64,9 @@ func get_type() -> BuildingType:
 ##     # TODO: Develop a schema and implement this function in children classes.
 ## [/codeblock]
 ## [br]
-## Override this method in children scenes to provide the appropriate return
-## value.
+## [br]
+## Virtual method. Override this method in children scenes to provide the
+## appropriate return value.
 func serialized() -> Dictionary[StringName, Variant]:
 	push_warning("Calling method 'serialized()' on generic 'Building' instance.")
 	return {}

@@ -70,43 +70,43 @@ class TestCoords2DToLinearIndex extends GutTest:
 			[
 				[
 					Vector2i(6, 7), Vector2i(6, 7),
-					"Coordinates out of matrix bounds."
+					"Coordinates out of matrix bounds.",
 				],
 				[
 					Vector2i(3, 7), Vector2i(6, 7),
-					"Coordinates out of matrix bounds."
+					"Coordinates out of matrix bounds.",
 				],
 				[
 					Vector2i(6, 3), Vector2i(6, 7),
-					"Coordinates out of matrix bounds."
+					"Coordinates out of matrix bounds.",
 				],
 				[
 					Vector2i(-1, 3), Vector2i(6, 7),
-					"Coordinates out of matrix bounds."
+					"Coordinates out of matrix bounds.",
 				],
 				[
 					Vector2i(3, -1), Vector2i(6, 7),
-					"Coordinates out of matrix bounds."
+					"Coordinates out of matrix bounds.",
 				],
 				[
 					Vector2i(-1, -1), Vector2i(6, 7),
-					"Coordinates out of matrix bounds."
+					"Coordinates out of matrix bounds.",
 				],
 				[
 					Vector2i(6, 7), Vector2i(0, 0),
-					"Invalid matrix size."
+					"Invalid matrix size.",
 				],
 				[
 					Vector2i(6, 7), Vector2i(-1, 0),
-					"Invalid matrix size."
+					"Invalid matrix size.",
 				],
 				[
 					Vector2i(6, 7), Vector2i(0, -1),
-					"Invalid matrix size."
+					"Invalid matrix size.",
 				],
 				[
 					Vector2i(6, 7), Vector2i(-1, -1),
-					"Invalid matrix size."
+					"Invalid matrix size.",
 				],
 			])
 

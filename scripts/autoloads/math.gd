@@ -195,6 +195,10 @@ class HexGrid extends Node:
 			range_distance: int,
 			offset_layout: OffsetLayout
 	) -> Array[Vector2i]:
+		if range_distance < 0:
+			push_error("Parameter 'range_distance' must not be negative.")
+			return []
+
 		var cube_coords: Vector3i = offset_to_cube(coords, offset_layout)
 		return Array(
 				get_cube_area_from_range_at(cube_coords, range_distance).map(
