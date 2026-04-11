@@ -40,6 +40,7 @@ func _ready() -> void:
 ## Resets The Shroud to reveal only around the initial coordinate at the center
 ## of the [World].
 func reset() -> void:
+	@warning_ignore("integer_division")
 	var world_center_coords: Vector2i = world.get_chunk_size() / 2
 	_colony_surrounding_edges_coords = []
 	_colony_surrounding_edges_coords.append(world_center_coords)
@@ -72,6 +73,6 @@ func _on_building_placed(
 		_building_type: Building.BuildingType
 ) -> void:
 	update(coords)
-	
+
 #endregion
 # ============================================================================ #
