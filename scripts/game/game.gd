@@ -39,6 +39,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	_process_auto_world_generation()
+	_render_shroud()
 
 
 func _input(event: InputEvent) -> void:
@@ -100,6 +101,12 @@ func _process_auto_world_generation() -> void:
 	for neighbor_chunk in %World.get_neigboring_chunks(camera_chunk_position):
 		if not %World.is_chunk_generated(neighbor_chunk):
 			%World.create_chunk(neighbor_chunk)
+
+
+func _render_shroud() -> void:
+	%World.get_shroud_tile_map_layer().render(
+			%PlayerCamera2D.get_tile_map_position(),
+			3)
 
 #endregion
 

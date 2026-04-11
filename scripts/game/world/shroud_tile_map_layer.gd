@@ -1,5 +1,6 @@
 class_name ShroudTileMapLayer
 extends TileMapLayer
+## The Shroud. It covers the distant undiscovered reaches of the planet!
 
 
 # ============================================================================ #
@@ -52,11 +53,16 @@ func get_colony_surrounding_edges_coords() -> Array[Vector2i]:
 	return _colony_surrounding_edges_coords
 
 
-## Re-renders The Shroud based on the coordinates currently at the edge of the
-## colony. See [method get_colony_surrounding_edges_coords].
-func update(_coords: Vector2i) -> void:
-	# TODO: Implement this. See algorithm in #48.
-	pass
+## Efficiently re-renders The Shroud around the [param camera_coords] given in
+## tile coordinates (See [method TileMapLayer.local_to_map]). This method is
+## optimized to only render the area within the player's camera.[br]
+## [br]
+## Set [param margin] to a positive value to expand the rendered area by that
+## amount of tiles.
+func render(_camera_coords: Vector2i, _margin: int = 0) -> void:
+	# var _margin: int = _margin if margin >= 0 else 0
+	var viewport_rect: Rect2 = get_viewport_rect()
+	print(viewport_rect.position)
 
 #endregion
 # ============================================================================ #
@@ -69,10 +75,11 @@ func update(_coords: Vector2i) -> void:
 #		coords: Vector2i,
 #		building_type: Building.BuildingType)
 func _on_building_placed(
-		coords: Vector2i,
+		_coords: Vector2i,
 		_building_type: Building.BuildingType
 ) -> void:
-	update(coords)
+	# TODO: Implement this. See algorithm in #48.
+	pass
 
 #endregion
 # ============================================================================ #
