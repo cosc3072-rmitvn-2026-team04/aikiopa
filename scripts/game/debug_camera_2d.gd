@@ -3,7 +3,7 @@ extends Camera2D
 
 const MIN_ZOOM: float = 0.1
 const MAX_ZOOM: float = 10.0
-const ZOOM_SPEED: float = 0.01
+const ZOOM_INCREMENT: float = 0.01
 
 
 ## Camera panning speed (scaled to [member Camera2D.zoom]).
@@ -46,9 +46,9 @@ func _process(delta: float) -> void:
 		position += movement * (pan_speed * 100 / zoom.x) * delta
 
 		if Input.is_action_pressed("debug_camera_zoom_in") and zoom.x < MAX_ZOOM:
-			zoom += Vector2.ONE * ZOOM_SPEED
+			zoom += Vector2.ONE * ZOOM_INCREMENT
 		if Input.is_action_pressed("debug_camera_zoom_out") and zoom.x > MIN_ZOOM:
-			zoom -= Vector2.ONE * ZOOM_SPEED
+			zoom -= Vector2.ONE * ZOOM_INCREMENT
 
 #endregion
 # ============================================================================ #

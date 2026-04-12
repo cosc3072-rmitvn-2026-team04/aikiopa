@@ -1,15 +1,28 @@
 extends Camera2D
 
 
-## Speed in pixels per second of the camera's panning.
-@export_range(500.0, 5000.0, 50.0, "suffix:px/s") var pan_speed: int = 2500
+## Speed in pixels per second of the camera's panning. Only affects
+## keyboard-controlled camera movements.
+@export_range(50.0, 5000.0, 5.0, "suffix:px/s") var pan_speed: int = 2500
+
+# TODO: Add grouping and documentation for these exported properties.
+@export_range(0.5, 1.0, 0.01) var min_zoom: float = 1.0
+@export_range(1.0, 2.0, 0.01) var max_zoom: float = 1.0
+@export_range(0.01, 0.1, 0.01) var zoom_increment: float = 0.01
+@export_range(1.0, 100.0, 1.0) var zoom_rate: float =  1.0
+
 @export var world: World = null
+
+
+var _target_zoom: float = 1.0
 
 
 # ============================================================================ #
 #region Godot builtins
 
 func _ready() -> void:
+	_target_zoom = 1.0
+
 	GameplayEventBus.building_placed.connect(_on_building_placed)
 
 	$ReferenceRect.editor_only = true
@@ -19,18 +32,52 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	# Keyboard-controlled movement.
+	# Keyboard-controlled panning.
 	var movement: Vector2 = Input.get_vector(
 			"player_camera_left",
 			"player_camera_right",
 			"player_camera_up",
 			"player_camera_down")
 	if movement:
-		position += movement * pan_speed * delta
+		position += movement * pan_speed * delta / zoom
+
+	# Keyboard-controlled zooming.
+	if (
+			$KeyboardZoomDelayTimer.is_stopped()
+			and	Input.is_action_pressed("player_camera_zoom_in")
+			and zoom.x < max_zoom
+	):
+		_zoom_in()
+		$KeyboardZoomDelayTimer.start()
+	if (
+			$KeyboardZoomDelayTimer.is_stopped()
+			and Input.is_action_pressed("player_camera_zoom_out")
+			and zoom.x > min_zoom
+	):
+		_zoom_out()
+		$KeyboardZoomDelayTimer.start()
+
+	# Zoom lerp.
+	if not is_equal_approx(zoom.x, _target_zoom):
+		zoom = lerp(zoom, _target_zoom * Vector2.ONE, zoom_rate * delta)
 
 	# Camera panning limits.
 	var shroud_tile_map_layer: TileMapLayer = world.get_shroud_tile_map_layer()
 	var map_coords: Vector2i = shroud_tile_map_layer.local_to_map(position)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	# Mouse-controlled panning.
+	# TODO: This doesn't work. Fix it.
+	if event is InputEventMouseMotion and event.button_mask == MOUSE_BUTTON_MASK_MIDDLE:
+		position -= event.screen_relative * zoom
+
+	# Mouse-controlled zooming.
+	if event is InputEventMouseButton and event.is_pressed():
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			_zoom_in()
+		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			_zoom_out()
 
 #endregion
 # ============================================================================ #
@@ -58,6 +105,20 @@ func get_chunk_position() -> Vector2i:
 	return Vector2i(
 			roundi(map_position.x / chunk_size.x - 0.5),
 			roundi(map_position.y / chunk_size.y - 0.5))
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Private methods
+
+func _zoom_in() -> void:
+	_target_zoom = min(_target_zoom + zoom_increment, max_zoom)
+
+
+func _zoom_out() -> void:
+	_target_zoom = max(_target_zoom - zoom_increment, min_zoom)
 
 #endregion
 # ============================================================================ #
