@@ -50,7 +50,7 @@ func _ready() -> void:
 func _update_building_card_positions() -> void:
 	var building_card_count: int = %BuildingStack.get_child_count()
 	var building_cards: Array[Node] = %BuildingStack.get_children()
-	for index in range(building_card_count):
+	for index: int in range(building_card_count):
 		var building_card: BuildingCard = building_cards[index]
 		var building_card_size: Vector2i = building_card.get_size()
 

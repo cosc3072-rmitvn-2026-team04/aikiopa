@@ -2,10 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dtslxw8hw6d1l" path="res://scripts/game/world/world.gd" id="1_t4al5"]
 [ext_resource type="Script" uid="uid://brxq3lcgxk4g8" path="res://scripts/game/world/world_generator.gd" id="3_d8brc"]
-[ext_resource type="TileSet" uid="uid://coa56ippaoyox" path="res://resources/terrain_tile_set.tres" id="3_q5tta"]
+[ext_resource type="TileSet" uid="uid://coa56ippaoyox" path="res://resources/tile_sets/terrain_tile_set.tres" id="3_q5tta"]
 [ext_resource type="Script" uid="uid://bhw8kyxi04s7t" path="res://scripts/game/world/terrain_feature_layer.gd" id="3_qd3kh"]
 [ext_resource type="Script" uid="uid://c4me4d4ubdu7" path="res://scripts/game/world/terrain_tile_map_layer.gd" id="3_vn813"]
 [ext_resource type="Script" uid="uid://b2nle6lcx1mst" path="res://scripts/game/world/building_layer.gd" id="4_w1nur"]
+[ext_resource type="TileSet" uid="uid://c4teuykid7jev" path="res://resources/tile_sets/shroud_tile_set.tres" id="7_a33jj"]
+[ext_resource type="Script" uid="uid://c6eorvhl3ljei" path="res://scripts/game/world/shroud_tile_map_layer.gd" id="7_vn813"]
 
 [node name="World" type="Node2D" unique_id=1513868058]
 script = ExtResource("1_t4al5")
@@ -42,4 +44,12 @@ world = NodePath("..")
 unique_name_in_owner = true
 y_sort_enabled = true
 script = ExtResource("4_w1nur")
+world = NodePath("..")
+
+[node name="ShroudTileMapLayer" type="TileMapLayer" parent="." unique_id=1603485493 node_paths=PackedStringArray("world")]
+unique_name_in_owner = true
+tile_set = ExtResource("7_a33jj")
+script = ExtResource("7_vn813")
+vision_range = 3
+render_margin = 12
 world = NodePath("..")

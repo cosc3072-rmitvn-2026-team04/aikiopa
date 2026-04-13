@@ -89,11 +89,14 @@ offset_bottom = 164.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_0s1lt")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="DebugCanvasLayer/ControlPanelContainer" unique_id=80082195]
+[node name="MarginContainer" type="MarginContainer" parent="DebugCanvasLayer/ControlPanelContainer" unique_id=1130766856]
 layout_mode = 2
-size_flags_horizontal = 0
+theme_override_constants/margin_right = 256
 
-[node name="ShortcutsRichTextLabel" type="RichTextLabel" parent="DebugCanvasLayer/ControlPanelContainer/HBoxContainer" unique_id=2074387811]
+[node name="HBoxContainer" type="HBoxContainer" parent="DebugCanvasLayer/ControlPanelContainer/MarginContainer" unique_id=80082195]
+layout_mode = 2
+
+[node name="ShortcutsRichTextLabel" type="RichTextLabel" parent="DebugCanvasLayer/ControlPanelContainer/MarginContainer/HBoxContainer" unique_id=2074387811]
 unique_name_in_owner = true
 layout_direction = 2
 layout_mode = 2
@@ -109,21 +112,35 @@ Zoom: U, I"
 fit_content = true
 autowrap_mode = 0
 
-[node name="BuildingStackControlContainer" type="VBoxContainer" parent="DebugCanvasLayer/ControlPanelContainer/HBoxContainer" unique_id=271214521]
+[node name="BuildingStackControlContainer" type="VFlowContainer" parent="DebugCanvasLayer/ControlPanelContainer/MarginContainer/HBoxContainer" unique_id=1776058762]
 layout_mode = 2
 
-[node name="AddBuildingButton" type="Button" parent="DebugCanvasLayer/ControlPanelContainer/HBoxContainer/BuildingStackControlContainer" unique_id=312910407]
+[node name="AddBuildingButton" type="Button" parent="DebugCanvasLayer/ControlPanelContainer/MarginContainer/HBoxContainer/BuildingStackControlContainer" unique_id=312910407]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 24
-text = "Add
-Building"
+text = " Add Building "
 
-[node name="PlaceBuildingButton" type="Button" parent="DebugCanvasLayer/ControlPanelContainer/HBoxContainer/BuildingStackControlContainer" unique_id=833915139]
+[node name="PopBuildingButton" type="Button" parent="DebugCanvasLayer/ControlPanelContainer/MarginContainer/HBoxContainer/BuildingStackControlContainer" unique_id=833915139]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 24
-text = "Place
-Building"
+text = " Pop Building "
+
+[node name="ShroudDisplayCheckBox" type="CheckBox" parent="DebugCanvasLayer/ControlPanelContainer/MarginContainer/HBoxContainer" unique_id=1717155315]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 24
+button_pressed = true
+text = " Shroud"
+alignment = 2
+
+[node name="KeyboardZoomDelayTimer" type="Timer" parent="." unique_id=2024952973]
+wait_time = 0.06
+one_shot = true

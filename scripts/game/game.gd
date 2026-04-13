@@ -39,6 +39,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	_process_auto_world_generation()
+	_render_shroud()
 
 
 func _input(event: InputEvent) -> void:
@@ -57,12 +58,14 @@ func _init_world(world_seed: Variant = null) -> void:
 	%World.initialize(world_seed)
 	%World.create_chunk(Vector2i.ZERO)
 
-	var center_coords: Vector2i = %World.get_chunk_size() / 2
-	%World.remove_terrain_feature_at(center_coords)
+	var world_center_coords: Vector2i = %World.get_chunk_size() / 2
+	%World.remove_terrain_feature_at(world_center_coords)
 	%World.place_building_at(
-			center_coords,
+			world_center_coords,
 			Building.BuildingType.LANDING_SITE,
 			true) # Quiet placement.
+
+	%World.reset_shroud()
 
 
 func _init_population() -> void:
@@ -82,9 +85,9 @@ func _init_building_stack(
 
 func _init_cameras() -> void:
 	# Main camera setup.
-	%PlayerCamera2D.make_current()
-	%PlayerCamera2D.position = %World.get_chunk_center_position()
-	%PlayerCamera2D.reset_smoothing()
+	%PlayerCamera.make_current()
+	%PlayerCamera.position = %World.get_chunk_center_position()
+	%PlayerCamera.reset_smoothing()
 
 	# Debug camera setup.
 	%DebugCamera2D.position = %World.get_chunk_center_position()
@@ -96,10 +99,14 @@ func _init_cameras() -> void:
 #region _process()
 
 func _process_auto_world_generation() -> void:
-	var camera_chunk_position: Vector2i = %PlayerCamera2D.get_chunk_position()
-	for neighbor_chunk in %World.get_neigboring_chunks(camera_chunk_position):
+	var camera_chunk_position: Vector2i = %PlayerCamera.get_chunk_position()
+	for neighbor_chunk: Vector2i in %World.get_neigboring_chunks(camera_chunk_position):
 		if not %World.is_chunk_generated(neighbor_chunk):
 			%World.create_chunk(neighbor_chunk)
+
+
+func _render_shroud() -> void:
+	%World.render_shroud(%PlayerCamera.position)
 
 #endregion
 
@@ -109,7 +116,7 @@ func _process_auto_world_generation() -> void:
 func _input_update_gameplay_debug_mode(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_gameplay_debug_mode"):
 		Global.gameplay_debug_mode_enabled = not Global.gameplay_debug_mode_enabled
-		GameplayEventBus.gameplay_debug_mode_toggled.emit(Global.gameplay_debug_mode_enabled)
+		UIEventBus.gameplay_debug_mode_toggled.emit(Global.gameplay_debug_mode_enabled)
 
 #endregion
 

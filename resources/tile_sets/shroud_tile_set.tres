@@ -1,0 +1,22 @@
+[gd_resource type="TileSet" format=3 uid="uid://c4teuykid7jev"]
+
+[ext_resource type="PhysicsMaterial" uid="uid://cm2apf4ty4j0k" path="res://resources/shroud/shroud_physics_material.tres" id="1_v1t05"]
+[ext_resource type="Texture2D" uid="uid://c5h4qqahp0dho" path="res://assets/tilesheets/shroud.png" id="1_vsnsk"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_v1t05"]
+texture = ExtResource("1_vsnsk")
+texture_region_size = Vector2i(160, 130)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, -65, -80, -32.5, -80, 32.5, 0, 65, 80, 32.5, 80, -32.5)
+0:0/0/custom_data_0 = 2
+1:0/0 = 0
+1:0/0/custom_data_0 = 1
+
+[resource]
+tile_shape = 3
+tile_size = Vector2i(160, 130)
+physics_layer_0/collision_layer = 1
+physics_layer_0/physics_material = ExtResource("1_v1t05")
+custom_data_layer_0/name = "shroud_type"
+custom_data_layer_0/type = 2
+sources/0 = SubResource("TileSetAtlasSource_v1t05")

@@ -78,7 +78,7 @@ func initialize_session(
 			(not session_seed and session_state)
 			or (session_seed and not session_state)
 	):
-		push_error("Both 'session_seed' and 'session_state' must be set.")
+		push_error("Both parameters 'session_seed' and 'session_state' must be set.")
 		return
 
 	if session_seed and session_state:
@@ -87,7 +87,7 @@ func initialize_session(
 		Global.game_state.building_stack = building_queue
 	else:
 		_rng.randomize()
-		for i in range(starting_building_count):
+		for iteration: int in range(starting_building_count):
 			add_building()
 			# TODO: Workaround: Without this line, the rapid adding of buildings
 			# would make the building stack UI put its cards at the wrong
