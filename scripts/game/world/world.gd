@@ -265,15 +265,11 @@ func has_building_at(coords: Vector2i) -> bool:
 ## building.[/b][/color][br]
 ## [br]
 ## Prints an error and do nothing if [param building_type] is unknown.[br]
-## [br]
-## Set [param quiet] to [code]true[/code] to execute without notifying other
-## game systems. Useful for scripted game events.
 func place_building_at(
 		coords: Vector2i,
-		building_type: Building.BuildingType,
-		quiet: bool = false
+		building_type: Building.BuildingType
 ) -> void:
-	get_building_layer().place_building_at(coords, building_type, quiet)
+	get_building_layer().place_building_at(coords, building_type)
 
 
 ## Returns and destroys the building at [param coords].[br]
@@ -332,16 +328,24 @@ func render_shroud(camera_position: Vector2) -> void:
 func _on_building_placement_requested(
 		mouse_position: Vector2,
 		building_type: Building.BuildingType) -> void:
-	var map_coords: Vector2i = %World.get_terrain_tile_map_layer().local_to_map(
-			mouse_position)
-	var parse_result: Dictionary[StringName, Variant] =\
-			building_ruleset_engine.parse_rules(map_coords, building_type)
+	var map_coords: Vector2i = local_to_map(mouse_position)
 
+	var ruleset_parse_result: Dictionary[StringName, Variant] =\
+			building_ruleset_engine.parse_rules(map_coords, building_type)
 	if (
-			parse_result.placement_check_status
+			ruleset_parse_result.placement_check_status
 			== BuildingRulesetEngine.PlacementCheckStatus.ALLOWED
 	):
+		if not ruleset_parse_result.interaction_result:
+			push_error(
+					"Unexpected value for 'interaction_result':"
+					+ "Should not be 'null' when 'placement_check_status' is '0'")
+			return
 		place_building_at(map_coords, building_type)
+		GameplayEventBus.building_placed.emit(
+				map_coords,
+				building_type,
+				ruleset_parse_result.interaction_result)
 
 #endregion
 # ============================================================================ #

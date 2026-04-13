@@ -118,13 +118,14 @@ func get_chunk_position() -> Vector2i:
 # ============================================================================ #
 #region Signal listeners
 
-# Listens to
-# GameplaEventBus.building_placed(
+# Listens to GameplayEventBus.building_placed(
 #		coords: Vector2i,
 #		building_type: Building.BuildingType).
+#		interaction_result: BuildingRulesetEngine.InteractionResult).
 func _on_building_placed(
 		coords: Vector2i,
-		_building_type: Building.BuildingType
+		_building_type: Building.BuildingType,
+		_interaction_result: BuildingRulesetEngine.InteractionResult
 ) -> void:
 	position = world.get_terrain_tile_map_layer().map_to_local(coords)
 

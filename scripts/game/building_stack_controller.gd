@@ -8,6 +8,8 @@ extends Node
 # ============================================================================ #
 #region Exported properties
 
+@export_group("Generator")
+
 ## The non-uniform weights used for random building generation. Building types
 ## with higher weights appear more often than those with lower weights.[br]
 ## [br]
@@ -34,6 +36,11 @@ extends Node
 
 ## The number of [BuildingCard]s that the player receives in each new session.
 @export_range(1, 50, 1) var starting_building_count: int = 1
+
+
+@export_group("", "")
+
+@export var building_ruleset_engine: BuildingRulesetEngine = null
 
 #endregion
 # ============================================================================ #
@@ -89,11 +96,11 @@ func initialize_session(
 		_rng.randomize()
 		for iteration: int in range(starting_building_count):
 			add_building()
-			# TODO: Workaround: Without this line, the rapid adding of buildings
+			# TODO: Workaround: Without this line, rapid adding of buildings
 			# would make the building stack UI put its cards at the wrong
-			# positions. We may have to keep this. But find out where to put the
-			# hard-coded 0.1 seconds into an exported property, or as a Global
-			# constant.
+			# positions. Fix this. If not possible then find out where to put
+			# the hard-coded 0.1 seconds into an exported property, or as a
+			# constant in [Global].
 			await get_tree().create_timer(0.1).timeout
 
 
@@ -154,13 +161,14 @@ func is_empty() -> bool:
 # ============================================================================ #
 #region Signal listeners
 
-# Listens to
-# GameplayEventBus.building_placed(
+# Listens to GameplayEventBus.building_placed(
 #		coords: Vector2i,
 #		building_type: Building.BuildingType).
+#		interaction_result: BuildingRulesetEngine.InteractionResult).
 func _on_building_placed(
 		_coords: Vector2i,
-		building_type: Building.BuildingType
+		building_type: Building.BuildingType,
+		interaction_result: BuildingRulesetEngine.InteractionResult
 ) -> void:
 	var building_stack_top: Building.BuildingType =\
 			Global.game_state.building_stack.back()
@@ -170,6 +178,13 @@ func _on_building_placed(
 			Building.BuildingType.keys()[building_type],
 		])
 		return
+	if not interaction_result:
+		push_error(
+				"Unexpected value for 'interaction_result':"
+				+ "Should not be 'null' at this stage.")
+		return
+	for interation: int in range(interaction_result.get_building_bonus()):
+		add_building()
 
 	pop_building()
 

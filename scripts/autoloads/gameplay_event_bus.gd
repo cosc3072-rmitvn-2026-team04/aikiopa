@@ -32,7 +32,10 @@ signal building_stack_building_popped(building_type: Building.BuildingType)
 ## Emitted when a [Building] of [param building_type] is successfully added at
 ## [param coords] in the [World].
 @warning_ignore("unused_signal")
-signal building_placed(coords: Vector2i, building_type: Building.BuildingType)
+signal building_placed(
+		coords: Vector2i,
+		building_type: Building.BuildingType,
+		interaction_result: BuildingRulesetEngine.InteractionResult)
 
 
 ## Emitted when a [Building] of [param building_type] at [param coords] is

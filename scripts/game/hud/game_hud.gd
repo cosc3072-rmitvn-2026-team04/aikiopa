@@ -46,27 +46,22 @@ func _on_building_card_dropped(_building: Building.BuildingType) -> void:
 	_picked_building = Building.BuildingType.NONE
 
 
-# Listens to
-# GameplayEventBus.building_placed(
+# Listens to GameplayEventBus.building_placed(
 #		coords: Vector2i,
 #		building_type: Building.BuildingType).
+#		interaction_result: BuildingRulesetEngine.InteractionResult).
 func _on_building_placed(
 		_coords: Vector2i,
-		building_type: Building.BuildingType
+		_building_type: Building.BuildingType,
+		_interaction_result: BuildingRulesetEngine.InteractionResult
 ) -> void:
-	if _picked_building != building_type:
-		push_error("Picked building (%s) does not match placed building (%s)" % [
-			Building.BuildingType.keys()[_picked_building],
-			Building.BuildingType.keys()[building_type],
-		])
-		return
 	_picked_building = Building.BuildingType.NONE
 
 
 # Listens to
 # GameplayEventBus.population_changed(old_amount: int, new_amount: int).
-func _on_population_changed(_old_amount: int, _new_amount: int) -> void:
-	%PopulationLabel.text = "%d" % Global.game_state.population
+func _on_population_changed(_old_amount: int, new_amount: int) -> void:
+	%PopulationLabel.text = "%d" % new_amount
 
 #endregion
 # ============================================================================ #
