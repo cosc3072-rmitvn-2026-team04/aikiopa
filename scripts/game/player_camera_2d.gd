@@ -85,9 +85,13 @@ func _process(delta: float) -> void:
 	if not is_equal_approx(zoom.x, _target_zoom):
 		zoom = lerp(zoom, _target_zoom * Vector2.ONE, zoom_rate * delta)
 
-	# Camera panning limits.
+	# Shroud panning limits.
 	var map_coords: Vector2i = world.local_to_map(position)
-
+	if map_coords != _last_map_coords:
+		if world.get_shroud_at(map_coords) == ShroudTileMapLayer.ShroudType.THICK:
+			position = world.map_to_local(_last_map_coords)
+		else:
+			_last_map_coords = map_coords
 
 func _input(event: InputEvent) -> void:
 	# Mouse-controlled panning.
@@ -112,7 +116,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 ## Returns the tile position of the camera on the map. Undefined behavior if
 ## [member world] is not set.
-func get_tile_map_position() -> Vector2i:
+func get_map_coords() -> Vector2i:
 	if world:
 		return world.local_to_map(position)
 	return Vector2i(-1, -1)
@@ -121,9 +125,9 @@ func get_tile_map_position() -> Vector2i:
 ## Returns the chunk offset that the camera is in. Undefined behavior if
 ## [member world] is not set.
 func get_chunk_position() -> Vector2i:
-	if get_tile_map_position() == Vector2i(INF, INF):
-		return get_tile_map_position()
-	var map_position: Vector2 = Vector2(get_tile_map_position())
+	if get_map_coords() == Vector2i(INF, INF):
+		return get_map_coords()
+	var map_position: Vector2 = Vector2(get_map_coords())
 
 	var chunk_size: Vector2 = Vector2(world.get_chunk_size())
 	return Vector2i(

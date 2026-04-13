@@ -85,11 +85,10 @@ func reset() -> void:
 
 ## Returns the [enum ShroudType] at [param coords].
 func get_shroud_at(coords: Vector2i) -> ShroudType:
-	var cell_shroud_type: Variant = \
-			get_cell_tile_data(coords).get_custom_data("shroud_type")
-	if not cell_shroud_type:
+	var cell_tile_data: Variant = get_cell_tile_data(coords)
+	if not cell_tile_data:
 		return ShroudType.CLEARED
-	return cell_shroud_type as ShroudType
+	return cell_tile_data.get_custom_data("shroud_type") as ShroudType
 
 
 ## Returns The Shroud's internal data as a [Dictionary]. Useful for saving game
