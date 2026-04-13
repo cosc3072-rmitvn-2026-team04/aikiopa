@@ -19,7 +19,19 @@ building_ruleset_engine = NodePath("../BuildingRulesetEngine")
 [node name="BuildingStackController" type="Node" parent="." unique_id=1349143746 node_paths=PackedStringArray("building_ruleset_engine")]
 unique_name_in_owner = true
 script = ExtResource("5_lfrn8")
-starting_building_count = 10
+building_type_weights = Dictionary[int, float]({
+1: 0.0,
+2: 2.5,
+3: 1.0,
+4: 1.0,
+5: 0.6,
+6: 1.0,
+7: 0.8,
+8: 1.0,
+9: 1.5
+})
+guaranteed_starting_buildings = Array[int]([2])
+starting_random_buildings_count = 9
 building_ruleset_engine = NodePath("../BuildingRulesetEngine")
 
 [node name="BuildingRulesetEngine" type="Node" parent="." unique_id=924936073 node_paths=PackedStringArray("world")]
