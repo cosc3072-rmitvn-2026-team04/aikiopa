@@ -51,5 +51,5 @@ unique_name_in_owner = true
 tile_set = ExtResource("7_a33jj")
 script = ExtResource("7_vn813")
 vision_range = 3
-render_margin = 18
+render_margin = 12
 world = NodePath("..")

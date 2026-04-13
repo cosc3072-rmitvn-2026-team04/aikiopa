@@ -140,3 +140,7 @@ theme_override_font_sizes/font_size = 24
 button_pressed = true
 text = " Shroud"
 alignment = 2
+
+[node name="KeyboardZoomDelayTimer" type="Timer" parent="." unique_id=2024952973]
+wait_time = 0.06
+one_shot = true

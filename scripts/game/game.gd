@@ -85,9 +85,9 @@ func _init_building_stack(
 
 func _init_cameras() -> void:
 	# Main camera setup.
-	%PlayerCamera2D.make_current()
-	%PlayerCamera2D.position = %World.get_chunk_center_position()
-	%PlayerCamera2D.reset_smoothing()
+	%PlayerCamera.make_current()
+	%PlayerCamera.position = %World.get_chunk_center_position()
+	%PlayerCamera.reset_smoothing()
 
 	# Debug camera setup.
 	%DebugCamera2D.position = %World.get_chunk_center_position()
@@ -99,14 +99,14 @@ func _init_cameras() -> void:
 #region _process()
 
 func _process_auto_world_generation() -> void:
-	var camera_chunk_position: Vector2i = %PlayerCamera2D.get_chunk_position()
+	var camera_chunk_position: Vector2i = %PlayerCamera.get_chunk_position()
 	for neighbor_chunk: Vector2i in %World.get_neigboring_chunks(camera_chunk_position):
 		if not %World.is_chunk_generated(neighbor_chunk):
 			%World.create_chunk(neighbor_chunk)
 
 
 func _render_shroud() -> void:
-	%World.render_shroud(%PlayerCamera2D.position)
+	%World.render_shroud(%PlayerCamera.position)
 
 #endregion
 

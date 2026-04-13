@@ -2,32 +2,19 @@ extends Camera2D
 
 
 # ============================================================================ #
-#region Exported properties
-
-@export_group("Pan", "pan")
-
-## Speed of the camera's panning.
-@export_range(50.0, 5000.0, 5.0, "suffix:px/s") var pan_speed: int = 2500
-
-
-@export_group("Zoom", "zoom")
+#region Public variables
 
 ## Mininimum camera zoom (zoom out).
-@export_range(0.5, 1.0, 0.01) var zoom_min: float = 1.0
+var zoom_min: float = 1.0
 
 ## Maximum camera zoom (zoom in).
-@export_range(1.0, 2.0, 0.01) var zoom_max: float = 1.0
+var zoom_max: float = 1.0
 
 ## The amount of zoom change per zoom command from the player.
-@export_range(0.01, 0.1, 0.01) var zoom_increment: float = 0.01
+var zoom_increment: float = 0.01
 
 ## The rate of zoom per [method Node._process] frame.
-@export_range(1.0, 100.0, 1.0) var zoom_rate: float =  1.0
-
-@export_group("", "")
-
-
-@export var world: World = null
+var zoom_rate: float =  1.0
 
 #endregion
 # ============================================================================ #
@@ -37,7 +24,6 @@ extends Camera2D
 #region Private properties
 
 var _target_zoom: float = 1.0
-var _last_map_coords: Vector2i = Vector2i.ZERO
 
 #endregion
 # ============================================================================ #
@@ -47,8 +33,6 @@ var _last_map_coords: Vector2i = Vector2i.ZERO
 #region Godot builtins
 
 func _ready() -> void:
-	GameplayEventBus.building_placed.connect(_on_building_placed)
-
 	$ReferenceRect.editor_only = true
 	$ReferenceRect/ReferenceLabel.visible = false
 	UIEventBus.gameplay_debug_mode_toggled.connect(
@@ -56,15 +40,6 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	# Keyboard-controlled panning.
-	var movement: Vector2 = Input.get_vector(
-			"player_camera_left",
-			"player_camera_right",
-			"player_camera_up",
-			"player_camera_down")
-	if movement:
-		position += movement * pan_speed * delta / zoom
-
 	# Keyboard-controlled zooming.
 	if (
 			$KeyboardZoomDelayTimer.is_stopped()
@@ -85,19 +60,6 @@ func _process(delta: float) -> void:
 	if not is_equal_approx(zoom.x, _target_zoom):
 		zoom = lerp(zoom, _target_zoom * Vector2.ONE, zoom_rate * delta)
 
-	# Shroud panning limits.
-	var map_coords: Vector2i = world.local_to_map(position)
-	if map_coords != _last_map_coords:
-		if world.get_shroud_at(map_coords) == ShroudTileMapLayer.ShroudType.THICK:
-			position = world.map_to_local(_last_map_coords)
-		else:
-			_last_map_coords = map_coords
-
-func _input(event: InputEvent) -> void:
-	# Mouse-controlled panning.
-	if event is InputEventMouseMotion and event.button_mask == MOUSE_BUTTON_MASK_RIGHT:
-		position -= event.relative.clampf(-pan_speed, pan_speed) / zoom
-
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Mouse-controlled zooming.
@@ -106,33 +68,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			_zoom_in()
 		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			_zoom_out()
-
-#endregion
-# ============================================================================ #
-
-
-# ============================================================================ #
-#region Public methods
-
-## Returns the tile position of the camera on the map. Undefined behavior if
-## [member world] is not set.
-func get_map_coords() -> Vector2i:
-	if world:
-		return world.local_to_map(position)
-	return Vector2i(-1, -1)
-
-
-## Returns the chunk offset that the camera is in. Undefined behavior if
-## [member world] is not set.
-func get_chunk_position() -> Vector2i:
-	if get_map_coords() == Vector2i(INF, INF):
-		return get_map_coords()
-	var map_position: Vector2 = Vector2(get_map_coords())
-
-	var chunk_size: Vector2 = Vector2(world.get_chunk_size())
-	return Vector2i(
-			roundi(map_position.x / chunk_size.x - 0.5),
-			roundi(map_position.y / chunk_size.y - 0.5))
 
 #endregion
 # ============================================================================ #
@@ -154,17 +89,6 @@ func _zoom_out() -> void:
 
 # ============================================================================ #
 #region Signal listeners
-
-# Listens to
-# GameplaEventBus.building_placed(
-#		coords: Vector2i,
-#		building_type: Building.BuildingType).
-func _on_building_placed(
-		coords: Vector2i,
-		_building_type: Building.BuildingType
-) -> void:
-	position = world.get_terrain_tile_map_layer().map_to_local(coords)
-
 
 # Listens to UIEventBus.gameplay_debug_mode_toggled(toggled_on: bool).
 func _on_gameplay_debug_mode_toggled(toggled_on: bool) -> void:
