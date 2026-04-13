@@ -48,6 +48,7 @@ building_stack_controller = NodePath("../BuildingStackController")
 [node name="PlayerCamera" parent="." unique_id=1893900081 node_paths=PackedStringArray("world") instance=ExtResource("8_87uf6")]
 unique_name_in_owner = true
 pan_speed = 800
+pan_mouse_sensitivity = 0.5
 zoom_min = 0.8
 zoom_max = 1.6
 zoom_increment = 0.08

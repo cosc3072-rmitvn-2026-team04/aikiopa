@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://6lexlgkglwls" path="res://scripts/game/player_camera/camera_2d.gd" id="2_w831c"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_87uf6"]
-radius = 32.0
+radius = 65.0
 
 [node name="PlayerCamera" type="CharacterBody2D" unique_id=1893900081]
 motion_mode = 1
@@ -12,12 +12,13 @@ script = ExtResource("1_ld2h1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=304785458]
 shape = SubResource("CircleShape2D_87uf6")
+debug_color = Color(0.89, 0.41830003, 0.42616153, 0.41960785)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=556469284]
 unique_name_in_owner = true
 limit_enabled = false
 position_smoothing_enabled = true
-position_smoothing_speed = 6.5
+position_smoothing_speed = 12.0
 script = ExtResource("2_w831c")
 
 [node name="ReferenceRect" type="ReferenceRect" parent="Camera2D" unique_id=432159537]

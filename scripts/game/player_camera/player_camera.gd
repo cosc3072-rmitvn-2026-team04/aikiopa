@@ -50,25 +50,27 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	# Keyboard-controlled panning.
 	var fps_sync: float = delta * Engine.physics_ticks_per_second
 	var movement: Vector2 = Input.get_vector(
 			"player_camera_left",
 			"player_camera_right",
 			"player_camera_up",
 			"player_camera_down")
-
 	if movement:
-		# Keyboard-controlled panning.
 		velocity = movement * pan_speed * fps_sync / %Camera2D.zoom
-	elif Input.is_action_pressed("player_camera_mouse_pan"):
-		# Mouse-controlled panning.
-		var mouse_velocity: Vector2 = Input.get_last_mouse_screen_velocity()
-		mouse_velocity.clampf(-pan_speed, pan_speed)
-		velocity = -mouse_velocity * pan_mouse_sensitivity * fps_sync / %Camera2D.zoom
 	else:
 		velocity = Vector2.ZERO
-
 	move_and_slide()
+
+
+func _input(event: InputEvent) -> void:
+	# Mouse-controlled panning.
+	if event is InputEventMouseMotion and event.button_mask == MOUSE_BUTTON_MASK_RIGHT:
+		velocity = -event.velocity * pan_mouse_sensitivity / %Camera2D.zoom
+		move_and_slide()
+	else:
+		velocity = Vector2.ZERO
 
 #endregion
 # ============================================================================ #
