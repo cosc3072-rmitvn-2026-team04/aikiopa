@@ -27,6 +27,7 @@ extends Node
 ## where the player starts at.
 @export_range(2, 12, 1, "suffix:tiles") var h_guaranteed_buildable_radius: int = 3
 
+
 # Moisture map generation noise algorithm. Produces Fertile Plain / Desert based
 # on noise values.
 @export_group("Moisture Map", "m")

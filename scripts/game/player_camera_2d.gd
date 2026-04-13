@@ -1,20 +1,46 @@
 extends Camera2D
 
 
-## Speed in pixels per second of the camera's panning. Only affects
-## keyboard-controlled camera movements.
+# ============================================================================ #
+#region Exported properties
+
+@export_group("Pan", "pan")
+
+## Speed of the camera's panning. Only affects keyboard-controlled camera
+## panning.
 @export_range(50.0, 5000.0, 5.0, "suffix:px/s") var pan_speed: int = 2500
 
-# TODO: Add grouping and documentation for these exported properties.
-@export_range(0.5, 1.0, 0.01) var min_zoom: float = 1.0
-@export_range(1.0, 2.0, 0.01) var max_zoom: float = 1.0
+
+@export_group("Zoom", "zoom")
+
+## Mininimum camera zoom (zoom out).
+@export_range(0.5, 1.0, 0.01) var zoom_min: float = 1.0
+
+## Maximum camera zoom (zoom in).
+@export_range(1.0, 2.0, 0.01) var zoom_max: float = 1.0
+
+## The amount of zoom change per zoom command from the player.
 @export_range(0.01, 0.1, 0.01) var zoom_increment: float = 0.01
+
+## The rate of zoom per [method Node._process] frame.
 @export_range(1.0, 100.0, 1.0) var zoom_rate: float =  1.0
+
+@export_group("", "")
+
 
 @export var world: World = null
 
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Private properties
 
 var _target_zoom: float = 1.0
+
+#endregion
+# ============================================================================ #
 
 
 # ============================================================================ #
@@ -45,19 +71,19 @@ func _process(delta: float) -> void:
 	if (
 			$KeyboardZoomDelayTimer.is_stopped()
 			and	Input.is_action_pressed("player_camera_zoom_in")
-			and zoom.x < max_zoom
+			and zoom.x < zoom_max
 	):
 		_zoom_in()
 		$KeyboardZoomDelayTimer.start()
 	if (
 			$KeyboardZoomDelayTimer.is_stopped()
 			and Input.is_action_pressed("player_camera_zoom_out")
-			and zoom.x > min_zoom
+			and zoom.x > zoom_min
 	):
 		_zoom_out()
 		$KeyboardZoomDelayTimer.start()
 
-	# Zoom lerp.
+	# Zoom interpolation (linear).
 	if not is_equal_approx(zoom.x, _target_zoom):
 		zoom = lerp(zoom, _target_zoom * Vector2.ONE, zoom_rate * delta)
 
@@ -114,11 +140,11 @@ func get_chunk_position() -> Vector2i:
 #region Private methods
 
 func _zoom_in() -> void:
-	_target_zoom = min(_target_zoom + zoom_increment, max_zoom)
+	_target_zoom = min(_target_zoom + zoom_increment, zoom_max)
 
 
 func _zoom_out() -> void:
-	_target_zoom = max(_target_zoom - zoom_increment, min_zoom)
+	_target_zoom = max(_target_zoom - zoom_increment, zoom_min)
 
 #endregion
 # ============================================================================ #
