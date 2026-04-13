@@ -120,3 +120,5 @@ addons/godot-git-plugin/
 ### Export directory ###
 **/build/*
 **/artifact/*
+**/test_results/*
+**/cc_check_reports/*

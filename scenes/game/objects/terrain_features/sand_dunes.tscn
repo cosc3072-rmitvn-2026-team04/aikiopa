@@ -2,8 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://blvhcx1c6kpg7" path="res://scenes/game/objects/terrain_features/_generic.tscn" id="1_5uyff"]
 [ext_resource type="Texture2D" uid="uid://2qja0wjoqvlm" path="res://assets/objects/terrain_feature_sand_dunes.png" id="2_3a4v4"]
+[ext_resource type="Script" uid="uid://blqkkif8mwv3d" path="res://scripts/game/objects/terrain_features/sand_dunes.gd" id="2_rwlqa"]
 
 [node name="SandDunes" unique_id=609911264 instance=ExtResource("1_5uyff")]
+script = ExtResource("2_rwlqa")
 
 [node name="Sprite2D" parent="." index="0" unique_id=929203464]
 texture = ExtResource("2_3a4v4")

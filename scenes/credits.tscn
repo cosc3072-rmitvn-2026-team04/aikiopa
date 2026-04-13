@@ -1,7 +1,100 @@
 [gd_scene format=3 uid="uid://xxxh008diddy"]
 
-[ext_resource type="Script" uid="uid://dqjitm5fwb83b" path="res://scripts/core/game_scene_2d.gd" id="1_677rg"]
+[ext_resource type="Script" uid="uid://bjico263pdusu" path="res://scripts/scenes/credits.gd" id="1_2ckv8"]
+[ext_resource type="Texture2D" uid="uid://drsmsbinxipa8" path="res://assets/main_menu_placeholder.png" id="2_0ctdu"]
 
 [node name="Credits" type="Node2D" unique_id=1890754985]
-script = ExtResource("1_677rg")
+script = ExtResource("1_2ckv8")
 metadata/_custom_type_script = "uid://dqjitm5fwb83b"
+
+[node name="BackgroundSprite2D" type="Sprite2D" parent="." unique_id=1582949480]
+texture = ExtResource("2_0ctdu")
+centered = false
+
+[node name="OverlayCanvasLayer" type="CanvasLayer" parent="." unique_id=655295641]
+
+[node name="ColorRect" type="ColorRect" parent="OverlayCanvasLayer" unique_id=1506790693]
+custom_minimum_size = Vector2(1920, 1080)
+anchors_preset = -1
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0, 0, 0, 0.78431374)
+
+[node name="MainCanvasLayer" type="CanvasLayer" parent="." unique_id=155775081]
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainCanvasLayer" unique_id=104342115]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainCanvasLayer/ScrollContainer" unique_id=449839570]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HeaderSpaceControl" type="Control" parent="MainCanvasLayer/ScrollContainer/VBoxContainer" unique_id=1627049270]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 720)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainCanvasLayer/ScrollContainer/VBoxContainer" unique_id=1591244336]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "A game by [Team Name][br]
+[b]Mike Vo[/b] & [b]Yolanda Tran[/b][br]
+[img]res://assets/logo/placeholder_studio_logo.png[/img]
+[br]
+Tech Lead[br]
+Mike Vo[br]
+[br]
+Art Director[br]
+Yolanda Tran[br]
+[br]
+Programming[br]
+Mike Vo[br]
+Yolanda Tran[br]
+[br]
+Art[br]
+Yolanda Tran[br]
+[br]
+SFX & Music[br]
+Mike Vo[br]
+[br]
+Testing & QA[br]
+Mike Vo[br]
+Doanh Tran[br]
+[br]
+Playtesters[br]
+[wip][br]
+[br]
+Special Thanks to:[br]
+Family and Friends[br]
+Bong the Cat[br]
+Hammie the Hamster[br]"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FooterSpaceControl" type="Control" parent="MainCanvasLayer/ScrollContainer/VBoxContainer" unique_id=574677146]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 720)
+layout_mode = 2
+
+[node name="EndCreditsLabel" type="Label" parent="MainCanvasLayer/ScrollContainer/VBoxContainer" unique_id=118550518]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Press Esc to exit"
+horizontal_alignment = 1
+vertical_alignment = 1
