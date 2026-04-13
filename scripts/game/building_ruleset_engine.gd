@@ -132,9 +132,9 @@ func parse_rules(
 					coords,
 					Math.HexGrid.OffsetLayout.ODD_R)
 	for neighbor_coords: Vector2i in surrounding_neighbor_coords:
-		var neighbor_building_type: Building.BuildingType = \
-				world.get_building_at(neighbor_coords)
-		if neighbor_building_type != Building.BuildingType.NONE:
+		if world.has_building_at(neighbor_coords):
+			var neighbor_building_type: Building.BuildingType = \
+					world.get_building_at(neighbor_coords)
 			var bvb_parse_result: Array[Variant] = _bvb_rules[[
 				building_type, neighbor_building_type
 			]]

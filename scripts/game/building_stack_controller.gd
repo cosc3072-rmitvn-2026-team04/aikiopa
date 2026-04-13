@@ -6,6 +6,17 @@ extends Node
 
 
 # ============================================================================ #
+#region Constants
+
+## Maximum amount of allowed rerolls for the internal generator when it cannot
+## generate a building with available placement for the player to not get stuck.
+const MAX_REROLL_COUNT: int = 10_000
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
 #region Exported properties
 
 @export_group("Generator")
@@ -44,6 +55,7 @@ extends Node
 
 @export_group("", "")
 
+@export var world: World = null
 @export var building_ruleset_engine: BuildingRulesetEngine = null
 
 #endregion
@@ -51,7 +63,7 @@ extends Node
 
 
 # ============================================================================ #
-#region Variables
+#region Private variables
 
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
@@ -140,10 +152,38 @@ func add_building(
 		GameplayEventBus.building_stack_building_added.emit(building_type)
 		return
 
-	var new_building_type: Building.BuildingType = (
-			_rng.rand_weighted(PackedFloat32Array(building_type_weights.values()))
-			+ 1 # Skip Building.BuildingType.NONE.
-	) as Building.BuildingType
+	var has_valid_placement: bool = false
+	var new_building_type: Building.BuildingType = Building.BuildingType.NONE
+	var reroll_count: int = 0
+	while not has_valid_placement and reroll_count < MAX_REROLL_COUNT:
+		reroll_count += 1
+		new_building_type = (
+				_rng.rand_weighted(PackedFloat32Array(building_type_weights.values()))
+				+ 1 # Skip Building.BuildingType.NONE.
+		) as Building.BuildingType
+		for edge_coords in Global.game_state.edge_coords:
+			var edge_surrounding_neighbor_coords: Array[Vector2i] =\
+					Math.HexGrid.get_offset_surrounding_neighbors(
+							edge_coords,
+							Math.HexGrid.OffsetLayout.ODD_R)
+			for edge_neighbor_coords: Vector2i in edge_surrounding_neighbor_coords:
+				if not world.has_building_at(edge_neighbor_coords):
+					var ruleset_parse_result: Dictionary[StringName, Variant] =\
+							building_ruleset_engine.parse_rules(
+									edge_neighbor_coords,
+									new_building_type)
+					if (
+							ruleset_parse_result.placement_check_status
+							== BuildingRulesetEngine.PlacementCheckStatus.ALLOWED
+					):
+						has_valid_placement = true
+						break
+			if has_valid_placement:
+				break
+	if new_building_type == Building.BuildingType.NONE:
+		push_error("Reroll overflow: Could not find a suitable building type.")
+		return
+
 	Global.game_state.building_stack.push_front(new_building_type)
 	GameplayEventBus.building_stack_building_added.emit(new_building_type)
 
