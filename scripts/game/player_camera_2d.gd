@@ -6,8 +6,7 @@ extends Camera2D
 
 @export_group("Pan", "pan")
 
-## Speed of the camera's panning. Only affects keyboard-controlled camera
-## panning.
+## Speed of the camera's panning.
 @export_range(50.0, 5000.0, 5.0, "suffix:px/s") var pan_speed: int = 2500
 
 
@@ -53,7 +52,7 @@ func _ready() -> void:
 
 	$ReferenceRect.editor_only = true
 	$ReferenceRect/ReferenceLabel.visible = false
-	GameplayEventBus.gameplay_debug_mode_toggled.connect(
+	UIEventBus.gameplay_debug_mode_toggled.connect(
 			_on_gameplay_debug_mode_toggled)
 
 
@@ -92,12 +91,13 @@ func _process(delta: float) -> void:
 	var map_coords: Vector2i = shroud_tile_map_layer.local_to_map(position)
 
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	# Mouse-controlled panning.
-	# TODO: This doesn't work. Fix it.
-	if event is InputEventMouseMotion and event.button_mask == MOUSE_BUTTON_MASK_MIDDLE:
-		position -= event.screen_relative * zoom
+	if event is InputEventMouseMotion and event.button_mask == MOUSE_BUTTON_MASK_RIGHT:
+		position -= event.relative.clampf(-pan_speed, pan_speed) / zoom
 
+
+func _unhandled_input(event: InputEvent) -> void:
 	# Mouse-controlled zooming.
 	if event is InputEventMouseButton and event.is_pressed():
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
@@ -164,9 +164,9 @@ func _on_building_placed(
 	position = world.get_terrain_tile_map_layer().map_to_local(coords)
 
 
-# Listens to GameplayEventBus.gameplay_debug_mode_toggled(value: bool).
-func _on_gameplay_debug_mode_toggled(value: bool) -> void:
-	if value:
+# Listens to UIEventBus.gameplay_debug_mode_toggled(toggled_on: bool).
+func _on_gameplay_debug_mode_toggled(toggled_on: bool) -> void:
+	if toggled_on:
 		$ReferenceRect.editor_only = false
 		$ReferenceRect/ReferenceLabel.visible = true
 	else:

@@ -40,3 +40,15 @@ signal building_card_dropped(building: Building.BuildingType)
 signal building_placement_requested(
         mouse_position: Vector2,
         building_type: Building.BuildingType)
+
+
+## Emitted when [member Global.gameplay_debug_mode_enabled] changes to the value
+## of [param toggled_on].
+@warning_ignore("unused_signal")
+signal gameplay_debug_mode_toggled(toggled_on: bool)
+
+
+## Emitted when the player requests to show/hide The Shroud from gameplay debug
+## mode.
+@warning_ignore("unused_signal")
+signal gameplay_debug_mode_shroud_toggled(toggled_on: bool)

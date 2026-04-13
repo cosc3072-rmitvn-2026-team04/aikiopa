@@ -45,9 +45,3 @@ signal building_destroyed(coords: Vector2i, building_type: Building.BuildingType
 ## [param new_amount].
 @warning_ignore("unused_signal")
 signal population_changed(old_amount: int, new_amount: int)
-
-
-## Emitted when [member Global.gameplay_debug_mode_enabled] changes to
-## [param value].
-@warning_ignore("unused_signal")
-signal gameplay_debug_mode_toggled(value: bool)

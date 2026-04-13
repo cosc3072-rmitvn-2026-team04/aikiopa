@@ -116,7 +116,7 @@ func _render_shroud() -> void:
 func _input_update_gameplay_debug_mode(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_gameplay_debug_mode"):
 		Global.gameplay_debug_mode_enabled = not Global.gameplay_debug_mode_enabled
-		GameplayEventBus.gameplay_debug_mode_toggled.emit(Global.gameplay_debug_mode_enabled)
+		UIEventBus.gameplay_debug_mode_toggled.emit(Global.gameplay_debug_mode_enabled)
 
 #endregion
 

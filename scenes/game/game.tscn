@@ -39,8 +39,8 @@ world = NodePath("../../World")
 unique_name_in_owner = true
 position_smoothing_speed = 6.5
 pan_speed = 720
-min_zoom = 0.8
-max_zoom = 1.6
+zoom_min = 0.8
+zoom_max = 1.6
 zoom_increment = 0.08
 zoom_rate = 3.0
 world = NodePath("../World")
@@ -51,6 +51,14 @@ one_shot = true
 
 [node name="DebugCamera2D" parent="." unique_id=1889864583 node_paths=PackedStringArray("world", "building_stack_controller") instance=ExtResource("4_lfrn8")]
 unique_name_in_owner = true
-pan_speed = 5
+pan_speed = 860
+zoom_min = 0.1
+zoom_max = 3.0
+zoom_increment = 0.05
+zoom_rate = 6.0
 world = NodePath("../World")
 building_stack_controller = NodePath("../BuildingStackController")
+
+[node name="KeyboardZoomDelayTimer" type="Timer" parent="DebugCamera2D" unique_id=1489147634]
+wait_time = 0.06
+one_shot = true

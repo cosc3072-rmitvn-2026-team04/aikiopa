@@ -40,7 +40,7 @@ const ATLAS_COORDS: Dictionary[ShroudType, Vector2i] = {
 @export_range(1, 10, 1, "suffix:tiles") var vision_range: int = 1
 
 ## The expanded margin rendered outside of the viewport.
-@export_range(0, 10, 1, "suffix:tiles") var render_margin: int = 0
+@export_range(0, 20, 1, "suffix:tiles") var render_margin: int = 0
 
 @export var world: World = null
 
@@ -63,6 +63,8 @@ var _thin_shroud_coords: Array[Vector2i] = []
 
 func _ready() -> void:
 	GameplayEventBus.building_placed.connect(_on_building_placed)
+	UIEventBus.gameplay_debug_mode_shroud_toggled.connect(
+			_on_gameplay_debug_mode_shroud_toggled)
 
 #endregion
 # ============================================================================ #
@@ -183,6 +185,11 @@ func _on_building_placed(
 		_building_type: Building.BuildingType
 ) -> void:
 	_append_vision_area_from_range_at(coords)
+
+
+# Listens to UIEventBus.gameplay_debug_mode_shroud_toggled(toggled_on: bool).
+func _on_gameplay_debug_mode_shroud_toggled(toggled_on: bool) -> void:
+	visible = toggled_on
 
 #endregion
 # ============================================================================ #
