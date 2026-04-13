@@ -64,7 +64,10 @@ func _on_building_placed(
 				"Unexpected value for 'interaction_result':"
 				+ "Should not be 'null' at this stage.")
 		return
-	change_population(interaction_result.get_population_change())
+	if get_population() + interaction_result.get_population_change() < 0:
+		change_population(0)
+	else:
+		change_population(interaction_result.get_population_change())
 
 #endregion
 # ============================================================================ #

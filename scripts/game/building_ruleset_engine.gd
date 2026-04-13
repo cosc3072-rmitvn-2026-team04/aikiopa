@@ -126,20 +126,63 @@ func parse_rules(
 		&"interaction_result": bvt_parse_result[1],
 	}
 
-	# TODO: Implement this so that it checks all neighbors.
 	# Step 2: Building versus adjacent Building check. Previous step must pass.
-	#var bvb_parse_result: Array[Variant] = _bvb_rules[[
-	#	building_type, building_type # TODO: This should be that of neighbors!
-	#]]
-	#if bvb_parse_result[0] != PlacementCheckStatus.ALLOWED:
-	#	return {
-	#		&"placement_check_status": bvb_parse_result[0],
-	#		&"interaction_result": null,
-	#	}
-	#parse_result = {
-	#	&"placement_check_status": bvb_parse_result[0],
-	#	&"interaction_result": bvb_parse_result[1] + bvt_parse_result[1],
-	#}
+	var surrounding_neighbor_coords: Array[Vector2i] =\
+			Math.HexGrid.get_offset_surrounding_neighbors(
+					coords,
+					Math.HexGrid.OffsetLayout.ODD_R)
+	for neighbor_coords: Vector2i in surrounding_neighbor_coords:
+		var neighbor_building_type: Building.BuildingType = \
+				world.get_building_at(neighbor_coords)
+		if neighbor_building_type != Building.BuildingType.NONE:
+			var bvb_parse_result: Array[Variant] = _bvb_rules[[
+				building_type, neighbor_building_type
+			]]
+			if bvb_parse_result[0] != PlacementCheckStatus.ALLOWED:
+				return {
+					&"placement_check_status": bvb_parse_result[0],
+					&"interaction_result": null,
+				}
+
+			parse_result.interaction_result.set_population_change(
+					parse_result.interaction_result.get_population_change()
+					+ bvb_parse_result[1].get_population_change())
+			parse_result.interaction_result.set_building_bonus(
+					parse_result.interaction_result.get_building_bonus()
+					+ bvb_parse_result[1].get_building_bonus())
+
+			# Special case for Housing versus Solar Farm or Wind Farm: If Solar
+			# Farm or Wind Farm on Desert or Desert Sand Dunes: +5 pops instead.
+			# INFO: Make this more scalable if needed.
+			if (
+					(
+							building_type == Building.BuildingType.HOUSING
+							and neighbor_building_type in [
+								Building.BuildingType.SOLAR_FARM,
+								Building.BuildingType.WIND_FARM,
+							]
+							and (world.get_terrain_at(neighbor_coords) in [
+								World.TerrainType.DESERT,
+								World.TerrainType.DESERT_SAND_DUNES,
+							])
+					) or (
+							building_type in [
+								Building.BuildingType.SOLAR_FARM,
+								Building.BuildingType.WIND_FARM,
+							]
+							and (
+									neighbor_building_type
+									== Building.BuildingType.HOUSING
+							) and (world.get_terrain_at(coords) in [
+								World.TerrainType.DESERT,
+								World.TerrainType.DESERT_SAND_DUNES,
+							])
+					)
+			):
+				parse_result.interaction_result.set_population_change(
+						parse_result.interaction_result.get_population_change()
+						+ 3) # Increase reward to +5 pops.
+
 
 	return parse_result
 
