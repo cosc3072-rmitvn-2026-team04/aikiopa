@@ -62,8 +62,7 @@ func _init_world(world_seed: Variant = null) -> void:
 	%World.remove_terrain_feature_at(world_center_coords)
 	%World.place_building_at(
 			world_center_coords,
-			Building.BuildingType.LANDING_SITE,
-			true) # Quiet placement.
+			Building.BuildingType.LANDING_SITE) # Quiet placement.
 
 	%World.reset_shroud()
 

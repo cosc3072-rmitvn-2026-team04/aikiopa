@@ -70,13 +70,9 @@ func has_building_at(coords: Vector2i) -> bool:
 ## TODO: Deterministically assign random variations.[br]
 ## [br]
 ## Prints an error and do nothing if [param building_type] is unknown.[br]
-## [br]
-## Set [param quiet] to [code]true[/code] to execute without notifying other
-## game systems. Useful for scripted game events.
 func place_building_at(
 		coords: Vector2i,
-		building_type: Building.BuildingType,
-		quiet: bool = false
+		building_type: Building.BuildingType
 ) -> void:
 	var building: Building = null
 	match building_type:
@@ -119,9 +115,6 @@ func place_building_at(
 	_buildings.set(coords, building)
 	building.position = terrain_tile_map_layer.map_to_local(coords)
 	add_child(building)
-
-	if not quiet:
-		GameplayEventBus.building_placed.emit(coords, building_type)
 
 
 ## Returns and destroys the building at [param coords].[br]

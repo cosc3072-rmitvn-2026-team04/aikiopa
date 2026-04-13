@@ -45,6 +45,18 @@ func _ready() -> void:
 
 
 # ============================================================================ #
+#region Public methods
+
+## Redraws the Building Stack UI.
+func redraw() -> void:
+	_update_building_card_positions()
+	_update_building_stack_position()
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
 #region Private methods
 
 func _update_building_card_positions() -> void:

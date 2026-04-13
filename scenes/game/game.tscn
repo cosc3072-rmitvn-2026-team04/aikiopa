@@ -16,19 +16,21 @@ script = ExtResource("1_sul5r")
 unique_name_in_owner = true
 building_ruleset_engine = NodePath("../BuildingRulesetEngine")
 
-[node name="BuildingStackController" type="Node" parent="." unique_id=1349143746]
+[node name="BuildingStackController" type="Node" parent="." unique_id=1349143746 node_paths=PackedStringArray("building_ruleset_engine")]
 unique_name_in_owner = true
 script = ExtResource("5_lfrn8")
 starting_building_count = 10
+building_ruleset_engine = NodePath("../BuildingRulesetEngine")
 
 [node name="BuildingRulesetEngine" type="Node" parent="." unique_id=924936073 node_paths=PackedStringArray("world")]
 unique_name_in_owner = true
 script = ExtResource("4_87uf6")
 world = NodePath("../World")
 
-[node name="PopulationController" type="Node" parent="." unique_id=153495353]
+[node name="PopulationController" type="Node" parent="." unique_id=153495353 node_paths=PackedStringArray("building_ruleset_engine")]
 unique_name_in_owner = true
 script = ExtResource("6_5i0tg")
+building_ruleset_engine = NodePath("../BuildingRulesetEngine")
 
 [node name="GameHUDCanvasLayer" type="CanvasLayer" parent="." unique_id=1835501581]
 
