@@ -44,7 +44,7 @@ offset_top = -53.0
 offset_right = 198.0
 offset_bottom = -8.0
 theme_override_font_sizes/font_size = 32
-text = "Main Camera"
+text = "PlayerCamera"
 autowrap_trim_flags = 64
 
 [node name="KeyboardZoomDelayTimer" type="Timer" parent="Camera2D" unique_id=1436920631]
