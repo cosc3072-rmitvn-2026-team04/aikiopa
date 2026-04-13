@@ -58,7 +58,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	var tile_map_position: Vector2i =\
-			world.get_terrain_tile_map_layer().local_to_map(position)
+			world.local_to_map(position)
 	%CameraMapCoordsLabel.text = "(%d, %d)" % [
 		tile_map_position.x,
 		tile_map_position.y,

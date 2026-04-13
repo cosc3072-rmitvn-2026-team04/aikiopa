@@ -37,6 +37,7 @@ extends Camera2D
 #region Private properties
 
 var _target_zoom: float = 1.0
+var _last_map_coords: Vector2i = Vector2i.ZERO
 
 #endregion
 # ============================================================================ #
@@ -46,8 +47,6 @@ var _target_zoom: float = 1.0
 #region Godot builtins
 
 func _ready() -> void:
-	_target_zoom = 1.0
-
 	GameplayEventBus.building_placed.connect(_on_building_placed)
 
 	$ReferenceRect.editor_only = true
@@ -87,8 +86,7 @@ func _process(delta: float) -> void:
 		zoom = lerp(zoom, _target_zoom * Vector2.ONE, zoom_rate * delta)
 
 	# Camera panning limits.
-	var shroud_tile_map_layer: TileMapLayer = world.get_shroud_tile_map_layer()
-	var map_coords: Vector2i = shroud_tile_map_layer.local_to_map(position)
+	var map_coords: Vector2i = world.local_to_map(position)
 
 
 func _input(event: InputEvent) -> void:
@@ -116,7 +114,7 @@ func _unhandled_input(event: InputEvent) -> void:
 ## [member world] is not set.
 func get_tile_map_position() -> Vector2i:
 	if world:
-		return world.get_terrain_tile_map_layer().local_to_map(position)
+		return world.local_to_map(position)
 	return Vector2i(-1, -1)
 
 

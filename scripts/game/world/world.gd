@@ -62,6 +62,25 @@ func _ready() -> void:
 # ============================================================================ #
 #region Public methods
 
+
+## Returns the [World] coordinates of the cell containing the given
+## [param local_position]. If [param local_position] is in global coordinates,
+## consider using [method Node2D.to_local()] before passing it to this method.
+## See also [method map_to_local()].
+func local_to_map(local_position: Vector2) -> Vector2i:
+	return get_terrain_tile_map_layer().local_to_map(local_position)
+
+
+## Returns the centered local position of a cell in the [World]'s coordinate
+## space. To convert the returned value into global position, use
+## [method Node2D.to_global()]. See also [method local_to_map()].[br]
+## [br]
+## [b]Note:[/b] This may not correspond to the visual position of the tile, i.e.
+## it ignores the [member TileData.texture_origin] property of individual tiles.
+func map_to_local(coords: Vector2i) -> Vector2:
+	return get_terrain_tile_map_layer().map_to_local(coords)
+
+
 ## Returns the [code]TerrainTileMapLayer[/code] node.
 func get_terrain_tile_map_layer() -> TileMapLayer:
 	return %TerrainTileMapLayer
@@ -313,16 +332,16 @@ func render_shroud(camera_position: Vector2) -> void:
 func _on_building_placement_requested(
 		mouse_position: Vector2,
 		building_type: Building.BuildingType) -> void:
-	var world_coords: Vector2i = %World.get_terrain_tile_map_layer().local_to_map(
+	var map_coords: Vector2i = %World.get_terrain_tile_map_layer().local_to_map(
 			mouse_position)
 	var parse_result: Dictionary[StringName, Variant] =\
-			building_ruleset_engine.parse_rules(world_coords, building_type)
+			building_ruleset_engine.parse_rules(map_coords, building_type)
 
 	if (
 			parse_result.placement_check_status
 			== BuildingRulesetEngine.PlacementCheckStatus.ALLOWED
 	):
-		place_building_at(world_coords, building_type)
+		place_building_at(map_coords, building_type)
 
 #endregion
 # ============================================================================ #
