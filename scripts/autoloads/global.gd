@@ -82,5 +82,21 @@ class GameState extends Node:
 	## The building stack in the current game session.
 	var building_stack: Array[Building.BuildingType] = []
 
+	## The [Building] instances in the game. Identified by their [Vector2i]
+	## coordinates.
+	var buildings: Dictionary[Vector2i, Building] = {}
+
+	## The list consisting of coordinates of the colony's edge buildings.
+	var edge_coords: Array[Vector2i] = []
+
+
+	## Resets the game state.
+	func reset() -> void:
+		population = 0
+		building_stack = []
+		buildings = {}
+		edge_coords = []
+
+
 #endregion
 # ============================================================================ #

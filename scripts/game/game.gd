@@ -24,6 +24,10 @@ enum GameModes {
 func _ready() -> void:
 	# TODO: Add world restore functionality by providing world_seed when needed.
 	# Implement in #11.
+	Global.game_state.reset()
+
+	# TODO: Add world restore functionality by providing world_seed when needed.
+	# Implement in #11.
 	_init_world()
 
 	# TODO: Add population restore functionality when restoring a session.

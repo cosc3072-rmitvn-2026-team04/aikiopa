@@ -32,10 +32,6 @@ var _nuclear_reactor_scene: PackedScene =\
 var _factory_scene: PackedScene =\
 		preload("res://scenes/game/objects/buildings/factory.tscn")
 
-# The [Building] instances in the game. Identified by their [Vector2i]
-# coordinates.
-var _buildings: Dictionary[Vector2i, Building]
-
 #endregion
 # ============================================================================ #
 
@@ -49,19 +45,19 @@ func clear() -> void:
 		for building: Building in get_children():
 			remove_child(building)
 			building.queue_free()
-	_buildings.clear()
+	Global.game_state.buildings.clear()
 
 
 ## Returns the [enum Building.BuildingType] at [param coords].
 func get_building_at(coords: Vector2i) -> Building.BuildingType:
 	if not has_building_at(coords):
 		return Building.BuildingType.NONE
-	return _buildings[coords].get_type()
+	return Global.game_state.buildings[coords].get_type()
 
 
 ## Returns [code]true[/code] if there is a building at [param coords].
 func has_building_at(coords: Vector2i) -> bool:
-	return _buildings.has(coords)
+	return Global.game_state.buildings.has(coords)
 
 
 ## Sets the building at [param coords] to one of [enum Building.BuildingType].
@@ -112,9 +108,36 @@ func place_building_at(
 
 	# Insert the building.
 	var terrain_tile_map_layer: TileMapLayer = world.get_terrain_tile_map_layer()
-	_buildings.set(coords, building)
+	Global.game_state.buildings.set(coords, building)
 	building.position = terrain_tile_map_layer.map_to_local(coords)
 	add_child(building)
+
+	# Update [member _edge_coords].
+	var is_edge: bool = false
+	var surrounding_neighbor_coords: Array[Vector2i] =\
+			Math.HexGrid.get_offset_surrounding_neighbors(
+					coords,
+					Math.HexGrid.OffsetLayout.ODD_R)
+	for neighbor_coords: Vector2i in surrounding_neighbor_coords:
+		if not has_building_at(neighbor_coords):
+			is_edge = true
+
+		var neighbor_is_edge: bool = true
+		var neighbor_surrounding_neighbor_coords: Array[Vector2i] =\
+				Math.HexGrid.get_offset_surrounding_neighbors(
+						neighbor_coords,
+						Math.HexGrid.OffsetLayout.ODD_R)
+		neighbor_surrounding_neighbor_coords.erase(coords)
+		for neighbor_neighbor_coords: Vector2i in neighbor_surrounding_neighbor_coords:
+			if not has_building_at(neighbor_neighbor_coords):
+				neighbor_is_edge = false
+				break
+		if neighbor_is_edge:
+			Global.game_state.edge_coords.erase(neighbor_coords)
+	if is_edge:
+		Global.game_state.edge_coords.append(coords)
+	else:
+		Global.game_state.edge_coords.erase(coords)
 
 
 ## Returns and destroys the building at [param coords].[br]
@@ -131,9 +154,9 @@ func destroy_building_at(
 	if not has_building_at(coords):
 		return Building.BuildingType.NONE
 
-	var building: Building = _buildings[coords]
+	var building: Building = Global.game_state.buildings[coords]
 	var building_type: Building.BuildingType = building.get_type()
-	_buildings.erase(coords)
+	Global.game_state.buildings.erase(coords)
 	remove_child(building)
 	building.queue_free()
 

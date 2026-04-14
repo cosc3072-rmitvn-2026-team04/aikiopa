@@ -56,7 +56,7 @@ size_flags_vertical = 3
 bbcode_enabled = true
 text = "A game by [Team Name][br]
 [b]Mike Vo[/b] & [b]Yolanda Tran[/b][br]
-[img]res://assets/logo/placeholder_studio_logo.png[/img]
+[img]res://assets/logos/placeholder_studio_logo.png[/img]
 [br]
 Tech Lead[br]
 Mike Vo[br]
@@ -76,7 +76,7 @@ Mike Vo[br]
 [br]
 Testing & QA[br]
 Mike Vo[br]
-Doanh Tran[br]
+Yolanda Tran[br]
 [br]
 Playtesters[br]
 [wip][br]
@@ -97,6 +97,11 @@ layout_mode = 2
 [node name="EndCreditsLabel" type="Label" parent="MainCanvasLayer/ScrollContainer/VBoxContainer" unique_id=118550518]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 46
 text = "Press Esc to exit"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="EndCreditsSpaceControl" type="Control" parent="MainCanvasLayer/ScrollContainer/VBoxContainer" unique_id=1092116774]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2

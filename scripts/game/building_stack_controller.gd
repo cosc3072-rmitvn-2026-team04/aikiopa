@@ -6,6 +6,17 @@ extends Node
 
 
 # ============================================================================ #
+#region Constants
+
+## Maximum amount of allowed rerolls for the internal generator when it cannot
+## generate a building with available placement for the player to not get stuck.
+const MAX_REROLL_COUNT: int = 10_000
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
 #region Exported properties
 
 @export_group("Generator")
@@ -34,12 +45,17 @@ extends Node
 	Building.BuildingType.FACTORY: 1.0,
 }
 
-## The number of [BuildingCard]s that the player receives in each new session.
-@export_range(1, 50, 1) var starting_building_count: int = 1
+## The buildings guaranteed to be generated at the start of each new session.
+@export var guaranteed_starting_buildings: Array[Building.BuildingType] = []
+
+## The number of random [BuildingCard]s that the player receives in each new
+## session, in addition to the [member guaranteed_starting_buildings].
+@export_range(1, 50, 1) var starting_random_buildings_count: int = 1
 
 
 @export_group("", "")
 
+@export var world: World = null
 @export var building_ruleset_engine: BuildingRulesetEngine = null
 
 #endregion
@@ -47,7 +63,7 @@ extends Node
 
 
 # ============================================================================ #
-#region Variables
+#region Private variables
 
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
@@ -94,7 +110,15 @@ func initialize_session(
 		Global.game_state.building_stack = building_queue
 	else:
 		_rng.randomize()
-		for iteration: int in range(starting_building_count):
+		for building_type in guaranteed_starting_buildings:
+			add_building(building_type)
+			# TODO: Workaround: Without this line, rapid adding of buildings
+			# would make the building stack UI put its cards at the wrong
+			# positions. Fix this. If not possible then find out where to put
+			# the hard-coded 0.1 seconds into an exported property, or as a
+			# constant in [Global].
+			await get_tree().create_timer(0.1).timeout
+		for iteration: int in range(starting_random_buildings_count):
 			add_building()
 			# TODO: Workaround: Without this line, rapid adding of buildings
 			# would make the building stack UI put its cards at the wrong
@@ -117,12 +141,49 @@ func get_session_state() -> int:
 
 
 ## Adds a random [enum Building.BuildingType] to the bottom of the building
-## stack, then returns that building type.
-func add_building() -> void:
-	var new_building_type: Building.BuildingType = (
-			_rng.rand_weighted(PackedFloat32Array(building_type_weights.values()))
-			+ 1 # Skip Building.BuildingType.NONE.
-	) as Building.BuildingType
+## stack.[br]
+## [br]
+## If [param building_type] is provided, adds that to the building stack instead.
+func add_building(
+		building_type: Building.BuildingType = Building.BuildingType.NONE
+) -> void:
+	if building_type != Building.BuildingType.NONE:
+		Global.game_state.building_stack.push_front(building_type)
+		GameplayEventBus.building_stack_building_added.emit(building_type)
+		return
+
+	var has_valid_placement: bool = false
+	var new_building_type: Building.BuildingType = Building.BuildingType.NONE
+	var reroll_count: int = 0
+	while not has_valid_placement and reroll_count < MAX_REROLL_COUNT:
+		reroll_count += 1
+		new_building_type = (
+				_rng.rand_weighted(PackedFloat32Array(building_type_weights.values()))
+				+ 1 # Skip Building.BuildingType.NONE.
+		) as Building.BuildingType
+		for edge_coords in Global.game_state.edge_coords:
+			var edge_surrounding_neighbor_coords: Array[Vector2i] =\
+					Math.HexGrid.get_offset_surrounding_neighbors(
+							edge_coords,
+							Math.HexGrid.OffsetLayout.ODD_R)
+			for edge_neighbor_coords: Vector2i in edge_surrounding_neighbor_coords:
+				if not world.has_building_at(edge_neighbor_coords):
+					var ruleset_parse_result: Dictionary[StringName, Variant] =\
+							building_ruleset_engine.parse_rules(
+									edge_neighbor_coords,
+									new_building_type)
+					if (
+							ruleset_parse_result.placement_check_status
+							== BuildingRulesetEngine.PlacementCheckStatus.ALLOWED
+					):
+						has_valid_placement = true
+						break
+			if has_valid_placement:
+				break
+	if new_building_type == Building.BuildingType.NONE:
+		push_error("Reroll overflow: Could not find a suitable building type.")
+		return
+
 	Global.game_state.building_stack.push_front(new_building_type)
 	GameplayEventBus.building_stack_building_added.emit(new_building_type)
 
