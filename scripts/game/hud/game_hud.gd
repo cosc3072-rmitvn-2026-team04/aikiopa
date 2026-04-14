@@ -28,6 +28,7 @@ var _picked_building: Building.BuildingType = Building.BuildingType.NONE
 
 func _ready() -> void:
 	_update_population_milestone_progress_bar()
+	_update_population_label()
 
 	UIEventBus.building_card_picked.connect(_on_building_card_picked)
 	UIEventBus.building_card_dropped.connect(_on_building_card_dropped)
