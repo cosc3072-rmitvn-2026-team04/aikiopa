@@ -141,16 +141,18 @@ func get_session_state() -> int:
 
 
 ## Adds a random [enum Building.BuildingType] to the bottom of the building
-## stack.[br]
+## stack, then returns it. Only generates buildings that has a valid tile to
+## be placed on. See [constant MAX_REROLL_COUNT].[br]
 ## [br]
-## If [param building_type] is provided, adds that to the building stack instead.
+## If [param building_type] is provided, adds that to the building stack
+## instead.
 func add_building(
 		building_type: Building.BuildingType = Building.BuildingType.NONE
-) -> void:
+) -> Building.BuildingType:
 	if building_type != Building.BuildingType.NONE:
 		Global.game_state.building_stack.push_front(building_type)
 		GameplayEventBus.building_stack_building_added.emit(building_type)
-		return
+		return building_type
 
 	var new_building_type: Building.BuildingType = Building.BuildingType.NONE
 	var has_valid_placement: bool = false
@@ -182,10 +184,11 @@ func add_building(
 				break
 	if new_building_type == Building.BuildingType.NONE:
 		push_error("Reroll exhausted: Could not find a suitable building type.")
-		return
+		return new_building_type
 
 	Global.game_state.building_stack.push_front(new_building_type)
 	GameplayEventBus.building_stack_building_added.emit(new_building_type)
+	return new_building_type
 
 
 ## Pops and returns the building type at the top of the building stack. Returns

@@ -130,6 +130,22 @@ size_flags_vertical = 3
 theme_override_font_sizes/font_size = 24
 text = " Pop Building Stack"
 
+[node name="BuildingAddedLabel" type="Label" parent="DebugCanvasLayer/ControlPanelContainer/VBoxContainer/HBoxContainer/BuildingStackControlContainer" unique_id=1576380244]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 24
+text = " Added: NONE "
+vertical_alignment = 1
+
+[node name="BuildingPoppedLabel" type="Label" parent="DebugCanvasLayer/ControlPanelContainer/VBoxContainer/HBoxContainer/BuildingStackControlContainer" unique_id=1792827040]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 24
+text = " Popped: NONE "
+vertical_alignment = 1
+
 [node name="ShroudDisplayCheckBox" type="CheckBox" parent="DebugCanvasLayer/ControlPanelContainer/VBoxContainer" unique_id=1717155315]
 unique_name_in_owner = true
 layout_mode = 2

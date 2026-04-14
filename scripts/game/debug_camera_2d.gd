@@ -125,12 +125,20 @@ func _on_gameplay_debug_mode_toggled(toggled_on: bool) -> void:
 
 # Listens to %AddBuildingButton.pressed.
 func _on_add_building_button_pressed() -> void:
-	building_stack_controller.add_building()
+	var added_building_type: Building.BuildingType =\
+			building_stack_controller.add_building()
+	%BuildingAddedLabel.text = " Added: %s " % [
+		Building.BuildingType.keys()[added_building_type]
+	]
 
 
 # Listens to %PopBuildingButton.pressed.
 func _on_pop_building_button_pressed() -> void:
-	building_stack_controller.pop_building()
+	var popped_building_type: Building.BuildingType =\
+			building_stack_controller.pop_building()
+	%BuildingPoppedLabel.text = " Popped: %s " % [
+		Building.BuildingType.keys()[popped_building_type]
+	]
 
 
 # Listens to %ShroudDisplayCheckBox.toggled(toggled_on: bool).
