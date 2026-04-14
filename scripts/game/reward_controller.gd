@@ -67,10 +67,10 @@ func get_population_milestone(index: int) -> int:
 func _on_population_changed(_old_amount: int, _new_amount: int) -> void:
 	var current_population: int = population_controller.get_population()
 	var next_population_milestone: int = get_population_milestone(
-			Global.game_state.milestones_reached)
+			Global.game_state.population_milestones_reached)
 	if current_population >= next_population_milestone:
 		GameplayEventBus.reward_triggered.emit(Reward.new(0, reward_amount))
-		Global.game_state.milestones_reached += 1
+		Global.game_state.population_milestones_reached += 1
 
 #endregion
 # ============================================================================ #
