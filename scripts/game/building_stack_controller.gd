@@ -152,8 +152,8 @@ func add_building(
 		GameplayEventBus.building_stack_building_added.emit(building_type)
 		return
 
-	var has_valid_placement: bool = false
 	var new_building_type: Building.BuildingType = Building.BuildingType.NONE
+	var has_valid_placement: bool = false
 	var reroll_count: int = 0
 	while not has_valid_placement and reroll_count < MAX_REROLL_COUNT:
 		reroll_count += 1
@@ -181,7 +181,7 @@ func add_building(
 			if has_valid_placement:
 				break
 	if new_building_type == Building.BuildingType.NONE:
-		push_error("Reroll overflow: Could not find a suitable building type.")
+		push_error("Reroll exhausted: Could not find a suitable building type.")
 		return
 
 	Global.game_state.building_stack.push_front(new_building_type)
