@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ce8kv7r587fid"
-path="res://.godot/imported/industry_fg.png-b55e360e4240ac5773a2abaf0a8b0025.ctex"
+uid="uid://ck5k4ita4hthw"
+path="res://.godot/imported/housing_fg.png-702c754378c1c82c6460dc26aa1c6971.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/building_stack/building_card/industry_fg.png"
-dest_files=["res://.godot/imported/industry_fg.png-b55e360e4240ac5773a2abaf0a8b0025.ctex"]
+source_file="res://assets/user_interface/building_stack/building_card/housing_fg.png"
+dest_files=["res://.godot/imported/housing_fg.png-702c754378c1c82c6460dc26aa1c6971.ctex"]
 
 [params]
 
