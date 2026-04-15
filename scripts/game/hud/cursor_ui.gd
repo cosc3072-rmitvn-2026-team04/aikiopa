@@ -109,8 +109,14 @@ func _process_snap_preview_building_sprite() -> void:
 			== BuildingRulesetEngine.PlacementCheckStatus.ALLOWED
 	):
 		_snap_preview_building_sprite(map_coords)
+		UIEventBus.preview_cursor_snapped.emit(
+				map_coords,
+				_picked_building_type,
+				ruleset_parse_result.placement_check_status,
+				ruleset_parse_result.interaction_result.duplicate())
 	else:
 		_unsnap_preview_building_sprite()
+		UIEventBus.preview_cursor_unsnapped.emit()
 
 
 func _snap_preview_building_sprite(map_coords: Vector2i) -> void:

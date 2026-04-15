@@ -29,6 +29,23 @@ signal building_card_picked(building_type: Building.BuildingType)
 signal building_card_dropped(building_type: Building.BuildingType)
 
 
+## Emitted when the building preview cursor snaps into a tile at [param coords]
+## for the [param picked_building_type]. The calculated resulting game effects
+## are given in [param placement_check_status] and [param interaction_result].
+@warning_ignore("unused_signal")
+signal preview_cursor_snapped(
+		coords: Vector2i,
+		picked_building_type: Building.BuildingType,
+		placement_check_status: BuildingRulesetEngine.PlacementCheckStatus,
+		interaction_result: BuildingRulesetEngine.InteractionResult)
+
+
+## Emitted when the building preview cursor unsnaps. See
+## [signal preview_cursor_snapped].
+@warning_ignore("unused_signal")
+signal preview_cursor_unsnapped()
+
+
 ## Emitted when the player attempts to use the building card they have on hand
 ## (picked up) to place [param building_type] at [param mouse_position].[br]
 ## [br]
