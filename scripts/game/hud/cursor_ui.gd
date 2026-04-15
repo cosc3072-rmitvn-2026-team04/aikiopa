@@ -48,6 +48,7 @@ func _ready() -> void:
 	UIEventBus.building_card_dropped.connect(_on_building_card_dropped)
 	GameplayEventBus.building_placed.connect(_on_building_placed)
 	_unload_preview_building_sprite()
+	%PopulationChangePreviewLabel.text = ""
 
 
 func _process(_delta: float) -> void:
@@ -108,7 +109,9 @@ func _process_snap_preview_building_sprite() -> void:
 			ruleset_parse_result.placement_check_status
 			== BuildingRulesetEngine.PlacementCheckStatus.ALLOWED
 	):
-		_snap_preview_building_sprite(map_coords)
+		_snap_preview_building_sprite(
+				map_coords,
+				ruleset_parse_result.interaction_result.get_population_change())
 		UIEventBus.preview_cursor_snapped.emit(
 				map_coords,
 				_picked_building_type,
@@ -119,17 +122,26 @@ func _process_snap_preview_building_sprite() -> void:
 		UIEventBus.preview_cursor_unsnapped.emit()
 
 
-func _snap_preview_building_sprite(map_coords: Vector2i) -> void:
+func _snap_preview_building_sprite(
+		map_coords: Vector2i,
+		population_change: int
+) -> void:
 	var target_position: Vector2 = world.map_to_local(map_coords)
 	target_position = world.to_global(target_position)
 	target_position = to_local(target_position)
 	%PreviewBuildingSprite2D.position = target_position
 	%PreviewBuildingSprite2D.modulate = appearance_preview_snapped
+	if population_change != 0:
+		%PopulationChangePreviewLabel.text = "%s%d" % [
+			"+" if population_change > 0 else "",
+			population_change,
+		]
 
 
 func _unsnap_preview_building_sprite() -> void:
 	%PreviewBuildingSprite2D.position = Vector2.ZERO
 	%PreviewBuildingSprite2D.modulate = appearance_preview_unsnapped
+	%PopulationChangePreviewLabel.text = ""
 
 #endregion
 # ============================================================================ #
