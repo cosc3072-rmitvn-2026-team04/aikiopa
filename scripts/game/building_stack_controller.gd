@@ -155,33 +155,44 @@ func add_building(
 		return building_type
 
 	var new_building_type: Building.BuildingType = Building.BuildingType.NONE
-	var has_valid_placement: bool = false
+	var valid_placement_count: int = 0
 	var reroll_count: int = 0
-	while not has_valid_placement and reroll_count < MAX_REROLL_COUNT:
+	while valid_placement_count == 0 and reroll_count < MAX_REROLL_COUNT:
 		reroll_count += 1
+
 		new_building_type = (
 				_rng.rand_weighted(PackedFloat32Array(building_type_weights.values()))
 				+ 1 # Skip Building.BuildingType.NONE.
 		) as Building.BuildingType
+
+		# Loop through all buildings at the edge of the colony.
 		for edge_coords in Global.game_state.edge_coords:
+
+			# Loop through all neighbors of each edge building.
 			var edge_surrounding_neighbor_coords: Array[Vector2i] =\
 					Math.HexGrid.get_offset_surrounding_neighbors(
 							edge_coords,
 							Math.HexGrid.OffsetLayout.ODD_R)
 			for edge_neighbor_coords: Vector2i in edge_surrounding_neighbor_coords:
-				if not world.has_building_at(edge_neighbor_coords):
-					var ruleset_parse_result: Dictionary[StringName, Variant] =\
-							building_ruleset_engine.parse_rules(
-									edge_neighbor_coords,
-									new_building_type)
-					if (
-							ruleset_parse_result.placement_check_status
-							== BuildingRulesetEngine.PlacementCheckStatus.ALLOWED
-					):
-						has_valid_placement = true
-						break
-			if has_valid_placement:
-				break
+				var ruleset_parse_result: Dictionary[StringName, Variant] =\
+						building_ruleset_engine.parse_rules(
+								edge_neighbor_coords,
+								new_building_type)
+				if (
+						# Find valid space for 'new_building_type'.
+						ruleset_parse_result.placement_check_status
+						== BuildingRulesetEngine.PlacementCheckStatus.ALLOWED
+				):
+					valid_placement_count += 1
+
+		if (
+				# The building stack has more cards of 'new_building_type' than
+				# there is available space for it.
+				Global.game_state.building_stack.count(new_building_type)
+				>= valid_placement_count
+		):
+			valid_placement_count = 0 # Reset and go to the next reroll.
+
 	if new_building_type == Building.BuildingType.NONE:
 		push_error("Reroll exhausted: Could not find a suitable building type.")
 		return new_building_type
