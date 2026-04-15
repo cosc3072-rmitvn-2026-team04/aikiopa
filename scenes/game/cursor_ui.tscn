@@ -5,7 +5,6 @@
 
 [node name="CursorUI" type="Node2D" unique_id=618488837]
 script = ExtResource("1_e6ndq")
-appearance_preview_unsnapped = Color(1, 1, 1, 0.60784316)
 
 [node name="PreviewBuildingSprite2D" type="Sprite2D" parent="." unique_id=127858115]
 unique_name_in_owner = true
