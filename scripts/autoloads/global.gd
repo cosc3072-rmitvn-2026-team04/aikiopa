@@ -79,6 +79,9 @@ class GameState extends Node:
 	## The population in the current game session.
 	var population: int = 0
 
+	## The amount of population milestones reached in thecurrent game session.
+	var population_milestones_reached: int = 0
+
 	## The building stack in the current game session.
 	var building_stack: Array[Building.BuildingType] = []
 
@@ -93,6 +96,7 @@ class GameState extends Node:
 	## Resets the game state.
 	func reset() -> void:
 		population = 0
+		population_milestones_reached = 0
 		building_stack = []
 		buildings = {}
 		edge_coords = []

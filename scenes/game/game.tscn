@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ccpo3uu672sqa" path="res://scenes/game/debug_camera_2d.tscn" id="4_lfrn8"]
 [ext_resource type="PackedScene" uid="uid://c8uldsfm820ug" path="res://scenes/game/game_hud.tscn" id="5_5i0tg"]
 [ext_resource type="Script" uid="uid://0nisd2iu4boj" path="res://scripts/game/building_stack_controller.gd" id="5_lfrn8"]
+[ext_resource type="Script" uid="uid://fybashptyea7" path="res://scripts/game/reward_controller.gd" id="6_4j704"]
 [ext_resource type="Script" uid="uid://cauurnggrdqh0" path="res://scripts/game/population_controller.gd" id="6_5i0tg"]
 [ext_resource type="PackedScene" uid="uid://cmoxmw1iug4v0" path="res://scenes/game/player_camera.tscn" id="8_87uf6"]
 
@@ -45,10 +46,21 @@ unique_name_in_owner = true
 script = ExtResource("6_5i0tg")
 building_ruleset_engine = NodePath("../BuildingRulesetEngine")
 
+[node name="RewardController" type="Node" parent="." unique_id=1185992142 node_paths=PackedStringArray("population_controller")]
+unique_name_in_owner = true
+script = ExtResource("6_4j704")
+reward_amount = 10
+difficulty = 2.0
+estimated_population_gain_per_turn = 10
+population_controller = NodePath("../PopulationController")
+
 [node name="GameHUDCanvasLayer" type="CanvasLayer" parent="." unique_id=1835501581]
 
-[node name="GameHUD" parent="GameHUDCanvasLayer" unique_id=1279456757 node_paths=PackedStringArray("world") instance=ExtResource("5_5i0tg")]
+[node name="GameHUD" parent="GameHUDCanvasLayer" unique_id=1279456757 node_paths=PackedStringArray("world", "population_controller", "reward_controller") instance=ExtResource("5_5i0tg")]
+unique_name_in_owner = true
 world = NodePath("../../World")
+population_controller = NodePath("../../PopulationController")
+reward_controller = NodePath("../../RewardController")
 
 [node name="DebugCamera2D" parent="." unique_id=1889864583 node_paths=PackedStringArray("world", "building_stack_controller") instance=ExtResource("4_lfrn8")]
 unique_name_in_owner = true

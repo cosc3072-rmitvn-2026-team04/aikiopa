@@ -278,9 +278,9 @@ func _has_adjacent_building(coords: Vector2i) -> bool:
 # ============================================================================ #
 #region Inner classes
 
+## Represents the result of the interaction between a building and its
+## surrounding [World] environment when it is placed.
 class InteractionResult extends RefCounted:
-	## Represents the result of the interaction between a building and its
-	## surrounding [World] environment when it is placed.
 
 	var _population_change: int = 0
 	var _building_bonus: int = 0
@@ -289,7 +289,7 @@ class InteractionResult extends RefCounted:
 	## Instantiates and initializes an [InteractionResult] with
 	## [param population_change] and [param building_bonus].[br]
 	## [br]
-	## If [param building_bonus] is negative, the building bonus would be set to
+	## If [param building_bonus] is negative, the building bonus is set to
 	## [code]0[/code].
 	func _init(population_change, building_bonus) -> void:
 		set_population_change(population_change)
@@ -311,9 +311,9 @@ class InteractionResult extends RefCounted:
 		return _building_bonus
 
 
-	## Sets the building bonus received after the interaction. If
-	## [param building_bonus] is negative, the building bonus would be set to
-	## [code]0[/code].
+	## Sets the building bonus received after the interaction if
+	## [param building_bonus] is greater or equal to [code]0[/code]. Otherwise
+	## sets it to [code]0[/code].
 	func set_building_bonus(building_bonus: int) -> void:
 		_building_bonus = 0 if building_bonus < 0 else building_bonus
 

@@ -12,6 +12,9 @@ extends Node
 ## generate a building with available placement for the player to not get stuck.
 const MAX_REROLL_COUNT: int = 10_000
 
+## The delay in seconds between receiving consecutive building rewards.
+const REWARD_DELAY: float = 0.1
+
 #endregion
 # ============================================================================ #
 
@@ -76,6 +79,7 @@ var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 func _ready() -> void:
 	GameplayEventBus.building_placed.connect(_on_building_placed)
+	GameplayEventBus.reward_triggered.connect(_on_reward_triggered)
 
 #endregion
 # ============================================================================ #
@@ -114,18 +118,14 @@ func initialize_session(
 			add_building(building_type)
 			# TODO: Workaround: Without this line, rapid adding of buildings
 			# would make the building stack UI put its cards at the wrong
-			# positions. Fix this. If not possible then find out where to put
-			# the hard-coded 0.1 seconds into an exported property, or as a
-			# constant in [Global].
-			await get_tree().create_timer(0.1).timeout
+			# positions. Fix this if possible.
+			await get_tree().create_timer(REWARD_DELAY).timeout
 		for iteration: int in range(starting_random_buildings_count):
 			add_building()
 			# TODO: Workaround: Without this line, rapid adding of buildings
 			# would make the building stack UI put its cards at the wrong
-			# positions. Fix this. If not possible then find out where to put
-			# the hard-coded 0.1 seconds into an exported property, or as a
-			# constant in [Global].
-			await get_tree().create_timer(0.1).timeout
+			# positions. Fix this if possible.
+			await get_tree().create_timer(REWARD_DELAY).timeout
 
 
 ## Returns the seed of the internal [RandomNumberGenerator]. Useful for saving
@@ -141,19 +141,21 @@ func get_session_state() -> int:
 
 
 ## Adds a random [enum Building.BuildingType] to the bottom of the building
-## stack.[br]
+## stack, then returns it. Only generates buildings that has a valid tile to
+## be placed on. See [constant MAX_REROLL_COUNT].[br]
 ## [br]
-## If [param building_type] is provided, adds that to the building stack instead.
+## If [param building_type] is provided, adds that to the building stack
+## instead.
 func add_building(
 		building_type: Building.BuildingType = Building.BuildingType.NONE
-) -> void:
+) -> Building.BuildingType:
 	if building_type != Building.BuildingType.NONE:
 		Global.game_state.building_stack.push_front(building_type)
 		GameplayEventBus.building_stack_building_added.emit(building_type)
-		return
+		return building_type
 
-	var has_valid_placement: bool = false
 	var new_building_type: Building.BuildingType = Building.BuildingType.NONE
+	var has_valid_placement: bool = false
 	var reroll_count: int = 0
 	while not has_valid_placement and reroll_count < MAX_REROLL_COUNT:
 		reroll_count += 1
@@ -181,11 +183,12 @@ func add_building(
 			if has_valid_placement:
 				break
 	if new_building_type == Building.BuildingType.NONE:
-		push_error("Reroll overflow: Could not find a suitable building type.")
-		return
+		push_error("Reroll exhausted: Could not find a suitable building type.")
+		return new_building_type
 
 	Global.game_state.building_stack.push_front(new_building_type)
 	GameplayEventBus.building_stack_building_added.emit(new_building_type)
+	return new_building_type
 
 
 ## Pops and returns the building type at the top of the building stack. Returns
@@ -248,6 +251,16 @@ func _on_building_placed(
 		add_building()
 
 	pop_building()
+
+
+# Listens to GameplayEventBus.reward_triggered(reward: RewardController.Reward).
+func _on_reward_triggered(reward: RewardController.Reward) -> void:
+	for iteration: int in range(reward.get_building_bonus()):
+		add_building()
+		# TODO: Workaround: Without this line, rapid adding of buildings
+		# would make the building stack UI put its cards at the wrong
+		# positions. Fix this if possible.
+		await get_tree().create_timer(REWARD_DELAY).timeout
 
 #endregion
 # ============================================================================ #

@@ -17,6 +17,12 @@ extends Node
 ## [/codeblock]
 
 
+## Emitted when the [RewardController] determines that the [param reward] should
+## be given to the player.
+@warning_ignore("unused_signal")
+signal reward_triggered(reward: RewardController.Reward)
+
+
 ## Emitted when a [param building_type] is added to the bottom of the building
 ## stack. See [BuildingStackController].
 @warning_ignore("unused_signal")

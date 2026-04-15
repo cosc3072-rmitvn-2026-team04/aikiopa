@@ -30,8 +30,9 @@ func set_population(amount: int) -> void:
 	if amount < 0:
 		push_error("Invalid population amount. Must be non-negative.")
 		return
-	GameplayEventBus.population_changed.emit(Global.game_state.population, amount)
+	var old_amount: int = Global.game_state.population
 	Global.game_state.population = amount
+	GameplayEventBus.population_changed.emit(old_amount, amount)
 
 
 ## Change the population by [param amount]. Increases the population if
