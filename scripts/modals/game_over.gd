@@ -7,7 +7,7 @@ extends GameUI
 #region Godot builtins
 func _ready() -> void:
 	%SaveButton.pressed.connect(_on_save_button_pressed)
-	%NewExpeditionButton.pressed.connect(_on_new_expedition_button_pressed)
+	%NewExpeditionButton.pressed.connect(_on_new_session_button_pressed)
 	%QuitToMainMenuButton.pressed.connect(_on_quit_to_main_menu_button_press)
 #endregion
 # ============================================================================ #
@@ -29,12 +29,12 @@ func set_population(population: int) -> void:
 
 # Listens to %SaveButton.pressed.connect().
 func _on_save_button_pressed() -> void:
-	acted.emit(&"save_expedition")
+	acted.emit(&"save_session")
 
 
 # Listens to %NewExpeditionButton.pressed.connect().
-func _on_new_expedition_button_pressed() -> void:
-	acted.emit(&"new_expedition")
+func _on_new_session_button_pressed() -> void:
+	acted.emit(&"new_session")
 
 
 # Listens to %QuitToMainMenuButton.pressed.connect().

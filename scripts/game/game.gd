@@ -2,10 +2,26 @@ extends Node2D
 ## Responsible for the main gameplay loop.
 
 
+# ============================================================================ #
+#region Enums
+
 enum GameModes {
 	TUTORIAL,
 	FREE_PLAY,
 }
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Exported properties
+
+@export var container_scene: GameScene2D = null
+
+#endregion
+# ============================================================================ #
+
 
 # ============================================================================ #
 #region Variables
@@ -40,6 +56,8 @@ func _ready() -> void:
 
 	_init_cameras()
 
+	_init_game_menu()
+
 
 func _process(_delta: float) -> void:
 	_process_auto_world_generation()
@@ -47,6 +65,7 @@ func _process(_delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
+	_input_command_game_menu(event)
 	_input_update_gameplay_debug_mode(event)
 
 #endregion
@@ -96,6 +115,11 @@ func _init_cameras() -> void:
 	%DebugCamera2D.position = %World.get_chunk_center_position()
 	%DebugCamera2D.reset_smoothing()
 
+
+func _init_game_menu() -> void:
+	%GameMenu.acted.connect(_on_game_menu_acted)
+	%GameMenu.close()
+
 #endregion
 
 
@@ -116,12 +140,34 @@ func _render_shroud() -> void:
 
 #region _input()
 
+func _input_command_game_menu(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_quit"):
+		%GameMenu.open()
+
+
 func _input_update_gameplay_debug_mode(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_gameplay_debug_mode"):
 		Global.gameplay_debug_mode_enabled = not Global.gameplay_debug_mode_enabled
 		UIEventBus.gameplay_debug_mode_toggled.emit(Global.gameplay_debug_mode_enabled)
 
 #endregion
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Signal listeners
+
+# Listens to %GameMenu.acted(action: StringName).
+func _on_game_menu_acted(action: StringName) -> void:
+	match action:
+		&"resume":
+			%GameMenu.close()
+		&"save_session":
+			push_error("Not implemented.")
+		&"quit_game":
+			container_scene.scene_finished.emit(GameScene2D.SceneKey.MAIN_MENU)
 
 #endregion
 # ============================================================================ #
