@@ -24,12 +24,13 @@ func _input(event: InputEvent) -> void:
 
 ## Show the Game Menu.
 func open() -> void:
-	process_mode = Node.PROCESS_MODE_INHERIT
+	process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	show()
 
 
 ## Hide the Game Menu.
 func close() -> void:
+	get_tree().paused = false
 	process_mode = Node.PROCESS_MODE_DISABLED
 	hide()
 
