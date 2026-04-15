@@ -5,7 +5,7 @@ extends Node2D
 # ============================================================================ #
 #region Constants
 
-const CARD_ASSET_PATH = "res://assets/building_stack/building_card/"
+const CARD_ASSET_PATH = "res://assets/user_interface/building_stack/building_card/"
 const BUILDING_ASSET_PATH = "res://assets/objects/"
 
 #endregion
