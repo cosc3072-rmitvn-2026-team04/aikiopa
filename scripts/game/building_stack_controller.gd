@@ -165,7 +165,10 @@ func add_building(
 				+ 1 # Skip Building.BuildingType.NONE.
 		) as Building.BuildingType
 
+		# Loop through all buildings at the edge of the colony.
 		for edge_coords in Global.game_state.edge_coords:
+
+			# Loop through all neighbors of each edge building.
 			var edge_surrounding_neighbor_coords: Array[Vector2i] =\
 					Math.HexGrid.get_offset_surrounding_neighbors(
 							edge_coords,
@@ -176,16 +179,19 @@ func add_building(
 								edge_neighbor_coords,
 								new_building_type)
 				if (
+						# Find valid space for 'new_building_type'.
 						ruleset_parse_result.placement_check_status
 						== BuildingRulesetEngine.PlacementCheckStatus.ALLOWED
 				):
 					valid_placement_count += 1
 
 		if (
+				# The building stack has more cards of 'new_building_type' than
+				# there is available space for it.
 				Global.game_state.building_stack.count(new_building_type)
 				>= valid_placement_count
 		):
-			valid_placement_count = 0
+			valid_placement_count = 0 # Reset and go to the next reroll.
 
 	if new_building_type == Building.BuildingType.NONE:
 		push_error("Reroll exhausted: Could not find a suitable building type.")
