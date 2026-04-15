@@ -76,9 +76,10 @@ func _update_population_label() -> void:
 # ============================================================================ #
 #region Signal listeners
 
-# Listens to UIEventBus.building_card_picked(building: Building.BuildingType).
-func _on_building_card_picked(building: Building.BuildingType) -> void:
-	_picked_building = building
+# Listens to
+# UIEventBus.building_card_picked(building_type: Building.BuildingType).
+func _on_building_card_picked(building_type: Building.BuildingType) -> void:
+	_picked_building = building_type
 
 
 # Listens to building_card_dropped(building: Building.BuildingType).

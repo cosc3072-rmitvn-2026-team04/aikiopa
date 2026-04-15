@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://fybashptyea7" path="res://scripts/game/reward_controller.gd" id="6_4j704"]
 [ext_resource type="Script" uid="uid://cauurnggrdqh0" path="res://scripts/game/population_controller.gd" id="6_5i0tg"]
 [ext_resource type="PackedScene" uid="uid://cmoxmw1iug4v0" path="res://scenes/game/player_camera.tscn" id="8_87uf6"]
+[ext_resource type="PackedScene" uid="uid://cgm4qt1v27f2b" path="res://scenes/game/hud/cursor_ui.tscn" id="10_4j704"]
 
 [node name="Game" type="Node2D" unique_id=1327406412]
 script = ExtResource("1_sul5r")
@@ -53,6 +54,11 @@ reward_amount = 10
 difficulty = 2.0
 estimated_population_gain_per_turn = 10
 population_controller = NodePath("../PopulationController")
+
+[node name="CursorUI" parent="." unique_id=618488837 node_paths=PackedStringArray("world", "building_ruleset_engine") instance=ExtResource("10_4j704")]
+unique_name_in_owner = true
+world = NodePath("../World")
+building_ruleset_engine = NodePath("../BuildingRulesetEngine")
 
 [node name="GameHUDCanvasLayer" type="CanvasLayer" parent="." unique_id=1835501581]
 

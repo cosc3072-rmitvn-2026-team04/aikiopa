@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cgm4qt1v27f2b"]
+
+[ext_resource type="Script" uid="uid://b03n0usk78v4n" path="res://scripts/game/hud/cursor_ui.gd" id="1_e6ndq"]
+[ext_resource type="Texture2D" uid="uid://cqta4luyjo7ek" path="res://assets/user_interface/cursor/picked_building_placeholder.png" id="2_b2h02"]
+
+[node name="CursorUI" type="Node2D" unique_id=618488837]
+script = ExtResource("1_e6ndq")
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=582409377]
+gizmo_extents = 64.0
+
+[node name="PickedBuildingSprite2D" type="Sprite2D" parent="." unique_id=127858115]
+unique_name_in_owner = true
+texture = ExtResource("2_b2h02")
