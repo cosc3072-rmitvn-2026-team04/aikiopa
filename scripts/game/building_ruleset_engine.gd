@@ -123,7 +123,7 @@ func parse_rules(
 		}
 	parse_result = {
 		&"placement_check_status": bvt_parse_result[0],
-		&"interaction_result": bvt_parse_result[1],
+		&"interaction_result": bvt_parse_result[1].duplicate(),
 	}
 
 	# Step 2: Building versus adjacent Building check. Previous step must pass.
@@ -182,7 +182,6 @@ func parse_rules(
 				parse_result.interaction_result.set_population_change(
 						parse_result.interaction_result.get_population_change()
 						+ 3) # Increase reward to +5 pops.
-
 
 	return parse_result
 
@@ -294,6 +293,11 @@ class InteractionResult extends RefCounted:
 	func _init(population_change, building_bonus) -> void:
 		set_population_change(population_change)
 		set_building_bonus(building_bonus)
+
+
+	## Creates a copy of the [InteractionResult], then returns it.
+	func duplicate() -> InteractionResult:
+		return InteractionResult.new(_population_change, _building_bonus)
 
 
 	## Returns the population change after the interaction.
