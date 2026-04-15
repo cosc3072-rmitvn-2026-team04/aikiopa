@@ -10,9 +10,11 @@
 [ext_resource type="Script" uid="uid://cauurnggrdqh0" path="res://scripts/game/population_controller.gd" id="6_5i0tg"]
 [ext_resource type="PackedScene" uid="uid://cmoxmw1iug4v0" path="res://scenes/game/player_camera.tscn" id="8_87uf6"]
 [ext_resource type="PackedScene" uid="uid://cgm4qt1v27f2b" path="res://scenes/game/cursor_ui.tscn" id="10_4j704"]
+[ext_resource type="PackedScene" uid="uid://873u2m0dhb0d" path="res://scenes/modals/game_menu.tscn" id="11_kp23o"]
 
-[node name="Game" type="Node2D" unique_id=1327406412]
+[node name="Game" type="Node2D" unique_id=361428006]
 script = ExtResource("1_sul5r")
+metadata/_custom_type_script = "uid://dqjitm5fwb83b"
 
 [node name="World" parent="." unique_id=1513868058 node_paths=PackedStringArray("building_ruleset_engine") instance=ExtResource("2_7h61r")]
 unique_name_in_owner = true
@@ -87,3 +89,8 @@ zoom_max = 1.6
 zoom_increment = 0.08
 zoom_rate = 3.0
 world = NodePath("../World")
+
+[node name="GameMenuCanvasLayer" type="CanvasLayer" parent="." unique_id=630394916]
+
+[node name="GameMenu" parent="GameMenuCanvasLayer" unique_id=650760349 instance=ExtResource("11_kp23o")]
+unique_name_in_owner = true

@@ -7,4 +7,5 @@
 script = ExtResource("1_dlqee")
 metadata/_custom_type_script = "uid://dqjitm5fwb83b"
 
-[node name="Game" parent="." unique_id=1327406412 instance=ExtResource("2_8o48g")]
+[node name="Game" parent="." unique_id=1327406412 node_paths=PackedStringArray("container_scene") instance=ExtResource("2_8o48g")]
+container_scene = NodePath("..")

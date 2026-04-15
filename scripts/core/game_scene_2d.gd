@@ -3,12 +3,10 @@ extends Node2D
 
 
 ## Signals whether this scene is done processing and is ready to switch to the
+## next scene. Must be emitted manually.
+## [br][br]
+## This signal is connected to [Main]. [param next_scene_key] identifies the
 ## next scene.
-## [br][br]
-## Not emitted by default. Must be emitted manually.
-## [br][br]
-## This signal is connected to [Main]. [param next_scene_key] is used for the
-## next scene change.
 @warning_ignore("unused_signal")
 signal scene_finished(next_scene_key: SceneKey)
 
@@ -22,7 +20,7 @@ enum SceneKey {
 	NONE,
 }
 
-const GAME_SCENE: Dictionary[int, String] = {
+const GAME_SCENE: Dictionary[SceneKey, String] = {
 	SceneKey.MAIN_MENU: "res://scenes/main_menu.tscn",
 	SceneKey.TUTORIAL: "res://scenes/tutorial.tscn",
 	SceneKey.FREE_PLAY: "res://scenes/free_play.tscn",

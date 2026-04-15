@@ -17,15 +17,15 @@ func _ready() -> void:
 # Listens to %MainMenuUI.acted(action: StringName).
 func _on_main_menu_ui_acted(action: StringName) -> void:
 	match action:
-		"tutorial":
+		&"tutorial":
 			scene_finished.emit(SceneKey.TUTORIAL)
-		"free_play":
+		&"free_play":
 			scene_finished.emit(SceneKey.FREE_PLAY)
-		"settings":
+		&"settings":
 			scene_finished.emit(SceneKey.SETTINGS)
-		"credits":
+		&"credits":
 			scene_finished.emit(SceneKey.CREDITS)
-		"quit":
+		&"quit":
 			get_tree().quit()
 
 #endregion
