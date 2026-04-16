@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cxu7tbupcfexl"]
+
+[ext_resource type="Texture2D" uid="uid://cqta4luyjo7ek" path="res://assets/user_interface/cursor/picked_building_placeholder.png" id="1_c77cb"]
+
+[node name="BuildingPreviewSprite2D" type="Sprite2D" unique_id=1801411118]
+texture = ExtResource("1_c77cb")

@@ -2,15 +2,6 @@ extends Node2D
 
 
 # ============================================================================ #
-#region Constants
-
-const BUILDING_ASSET_PATH = "res://assets/objects/"
-
-#endregion
-# ============================================================================ #
-
-
-# ============================================================================ #
 #region Exported properties
 
 @export_group("Appearance")
@@ -102,41 +93,12 @@ func _init_building_bonus_preview_label() -> void:
 
 
 func _load_preview_building_sprite(building_type: Building.BuildingType) -> void:
-	match building_type:
-		Building.BuildingType.HOUSING:
-			$PreviewBuildingSprite2D.texture = load(
-					BUILDING_ASSET_PATH.path_join("building_housing.png"))
-		Building.BuildingType.GREENHOUSE:
-			$PreviewBuildingSprite2D.texture = load(
-					BUILDING_ASSET_PATH.path_join("building_greenhouse.png"))
-		Building.BuildingType.RANCH:
-			$PreviewBuildingSprite2D.texture = load(
-					BUILDING_ASSET_PATH.path_join("building_ranch.png"))
-		Building.BuildingType.FISHERY:
-			$PreviewBuildingSprite2D.texture = load(
-					BUILDING_ASSET_PATH.path_join("building_fishery.png"))
-		Building.BuildingType.SOLAR_FARM:
-			$PreviewBuildingSprite2D.texture = load(
-					BUILDING_ASSET_PATH.path_join("building_solar_farm.png"))
-		Building.BuildingType.WIND_FARM:
-			$PreviewBuildingSprite2D.texture = load(
-					BUILDING_ASSET_PATH.path_join("building_wind_farm.png"))
-		Building.BuildingType.NUCLEAR_REACTOR:
-			$PreviewBuildingSprite2D.texture = load(
-					BUILDING_ASSET_PATH.path_join("building_nuclear_reactor.png"))
-		Building.BuildingType.FACTORY:
-			$PreviewBuildingSprite2D.texture = load(
-					BUILDING_ASSET_PATH.path_join("building_factory.png"))
-		_:
-			push_error("Unrecognized building type: '%s'." % [
-				Building.BuildingType.keys()[building_type]
-			])
-			return
+	%BuildingPreview.set_type(building_type)
 	_picked_building_type = building_type
 
 
 func _unload_preview_building_sprite() -> void:
-	%PreviewBuildingSprite2D.texture = null
+	%BuildingPreview.set_type(Building.BuildingType.NONE)
 	_picked_building_type = Building.BuildingType.NONE
 
 
@@ -170,8 +132,9 @@ func _snap_preview(
 	var target_position: Vector2 = world.map_to_local(map_coords)
 	target_position = world.to_global(target_position)
 	target_position = to_local(target_position)
-	%PreviewBuildingSprite2D.position = target_position
-	%PreviewBuildingSprite2D.modulate = building_preview_snapped_modulate
+	%BuildingPreview.position = target_position
+	%BuildingPreview.modulate = building_preview_snapped_modulate
+	%BuildingPreview.snap()
 
 	if population_change < 0:
 		%PopulationChangePreviewLabel.show()
@@ -193,15 +156,16 @@ func _snap_preview(
 
 	if building_bonus > 0:
 		%BuildingBonusPreviewLabel.show()
-		%BuildingBonusPreviewLabel.text = "+%d🏠" % [building_bonus - 1]
+		%BuildingBonusPreviewLabel.text = "+%d🏠" % [building_bonus]
 	else:
 		%BuildingBonusPreviewLabel.text = "NaN🏠"
 		%BuildingBonusPreviewLabel.hide()
 
 
 func _unsnap_preview() -> void:
-	%PreviewBuildingSprite2D.position = Vector2.ZERO
-	%PreviewBuildingSprite2D.modulate = building_preview_unsnapped_modulate
+	%BuildingPreview.unsnap()
+	%BuildingPreview.position = Vector2.ZERO
+	%BuildingPreview.modulate = building_preview_unsnapped_modulate
 	%PopulationChangePreviewLabel.text = "NaN👨‍🚀"
 	%PopulationChangePreviewLabel.hide()
 	%BuildingBonusPreviewLabel.text = "NaN🏠"
