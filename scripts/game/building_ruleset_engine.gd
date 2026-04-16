@@ -87,16 +87,28 @@ func _ready() -> void:
 # ============================================================================ #
 #region Public methods
 
-## Returns a dictionary consisting of [enum PlacementCheckStatus] and
-## [InteractionResult] for the [param coords] if a building of
-## [param building_type] is placed on its tile.[br]
+## Returns a dictionary consisting of two elements:[br]
+## - [code]&"placement_check_status"[/code]: Calculated
+## [enum PlacementCheckStatus] for [param building_type] at [param coords].[br]
+## - [code]&"interaction_result"[/code]: Calculated total
+## [BuildingRulesetEngine.InteractionResult] between [param building_type] and
+## the environment around [param coords]. Will be [code]null[/code] if
+## [code]&"placement_check_status"[/code] is any value other than
+## [constant BuildingRulesetEngine.PlacementCheckStatus.ALLOWED].[br]
 ## [br]
-## The returned [InteractionResult] will be [code]null[/code] if the returned
-## [enum PlacementCheckStatus] is any value other than
-## [constant BuildingRulesetEngine.PlacementCheckStatus.ALLOWED].
+## [b]Advanced:[/b] For more granular output, set [param summarized] to
+## [code]false[/code]. The total [code]&"interaction_result"[/code] will
+## instead be divided and returned as a
+## [code]Dictionary[Vector2i, BuildingRulesetEngine.InteractionResult][/code]
+## with each key-value pair corresponding to a unit
+## [BuildingRulesetEngine.InteractionResult] value coming from its [Vector2i]
+## key. If [code]&"placement_check_status"[/code] is [code]null[/code], this
+## will consist of a single key-value pair of [param coords] and
+## [code]null[/code], i.e. [code]{ coords: null }[/code].
 func parse_rules(
 		coords: Vector2i,
-		building_type: Building.BuildingType
+		building_type: Building.BuildingType,
+		summarized: bool = true
 ) -> Dictionary[StringName, Variant]:
 	if not _has_adjacent_building(coords):
 		return {
