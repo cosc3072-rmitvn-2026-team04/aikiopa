@@ -187,16 +187,24 @@ func _snap_preview(
 			%PopulationChangePreviewLabel.remove_theme_color_override(&"font_color")
 		%PopulationChangePreviewLabel.add_theme_color_override(
 				&"font_color", population_change_preview_positive_color)
+	else:
+		%PopulationChangePreviewLabel.text = "NaN👨‍🚀"
+		%PopulationChangePreviewLabel.hide()
 
 	if building_bonus > 0:
 		%BuildingBonusPreviewLabel.show()
-		%BuildingBonusPreviewLabel.text = "+%d🏠" % [building_bonus]
+		%BuildingBonusPreviewLabel.text = "+%d🏠" % [building_bonus - 1]
+	else:
+		%BuildingBonusPreviewLabel.text = "NaN🏠"
+		%BuildingBonusPreviewLabel.hide()
 
 
 func _unsnap_preview() -> void:
 	%PreviewBuildingSprite2D.position = Vector2.ZERO
 	%PreviewBuildingSprite2D.modulate = building_preview_unsnapped_modulate
+	%PopulationChangePreviewLabel.text = "NaN👨‍🚀"
 	%PopulationChangePreviewLabel.hide()
+	%BuildingBonusPreviewLabel.text = "NaN🏠"
 	%BuildingBonusPreviewLabel.hide()
 
 #endregion
