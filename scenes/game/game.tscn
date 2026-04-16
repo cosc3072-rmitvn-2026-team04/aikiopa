@@ -72,9 +72,8 @@ reward_controller = NodePath("../../RewardController")
 
 [node name="GameMenuCanvasLayer" type="CanvasLayer" parent="." unique_id=630394916]
 
-[node name="GameMenu" parent="GameMenuCanvasLayer" unique_id=650760349 node_paths=PackedStringArray("game") instance=ExtResource("11_kp23o")]
+[node name="GameMenu" parent="GameMenuCanvasLayer" unique_id=650760349 instance=ExtResource("11_kp23o")]
 unique_name_in_owner = true
-game = NodePath("../..")
 
 [node name="DebugCamera2D" parent="." unique_id=1889864583 node_paths=PackedStringArray("world", "building_stack_controller") instance=ExtResource("4_lfrn8")]
 unique_name_in_owner = true

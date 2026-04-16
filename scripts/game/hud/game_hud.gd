@@ -104,7 +104,7 @@ func _update_population_milestone_progress_bar(
 
 func _update_population_label() -> void:
 	var label: Label = %PopulationLabel
-	label.text = "%d/%d" % [
+	label.text = "%d/%d👨‍🚀" % [
 		population_controller.get_population(),
 		reward_controller.get_population_milestone(
 				Global.game_state.population_milestones_reached)
