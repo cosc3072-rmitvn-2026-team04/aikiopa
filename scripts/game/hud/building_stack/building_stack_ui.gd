@@ -38,7 +38,7 @@ func _ready() -> void:
 	%BuildingStack.remove_child(placeholder_card)
 	placeholder_card.queue_free()
 
-	%BuildingStackCountLabel.text = "%d" % Global.game_state.building_stack.size()
+	%BuildingStackCountLabel.text = "%d🏠" % Global.game_state.building_stack.size()
 
 #endregion
 # ============================================================================ #
@@ -147,7 +147,7 @@ func _on_building_stack_building_added(
 	%BuildingStack.add_child(building_card)
 	%BuildingStack.move_child(building_card, 0)
 	%BuildingStack.get_child(-1).set_pickable()
-	%BuildingStackCountLabel.text = "%d" % Global.game_state.building_stack.size()
+	%BuildingStackCountLabel.text = "%d🏠" % Global.game_state.building_stack.size()
 	_update_building_card_positions()
 	_update_building_stack_position()
 
@@ -159,7 +159,7 @@ func _on_building_stack_building_popped(_building: Building.BuildingType) -> voi
 	%BuildingStack.remove_child(top_building_card)
 	if %BuildingStack.get_child_count() != 0:
 		%BuildingStack.get_child(-1).set_pickable()
-	%BuildingStackCountLabel.text = "%d" % Global.game_state.building_stack.size()
+	%BuildingStackCountLabel.text = "%d🏠" % Global.game_state.building_stack.size()
 	_update_building_card_positions()
 	_update_building_stack_position()
 	top_building_card.queue_free()

@@ -143,6 +143,7 @@ func _render_shroud() -> void:
 func _input_command_game_menu(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_quit"):
 		%GameMenu.open()
+		get_tree().paused = true
 
 
 func _input_update_gameplay_debug_mode(event: InputEvent) -> void:
@@ -165,8 +166,10 @@ func _on_game_menu_acted(action: StringName) -> void:
 		&"resume":
 			%GameMenu.close()
 		&"save_session":
+			%GameMenu.close()
 			push_error("Not implemented.")
 		&"quit_game":
+			%GameMenu.close()
 			container_scene.scene_finished.emit(GameScene2D.SceneKey.MAIN_MENU)
 
 #endregion

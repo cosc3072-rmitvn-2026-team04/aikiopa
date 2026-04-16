@@ -27,11 +27,13 @@ var _picked_building: Building.BuildingType = Building.BuildingType.NONE
 #region Godot builtins
 
 func _ready() -> void:
-	_update_population_milestone_progress_bar()
+	_update_population_milestone_progress_bar(null)
 	_update_population_label()
 
 	UIEventBus.building_card_picked.connect(_on_building_card_picked)
 	UIEventBus.building_card_dropped.connect(_on_building_card_dropped)
+	UIEventBus.preview_cursor_snapped.connect(_on_preview_cursor_snapped)
+	UIEventBus.preview_cursor_unsnapped.connect(_on_preview_cursor_unsnapped)
 	GameplayEventBus.building_placed.connect(_on_building_placed)
 	GameplayEventBus.population_changed.connect(_on_population_changed)
 
@@ -54,16 +56,55 @@ func _input(event: InputEvent) -> void:
 # ============================================================================ #
 #region Godot builtins
 
-func _update_population_milestone_progress_bar() -> void:
-	var bar: ProgressBar = %PopulationMilestoneProgressBar
+func _activate_population_milestone_preview_progress_bar(
+		interaction_result: BuildingRulesetEngine.InteractionResult
+) -> void:
+	var bar: ProgressBar = %PopulationMilestonePreviewProgressBar
+	if bar.has_theme_stylebox_override(&"fill"):
+		bar.remove_theme_stylebox_override(&"fill")
+	if interaction_result.get_population_change() >= 0:
+		bar.max_value = reward_controller.get_population_milestone(
+				Global.game_state.population_milestones_reached)
+		bar.value = (
+				population_controller.get_population()
+				+ interaction_result.get_population_change()
+		)
+		bar.add_theme_stylebox_override(&"fill", load(bar.STYLE_BOX_BAR_POSITIVE))
+	else:
+		bar.max_value = reward_controller.get_population_milestone(
+				Global.game_state.population_milestones_reached)
+		bar.value = population_controller.get_population()
+		bar.add_theme_stylebox_override(&"fill", load(bar.STYLE_BOX_BAR_NEGATIVE))
+
+
+func _deactivate_population_milestone_preview_progress_bar() -> void:
+	var bar: ProgressBar = %PopulationMilestonePreviewProgressBar
 	bar.max_value = reward_controller.get_population_milestone(
 			Global.game_state.population_milestones_reached)
-	bar.value = population_controller.get_population()
+	bar.value = 0.0
+
+
+func _update_population_milestone_progress_bar(
+		interaction_result: BuildingRulesetEngine.InteractionResult
+) -> void:
+	var bar: ProgressBar = %PopulationMilestoneProgressBar
+	if interaction_result: # Updates on preview cursor snapping.
+		if interaction_result.get_population_change() <= 0:
+			bar.max_value = reward_controller.get_population_milestone(
+					Global.game_state.population_milestones_reached)
+			bar.value = (
+					population_controller.get_population()
+					+ interaction_result.get_population_change()
+			)
+	if not interaction_result: # Normal updates after population changes.
+		bar.max_value = reward_controller.get_population_milestone(
+				Global.game_state.population_milestones_reached)
+		bar.value = population_controller.get_population()
 
 
 func _update_population_label() -> void:
 	var label: Label = %PopulationLabel
-	label.text = "%d/%d" % [
+	label.text = "%d/%d👨‍🚀" % [
 		population_controller.get_population(),
 		reward_controller.get_population_milestone(
 				Global.game_state.population_milestones_reached)
@@ -87,6 +128,27 @@ func _on_building_card_dropped(_building: Building.BuildingType) -> void:
 	_picked_building = Building.BuildingType.NONE
 
 
+# Listens to preview_cursor_snapped(
+#		coords: Vector2i,
+#		picked_building_type: Building.BuildingType,
+#		placement_check_status: BuildingRulesetEngine.PlacementCheckStatus,
+#		interaction_result: BuildingRulesetEngine.InteractionResult).
+func _on_preview_cursor_snapped(
+		_coords: Vector2i,
+		_picked_building_type: Building.BuildingType,
+		placement_check_status: BuildingRulesetEngine.PlacementCheckStatus,
+		interaction_result: BuildingRulesetEngine.InteractionResult
+) -> void:
+	if placement_check_status == BuildingRulesetEngine.PlacementCheckStatus.ALLOWED:
+		_activate_population_milestone_preview_progress_bar(interaction_result)
+		_update_population_milestone_progress_bar(interaction_result)
+
+
+func _on_preview_cursor_unsnapped() -> void:
+	_deactivate_population_milestone_preview_progress_bar()
+	_update_population_milestone_progress_bar(null)
+
+
 # Listens to GameplayEventBus.building_placed(
 #		coords: Vector2i,
 #		building_type: Building.BuildingType).
@@ -102,7 +164,7 @@ func _on_building_placed(
 # Listens to
 # GameplayEventBus.population_changed(old_amount: int, new_amount: int).
 func _on_population_changed(_old_amount: int, _new_amount: int) -> void:
-	_update_population_milestone_progress_bar()
+	_update_population_milestone_progress_bar(null)
 	_update_population_label()
 
 #endregion
