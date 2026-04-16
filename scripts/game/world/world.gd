@@ -345,7 +345,7 @@ func _on_building_placement_requested(
 		GameplayEventBus.building_placed.emit(
 				map_coords,
 				building_type,
-				ruleset_parse_result.interaction_result)
+				ruleset_parse_result.interaction_result.duplicate())
 
 #endregion
 # ============================================================================ #

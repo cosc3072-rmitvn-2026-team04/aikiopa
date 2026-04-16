@@ -295,7 +295,9 @@ class InteractionResult extends RefCounted:
 		set_building_bonus(building_bonus)
 
 
-	## Creates a copy of the [InteractionResult], then returns it.
+	## Creates a copy of the [InteractionResult], then returns it. Use this
+	## method to pass [InteractionResult] insteances by value instead of by
+	## reference.
 	func duplicate() -> InteractionResult:
 		return InteractionResult.new(_population_change, _building_bonus)
 
