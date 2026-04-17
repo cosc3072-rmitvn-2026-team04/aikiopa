@@ -18,20 +18,20 @@ extends Node2D
 
 @export_subgroup("Population Change Preview", "population_change_preview")
 
-## Color of the Population Change Preview label when its value is greater than
-## [code]0[/code].
+## Color of the [code]PopulationChangePreviewLabel[/code] when its value is
+## greater than [code]0[/code].
 @export_color_no_alpha
 var population_change_preview_positive_color: Color = Color.GREEN
 
-## Color of the Population Change Preview label when its value is lesser than
-## [code]0[/code].
+## Color of the [code]PopulationChangePreviewLabel[/code] when its value is
+## lesser than [code]0[/code].
 @export_color_no_alpha
 var population_change_preview_negative_color: Color = Color.RED
 
 
 @export_subgroup("Building Bonus Preview", "building_bonus_preview")
 
-## Color of the Building Bonus Preview label.
+## Color of the [code]BuildingBonusPreviewLabel[/code].
 @export_color_no_alpha var building_bonus_preview_color: Color = Color.YELLOW
 
 
@@ -48,6 +48,7 @@ var population_change_preview_negative_color: Color = Color.RED
 #region Exported properties
 
 var _picked_building_type: Building.BuildingType = Building.BuildingType.NONE
+var _environment_interaction_result_labels: Array[Node2D] = []
 
 #endregion
 # ============================================================================ #
@@ -63,6 +64,7 @@ func _ready() -> void:
 	_unload_preview_building_sprite()
 	_init_population_change_preview_label()
 	_init_building_bonus_preview_label()
+	_reset_environment_interaction_result_labels()
 
 
 func _process(_delta: float) -> void:
@@ -90,6 +92,14 @@ func _init_building_bonus_preview_label() -> void:
 	%BuildingBonusPreviewLabel.add_theme_color_override(
 			&"font_color", building_bonus_preview_color)
 	%BuildingBonusPreviewLabel.hide()
+
+
+func _reset_environment_interaction_result_labels() -> void:
+	if %EnvironmentInteractionResultLabels.get_child_count() > 0:
+		for label: Node2D in %EnvironmentInteractionResultLabels.get_children():
+			remove_child(label)
+			label.queue_free()
+	_environment_interaction_result_labels.clear()
 
 
 func _load_preview_building_sprite(building_type: Building.BuildingType) -> void:
