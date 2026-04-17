@@ -104,7 +104,12 @@ func _ready() -> void:
 ## [BuildingRulesetEngine.InteractionResult] value coming from its [Vector2i]
 ## key. If [code]&"placement_check_status"[/code] is [code]null[/code], this
 ## will consist of a single key-value pair of [param coords] and
-## [code]null[/code], i.e. [code]{ coords: null }[/code].
+## [code]null[/code], i.e. [code]{ coords: null }[/code].[br]
+## [br]
+## [color=orange][b]WARNING:[/b] Since the return schema of this method is loose
+## ([code]&"interaction_result"[/code] can be either one object or a dictionary
+## of coordinates-object pairs), extra caution must be taken to keep
+## track of what is being returned.[/color]
 func parse_rules(
 		coords: Vector2i,
 		building_type: Building.BuildingType,
