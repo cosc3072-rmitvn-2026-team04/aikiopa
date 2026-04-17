@@ -39,8 +39,21 @@ extends Node2D
 #region Public methods
 
 ## Displays the appropriate colored labels according to
-## [param population_change] and [param building_bonus].
-func display(population_change: int, building_bonus: int) -> void:
+## [param population_change] and [param building_bonus]. If [param blocked] is
+## set to [code]true[/code], disregard the previous two parameters and show the
+## [code]BlockedLabel[/code] instead.
+func display(
+		population_change: int,
+		building_bonus: int,
+		blocked: bool = false
+) -> void:
+	if blocked:
+		%BlockedLabel.show()
+		%PopulationChangeLabel.hide()
+		%BuildingBonusLabel.hide()
+		return
+
+	%BlockedLabel.hide()
 	if population_change == 0:
 		%PopulationChangeLabel.hide()
 	elif population_change != 0:

@@ -124,8 +124,7 @@ func _process_snap_preview_building_sprite() -> void:
 	if (
 			ruleset_parse_result.placement_check_status
 			== BuildingRulesetEngine.PlacementCheckStatus.ALLOWED
-	):
-		# HACK: This gets called every frame and is bad on game performance.
+	): # HACK: This gets called every frame and is a performance bottleneck.
 		_snap_preview(
 				map_coords,
 				ruleset_parse_result.interaction_result)
@@ -135,10 +134,13 @@ func _process_snap_preview_building_sprite() -> void:
 				ruleset_parse_result.placement_check_status,
 				BuildingRulesetEngine.InteractionResult.sum(
 						ruleset_parse_result.interaction_result.values()))
-	else:
-		# HACK: This gets called every frame and is bad on game performance.
+	else: # HACK: This gets called every frame and is a performance bottleneck.
 		_unsnap_preview()
 		UIEventBus.preview_cursor_unsnapped.emit()
+		_apply_blocked_context(
+			map_coords,
+			ruleset_parse_result.placement_check_status,
+			ruleset_parse_result.interaction_result)
 
 
 func _snap_preview(
@@ -197,8 +199,35 @@ func _snap_preview(
 			target_label_position = world.to_global(target_label_position)
 			target_label_position = to_local(target_label_position)
 			interaction_result_label.position = target_label_position
-
 			%EnvironmentInteractionResultLabels.add_child(interaction_result_label)
+
+
+func _apply_blocked_context(
+		map_coords: Vector2i,
+		placement_check_status,
+		interaction_results: Dictionary[Vector2i, BuildingRulesetEngine.InteractionResult]
+) -> void:
+	if (
+			placement_check_status in [
+				BuildingRulesetEngine.PlacementCheckStatus.BLOCKED_BY_TERRAIN,
+				BuildingRulesetEngine.PlacementCheckStatus.BLOCKED_BY_ADJACENT_BUILDING,
+			]
+	):
+		_reset_environment_interaction_result_labels()
+		for source_coords: Vector2i in interaction_results.keys():
+			if(
+					source_coords == map_coords
+					or interaction_results[source_coords] == null
+			):
+				var interaction_result_label: Node2D =\
+						_interaction_result_label_scene.instantiate()
+				interaction_result_label.display(0, 0, true)
+
+				var target_label_position: Vector2 = world.map_to_local(source_coords)
+				target_label_position = world.to_global(target_label_position)
+				target_label_position = to_local(target_label_position)
+				interaction_result_label.position = target_label_position
+				%EnvironmentInteractionResultLabels.add_child(interaction_result_label)
 
 
 func _unsnap_preview() -> void:
