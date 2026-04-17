@@ -36,27 +36,14 @@ extends Node2D
 
 
 # ============================================================================ #
-#region Godot builtins
-
-func _ready() -> void:
-	if %PopulationChangeLabel.has_theme_color_override(&"font_color"):
-		%PopulationChangeLabel.remove_theme_color_override(&"font_color")
-	%PopulationChangeLabel.hide()
-	if %BuildingBonusLabel.has_theme_color_override(&"font_color"):
-		%BuildingBonusLabel.remove_theme_color_override(&"font_color")
-	%BuildingBonusLabel.hide()
-
-#endregion
-# ============================================================================ #
-
-
-# ============================================================================ #
 #region Public methods
 
 ## Displays the appropriate colored labels according to
 ## [param population_change] and [param building_bonus].
 func display(population_change: int, building_bonus: int) -> void:
-	if population_change != 0:
+	if population_change == 0:
+		%PopulationChangeLabel.hide()
+	elif population_change != 0:
 		%PopulationChangeLabel.show()
 		if population_change > 0:
 			%PopulationChangeLabel.add_theme_color_override(
@@ -68,12 +55,15 @@ func display(population_change: int, building_bonus: int) -> void:
 					&"font_color",
 					population_change_negative_color)
 			%PopulationChangeLabel.text = population_change_negative_text
+
 	if building_bonus > 0:
 		%BuildingBonusLabel.show()
 		%BuildingBonusLabel.add_theme_color_override(
 				&"font_color",
 				building_bonus_color)
 		%BuildingBonusLabel.text = building_bonus_text
+	else:
+		%BuildingBonusLabel.hide()
 
 #endregion
 # ============================================================================ #

@@ -108,8 +108,8 @@ func _ready() -> void:
 ## [br]
 ## [color=orange][b]WARNING:[/b] Since the return schema of this method is loose
 ## ([code]&"interaction_result"[/code] can be either one object or a dictionary
-## of coordinates-object pairs), extra caution must be taken to keep
-## track of what is being returned.[/color]
+## of coordinates-object pairs), extra caution must be taken to manage and keep
+## track of the returned output.[/color]
 func parse_rules(
 		coords: Vector2i,
 		building_type: Building.BuildingType,
@@ -345,8 +345,23 @@ class InteractionResult extends RefCounted:
 	var _building_bonus: int = 0
 
 
-	## Instantiates and initializes an [InteractionResult] with
-	## [param population_change] and [param building_bonus].[br]
+	## Returns a summarized [BuildingRulesetEngine.InteractionResult] from a
+	## list of component [param interaction_results].
+	static func sum(interaction_results: Array[InteractionResult]) -> InteractionResult:
+		var summarized_interaction_result: InteractionResult =\
+				InteractionResult.new(0, 0)
+		for interaction_result: InteractionResult in interaction_results:
+			summarized_interaction_result.set_population_change(
+					summarized_interaction_result.get_population_change()
+					+ interaction_result.get_population_change())
+			summarized_interaction_result.set_building_bonus(
+					summarized_interaction_result.get_building_bonus()
+					+ interaction_result.get_building_bonus())
+		return summarized_interaction_result
+
+
+	## Instantiates and initializes a [BuildingRulesetEngine.InteractionResult]
+	## with [param population_change] and [param building_bonus].[br]
 	## [br]
 	## If [param building_bonus] is negative, the building bonus is set to
 	## [code]0[/code].
@@ -355,9 +370,10 @@ class InteractionResult extends RefCounted:
 		set_building_bonus(building_bonus)
 
 
-	## Creates a copy of the [InteractionResult], then returns it. Use this
-	## method to pass [InteractionResult] insteances by value instead of by
-	## reference.
+	## Creates a copy of the [BuildingRulesetEngine.InteractionResult], then
+	## returns it. Use this method to pass
+	## [BuildingRulesetEngine.InteractionResult] instances by value instead of
+	## by reference.
 	func duplicate() -> InteractionResult:
 		return InteractionResult.new(_population_change, _building_bonus)
 

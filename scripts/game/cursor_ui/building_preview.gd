@@ -33,10 +33,6 @@ func _ready() -> void:
 	_map_sprite_2d.hide()
 	building_layer.add_child(_map_sprite_2d, false, INTERNAL_MODE_BACK)
 
-
-func _process(_delta: float) -> void:
-	_map_sprite_2d.global_position = global_position
-
 #endregion
 # ============================================================================ #
 
@@ -97,9 +93,11 @@ func set_type(building_type: Building.BuildingType) -> void:
 			return
 
 
-## Snaps the building preview onto the map's y-sorted
-## [code]BuildingLayer[/code].
-func snap() -> void:
+## Snaps the building preview onto the map's y-sorted [code]BuildingLayer[/code]
+## at [param coords].
+func snap(map_coords: Vector2i) -> void:
+	var world: World = cursor_ui.world
+	_map_sprite_2d.position = world.map_to_local(map_coords)
 	_map_sprite_2d.show()
 	_local_sprite_2d.hide()
 
