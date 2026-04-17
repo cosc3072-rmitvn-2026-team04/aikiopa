@@ -81,6 +81,7 @@ func place_building_at(
 		Building.BuildingType.RANCH:
 			building = _ranch_scene.instantiate()
 		Building.BuildingType.FISHERY:
+			world.remove_terrain_feature_at(coords)
 			building = _fishery_scene.instantiate()
 		Building.BuildingType.SOLAR_FARM:
 			building = _solar_farm_scene.instantiate()
