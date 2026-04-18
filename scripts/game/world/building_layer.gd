@@ -81,7 +81,6 @@ func place_building_at(
 		Building.BuildingType.RANCH:
 			building = _ranch_scene.instantiate()
 		Building.BuildingType.FISHERY:
-			world.remove_terrain_feature_at(coords)
 			building = _fishery_scene.instantiate()
 		Building.BuildingType.SOLAR_FARM:
 			building = _solar_farm_scene.instantiate()
@@ -103,9 +102,8 @@ func place_building_at(
 		destroy_building_at(coords, true)
 
 	# Clear terrain feature, if any.
-	var terrain_feature_layer: Node2D = world.get_terrain_feature_layer()
-	if terrain_feature_layer.has_feature_at(coords):
-		terrain_feature_layer.remove_feature_at(coords)
+	if world.has_terrain_feature_at(coords):
+		world.remove_terrain_feature_at(coords)
 
 	# Insert the building.
 	var terrain_tile_map_layer: TileMapLayer = world.get_terrain_tile_map_layer()
