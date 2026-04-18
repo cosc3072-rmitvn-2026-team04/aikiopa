@@ -16,7 +16,7 @@ extends Node2D
 
 ## The text displays in [code]PopulationChangeLabel[/code] when its value is
 ## lesser than [code]0[/code].
-@export var population_change_negative_text: String = "-"
+@export var population_change_negative_text: String = "−"
 
 ## Color of the [code]PopulationChangeLabel[/code] when its value is lesser than
 ## [code]0[/code].
