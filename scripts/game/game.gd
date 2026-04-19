@@ -1,3 +1,4 @@
+class_name Game
 extends Node2D
 ## Responsible for the main gameplay loop.
 
@@ -5,9 +6,15 @@ extends Node2D
 # ============================================================================ #
 #region Enums
 
-enum GameModes {
+enum GameMode {
 	TUTORIAL,
 	FREE_PLAY,
+}
+
+enum GameOverType {
+	NONE,
+	NO_BUILDING_CARD,
+	NO_POPULATION,
 }
 
 #endregion
@@ -26,7 +33,7 @@ enum GameModes {
 # ============================================================================ #
 #region Variables
 
-@export var game_mode: GameModes = GameModes.FREE_PLAY
+@export var game_mode: GameMode = GameMode.FREE_PLAY
 @onready var _building_stack_controller: Node = %BuildingStackController
 
 #endregion
@@ -61,13 +68,20 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	_process_auto_world_generation()
 	_render_shroud()
+
+	var building_stack_count: int = Global.game_state.building_stack.size()
+	var population: int = Global.game_state.population
 	if is_game_over(
-			Global.game_state.building_stack.size(),
-			Global.game_state.population,
+			building_stack_count,
+			population,
 			Global.game_state.buildings.size()):
 		%GameOverMenu.open()
-		%GameOverMenu.set_population(Global.game_state.population)
-		GameplayEventBus.game_over.emit(Global.game_state.population)
+		var game_over_type: GameOverType = (
+				GameOverType.NO_BUILDING_CARD if building_stack_count == 0
+				else GameOverType.NO_POPULATION if population == 0
+				else GameOverType.NONE
+		)
+		GameplayEventBus.game_over.emit(population, game_over_type)
 
 
 func _input(event: InputEvent) -> void:

@@ -60,6 +60,6 @@ signal population_changed(old_amount: int, new_amount: int)
 ## [method Game.is_game_over].[br]
 ## [br]
 ## [param population_reached] is the amount of population reached at the end of
-## the session when the game ended.
+## the session when the game ended with [param game_over_type].
 @warning_ignore("unused_signal")
-signal game_over(population_reached: int)
+signal game_over(population_reached: int, game_over_type: Game.GameOverType)
