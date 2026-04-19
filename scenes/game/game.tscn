@@ -43,6 +43,7 @@ building_ruleset_engine = NodePath("../BuildingRulesetEngine")
 [node name="BuildingRulesetEngine" type="Node" parent="." unique_id=924936073 node_paths=PackedStringArray("world")]
 unique_name_in_owner = true
 script = ExtResource("4_87uf6")
+combo_rule_forest_population_gain = 30
 world = NodePath("../World")
 
 [node name="PopulationController" type="Node" parent="." unique_id=153495353 node_paths=PackedStringArray("building_ruleset_engine")]
