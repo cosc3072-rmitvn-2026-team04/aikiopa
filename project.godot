@@ -19,10 +19,10 @@ config/icon="uid://dqp3lnsxh5fw"
 
 [autoload]
 
-Global="*uid://1e7omhauptu1"
-GameplayEventBus="*uid://bvbx608cejmwp"
-UIEventBus="*uid://ec3r0dickbin"
-Math="*uid://b6l5brx5akrvh"
+Global="*uid://bh23jxt878mfg"
+GameplayEventBus="*uid://cile0rk71d8x8"
+UIEventBus="*uid://d14g2l5ubghi2"
+Math="*uid://chbvmtto2mtli"
 
 [display]
 
