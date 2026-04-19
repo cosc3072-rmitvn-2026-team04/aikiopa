@@ -87,73 +87,100 @@ func _ready() -> void:
 # ============================================================================ #
 #region Public methods
 
-## Returns a dictionary consisting of [enum PlacementCheckStatus] and
-## [InteractionResult] for the [param coords] if a building of
-## [param building_type] is placed on its tile.[br]
+## Returns a dictionary consisting of two elements:[br]
+## - [code]&"placement_check_status"[/code]: Calculated
+## [enum PlacementCheckStatus] for [param building_type] at [param coords].[br]
+## - [code]&"interaction_result"[/code]: Calculated total
+## [BuildingRulesetEngine.InteractionResult] between [param building_type] and
+## the environment around [param coords]. Will be [code]null[/code] if
+## [code]&"placement_check_status"[/code] is any value other than
+## [constant BuildingRulesetEngine.PlacementCheckStatus.ALLOWED].[br]
 ## [br]
-## The returned [InteractionResult] will be [code]null[/code] if the returned
-## [enum PlacementCheckStatus] is any value other than
-## [constant BuildingRulesetEngine.PlacementCheckStatus.ALLOWED].
+## [b]Advanced:[/b] For more granular output, set [param summarized] to
+## [code]false[/code]. The total [code]&"interaction_result"[/code] will
+## instead be divided and returned as a
+## [code]Dictionary[Vector2i, BuildingRulesetEngine.InteractionResult][/code]
+## with each key-value pair corresponding to a unit
+## [BuildingRulesetEngine.InteractionResult] value coming from its [Vector2i]
+## key. If [code]&"placement_check_status"[/code] is [code]null[/code], this
+## will consist of a single key-value pair of [param coords] and
+## [code]null[/code], i.e. [code]{ coords: null }[/code].[br]
+## [br]
+## [color=orange][b]WARNING:[/b] Since the return schema of this method is loose
+## ([code]&"interaction_result"[/code] can be either one object or a dictionary
+## of coordinates-object pairs), extra caution must be taken to manage and keep
+## track of the returned output.[/color]
 func parse_rules(
 		coords: Vector2i,
-		building_type: Building.BuildingType
+		building_type: Building.BuildingType,
+		summarized: bool = true
 ) -> Dictionary[StringName, Variant]:
 	if not _has_adjacent_building(coords):
-		return {
-			&"placement_check_status": PlacementCheckStatus.BLOCKED_BY_DISCONNECTION,
-			&"interaction_result": null,
-		}
+		return _create_parse_result(
+				PlacementCheckStatus.BLOCKED_BY_DISCONNECTION,
+				{ coords: null }, summarized)
 
 	if not _is_clear_of_building(coords):
-		return {
-			&"placement_check_status": PlacementCheckStatus.BLOCKED_BY_BUILDING,
-			&"interaction_result": null,
-		}
-
-	var parse_result: Dictionary[StringName, Variant] = {}
+		return _create_parse_result(
+				PlacementCheckStatus.BLOCKED_BY_BUILDING,
+				{ coords: null }, summarized)
 
 	# Step 1: Building versus Terrain check. Must pass before next step.
 	var bvt_parse_result: Array[Variant] = _bvt_rules[[
 		building_type, world.get_terrain_at(coords)
 	]]
 	if bvt_parse_result[0] != PlacementCheckStatus.ALLOWED:
-		return {
-			&"placement_check_status": bvt_parse_result[0],
-			&"interaction_result": null,
-		}
-	parse_result = {
-		&"placement_check_status": bvt_parse_result[0],
-		&"interaction_result": bvt_parse_result[1].duplicate(),
-	}
+		return _create_parse_result(
+				bvt_parse_result[0],
+				{ coords: null }, summarized)
+	var parse_result: Dictionary[StringName, Variant] = _create_parse_result(
+			bvt_parse_result[0],
+			{ coords: bvt_parse_result[1].duplicate() },
+			summarized)
 
-	# Step 2: Building versus adjacent Building check. Previous step must pass.
+	# Step 2: Building versus adjacent Building(s) check. Previous step must
+	# pass.
 	var surrounding_neighbor_coords: Array[Vector2i] =\
 			Math.HexGrid.get_offset_surrounding_neighbors(
 					coords,
 					Math.HexGrid.OffsetLayout.ODD_R)
 	for neighbor_coords: Vector2i in surrounding_neighbor_coords:
 		if world.has_building_at(neighbor_coords):
+
+			#region Main rules
 			var neighbor_building_type: Building.BuildingType = \
 					world.get_building_at(neighbor_coords)
 			var bvb_parse_result: Array[Variant] = _bvb_rules[[
 				building_type, neighbor_building_type
 			]]
 			if bvb_parse_result[0] != PlacementCheckStatus.ALLOWED:
-				return {
-					&"placement_check_status": bvb_parse_result[0],
-					&"interaction_result": null,
-				}
+				# WARN: Known limitation - this only keeps the last non-allowed
+				# placement check status.
+				parse_result.placement_check_status = bvb_parse_result[0]
+				if summarized:
+					parse_result.interaction_result = null
+					return parse_result
+				parse_result.interaction_result.set(neighbor_coords, null)
+			elif summarized:
+				parse_result.interaction_result.set_population_change(
+						parse_result.interaction_result.get_population_change()
+						+ bvb_parse_result[1].get_population_change())
+				parse_result.interaction_result.set_building_bonus(
+						parse_result.interaction_result.get_building_bonus()
+						+ bvb_parse_result[1].get_building_bonus())
+			else:
+				parse_result.interaction_result.set(
+						neighbor_coords,
+						bvb_parse_result[1].duplicate())
+			#endregion
 
-			parse_result.interaction_result.set_population_change(
-					parse_result.interaction_result.get_population_change()
-					+ bvb_parse_result[1].get_population_change())
-			parse_result.interaction_result.set_building_bonus(
-					parse_result.interaction_result.get_building_bonus()
-					+ bvb_parse_result[1].get_building_bonus())
-
-			# Special case for Housing versus Solar Farm or Wind Farm: If Solar
-			# Farm or Wind Farm on Desert or Desert Sand Dunes: +5 pops instead.
-			# INFO: Make this more scalable if needed.
+			#region Special cases
+			# Special case for Housing versus Solar Farm / Wind Farm: If the
+			# Solar Farm / Wind Farm is on Desert or Desert Sand Dunes: +5 pops
+			# instead.
+			#
+			# WARNING: This solution is not scalable. Find a different approach
+			# if the scope grows.
 			if (
 					(
 							building_type == Building.BuildingType.HOUSING
@@ -179,9 +206,14 @@ func parse_rules(
 							])
 					)
 			):
-				parse_result.interaction_result.set_population_change(
-						parse_result.interaction_result.get_population_change()
+				var interaction_result: InteractionResult = (
+					parse_result.interaction_result if summarized
+					else parse_result.interaction_result[neighbor_coords]
+				)
+				interaction_result.set_population_change(
+						interaction_result.get_population_change()
 						+ 3) # Increase reward to +5 pops.
+			#endregion
 
 	return parse_result
 
@@ -270,6 +302,34 @@ func _has_adjacent_building(coords: Vector2i) -> bool:
 			return true
 	return false
 
+
+func _create_parse_result(
+		placement_check_status: PlacementCheckStatus,
+		interaction_results: Dictionary[Vector2i, InteractionResult],
+		summarized: bool
+) -> Dictionary[StringName, Variant]:
+	var parse_result: Dictionary[StringName, Variant] = {}
+	parse_result.set(&"placement_check_status", placement_check_status)
+
+	if summarized:
+		if interaction_results.values().has(null):
+			parse_result.set(&"interaction_result", null)
+		else:
+			var summarized_interaction_result: InteractionResult =\
+					InteractionResult.new(0, 0)
+			for unit_interaction_result: InteractionResult in interaction_results.values():
+				summarized_interaction_result.set_population_change(
+						summarized_interaction_result.get_population_change()
+						+ unit_interaction_result.get_population_change())
+				summarized_interaction_result.set_building_bonus(
+						summarized_interaction_result.get_building_bonus()
+						+ unit_interaction_result.get_building_bonus())
+			parse_result.set(&"interaction_result", summarized_interaction_result)
+	else:
+		parse_result.set(&"interaction_result", interaction_results)
+
+	return parse_result
+
 #endregion
 # ============================================================================ #
 
@@ -285,8 +345,23 @@ class InteractionResult extends RefCounted:
 	var _building_bonus: int = 0
 
 
-	## Instantiates and initializes an [InteractionResult] with
-	## [param population_change] and [param building_bonus].[br]
+	## Returns a summarized [BuildingRulesetEngine.InteractionResult] from a
+	## list of component [param interaction_results].
+	static func sum(interaction_results: Array[InteractionResult]) -> InteractionResult:
+		var summarized_interaction_result: InteractionResult =\
+				InteractionResult.new(0, 0)
+		for interaction_result: InteractionResult in interaction_results:
+			summarized_interaction_result.set_population_change(
+					summarized_interaction_result.get_population_change()
+					+ interaction_result.get_population_change())
+			summarized_interaction_result.set_building_bonus(
+					summarized_interaction_result.get_building_bonus()
+					+ interaction_result.get_building_bonus())
+		return summarized_interaction_result
+
+
+	## Instantiates and initializes a [BuildingRulesetEngine.InteractionResult]
+	## with [param population_change] and [param building_bonus].[br]
 	## [br]
 	## If [param building_bonus] is negative, the building bonus is set to
 	## [code]0[/code].
@@ -295,7 +370,10 @@ class InteractionResult extends RefCounted:
 		set_building_bonus(building_bonus)
 
 
-	## Creates a copy of the [InteractionResult], then returns it.
+	## Creates a copy of the [BuildingRulesetEngine.InteractionResult], then
+	## returns it. Use this method to pass
+	## [BuildingRulesetEngine.InteractionResult] instances by value instead of
+	## by reference.
 	func duplicate() -> InteractionResult:
 		return InteractionResult.new(_population_change, _building_bonus)
 

@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://fybashptyea7" path="res://scripts/game/reward_controller.gd" id="6_4j704"]
 [ext_resource type="Script" uid="uid://cauurnggrdqh0" path="res://scripts/game/population_controller.gd" id="6_5i0tg"]
 [ext_resource type="PackedScene" uid="uid://cmoxmw1iug4v0" path="res://scenes/game/player_camera.tscn" id="8_87uf6"]
-[ext_resource type="PackedScene" uid="uid://cgm4qt1v27f2b" path="res://scenes/game/cursor_ui.tscn" id="10_4j704"]
+[ext_resource type="PackedScene" uid="uid://cgm4qt1v27f2b" path="res://scenes/game/cursor_ui/cursor_ui.tscn" id="10_4j704"]
 [ext_resource type="PackedScene" uid="uid://873u2m0dhb0d" path="res://scenes/modals/game_menu.tscn" id="11_kp23o"]
 
 [node name="Game" type="Node2D" unique_id=361428006]

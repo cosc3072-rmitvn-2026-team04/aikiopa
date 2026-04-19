@@ -116,15 +116,15 @@ func initialize_session(
 		_rng.randomize()
 		for building_type in guaranteed_starting_buildings:
 			add_building(building_type)
-			# TODO: Workaround: Without this line, rapid adding of buildings
-			# would make the building stack UI put its cards at the wrong
-			# positions. Fix this if possible.
+			# HACK: Without this line, rapid adding of buildings would make the
+			# building stack UI put its cards at the wrong positions. Good
+			# enough for now, fix when this becomes critical.
 			await get_tree().create_timer(REWARD_DELAY).timeout
 		for iteration: int in range(starting_random_buildings_count):
 			add_building()
-			# TODO: Workaround: Without this line, rapid adding of buildings
-			# would make the building stack UI put its cards at the wrong
-			# positions. Fix this if possible.
+			# HACK: Without this line, rapid adding of buildings would make the
+			# building stack UI put its cards at the wrong positions. Good
+			# enough for now, fix when this becomes critical.
 			await get_tree().create_timer(REWARD_DELAY).timeout
 
 
@@ -268,9 +268,9 @@ func _on_building_placed(
 func _on_reward_triggered(reward: RewardController.Reward) -> void:
 	for iteration: int in range(reward.get_building_bonus()):
 		add_building()
-		# TODO: Workaround: Without this line, rapid adding of buildings
-		# would make the building stack UI put its cards at the wrong
-		# positions. Fix this if possible.
+		# HACK: Without this line, rapid adding of buildings would make the
+		# building stack UI put its cards at the wrong positions. Good enough
+		# for now, fix when this becomes critical.
 		await get_tree().create_timer(REWARD_DELAY).timeout
 
 #endregion

@@ -57,15 +57,18 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	var tile_map_position: Vector2i =\
-			world.local_to_map(position)
-	%CameraMapCoordsLabel.text = "(%d, %d)" % [
-		tile_map_position.x,
-		tile_map_position.y,
-	]
-	%CameraZoomLabel.text = "Zoom: %.2f" % [zoom.x]
-
 	if is_current():
+		# Update labels.
+		var map_coords: Vector2i = world.local_to_map(position)
+		%CameraMapCoordsLabel.text = "(%d, %d)" % [map_coords.x, map_coords.y ]
+		%CameraZoomLabel.text = "Zoom: %.2f" % [zoom.x]
+		%TerrainLabel.text = "%s 🏞️" % [
+			World.TerrainType.keys()[world.get_terrain_at(map_coords)],
+		]
+		%BuildingLabel.text = "%s 🏠" % [
+			Building.BuildingType.keys()[world.get_building_at(map_coords)],
+		]
+
 		var movement: Vector2 = Input.get_vector(
 				"debug_camera_left",
 				"debug_camera_right",

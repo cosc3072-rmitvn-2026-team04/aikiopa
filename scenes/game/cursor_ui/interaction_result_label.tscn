@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://ctosyr7efpboq"]
+
+[ext_resource type="Script" uid="uid://bg17ajpatdjl2" path="res://scripts/game/cursor_ui/interaction_result_label.gd" id="1_th4n1"]
+[ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="2_vww8o"]
+
+[node name="InteractionResultLabel" type="Node2D" unique_id=2016187391]
+script = ExtResource("1_th4n1")
+
+[node name="BlockedLabel" type="Label" parent="." unique_id=1983800584]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.5
+offset_top = -47.0
+offset_right = 28.5
+offset_bottom = 42.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 64
+text = "🞩"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1962724256]
+anchors_preset = -1
+offset_left = -45.0
+offset_top = -98.0
+offset_right = 45.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 1)
+theme = ExtResource("2_vww8o")
+alignment = 2
+
+[node name="PopulationChangeLabel" type="Label" parent="VBoxContainer" unique_id=1603667586]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 28
+text = "null"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BuildingBonusLabel" type="Label" parent="VBoxContainer" unique_id=1029886167]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 28
+text = "null"
+horizontal_alignment = 1
+vertical_alignment = 1

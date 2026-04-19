@@ -66,7 +66,7 @@ func _on_building_placed(
 				+ "Should not be 'null' at this stage.")
 		return
 	if get_population() + interaction_result.get_population_change() < 0:
-		change_population(0)
+		set_population(0)
 	else:
 		change_population(interaction_result.get_population_change())
 

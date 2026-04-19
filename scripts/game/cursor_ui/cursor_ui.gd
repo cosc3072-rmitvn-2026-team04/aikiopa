@@ -2,15 +2,6 @@ extends Node2D
 
 
 # ============================================================================ #
-#region Constants
-
-const BUILDING_ASSET_PATH = "res://assets/objects/"
-
-#endregion
-# ============================================================================ #
-
-
-# ============================================================================ #
 #region Exported properties
 
 @export_group("Appearance")
@@ -27,20 +18,20 @@ const BUILDING_ASSET_PATH = "res://assets/objects/"
 
 @export_subgroup("Population Change Preview", "population_change_preview")
 
-## Color of the Population Change Preview label when its value is greater than
-## [code]0[/code].
+## Color of the [code]PopulationChangePreviewLabel[/code] when its value is
+## greater than [code]0[/code].
 @export_color_no_alpha
 var population_change_preview_positive_color: Color = Color.GREEN
 
-## Color of the Population Change Preview label when its value is lesser than
-## [code]0[/code].
+## Color of the [code]PopulationChangePreviewLabel[/code] when its value is
+## lesser than [code]0[/code].
 @export_color_no_alpha
 var population_change_preview_negative_color: Color = Color.RED
 
 
 @export_subgroup("Building Bonus Preview", "building_bonus_preview")
 
-## Color of the Building Bonus Preview label.
+## Color of the [code]BuildingBonusPreviewLabel[/code].
 @export_color_no_alpha var building_bonus_preview_color: Color = Color.YELLOW
 
 
@@ -56,6 +47,9 @@ var population_change_preview_negative_color: Color = Color.RED
 # ============================================================================ #
 #region Exported properties
 
+var _interaction_result_label_scene: PackedScene =\
+		preload("res://scenes/game/cursor_ui/interaction_result_label.tscn")
+
 var _picked_building_type: Building.BuildingType = Building.BuildingType.NONE
 
 #endregion
@@ -69,9 +63,11 @@ func _ready() -> void:
 	UIEventBus.building_card_picked.connect(_on_building_card_picked)
 	UIEventBus.building_card_dropped.connect(_on_building_card_dropped)
 	GameplayEventBus.building_placed.connect(_on_building_placed)
+
 	_unload_preview_building_sprite()
 	_init_population_change_preview_label()
 	_init_building_bonus_preview_label()
+	_reset_environment_interaction_result_labels()
 
 
 func _process(_delta: float) -> void:
@@ -101,103 +97,148 @@ func _init_building_bonus_preview_label() -> void:
 	%BuildingBonusPreviewLabel.hide()
 
 
+func _reset_environment_interaction_result_labels() -> void:
+	if %EnvironmentInteractionResultLabels.get_child_count() > 0:
+		for label: Node2D in %EnvironmentInteractionResultLabels.get_children():
+			%EnvironmentInteractionResultLabels.remove_child(label)
+			label.queue_free()
+
+
 func _load_preview_building_sprite(building_type: Building.BuildingType) -> void:
-	match building_type:
-		Building.BuildingType.HOUSING:
-			$PreviewBuildingSprite2D.texture = load(
-					BUILDING_ASSET_PATH.path_join("building_housing.png"))
-		Building.BuildingType.GREENHOUSE:
-			$PreviewBuildingSprite2D.texture = load(
-					BUILDING_ASSET_PATH.path_join("building_greenhouse.png"))
-		Building.BuildingType.RANCH:
-			$PreviewBuildingSprite2D.texture = load(
-					BUILDING_ASSET_PATH.path_join("building_ranch.png"))
-		Building.BuildingType.FISHERY:
-			$PreviewBuildingSprite2D.texture = load(
-					BUILDING_ASSET_PATH.path_join("building_fishery.png"))
-		Building.BuildingType.SOLAR_FARM:
-			$PreviewBuildingSprite2D.texture = load(
-					BUILDING_ASSET_PATH.path_join("building_solar_farm.png"))
-		Building.BuildingType.WIND_FARM:
-			$PreviewBuildingSprite2D.texture = load(
-					BUILDING_ASSET_PATH.path_join("building_wind_farm.png"))
-		Building.BuildingType.NUCLEAR_REACTOR:
-			$PreviewBuildingSprite2D.texture = load(
-					BUILDING_ASSET_PATH.path_join("building_nuclear_reactor.png"))
-		Building.BuildingType.FACTORY:
-			$PreviewBuildingSprite2D.texture = load(
-					BUILDING_ASSET_PATH.path_join("building_factory.png"))
-		_:
-			push_error("Unrecognized building type: '%s'." % [
-				Building.BuildingType.keys()[building_type]
-			])
-			return
+	%BuildingPreview.set_type(building_type)
 	_picked_building_type = building_type
 
 
 func _unload_preview_building_sprite() -> void:
-	%PreviewBuildingSprite2D.texture = null
+	%BuildingPreview.set_type(Building.BuildingType.NONE)
 	_picked_building_type = Building.BuildingType.NONE
 
 
 func _process_snap_preview_building_sprite() -> void:
 	var map_coords: Vector2i = world.local_to_map(position)
 	var ruleset_parse_result: Dictionary[StringName, Variant] =\
-			building_ruleset_engine.parse_rules(map_coords, _picked_building_type)
+			building_ruleset_engine.parse_rules(
+					map_coords,
+					_picked_building_type,
+					false)
 	if (
 			ruleset_parse_result.placement_check_status
 			== BuildingRulesetEngine.PlacementCheckStatus.ALLOWED
-	):
+	): # HACK: This gets called every frame and is a performance bottleneck.
 		_snap_preview(
 				map_coords,
-				ruleset_parse_result.interaction_result.get_population_change(),
-				ruleset_parse_result.interaction_result.get_building_bonus())
+				ruleset_parse_result.interaction_result)
 		UIEventBus.preview_cursor_snapped.emit(
 				map_coords,
 				_picked_building_type,
 				ruleset_parse_result.placement_check_status,
-				ruleset_parse_result.interaction_result.duplicate())
-	else:
+				BuildingRulesetEngine.InteractionResult.sum(
+						ruleset_parse_result.interaction_result.values()))
+	else: # HACK: This gets called every frame and is a performance bottleneck.
 		_unsnap_preview()
 		UIEventBus.preview_cursor_unsnapped.emit()
+		_apply_blocked_context(
+			map_coords,
+			ruleset_parse_result.placement_check_status,
+			ruleset_parse_result.interaction_result)
 
 
 func _snap_preview(
 		map_coords: Vector2i,
-		population_change: int,
-		building_bonus: int
+		interaction_results: Dictionary[Vector2i, BuildingRulesetEngine.InteractionResult],
 ) -> void:
 	var target_position: Vector2 = world.map_to_local(map_coords)
 	target_position = world.to_global(target_position)
 	target_position = to_local(target_position)
-	%PreviewBuildingSprite2D.position = target_position
-	%PreviewBuildingSprite2D.modulate = building_preview_snapped_modulate
+	%BuildingPreview.position = target_position
+	%BuildingPreview.modulate = building_preview_snapped_modulate
+	%BuildingPreview.snap(map_coords)
 
-	if population_change < 0:
+	var summarized_interaction_result: BuildingRulesetEngine.InteractionResult =\
+			BuildingRulesetEngine.InteractionResult.sum(interaction_results.values())
+
+	var total_population_change = summarized_interaction_result.get_population_change()
+	if total_population_change < 0:
 		%PopulationChangePreviewLabel.show()
-		%PopulationChangePreviewLabel.text = "%d👨‍🚀" % [population_change]
+		%PopulationChangePreviewLabel.text = "%d👨‍🚀" % [total_population_change]
 		if %PopulationChangePreviewLabel.has_theme_color_override(&"font_color"):
 			%PopulationChangePreviewLabel.remove_theme_color_override(&"font_color")
 		%PopulationChangePreviewLabel.add_theme_color_override(
 				&"font_color", population_change_preview_negative_color)
-	elif population_change > 0:
+	elif total_population_change > 0:
 		%PopulationChangePreviewLabel.show()
-		%PopulationChangePreviewLabel.text = "+%d👨‍🚀" % [population_change]
+		%PopulationChangePreviewLabel.text = "+%d👨‍🚀" % [total_population_change]
 		if %PopulationChangePreviewLabel.has_theme_color_override(&"font_color"):
 			%PopulationChangePreviewLabel.remove_theme_color_override(&"font_color")
 		%PopulationChangePreviewLabel.add_theme_color_override(
 				&"font_color", population_change_preview_positive_color)
+	else:
+		%PopulationChangePreviewLabel.text = "NaN👨‍🚀"
+		%PopulationChangePreviewLabel.hide()
 
-	if building_bonus > 0:
+	var total_building_bonus: int = summarized_interaction_result.get_building_bonus()
+	if total_building_bonus > 0:
 		%BuildingBonusPreviewLabel.show()
-		%BuildingBonusPreviewLabel.text = "+%d🏠" % [building_bonus]
+		%BuildingBonusPreviewLabel.text = "+%d🏠" % [total_building_bonus]
+	else:
+		%BuildingBonusPreviewLabel.text = "NaN🏠"
+		%BuildingBonusPreviewLabel.hide()
+
+	_reset_environment_interaction_result_labels()
+	for source_coords: Vector2i in interaction_results.keys():
+		if source_coords != map_coords:
+			var interaction_result: BuildingRulesetEngine.InteractionResult =\
+					interaction_results[source_coords]
+			var interaction_result_label: Node2D =\
+					_interaction_result_label_scene.instantiate()
+			interaction_result_label.display(
+					interaction_result.get_population_change(),
+				interaction_result.get_building_bonus())
+
+			var target_label_position: Vector2 = world.map_to_local(source_coords)
+			target_label_position = world.to_global(target_label_position)
+			target_label_position = to_local(target_label_position)
+			interaction_result_label.position = target_label_position
+			%EnvironmentInteractionResultLabels.add_child(interaction_result_label)
+
+
+func _apply_blocked_context(
+		map_coords: Vector2i,
+		placement_check_status,
+		interaction_results: Dictionary[Vector2i, BuildingRulesetEngine.InteractionResult]
+) -> void:
+	if (
+			placement_check_status in [
+				BuildingRulesetEngine.PlacementCheckStatus.BLOCKED_BY_TERRAIN,
+				BuildingRulesetEngine.PlacementCheckStatus.BLOCKED_BY_ADJACENT_BUILDING,
+			]
+	):
+		_reset_environment_interaction_result_labels()
+		for source_coords: Vector2i in interaction_results.keys():
+			if(
+					source_coords == map_coords
+					or interaction_results[source_coords] == null
+			):
+				var interaction_result_label: Node2D =\
+						_interaction_result_label_scene.instantiate()
+				interaction_result_label.display(0, 0, true)
+
+				var target_label_position: Vector2 = world.map_to_local(source_coords)
+				target_label_position = world.to_global(target_label_position)
+				target_label_position = to_local(target_label_position)
+				interaction_result_label.position = target_label_position
+				%EnvironmentInteractionResultLabels.add_child(interaction_result_label)
 
 
 func _unsnap_preview() -> void:
-	%PreviewBuildingSprite2D.position = Vector2.ZERO
-	%PreviewBuildingSprite2D.modulate = building_preview_unsnapped_modulate
+	%BuildingPreview.unsnap()
+	%BuildingPreview.position = Vector2.ZERO
+	%BuildingPreview.modulate = building_preview_unsnapped_modulate
+	%PopulationChangePreviewLabel.text = "NaN👨‍🚀"
 	%PopulationChangePreviewLabel.hide()
+	%BuildingBonusPreviewLabel.text = "NaN🏠"
 	%BuildingBonusPreviewLabel.hide()
+	_reset_environment_interaction_result_labels()
 
 #endregion
 # ============================================================================ #

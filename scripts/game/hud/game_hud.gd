@@ -59,55 +59,104 @@ func _input(event: InputEvent) -> void:
 func _activate_population_milestone_preview_progress_bar(
 		interaction_result: BuildingRulesetEngine.InteractionResult
 ) -> void:
+	var population_milestones_reached: int =\
+			Global.game_state.population_milestones_reached
+	var previous_population_milestone: int = (
+			0 if population_milestones_reached == 0
+			else reward_controller.get_population_milestone(
+					population_milestones_reached - 1)
+	)
+	var current_population_milestone: int =\
+			reward_controller.get_population_milestone(population_milestones_reached)
+
 	var bar: ProgressBar = %PopulationMilestonePreviewProgressBar
 	if bar.has_theme_stylebox_override(&"fill"):
 		bar.remove_theme_stylebox_override(&"fill")
 	if interaction_result.get_population_change() >= 0:
-		bar.max_value = reward_controller.get_population_milestone(
-				Global.game_state.population_milestones_reached)
+		bar.max_value = (
+				current_population_milestone
+				- previous_population_milestone
+		)
 		bar.value = (
 				population_controller.get_population()
 				+ interaction_result.get_population_change()
+				- previous_population_milestone
 		)
 		bar.add_theme_stylebox_override(&"fill", load(bar.STYLE_BOX_BAR_POSITIVE))
 	else:
-		bar.max_value = reward_controller.get_population_milestone(
-				Global.game_state.population_milestones_reached)
-		bar.value = population_controller.get_population()
+		bar.max_value = (
+				current_population_milestone
+				- previous_population_milestone
+		)
+		bar.value = (
+				population_controller.get_population()
+				- previous_population_milestone
+		)
 		bar.add_theme_stylebox_override(&"fill", load(bar.STYLE_BOX_BAR_NEGATIVE))
 
 
 func _deactivate_population_milestone_preview_progress_bar() -> void:
+	var population_milestones_reached: int =\
+			Global.game_state.population_milestones_reached
+	var previous_population_milestone: int = (
+			0 if population_milestones_reached == 0
+			else reward_controller.get_population_milestone(
+					population_milestones_reached - 1)
+	)
+	var current_population_milestone: int =\
+			reward_controller.get_population_milestone(population_milestones_reached)
+
 	var bar: ProgressBar = %PopulationMilestonePreviewProgressBar
-	bar.max_value = reward_controller.get_population_milestone(
-			Global.game_state.population_milestones_reached)
+	bar.max_value = current_population_milestone - previous_population_milestone
 	bar.value = 0.0
 
 
 func _update_population_milestone_progress_bar(
 		interaction_result: BuildingRulesetEngine.InteractionResult
 ) -> void:
+	var population_milestones_reached: int =\
+			Global.game_state.population_milestones_reached
+	var previous_population_milestone: int = (
+			0 if population_milestones_reached == 0
+			else reward_controller.get_population_milestone(
+					population_milestones_reached - 1)
+	)
+	var current_population_milestone: int =\
+			reward_controller.get_population_milestone(population_milestones_reached)
+
 	var bar: ProgressBar = %PopulationMilestoneProgressBar
 	if interaction_result: # Updates on preview cursor snapping.
 		if interaction_result.get_population_change() <= 0:
-			bar.max_value = reward_controller.get_population_milestone(
-					Global.game_state.population_milestones_reached)
+			bar.max_value = (
+					current_population_milestone
+					- previous_population_milestone
+			)
 			bar.value = (
 					population_controller.get_population()
 					+ interaction_result.get_population_change()
+					- previous_population_milestone
 			)
 	if not interaction_result: # Normal updates after population changes.
-		bar.max_value = reward_controller.get_population_milestone(
-				Global.game_state.population_milestones_reached)
-		bar.value = population_controller.get_population()
+		bar.max_value = (
+				current_population_milestone
+				- previous_population_milestone
+		)
+		bar.value = (
+				population_controller.get_population()
+				- previous_population_milestone
+		)
 
 
 func _update_population_label() -> void:
+	var population_milestones_reached: int =\
+			Global.game_state.population_milestones_reached
+	var current_population_milestone: int =\
+			reward_controller.get_population_milestone(population_milestones_reached)
+
 	var label: Label = %PopulationLabel
 	label.text = "%d/%d👨‍🚀" % [
 		population_controller.get_population(),
-		reward_controller.get_population_milestone(
-				Global.game_state.population_milestones_reached)
+		current_population_milestone,
 	]
 
 #endregion
