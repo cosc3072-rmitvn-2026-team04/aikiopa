@@ -35,6 +35,13 @@ var population_change_preview_negative_color: Color = Color.RED
 @export_color_no_alpha var building_bonus_preview_color: Color = Color.YELLOW
 
 
+@export_subgroup("Terrain Feature Context Preview", "terrain_feature_context_preview")
+
+## Color modulation of terrain features to warn the player that placing a
+## building on top would destroy them.
+@export var terrain_feature_context_preview_modulate: Color = Color(1.0, 1.0, 1.0, 0.5)
+
+
 @export_group("", "")
 
 @export var world: World = null
@@ -51,6 +58,7 @@ var _interaction_result_label_scene: PackedScene =\
 		preload("res://scenes/game/cursor_ui/interaction_result_label.tscn")
 
 var _picked_building_type: Building.BuildingType = Building.BuildingType.NONE
+var _context_applied_terrain_features: Array[TerrainFeature] = []
 
 #endregion
 # ============================================================================ #
@@ -115,6 +123,8 @@ func _unload_preview_building_sprite() -> void:
 
 
 func _process_snap_preview_building_sprite() -> void:
+	# HACK: This gets called every frame and is a performance bottleneck.
+	_remove_terrain_feature_context()
 	var map_coords: Vector2i = world.local_to_map(position)
 	var ruleset_parse_result: Dictionary[StringName, Variant] =\
 			building_ruleset_engine.parse_rules(
@@ -125,6 +135,7 @@ func _process_snap_preview_building_sprite() -> void:
 			ruleset_parse_result.placement_check_status
 			== BuildingRulesetEngine.PlacementCheckStatus.ALLOWED
 	): # HACK: This gets called every frame and is a performance bottleneck.
+		_apply_terrain_feature_context(map_coords, _picked_building_type)
 		_snap_preview(
 				map_coords,
 				ruleset_parse_result.interaction_result)
@@ -136,11 +147,11 @@ func _process_snap_preview_building_sprite() -> void:
 						ruleset_parse_result.interaction_result.values()))
 	else: # HACK: This gets called every frame and is a performance bottleneck.
 		_unsnap_preview()
-		UIEventBus.preview_cursor_unsnapped.emit()
 		_apply_blocked_context(
 			map_coords,
 			ruleset_parse_result.placement_check_status,
 			ruleset_parse_result.interaction_result)
+		UIEventBus.preview_cursor_unsnapped.emit()
 
 
 func _snap_preview(
@@ -202,6 +213,34 @@ func _snap_preview(
 			%EnvironmentInteractionResultLabels.add_child(interaction_result_label)
 
 
+func _apply_terrain_feature_context(
+		map_coords: Vector2i,
+		building_type: Building.BuildingType
+) -> void:
+	var terrain_type: World.TerrainType = world.get_terrain_at(map_coords)
+	if terrain_type in [
+		World.TerrainType.SHALLOW_WATER_FISHES,
+		World.TerrainType.PLAIN_FOREST,
+		World.TerrainType.GRASSLAND_FOREST,
+	]:
+		if building_type == Building.BuildingType.FISHERY:
+			return
+		var terrain_feature_layer: Node = world.get_terrain_feature_layer()
+		var terrain_feature: TerrainFeature =\
+				terrain_feature_layer.get_feature_instance_at(map_coords)
+		terrain_feature.modulate = terrain_feature_context_preview_modulate
+		if not _context_applied_terrain_features.has(terrain_feature):
+			_context_applied_terrain_features.append(terrain_feature)
+
+
+func _remove_terrain_feature_context() -> void:
+	if not _context_applied_terrain_features.is_empty():
+		for terrain_feature: TerrainFeature in _context_applied_terrain_features:
+			if terrain_feature:
+				terrain_feature.modulate = Color.WHITE # Reset modulation to default.
+		_context_applied_terrain_features.clear()
+
+
 func _apply_blocked_context(
 		map_coords: Vector2i,
 		placement_check_status,
@@ -238,6 +277,7 @@ func _unsnap_preview() -> void:
 	%PopulationChangePreviewLabel.hide()
 	%BuildingBonusPreviewLabel.text = "NaN🏠"
 	%BuildingBonusPreviewLabel.hide()
+	_remove_terrain_feature_context()
 	_reset_environment_interaction_result_labels()
 
 #endregion

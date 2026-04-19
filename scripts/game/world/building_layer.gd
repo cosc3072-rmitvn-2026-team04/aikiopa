@@ -55,6 +55,19 @@ func get_building_at(coords: Vector2i) -> Building.BuildingType:
 	return Global.game_state.buildings[coords].get_type()
 
 
+## Returns a reference to the [Building] instance at [param coords]. Returns
+## [code]null[/code] if there is no terrain feature at the specified
+## coordinates.[br]
+## [br]
+## [color=orange][b]WARNING:[/b] Extra caution must be taken when modifying the
+## returned instance for it being a reference, and thus will produce
+## side-effects on any modification to its properties.[/color]
+func get_building_instance_at(coords: Vector2i) -> Building:
+	if not has_building_at(coords):
+		return null
+	return Global.game_state.buildings[coords]
+
+
 ## Returns [code]true[/code] if there is a building at [param coords].
 func has_building_at(coords: Vector2i) -> bool:
 	return Global.game_state.buildings.has(coords)
