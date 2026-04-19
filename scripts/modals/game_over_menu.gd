@@ -5,6 +5,7 @@ extends GameUI
 #region Godot builtins
 
 func _ready() -> void:
+	GameplayEventBus.game_over.connect(_on_game_over)
 	%SaveButton.pressed.connect(_on_save_button_pressed)
 	%NewExpeditionButton.pressed.connect(_on_new_session_button_pressed)
 	%QuitToMainMenuButton.pressed.connect(_on_quit_to_main_menu_button_press)
@@ -15,11 +16,6 @@ func _ready() -> void:
 
 # ============================================================================ #
 #region Public methods
-
-## Set %PopulationValueLabel.text to [param population].
-func set_population(population: int) -> void:
-	%PopulationValueLabel.text = "Final Population: %d👨‍🚀" % [population]
-
 
 ## Show the Game Over Menu.
 func open() -> void:
@@ -40,6 +36,26 @@ func close() -> void:
 
 # ============================================================================ #
 #region Signal listeners
+
+# Listens to GameplayEventBus.game_over(
+#		population_reached: int,
+#		game_over_type: Game.GameOverType).
+func _on_game_over(population: int, game_over_type: Game.GameOverType) -> void:
+	%PopulationValueLabel.text = "Final Population: %d👨‍🚀" % [population]
+	match game_over_type:
+		Game.GameOverType.NO_BUILDING_CARD:
+			%PopulationValueLabel.text = "Final Population: %d👨‍🚀" % [population]
+			%MessageLabel.text = "Expedition Completed!"
+		Game.GameOverType.NO_POPULATION:
+			%PopulationValueLabel.text = "Colony Abandoned"
+			%MessageLabel.text = "Expedition Ended"
+		_:
+			%PopulationValueLabel.text = "!Error"
+			%MessageLabel.text = "!Error"
+			push_error("Unrecognized 'game_over_type': %s" % [
+				Game.GameOverType.keys()[game_over_type]
+			])
+
 
 # Listens to %SaveButton.pressed.connect().
 func _on_save_button_pressed() -> void:
