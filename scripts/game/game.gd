@@ -1,3 +1,4 @@
+class_name Game
 extends Node2D
 ## Responsible for the main gameplay loop.
 
@@ -5,9 +6,15 @@ extends Node2D
 # ============================================================================ #
 #region Enums
 
-enum GameModes {
+enum GameMode {
 	TUTORIAL,
 	FREE_PLAY,
+}
+
+enum GameOverType {
+	NONE,
+	NO_BUILDING_CARD,
+	NO_POPULATION,
 }
 
 #endregion
@@ -26,8 +33,7 @@ enum GameModes {
 # ============================================================================ #
 #region Variables
 
-@export var game_mode: GameModes = GameModes.FREE_PLAY
-
+@export var game_mode: GameMode = GameMode.FREE_PLAY
 @onready var _building_stack_controller: Node = %BuildingStackController
 
 #endregion
@@ -55,18 +61,52 @@ func _ready() -> void:
 	_init_building_stack([])
 
 	_init_cameras()
-
 	_init_game_menu()
+	_init_game_over_menu()
 
 
 func _process(_delta: float) -> void:
 	_process_auto_world_generation()
 	_render_shroud()
 
+	var building_stack_count: int = Global.game_state.building_stack.size()
+	var population: int = Global.game_state.population
+	if is_game_over(
+			building_stack_count,
+			population,
+			Global.game_state.buildings.size()):
+		%GameOverMenu.open()
+		var game_over_type: GameOverType = (
+				GameOverType.NO_BUILDING_CARD if building_stack_count == 0
+				else GameOverType.NO_POPULATION if population == 0
+				else GameOverType.NONE
+		)
+		GameplayEventBus.game_over.emit(population, game_over_type)
+
 
 func _input(event: InputEvent) -> void:
 	_input_command_game_menu(event)
 	_input_update_gameplay_debug_mode(event)
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Public methods
+
+## Returns [code][/code] if game over conditions has been satisfied.
+func is_game_over(
+		building_stack_count: int,
+		population: int,
+		buildings_placed: int
+) -> bool:
+	if buildings_placed > 1:
+		if building_stack_count == 0:
+			return true
+		if population == 0:
+			return true
+	return false
 
 #endregion
 # ============================================================================ #
@@ -120,6 +160,11 @@ func _init_game_menu() -> void:
 	%GameMenu.acted.connect(_on_game_menu_acted)
 	%GameMenu.close()
 
+
+func _init_game_over_menu() -> void:
+	%GameOverMenu.acted.connect(_on_game_over_menu_acted)
+	%GameOverMenu.close()
+
 #endregion
 
 
@@ -168,7 +213,21 @@ func _on_game_menu_acted(action: StringName) -> void:
 		&"save_session":
 			%GameMenu.close()
 			push_error("Not implemented.")
-		&"quit_game":
+		&"quit_to_main_menu":
+			%GameMenu.close()
+			container_scene.scene_finished.emit(GameScene2D.SceneKey.MAIN_MENU)
+
+
+# Listes to %GameOverMenu.acted(action: StringName).
+func _on_game_over_menu_acted(action: StringName) -> void:
+	match action:
+		&"save_snapshot":
+			%GameMenu.close()
+			push_error("Not implemented.")
+		&"new_session":
+			%GameMenu.close()
+			container_scene.scene_finished.emit(GameScene2D.SceneKey.FREE_PLAY)
+		&"quit_to_main_menu":
 			%GameMenu.close()
 			container_scene.scene_finished.emit(GameScene2D.SceneKey.MAIN_MENU)
 

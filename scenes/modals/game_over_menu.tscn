@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://c2jk4roqpaohs"]
+
+[ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="1_18j6f"]
+[ext_resource type="Script" uid="uid://fh4lfcav0lye" path="res://scripts/modals/game_over_menu.gd" id="1_n68tj"]
+
+[sub_resource type="Gradient" id="Gradient_dadcw"]
+offsets = PackedFloat32Array(0, 0.31193197, 0.68693197, 1)
+colors = PackedColorArray(0, 0, 0, 0.6431373, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.6392157)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4iega"]
+gradient = SubResource("Gradient_dadcw")
+fill_to = Vector2(0, 1)
+
+[node name="GameOverMenu" type="Control" unique_id=1463684322]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_18j6f")
+script = ExtResource("1_n68tj")
+metadata/_custom_type_script = "uid://cupvablkoadik"
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=272883654]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_4iega")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect" unique_id=257114138]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -381.5
+offset_top = -420.5
+offset_right = 381.5
+offset_bottom = 420.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 640
+
+[node name="LabelVBoxContainer" type="VBoxContainer" parent="TextureRect/VBoxContainer" unique_id=125423325]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PopulationValueLabel" type="Label" parent="TextureRect/VBoxContainer/LabelVBoxContainer" unique_id=2025826919]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 64
+text = "Final Population: NaN👨‍🚀"
+horizontal_alignment = 1
+
+[node name="MessageLabel" type="Label" parent="TextureRect/VBoxContainer/LabelVBoxContainer" unique_id=1388868528]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 28
+text = "Expedition Completed!"
+horizontal_alignment = 1
+
+[node name="ButtonVBoxContainer" type="VBoxContainer" parent="TextureRect/VBoxContainer" unique_id=447443858]
+layout_mode = 2
+
+[node name="SaveButton" type="Button" parent="TextureRect/VBoxContainer/ButtonVBoxContainer" unique_id=1160669998]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Save Snapshot"
+
+[node name="NewExpeditionButton" type="Button" parent="TextureRect/VBoxContainer/ButtonVBoxContainer" unique_id=183934942]
+unique_name_in_owner = true
+layout_mode = 2
+text = "New Expedition"
+
+[node name="QuitToMainMenuButton" type="Button" parent="TextureRect/VBoxContainer/ButtonVBoxContainer" unique_id=1268427561]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quit to Main Menu"

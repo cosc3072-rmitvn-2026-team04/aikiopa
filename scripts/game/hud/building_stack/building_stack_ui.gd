@@ -33,6 +33,7 @@ func _ready() -> void:
 			_on_building_stack_building_added)
 	GameplayEventBus.building_stack_building_popped.connect(
 			_on_building_stack_building_popped)
+	GameplayEventBus.game_over.connect(_on_game_over)
 
 	var placeholder_card: InstancePlaceholder = %BuildingStack.get_child(0)
 	%BuildingStack.remove_child(placeholder_card)
@@ -163,6 +164,19 @@ func _on_building_stack_building_popped(_building: Building.BuildingType) -> voi
 	_update_building_card_positions()
 	_update_building_stack_position()
 	top_building_card.queue_free()
+
+	if Global.game_state.building_stack.size() == 0:
+		# TODO: This could be made prettier using a Tween animation on its size.
+		%BuildingStackCountTextureRect.hide()
+
+
+# Listens to GameplayEventBus.game_over(
+#		population_reached: int,
+#		game_over_type: Game.GameOverType).
+func _on_game_over(_population: int, _game_over_type: Game.GameOverType) -> void:
+	if %BuildingStack.get_child_count() > 0:
+		for building_card: BuildingCard in %BuildingStack.get_children():
+			building_card.process_mode = Node.PROCESS_MODE_DISABLED
 
 #endregion
 # ============================================================================ #

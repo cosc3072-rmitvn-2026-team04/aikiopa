@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://cauurnggrdqh0" path="res://scripts/game/population_controller.gd" id="6_5i0tg"]
 [ext_resource type="PackedScene" uid="uid://cmoxmw1iug4v0" path="res://scenes/game/player_camera.tscn" id="8_87uf6"]
 [ext_resource type="PackedScene" uid="uid://cgm4qt1v27f2b" path="res://scenes/game/cursor_ui/cursor_ui.tscn" id="10_4j704"]
+[ext_resource type="PackedScene" uid="uid://c2jk4roqpaohs" path="res://scenes/modals/game_over_menu.tscn" id="10_5jirj"]
 [ext_resource type="PackedScene" uid="uid://873u2m0dhb0d" path="res://scenes/modals/game_menu.tscn" id="11_kp23o"]
 
 [node name="Game" type="Node2D" unique_id=361428006]
@@ -73,6 +74,11 @@ reward_controller = NodePath("../../RewardController")
 [node name="GameMenuCanvasLayer" type="CanvasLayer" parent="." unique_id=630394916]
 
 [node name="GameMenu" parent="GameMenuCanvasLayer" unique_id=650760349 instance=ExtResource("11_kp23o")]
+unique_name_in_owner = true
+
+[node name="GameOverCanvasLayer" type="CanvasLayer" parent="." unique_id=1568259986]
+
+[node name="GameOverMenu" parent="GameOverCanvasLayer" unique_id=1463684322 instance=ExtResource("10_5jirj")]
 unique_name_in_owner = true
 
 [node name="DebugCamera2D" parent="." unique_id=1889864583 node_paths=PackedStringArray("world", "building_stack_controller") instance=ExtResource("4_lfrn8")]

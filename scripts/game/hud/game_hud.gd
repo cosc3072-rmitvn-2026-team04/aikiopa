@@ -114,6 +114,7 @@ func _deactivate_population_milestone_preview_progress_bar() -> void:
 func _update_population_milestone_progress_bar(
 		interaction_result: BuildingRulesetEngine.InteractionResult
 ) -> void:
+	# TODO: This could be made prettier using a Tween animation on its value.
 	var population_milestones_reached: int =\
 			Global.game_state.population_milestones_reached
 	var previous_population_milestone: int = (
@@ -148,6 +149,7 @@ func _update_population_milestone_progress_bar(
 
 
 func _update_population_label() -> void:
+	# TODO: This could be made prettier using a Tween animation on its scale.
 	var population_milestones_reached: int =\
 			Global.game_state.population_milestones_reached
 	var current_population_milestone: int =\
