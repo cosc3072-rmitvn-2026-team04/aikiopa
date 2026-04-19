@@ -34,16 +34,16 @@ position = Vector2(1118, 546)
 position = Vector2(1192, 446)
 
 [node name="Forest" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="4" unique_id=1542832817 instance=ExtResource("3_ge07p")]
-position = Vector2(712, 456)
+position = Vector2(718, 459)
 
 [node name="Forest2" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="5" unique_id=917795901 instance=ExtResource("3_ge07p")]
-position = Vector2(1032, 449)
+position = Vector2(1040, 456)
 
 [node name="Forest3" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="6" unique_id=200746276 instance=ExtResource("3_ge07p")]
 position = Vector2(1116, 354)
 
 [node name="Forest4" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="7" unique_id=441313923 instance=ExtResource("3_ge07p")]
-position = Vector2(955, 352)
+position = Vector2(958, 359)
 
 [node name="Forest5" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="8" unique_id=735945196 instance=ExtResource("3_ge07p")]
 position = Vector2(1036, 256)
@@ -79,7 +79,7 @@ position = Vector2(639, 748)
 position = Vector2(477, 552)
 
 [node name="Forest10" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="19" unique_id=31863317 instance=ExtResource("3_ge07p")]
-position = Vector2(715, 646)
+position = Vector2(716, 652)
 
 [node name="Chasm" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="20" unique_id=1564893698 instance=ExtResource("6_kg817")]
 position = Vector2(809, 557)
@@ -88,16 +88,16 @@ position = Vector2(809, 557)
 position = Vector2(1283, 748)
 
 [node name="Forest11" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="22" unique_id=464058614 instance=ExtResource("3_ge07p")]
-position = Vector2(715, 646)
+position = Vector2(796, 752)
 
 [node name="Chasm3" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="23" unique_id=1930766387 instance=ExtResource("6_kg817")]
 position = Vector2(809, 557)
 
 [node name="Chasm4" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="24" unique_id=1452170702 instance=ExtResource("6_kg817")]
-position = Vector2(1283, 748)
+position = Vector2(1109, 749)
 
 [node name="LandingSite" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="0" unique_id=1178872670 instance=ExtResource("7_mwd2l")]
-position = Vector2(881, 617)
+position = Vector2(879, 617)
 
 [node name="Ranch" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="1" unique_id=2068667409 instance=ExtResource("8_0prlu")]
 position = Vector2(644, 553)
