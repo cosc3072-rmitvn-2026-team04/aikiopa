@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://erfnhuloq32r"]
+
+[ext_resource type="Shader" uid="uid://cc8851x1in2du" path="res://shaders/menu_blur.gdshader" id="1_l0jx6"]
+
+[resource]
+shader = ExtResource("1_l0jx6")
+shader_parameter/strength = 3.0000001392401203
+shader_parameter/mix_percentage = 0.6000000285

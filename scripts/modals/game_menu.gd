@@ -53,7 +53,7 @@ func _on_save_button_pressed() -> void:
 
 # Listens to %QuitToMainMenuButton.pressed.connect().
 func _on_quit_to_main_menu_button_pressed() -> void:
-	acted.emit(&"quit_game")
+	acted.emit(&"quit_to_main_menu")
 
 #endregion
 # ============================================================================ #

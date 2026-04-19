@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://btlo4kj56j4q1" path="res://scripts/modals/game_menu.gd" id="1_k7vw1"]
 [ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="1_wifwp"]
+[ext_resource type="Material" uid="uid://erfnhuloq32r" path="res://resources/materials/game_menu_shader_material.tres" id="3_0kro7"]
 
 [node name="GameMenu" type="Control" unique_id=650760349]
 layout_mode = 3
@@ -15,6 +16,7 @@ script = ExtResource("1_k7vw1")
 metadata/_custom_type_script = "uid://cupvablkoadik"
 
 [node name="OverlayColorRect" type="ColorRect" parent="." unique_id=1260311588]
+material = ExtResource("3_0kro7")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,23 +38,29 @@ offset_right = 0.5
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 20
 
 [node name="GameMenuLabel" type="Label" parent="OverlayColorRect/VBoxContainer" unique_id=994679446]
 layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 36
 text = "Menu"
 horizontal_alignment = 1
 
-[node name="ResumeButton" type="Button" parent="OverlayColorRect/VBoxContainer" unique_id=185200360]
+[node name="VBoxContainer" type="VBoxContainer" parent="OverlayColorRect/VBoxContainer" unique_id=1949990094]
+layout_mode = 2
+
+[node name="ResumeButton" type="Button" parent="OverlayColorRect/VBoxContainer/VBoxContainer" unique_id=185200360]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Resume"
 
-[node name="SaveButton" type="Button" parent="OverlayColorRect/VBoxContainer" unique_id=70006967]
+[node name="SaveButton" type="Button" parent="OverlayColorRect/VBoxContainer/VBoxContainer" unique_id=70006967]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Save"
 
-[node name="QuitToMainMenuButton" type="Button" parent="OverlayColorRect/VBoxContainer" unique_id=60178488]
+[node name="QuitToMainMenuButton" type="Button" parent="OverlayColorRect/VBoxContainer/VBoxContainer" unique_id=60178488]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Quit to Main Menu"

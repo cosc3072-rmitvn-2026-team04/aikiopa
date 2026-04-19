@@ -27,7 +27,6 @@ enum GameModes {
 #region Variables
 
 @export var game_mode: GameModes = GameModes.FREE_PLAY
-
 @onready var _building_stack_controller: Node = %BuildingStackController
 
 #endregion
@@ -55,18 +54,45 @@ func _ready() -> void:
 	_init_building_stack([])
 
 	_init_cameras()
-
 	_init_game_menu()
+	_init_game_over_menu()
 
 
 func _process(_delta: float) -> void:
 	_process_auto_world_generation()
 	_render_shroud()
+	if is_game_over(
+			Global.game_state.building_stack.size(),
+			Global.game_state.population,
+			Global.game_state.buildings.size()):
+		%GameOverMenu.open()
+		%GameOverMenu.set_population(Global.game_state.population)
+		GameplayEventBus.game_over.emit(Global.game_state.population)
 
 
 func _input(event: InputEvent) -> void:
 	_input_command_game_menu(event)
 	_input_update_gameplay_debug_mode(event)
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Public methods
+
+## Returns [code][/code] if game over conditions has been satisfied.
+func is_game_over(
+		building_stack_count: int,
+		population: int,
+		buildings_placed: int
+) -> bool:
+	if buildings_placed > 1:
+		if building_stack_count == 0:
+			return true
+		if population == 0:
+			return true
+	return false
 
 #endregion
 # ============================================================================ #
@@ -120,6 +146,11 @@ func _init_game_menu() -> void:
 	%GameMenu.acted.connect(_on_game_menu_acted)
 	%GameMenu.close()
 
+
+func _init_game_over_menu() -> void:
+	%GameOverMenu.acted.connect(_on_game_over_menu_acted)
+	%GameOverMenu.close()
+
 #endregion
 
 
@@ -168,7 +199,21 @@ func _on_game_menu_acted(action: StringName) -> void:
 		&"save_session":
 			%GameMenu.close()
 			push_error("Not implemented.")
-		&"quit_game":
+		&"quit_to_main_menu":
+			%GameMenu.close()
+			container_scene.scene_finished.emit(GameScene2D.SceneKey.MAIN_MENU)
+
+
+# Listes to %GameOverMenu.acted(action: StringName).
+func _on_game_over_menu_acted(action: StringName) -> void:
+	match action:
+		&"save_snapshot":
+			%GameMenu.close()
+			push_error("Not implemented.")
+		&"new_session":
+			%GameMenu.close()
+			container_scene.scene_finished.emit(GameScene2D.SceneKey.FREE_PLAY)
+		&"quit_to_main_menu":
 			%GameMenu.close()
 			container_scene.scene_finished.emit(GameScene2D.SceneKey.MAIN_MENU)
 
