@@ -239,19 +239,29 @@ func parse_rules(
 	var enclosed_forest_areas: Array[Vector2i] = _get_enclosed_forest_areas_at(coords)
 	if not enclosed_forest_areas.is_empty():
 		for enclosed_forest_coords: Vector2i in enclosed_forest_areas:
-			if summarized:
-				parse_result.interaction_result.set_population_change(
-						parse_result.interaction_result.get_population_change()
-						+ combo_rule_forest_population_gain)
-				parse_result.interaction_result.set_building_bonus(
-						parse_result.interaction_result.get_building_bonus()
-						+ combo_rule_forest_building_bonus_gain)
-			else:
-				parse_result.interaction_result.set(
-						enclosed_forest_coords,
-						InteractionResult.new(
-								combo_rule_forest_population_gain,
-								combo_rule_forest_building_bonus_gain))
+			if enclosed_forest_coords not in Global.game_state.enclosed_forest_coords:
+				if summarized:
+					parse_result.interaction_result.set_population_change(
+							parse_result.interaction_result.get_population_change()
+							+ combo_rule_forest_population_gain)
+					parse_result.interaction_result.set_building_bonus(
+							parse_result.interaction_result.get_building_bonus()
+							+ combo_rule_forest_building_bonus_gain)
+				else:
+					parse_result.interaction_result.set(
+							enclosed_forest_coords,
+							InteractionResult.new(
+									combo_rule_forest_population_gain,
+									combo_rule_forest_building_bonus_gain))
+	if coords in Global.game_state.enclosed_forest_coords:
+		if summarized:
+			parse_result.interaction_result.set_population_change(
+					parse_result.interaction_result.get_population_change()
+					- combo_rule_forest_population_gain)
+		else:
+			parse_result.interaction_result[coords].set_population_change(
+					parse_result.interaction_result[coords].get_population_change()
+					- combo_rule_forest_population_gain)
 	#endregion
 
 	return parse_result
