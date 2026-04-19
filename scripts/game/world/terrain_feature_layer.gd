@@ -51,6 +51,19 @@ func get_feature_at(coords: Vector2i) -> TerrainFeature.FeatureType:
 	return _terrain_features[coords].get_type()
 
 
+## Returns a reference to the [TerrainFeature] instance at [param coords].
+## Returns [code]null[/code] if there is no terrain feature at the specified
+## coordinates.[br]
+## [br]
+## [color=orange][b]WARNING:[/b] Extra caution must be taken when modifying the
+## returned instance for it being a reference, and thus will produce
+## side-effects on any modification to its properties.[/color]
+func get_feature_instance_at(coords: Vector2i) -> TerrainFeature:
+	if not has_feature_at(coords):
+		return null
+	return _terrain_features[coords]
+
+
 ## Returns [code]true[/code] if there is a terrain feature at [param coords].
 func has_feature_at(coords: Vector2i) -> bool:
 	return _terrain_features.has(coords)
