@@ -28,6 +28,11 @@ var population_change_preview_positive_color: Color = Color.GREEN
 @export_color_no_alpha
 var population_change_preview_negative_color: Color = Color.RED
 
+## Color of the [code]PopulationChangePreviewLabel[/code] when its value is
+## equal to [code]0[/code].
+@export_color_no_alpha
+var population_change_preview_neutral_color: Color = Color.WHITE
+
 
 @export_subgroup("Building Bonus Preview", "building_bonus_preview")
 
@@ -169,23 +174,19 @@ func _snap_preview(
 			BuildingRulesetEngine.InteractionResult.sum(interaction_results.values())
 
 	var total_population_change = summarized_interaction_result.get_population_change()
-	if total_population_change < 0:
-		%PopulationChangePreviewLabel.show()
-		%PopulationChangePreviewLabel.text = "%d👨‍🚀" % [total_population_change]
-		if %PopulationChangePreviewLabel.has_theme_color_override(&"font_color"):
-			%PopulationChangePreviewLabel.remove_theme_color_override(&"font_color")
-		%PopulationChangePreviewLabel.add_theme_color_override(
-				&"font_color", population_change_preview_negative_color)
-	elif total_population_change > 0:
-		%PopulationChangePreviewLabel.show()
-		%PopulationChangePreviewLabel.text = "+%d👨‍🚀" % [total_population_change]
-		if %PopulationChangePreviewLabel.has_theme_color_override(&"font_color"):
-			%PopulationChangePreviewLabel.remove_theme_color_override(&"font_color")
+	%PopulationChangePreviewLabel.show()
+	%PopulationChangePreviewLabel.text = "%+d👨‍🚀" % [total_population_change]
+	if %PopulationChangePreviewLabel.has_theme_color_override(&"font_color"):
+		%PopulationChangePreviewLabel.remove_theme_color_override(&"font_color")
+	if total_population_change > 0:
 		%PopulationChangePreviewLabel.add_theme_color_override(
 				&"font_color", population_change_preview_positive_color)
+	elif total_population_change < 0:
+		%PopulationChangePreviewLabel.add_theme_color_override(
+				&"font_color", population_change_preview_negative_color)
 	else:
-		%PopulationChangePreviewLabel.text = "NaN👨‍🚀"
-		%PopulationChangePreviewLabel.hide()
+		%PopulationChangePreviewLabel.add_theme_color_override(
+				&"font_color", population_change_preview_neutral_color)
 
 	var total_building_bonus: int = summarized_interaction_result.get_building_bonus()
 	if total_building_bonus > 0:
