@@ -6,6 +6,7 @@
 
 [node name="Ranch" unique_id=1178872670 instance=ExtResource("1_wch6q")]
 script = ExtResource("2_2x0iu")
+variations = Array[CompressedTexture2D]([ExtResource("2_jnsub")])
 
 [node name="Sprite2D" parent="." index="0" unique_id=906012488]
 position = Vector2(0, -4.5)

@@ -6,6 +6,7 @@
 
 [node name="WindFarm" unique_id=1178872670 instance=ExtResource("1_w4082")]
 script = ExtResource("2_y343v")
+variations = Array[CompressedTexture2D]([ExtResource("2_8qrjs")])
 
 [node name="Sprite2D" parent="." index="0" unique_id=906012488]
 position = Vector2(0, -14.5)

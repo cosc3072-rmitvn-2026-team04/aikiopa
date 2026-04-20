@@ -4,8 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://dti3722xw4pdt" path="res://assets/objects/terrain_features/terrain_feature_fishes_var0.png" id="2_b7m4h"]
 [ext_resource type="Script" uid="uid://brv62yu5y6t0n" path="res://scripts/game/objects/terrain_features/fishes.gd" id="2_xd8ni"]
 
-[node name="Fish" unique_id=609911264 instance=ExtResource("1_h7clm")]
+[node name="Fishes" unique_id=609911264 instance=ExtResource("1_h7clm")]
 script = ExtResource("2_xd8ni")
+variations = Array[CompressedTexture2D]([ExtResource("2_b7m4h")])
 
 [node name="Sprite2D" parent="." index="0" unique_id=929203464]
 texture = ExtResource("2_b7m4h")

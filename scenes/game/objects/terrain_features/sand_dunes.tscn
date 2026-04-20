@@ -6,6 +6,7 @@
 
 [node name="SandDunes" unique_id=609911264 instance=ExtResource("1_5uyff")]
 script = ExtResource("2_rwlqa")
+variations = Array[CompressedTexture2D]([ExtResource("2_3a4v4")])
 
 [node name="Sprite2D" parent="." index="0" unique_id=929203464]
 texture = ExtResource("2_3a4v4")

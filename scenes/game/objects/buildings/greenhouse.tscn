@@ -6,6 +6,7 @@
 
 [node name="Greenhouse" unique_id=1178872670 instance=ExtResource("1_1psii")]
 script = ExtResource("2_y4axj")
+variations = Array[CompressedTexture2D]([ExtResource("2_7e8cd")])
 
 [node name="Sprite2D" parent="." index="0" unique_id=906012488]
 texture = ExtResource("2_7e8cd")

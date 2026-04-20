@@ -48,6 +48,16 @@ const BUILDING_NAME: Dictionary[BuildingType, String] = {
 
 
 # ============================================================================ #
+#region Exported properties
+
+## Sprite variations.
+@export var variations: Array[CompressedTexture2D] = []
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
 #region Public methods
 
 ## Returns the [enum Building.BuildingType] of this [Building] instance.[br]

@@ -6,6 +6,7 @@
 
 [node name="Mountain" unique_id=609911264 instance=ExtResource("1_s3qhr")]
 script = ExtResource("2_sgby7")
+variations = Array[CompressedTexture2D]([ExtResource("2_jqh5q")])
 
 [node name="Sprite2D" parent="." index="0" unique_id=929203464]
 position = Vector2(0, -8.5)

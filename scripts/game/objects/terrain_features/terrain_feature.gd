@@ -19,6 +19,16 @@ enum FeatureType {
 
 
 # ============================================================================ #
+#region Exported properties
+
+## Sprite variations.
+@export var variations: Array[CompressedTexture2D] = []
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
 #region Public methods
 
 ## Returns the [enum FeatureType] of this [TerrainFeature] instance.[br]
