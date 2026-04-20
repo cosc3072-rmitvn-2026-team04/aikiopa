@@ -196,17 +196,17 @@ func _snap_preview(
 		%BuildingBonusPreviewLabel.hide()
 
 	_reset_environment_interaction_result_labels()
-	for source_coords: Vector2i in interaction_results.keys():
-		if source_coords != map_coords:
+	for interaction_coords: Vector2i in interaction_results.keys():
+		if interaction_coords != map_coords:
 			var interaction_result: BuildingRulesetEngine.InteractionResult =\
-					interaction_results[source_coords]
+					interaction_results[interaction_coords]
 			var interaction_result_label: Node2D =\
 					_interaction_result_label_scene.instantiate()
 			interaction_result_label.display(
 					interaction_result.get_population_change(),
 				interaction_result.get_building_bonus())
 
-			var target_label_position: Vector2 = world.map_to_local(source_coords)
+			var target_label_position: Vector2 = world.map_to_local(interaction_coords)
 			target_label_position = world.to_global(target_label_position)
 			target_label_position = to_local(target_label_position)
 			interaction_result_label.position = target_label_position
@@ -253,16 +253,16 @@ func _apply_blocked_context(
 			]
 	):
 		_reset_environment_interaction_result_labels()
-		for source_coords: Vector2i in interaction_results.keys():
+		for interaction_coords: Vector2i in interaction_results.keys():
 			if(
-					source_coords == map_coords
-					or interaction_results[source_coords] == null
+					interaction_coords == map_coords
+					or interaction_results[interaction_coords] == null
 			):
 				var interaction_result_label: Node2D =\
 						_interaction_result_label_scene.instantiate()
 				interaction_result_label.display(0, 0, true)
 
-				var target_label_position: Vector2 = world.map_to_local(source_coords)
+				var target_label_position: Vector2 = world.map_to_local(interaction_coords)
 				target_label_position = world.to_global(target_label_position)
 				target_label_position = to_local(target_label_position)
 				interaction_result_label.position = target_label_position

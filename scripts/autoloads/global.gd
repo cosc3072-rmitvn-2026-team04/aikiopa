@@ -96,8 +96,11 @@ class GameState extends Node:
 	## coordinates.
 	var buildings: Dictionary[Vector2i, Building] = {}
 
-	## The list consisting of coordinates of the colony's edge buildings.
+	## The list of building coordinates at the colony's edge.
 	var edge_coords: Array[Vector2i] = []
+
+	## The list of Forest coordinates already enclosed by the colony.
+	var enclosed_forest_coords: Array[Vector2i] = []
 
 
 	## Resets the game state.

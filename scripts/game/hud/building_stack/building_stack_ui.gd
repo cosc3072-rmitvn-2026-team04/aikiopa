@@ -165,7 +165,7 @@ func _on_building_stack_building_popped(_building: Building.BuildingType) -> voi
 	_update_building_stack_position()
 	top_building_card.queue_free()
 
-	if Global.game_state.building_stack.size() == 0:
+	if Global.game_state.building_stack.is_empty():
 		# TODO: This could be made prettier using a Tween animation on its size.
 		%BuildingStackCountTextureRect.hide()
 
