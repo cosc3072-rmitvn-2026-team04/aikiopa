@@ -97,10 +97,10 @@ position = Vector2(809, 557)
 position = Vector2(1109, 749)
 
 [node name="LandingSite" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="0" unique_id=1178872670 instance=ExtResource("7_mwd2l")]
-position = Vector2(879, 617)
+position = Vector2(881, 655)
 
 [node name="Ranch" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="1" unique_id=2068667409 instance=ExtResource("8_0prlu")]
-position = Vector2(644, 553)
+position = Vector2(649, 355)
 
 [node name="Ranch2" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="2" unique_id=709261057 instance=ExtResource("8_0prlu")]
 position = Vector2(805, 356)
@@ -112,7 +112,7 @@ position = Vector2(1356, 641)
 position = Vector2(1439, 738)
 
 [node name="WindFarm" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="5" unique_id=195833678 instance=ExtResource("10_7qspy")]
-position = Vector2(1188, 627)
+position = Vector2(1192, 666)
 
 [node name="WindFarm2" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="6" unique_id=253609113 instance=ExtResource("10_7qspy")]
 position = Vector2(1509, 440)
@@ -124,19 +124,19 @@ position = Vector2(1283, 340)
 position = Vector2(475, 731)
 
 [node name="Greenhouse2" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="9" unique_id=1373879327 instance=ExtResource("12_ylelj")]
-position = Vector2(324, 732)
+position = Vector2(321, 748)
 
 [node name="Fishery" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="10" unique_id=2049153507 instance=ExtResource("13_l82yw")]
-position = Vector2(640, 750)
+position = Vector2(727, 846)
 
 [node name="Fishery2" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="11" unique_id=2025811653 instance=ExtResource("13_l82yw")]
 position = Vector2(478, 553)
 
 [node name="Factory" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="12" unique_id=1361406799 instance=ExtResource("14_y87f1")]
-position = Vector2(963, 736)
+position = Vector2(799, 746)
 
 [node name="Factory2" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="13" unique_id=1987318850 instance=ExtResource("14_y87f1")]
-position = Vector2(1360, 442)
+position = Vector2(1357, 438)
 
 [node name="NuclearReactor" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="14" unique_id=1999556063 instance=ExtResource("15_0prlu")]
 position = Vector2(1436, 344)
