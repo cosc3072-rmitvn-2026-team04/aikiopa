@@ -86,7 +86,8 @@ class GameState extends Node:
 	## The population in the current game session.
 	var population: int = 0
 
-	## The amount of population milestones reached in thecurrent game session.
+	## The amount of population milestones already reached in the current game
+	## session.
 	var population_milestones_reached: int = 0
 
 	## The building stack in the current game session.
@@ -110,7 +111,7 @@ class GameState extends Node:
 		building_stack = []
 		buildings = {}
 		edge_coords = []
-
+		enclosed_forest_coords = []
 
 #endregion
 # ============================================================================ #
