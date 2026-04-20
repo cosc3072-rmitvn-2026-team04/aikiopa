@@ -110,9 +110,9 @@ func place_building_at(
 			])
 			return
 
-	# Quietly clear existing building, if any.
+	# Clear existing building, if any.
 	if has_building_at(coords):
-		destroy_building_at(coords, true)
+		destroy_building_at(coords)
 
 	# Clear terrain feature, if any.
 	if world.has_terrain_feature_at(coords):
@@ -159,10 +159,7 @@ func place_building_at(
 ## [br]
 ## Set [param quiet] to [code]true[/code] to execute without notifying other
 ## game systems. Useful for scripted game events.
-func destroy_building_at(
-		coords: Vector2i,
-		quiet: bool = false
-) -> Building.BuildingType:
+func destroy_building_at(coords: Vector2i) -> Building.BuildingType:
 	if not has_building_at(coords):
 		return Building.BuildingType.NONE
 
@@ -172,8 +169,6 @@ func destroy_building_at(
 	remove_child(building)
 	building.queue_free()
 
-	if not quiet:
-		GameplayEventBus.building_destroyed.emit(coords, building_type)
 	return building_type
 
 #endregion

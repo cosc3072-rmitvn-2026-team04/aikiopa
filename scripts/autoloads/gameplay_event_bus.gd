@@ -44,6 +44,7 @@ signal building_placed(
 		interaction_result: BuildingRulesetEngine.InteractionResult)
 
 
+# TODO: Implement this in #21.
 ## Emitted when a [Building] of [param building_type] at [param coords] is
 ## destroyed.
 @warning_ignore("unused_signal")

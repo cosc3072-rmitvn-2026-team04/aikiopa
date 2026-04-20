@@ -276,10 +276,7 @@ func place_building_at(
 ## [br]
 ## Returns [constant Building.BuildingType.NONE] if there is no building at
 ## [param coords].
-## [br]
-## Set [param quiet] to [code]true[/code] to execute without notifying other
-## game systems. Useful for scripted game events.
-func destroy_building_at(coords: Vector2i) -> bool:
+func destroy_building_at(coords: Vector2i) -> Building.BuildingType:
 	return get_building_layer().destroy_building_at(coords)
 
 
