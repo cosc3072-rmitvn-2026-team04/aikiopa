@@ -331,21 +331,23 @@ func _on_building_placement_requested(
 	var map_coords: Vector2i = local_to_map(mouse_position)
 
 	var ruleset_parse_result: Dictionary[StringName, Variant] =\
-			building_ruleset_engine.parse_rules(map_coords, building_type)
+			building_ruleset_engine.parse_rules(map_coords, building_type, false)
 	if (
 			ruleset_parse_result.placement_check_status
 			== BuildingRulesetEngine.PlacementCheckStatus.ALLOWED
 	):
-		if not ruleset_parse_result.interaction_result:
-			push_error(
-					"Unexpected value for 'interaction_result':"
-					+ "Should not be 'null' when 'placement_check_status' is '0'")
-			return
 		place_building_at(map_coords, building_type)
+		for interaction_coords: Vector2i in ruleset_parse_result.interaction_result.keys():
+			if get_terrain_at(interaction_coords) in [
+				TerrainType.PLAIN_FOREST,
+				TerrainType.GRASSLAND_FOREST,
+			]:
+				Global.game_state.enclosed_forest_coords.append(interaction_coords)
 		GameplayEventBus.building_placed.emit(
 				map_coords,
 				building_type,
-				ruleset_parse_result.interaction_result.duplicate())
+				BuildingRulesetEngine.InteractionResult.sum(
+						ruleset_parse_result.interaction_result.values()))
 
 #endregion
 # ============================================================================ #

@@ -34,6 +34,21 @@ enum PlacementCheckStatus {
 # ============================================================================ #
 #region Exported properties
 
+@export_group("Combo Rules", "combo_rule")
+
+## The amount of population gained per forest tile when a region of forest is
+## enclosed.
+@export_range(1, 100, 1, "suffix:pops/tile")
+var combo_rule_forest_population_gain: int = 10
+
+## The amount of building bonus gained per forest tile when a region of forest
+## is enclosed.
+@export_range(0, 50, 1, "suffix:buildings/tile")
+var combo_rule_forest_building_bonus_gain: int = 0
+
+
+@export_group("", "")
+
 @export var world: World
 
 #endregion
@@ -125,6 +140,7 @@ func parse_rules(
 				PlacementCheckStatus.BLOCKED_BY_BUILDING,
 				{ coords: null }, summarized)
 
+	#region Step 1: Building versus Terrain check
 	# Step 1: Building versus Terrain check. Must pass before next step.
 	var bvt_parse_result: Array[Variant] = _bvt_rules[[
 		building_type, world.get_terrain_at(coords)
@@ -137,7 +153,9 @@ func parse_rules(
 			bvt_parse_result[0],
 			{ coords: bvt_parse_result[1].duplicate() },
 			summarized)
+	#endregion
 
+	#region Step 2: Building versus adjacent Building(s) check
 	# Step 2: Building versus adjacent Building(s) check. Previous step must
 	# pass.
 	var surrounding_neighbor_coords: Array[Vector2i] =\
@@ -214,6 +232,37 @@ func parse_rules(
 						interaction_result.get_population_change()
 						+ 3) # Increase reward to +5 pops.
 			#endregion
+	#endregion
+
+	#region Step 3: Forest enclosure check
+	# Step 3: Forest enclosure check. Previous step must pass.
+	var enclosed_forest_areas: Array[Vector2i] = _get_enclosed_forest_areas_at(coords)
+	if not enclosed_forest_areas.is_empty():
+		for enclosed_forest_coords: Vector2i in enclosed_forest_areas:
+			if enclosed_forest_coords not in Global.game_state.enclosed_forest_coords:
+				if summarized:
+					parse_result.interaction_result.set_population_change(
+							parse_result.interaction_result.get_population_change()
+							+ combo_rule_forest_population_gain)
+					parse_result.interaction_result.set_building_bonus(
+							parse_result.interaction_result.get_building_bonus()
+							+ combo_rule_forest_building_bonus_gain)
+				else:
+					parse_result.interaction_result.set(
+							enclosed_forest_coords,
+							InteractionResult.new(
+									combo_rule_forest_population_gain,
+									combo_rule_forest_building_bonus_gain))
+	if coords in Global.game_state.enclosed_forest_coords:
+		if summarized:
+			parse_result.interaction_result.set_population_change(
+					parse_result.interaction_result.get_population_change()
+					- combo_rule_forest_population_gain)
+		else:
+			parse_result.interaction_result[coords].set_population_change(
+					parse_result.interaction_result[coords].get_population_change()
+					- combo_rule_forest_population_gain)
+	#endregion
 
 	return parse_result
 
@@ -301,6 +350,77 @@ func _has_adjacent_building(coords: Vector2i) -> bool:
 		if world.has_building_at(neighbor_coords):
 			return true
 	return false
+
+
+func _get_enclosed_forest_areas_at(coords: Vector2i) -> Array[Vector2i]:
+	const FOREST_TERRAIN_TYPES: Array[World.TerrainType] = [
+		World.TerrainType.PLAIN_FOREST,
+		World.TerrainType.GRASSLAND_FOREST,
+	]
+	const BLOCKER_TERRAIN_TYPES: Array[World.TerrainType] = [
+		World.TerrainType.DEEP_WATER,
+		World.TerrainType.SHALLOW_WATER,
+		World.TerrainType.SHALLOW_WATER_FISHES,
+		World.TerrainType.PLAIN_MOUNTAIN,
+		World.TerrainType.GRASSLAND_MOUNTAIN,
+		World.TerrainType.DESERT_MOUNTAIN,
+		World.TerrainType.PLAIN_CHASM,
+		World.TerrainType.GRASSLAND_CHASM,
+		World.TerrainType.DESERT_CHASM,
+	]
+
+	var enclosed_forest_areas: Array[Vector2i] = []
+
+	var surrounding_neighbor_coords: Array[Vector2i] =\
+			Math.HexGrid.get_offset_surrounding_neighbors(
+					coords,
+					Math.HexGrid.OffsetLayout.ODD_R)
+	for seed_coords: Vector2i in surrounding_neighbor_coords:
+		var discovered_forest_coords: Array[Vector2i] = []
+		if (
+				seed_coords not in discovered_forest_coords
+				and world.get_terrain_at(seed_coords) in FOREST_TERRAIN_TYPES
+		):
+			# Start BFS flood fill.
+			var enclosed: bool = true
+			discovered_forest_coords.append(seed_coords)
+			var bfs_coords_queue: Array[Vector2i] = [seed_coords]
+			while not bfs_coords_queue.is_empty():
+				var current_coords: Vector2i = bfs_coords_queue.pop_front()
+				var current_coords_surrounding_neighbors: Array[Vector2i] =\
+						Math.HexGrid.get_offset_surrounding_neighbors(
+								current_coords,
+								Math.HexGrid.OffsetLayout.ODD_R)
+				for current_coords_neighbor: Vector2i in current_coords_surrounding_neighbors:
+					if current_coords_neighbor == coords:
+						# Skip [param coords] since it would become a building.
+						continue
+
+					var current_coords_neighbor_terrain: World.TerrainType =\
+						world.get_terrain_at(current_coords_neighbor)
+					if (
+							not world.has_building_at(current_coords_neighbor)
+							and not (
+									current_coords_neighbor_terrain
+									in BLOCKER_TERRAIN_TYPES
+							) and not (
+									current_coords_neighbor_terrain
+									in FOREST_TERRAIN_TYPES
+							)
+					):
+						enclosed = false
+						break
+					if (
+							current_coords_neighbor not in discovered_forest_coords
+							and current_coords_neighbor_terrain in FOREST_TERRAIN_TYPES
+					):
+						discovered_forest_coords.append(current_coords_neighbor)
+						bfs_coords_queue.push_back(current_coords_neighbor)
+				if not enclosed:
+					break
+			if enclosed:
+				enclosed_forest_areas.append_array(discovered_forest_coords)
+	return enclosed_forest_areas
 
 
 func _create_parse_result(
