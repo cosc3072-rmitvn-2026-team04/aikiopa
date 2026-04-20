@@ -38,6 +38,7 @@ Make sure these dependencies are installed before continuing. Using a package ma
 ├── 📂tests/            # GUT tests (`.gd`)
 ├── 📂build/            # Export artifacts (`.exe`)
 ├── 📂test_results/     # JUnit XML test reports (`.xml`)
+├── .clang-format
 ├── .gdlintrc
 ├── .editorconfig
 ├── .gitattributes
@@ -46,7 +47,7 @@ Make sure these dependencies are installed before continuing. Using a package ma
 ├── test.ps1            # Unit test automation script
 ├── cc_check.sh         # Cyclomatic complexity analysis (gdradon) automation script
 ├── export_presets.cfg  # Godot export config
-├── icon.svg            # Project icon
+├── icon.png            # Project icon
 ├── project.godot       # Godot project config
 ├── LICENSE             # License information
 ├── CONTRIBUTING.md     # Contributing guidelines
