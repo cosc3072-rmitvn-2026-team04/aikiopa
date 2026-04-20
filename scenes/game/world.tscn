@@ -34,6 +34,7 @@ y_sort_enabled = true
 
 [node name="TerrainTileMapLayer" type="TileMapLayer" parent="GroundLayer" unique_id=1094802460]
 unique_name_in_owner = true
+z_index = -1
 tile_set = ExtResource("3_q5tta")
 script = ExtResource("3_vn813")
 
