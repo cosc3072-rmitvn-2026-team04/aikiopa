@@ -112,7 +112,7 @@ position = Vector2(1356, 641)
 position = Vector2(1439, 738)
 
 [node name="WindFarm" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="5" unique_id=195833678 instance=ExtResource("10_7qspy")]
-position = Vector2(1188, 627)
+position = Vector2(1192, 666)
 
 [node name="WindFarm2" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="6" unique_id=253609113 instance=ExtResource("10_7qspy")]
 position = Vector2(1509, 440)
@@ -124,10 +124,10 @@ position = Vector2(1283, 340)
 position = Vector2(475, 731)
 
 [node name="Greenhouse2" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="9" unique_id=1373879327 instance=ExtResource("12_ylelj")]
-position = Vector2(324, 732)
+position = Vector2(321, 748)
 
 [node name="Fishery" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="10" unique_id=2049153507 instance=ExtResource("13_l82yw")]
-position = Vector2(640, 750)
+position = Vector2(727, 846)
 
 [node name="Fishery2" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="11" unique_id=2025811653 instance=ExtResource("13_l82yw")]
 position = Vector2(478, 553)
