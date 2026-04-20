@@ -12,6 +12,9 @@ extends Node
 ## generate a building with available placement for the player to not get stuck.
 const MAX_REROLL_COUNT: int = 10_000
 
+# HACK: Without this constant, rapid adding of buildings would make the building
+# stack UI put its cards at the wrong positions. Good enough for now, fix when
+# this becomes critical.
 ## The delay in seconds between receiving consecutive building rewards.
 const REWARD_DELAY: float = 0.1
 
