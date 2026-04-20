@@ -147,42 +147,42 @@ func set_type(building_type: Building.BuildingType) -> void:
 			$CardForegroundSprite2D.texture = load(
 					BUILDING_CARD_ASSET_DIR.path_join("housing_fg.png"))
 			$BuildingSprite2D.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_housing.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_housing_var0.png"))
 		Building.BuildingType.GREENHOUSE:
 			$CardForegroundSprite2D.texture = load(
 					BUILDING_CARD_ASSET_DIR.path_join("food_fg.png"))
 			$BuildingSprite2D.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_greenhouse.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_greenhouse_var0.png"))
 		Building.BuildingType.RANCH:
 			$CardForegroundSprite2D.texture = load(
 					BUILDING_CARD_ASSET_DIR.path_join("food_fg.png"))
 			$BuildingSprite2D.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_ranch.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_ranch_var0.png"))
 		Building.BuildingType.FISHERY:
 			$CardForegroundSprite2D.texture = load(
 					BUILDING_CARD_ASSET_DIR.path_join("food_fg.png"))
 			$BuildingSprite2D.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_fishery.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_fishery_var0.png"))
 		Building.BuildingType.SOLAR_FARM:
 			$CardForegroundSprite2D.texture = load(
 					BUILDING_CARD_ASSET_DIR.path_join("energy_fg.png"))
 			$BuildingSprite2D.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_solar_farm.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_solar_farm_var0.png"))
 		Building.BuildingType.WIND_FARM:
 			$CardForegroundSprite2D.texture = load(
 					BUILDING_CARD_ASSET_DIR.path_join("energy_fg.png"))
 			$BuildingSprite2D.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_wind_farm.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_wind_farm_var0.png"))
 		Building.BuildingType.NUCLEAR_REACTOR:
 			$CardForegroundSprite2D.texture = load(
 					BUILDING_CARD_ASSET_DIR.path_join("energy_fg.png"))
 			$BuildingSprite2D.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_nuclear_reactor.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_nuclear_reactor_var0.png"))
 		Building.BuildingType.FACTORY:
 			$CardForegroundSprite2D.texture = load(
 					BUILDING_CARD_ASSET_DIR.path_join("industry_fg.png"))
 			$BuildingSprite2D.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_factory.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_factory_var0.png"))
 		_:
 			push_error("Unrecognized building type: '%s'." % [
 				Building.BuildingType.keys()[building_type]

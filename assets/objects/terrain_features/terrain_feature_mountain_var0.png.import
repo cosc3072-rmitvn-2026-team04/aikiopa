@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dsfub37jnsgb3"
-path="res://.godot/imported/terrain_feature_chasm.png-23271fe7f1b5d1a90a1c3acc7dd12c39.ctex"
+uid="uid://bx26oeqm4ggxx"
+path="res://.godot/imported/terrain_feature_mountain_var0.png-1dfe7cc7d555c9fda369f50b0d7e37b8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/objects/terrain_feature_chasm.png"
-dest_files=["res://.godot/imported/terrain_feature_chasm.png-23271fe7f1b5d1a90a1c3acc7dd12c39.ctex"]
+source_file="res://assets/objects/terrain_features/terrain_feature_mountain_var0.png"
+dest_files=["res://.godot/imported/terrain_feature_mountain_var0.png-1dfe7cc7d555c9fda369f50b0d7e37b8.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdd2qh0mo4cfc"
-path="res://.godot/imported/building_landing_site.png-2cba6767d193017a53e9ad357c916ae2.ctex"
+uid="uid://blv8s18o0w2uu"
+path="res://.godot/imported/building_factory_var0.png-eddeec27a6f9a1cc583f6e916569af64.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/objects/building_landing_site.png"
-dest_files=["res://.godot/imported/building_landing_site.png-2cba6767d193017a53e9ad357c916ae2.ctex"]
+source_file="res://assets/objects/buildings/building_factory_var0.png"
+dest_files=["res://.godot/imported/building_factory_var0.png-eddeec27a6f9a1cc583f6e916569af64.ctex"]
 
 [params]
 

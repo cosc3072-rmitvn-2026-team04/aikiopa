@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://due3x8p1rjvea"]
 
 [ext_resource type="PackedScene" uid="uid://blvhcx1c6kpg7" path="res://scenes/game/objects/terrain_features/_generic.tscn" id="1_s3qhr"]
-[ext_resource type="Texture2D" uid="uid://bx26oeqm4ggxx" path="res://assets/objects/terrain_feature_mountain.png" id="2_jqh5q"]
+[ext_resource type="Texture2D" uid="uid://bx26oeqm4ggxx" path="res://assets/objects/terrain_features/terrain_feature_mountain_var0.png" id="2_jqh5q"]
 [ext_resource type="Script" uid="uid://bkbl6u3np50nf" path="res://scripts/game/objects/terrain_features/mountain.gd" id="2_sgby7"]
 
 [node name="Mountain" unique_id=609911264 instance=ExtResource("1_s3qhr")]

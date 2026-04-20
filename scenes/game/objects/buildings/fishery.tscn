@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://d00cp1m1nbkw5"]
 
 [ext_resource type="PackedScene" uid="uid://q1crh5ps008g" path="res://scenes/game/objects/buildings/_generic.tscn" id="1_ua16u"]
-[ext_resource type="Texture2D" uid="uid://bkc4klgrxu463" path="res://assets/objects/building_fishery.png" id="2_qn3ht"]
+[ext_resource type="Texture2D" uid="uid://bkc4klgrxu463" path="res://assets/objects/buildings/building_fishery_var0.png" id="2_qn3ht"]
 [ext_resource type="Script" uid="uid://cfkgvti3fyu1p" path="res://scripts/game/objects/buildings/fishery.gd" id="2_v77kg"]
 
 [node name="Fishery" unique_id=1178872670 instance=ExtResource("1_ua16u")]

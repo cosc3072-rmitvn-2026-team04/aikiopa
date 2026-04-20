@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cj10xohbicqgv"]
 
 [ext_resource type="PackedScene" uid="uid://blvhcx1c6kpg7" path="res://scenes/game/objects/terrain_features/_generic.tscn" id="1_2km5u"]
-[ext_resource type="Texture2D" uid="uid://jhghyddm5mpa" path="res://assets/objects/terrain_feature_forest.png" id="2_35lf1"]
+[ext_resource type="Texture2D" uid="uid://jhghyddm5mpa" path="res://assets/objects/terrain_features/terrain_feature_forest_var0.png" id="2_35lf1"]
 [ext_resource type="Script" uid="uid://b2kwnqn63c1g7" path="res://scripts/game/objects/terrain_features/forest.gd" id="2_eo1qc"]
 
 [node name="Forest" unique_id=609911264 instance=ExtResource("1_2km5u")]

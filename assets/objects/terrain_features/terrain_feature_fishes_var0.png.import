@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ht1psllv6o3e"
-path="res://.godot/imported/building_nuclear_reactor.png-918e11fd0c3c8a6019c08fea84ea4121.ctex"
+uid="uid://dti3722xw4pdt"
+path="res://.godot/imported/terrain_feature_fishes_var0.png-ab04ef6e0a336d43e3ff2965b0e0131b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/objects/building_nuclear_reactor.png"
-dest_files=["res://.godot/imported/building_nuclear_reactor.png-918e11fd0c3c8a6019c08fea84ea4121.ctex"]
+source_file="res://assets/objects/terrain_features/terrain_feature_fishes_var0.png"
+dest_files=["res://.godot/imported/terrain_feature_fishes_var0.png-ab04ef6e0a336d43e3ff2965b0e0131b.ctex"]
 
 [params]
 
