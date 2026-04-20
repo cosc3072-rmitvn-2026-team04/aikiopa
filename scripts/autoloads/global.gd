@@ -81,7 +81,7 @@ func _exit_tree() -> void:
 
 ## Game state data. Contains relevant information on the current state of the
 ## game.
-class GameState extends Node:
+class GameState extends RefCounted:
 
 	## The population in the current game session.
 	var population: int = 0
@@ -103,6 +103,13 @@ class GameState extends Node:
 	## The list of Forest coordinates already enclosed by the colony.
 	var enclosed_forest_coords: Array[Vector2i] = []
 
+	## Data representing The Shroud.[br]
+	## [br]
+	## [color=orange][b]WARNING:[/b] This affects the internal logic of
+	## [ShroudTileMapLayer]. Take precaution when modifying directly. Prefer the
+	## safer [method ShroudTileMapLayer.get_shroud_data] instead.[/color]
+	var shroud_data: Dictionary[StringName, Array] = {}
+
 
 	## Resets the game state.
 	func reset() -> void:
@@ -112,6 +119,7 @@ class GameState extends Node:
 		buildings = {}
 		edge_coords = []
 		enclosed_forest_coords = []
+		shroud_data = {}
 
 #endregion
 # ============================================================================ #

@@ -95,8 +95,8 @@ func get_shroud_at(coords: Vector2i) -> ShroudType:
 ## sessions.
 func get_shroud_data() -> Dictionary[StringName, Array]:
 	return {
-		"cleared_shroud_coords": _cleared_shroud_coords,
-		"thin_shroud_coords": _thin_shroud_coords,
+		&"cleared_shroud_coords": _cleared_shroud_coords,
+		&"thin_shroud_coords": _thin_shroud_coords,
 	}
 
 
@@ -186,6 +186,7 @@ func _on_building_placed(
 		_interaction_result: BuildingRulesetEngine.InteractionResult
 ) -> void:
 	_append_vision_area_from_range_at(coords)
+	Global.game_state.shroud_data = get_shroud_data()
 
 
 # Listens to UIEventBus.gameplay_debug_mode_shroud_toggled(toggled_on: bool).
