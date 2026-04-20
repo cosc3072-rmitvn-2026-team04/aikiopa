@@ -83,12 +83,35 @@ func _exit_tree() -> void:
 ## game.
 class GameState extends RefCounted:
 
-	## The population in the current game session.
-	var population: int = 0
+	## The [World] map seed of the current game session.[br]
+	## [br]
+	## [b]Note:[/b] The [code]0[/code] value documented here is a placeholder,
+	## and not the actual default seed.[br]
+	## [br]
+	## [color=orange][b]WARNING:[/b] This affects the internal logic of
+	## [WorldGenerator]. DO NOT modify directly. Assign values using
+	## [method WorldGenerator.get_seed] instead.[/color]
+	var map_seed: int = 0
 
-	## The amount of population milestones already reached in the current game
-	## session.
-	var population_milestones_reached: int = 0
+	## The RNG seed of the [BuildingStackController].[br]
+	## [br]
+	## [b]Note:[/b] The [code]0[/code] value documented here is a placeholder,
+	## and not the actual default seed.[br]
+	## [br]
+	## [color=orange][b]WARNING:[/b] This affects the internal logic of
+	## [BuildingStackController]. DO NOT modify directly. Assign values using
+	## [method BuildingStackController.get_session_seed] instead.[/color]
+	var building_stack_seed: int = 0
+
+	## The RNG state of the [BuildingStackController].[br]
+	## [br]
+	## [b]Note:[/b] The [code]0[/code] value documented here is a placeholder,
+	## and not the actual default state.[br]
+	## [br]
+	## [color=orange][b]WARNING:[/b] This affects the internal logic of
+	## [BuildingStackController]. DO NOT modify directly. Assign values using
+	## [method BuildingStackController.get_session_state] instead.[/color]
+	var building_stack_state: int = 0
 
 	## The building stack in the current game session.
 	var building_stack: Array[Building.BuildingType] = []
@@ -110,16 +133,26 @@ class GameState extends RefCounted:
 	## safer [method ShroudTileMapLayer.get_shroud_data] instead.[/color]
 	var shroud_data: Dictionary[StringName, Array] = {}
 
+	## The population in the current game session.
+	var population: int = 0
+
+	## The amount of population milestones already reached in the current game
+	## session.
+	var population_milestones_reached: int = 0
+
 
 	## Resets the game state.
 	func reset() -> void:
-		population = 0
-		population_milestones_reached = 0
+		map_seed = 0
+		building_stack_seed = 0
+		building_stack_state = 0
 		building_stack = []
 		buildings = {}
 		edge_coords = []
 		enclosed_forest_coords = []
 		shroud_data = {}
+		population = 0
+		population_milestones_reached = 0
 
 #endregion
 # ============================================================================ #

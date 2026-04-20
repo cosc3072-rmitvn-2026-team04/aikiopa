@@ -138,6 +138,7 @@ func generate_seeds(rng_seed: Variant = null) -> void:
 		_rng.seed = rng_seed as int
 	else:
 		_rng.randomize()
+	Global.game_state.map_seed = get_seed()
 	h_map.seed = _rng.randi()
 	m_map.seed = _rng.randi()
 	c_map.seed = _rng.randi()
