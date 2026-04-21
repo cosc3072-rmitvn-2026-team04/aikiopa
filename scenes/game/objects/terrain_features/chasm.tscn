@@ -3,10 +3,12 @@
 [ext_resource type="PackedScene" uid="uid://blvhcx1c6kpg7" path="res://scenes/game/objects/terrain_features/_generic.tscn" id="1_1tr88"]
 [ext_resource type="Texture2D" uid="uid://dsfub37jnsgb3" path="res://assets/objects/terrain_features/terrain_feature_chasm_var0.png" id="2_6amod"]
 [ext_resource type="Script" uid="uid://x7r0r4ylo2kc" path="res://scripts/game/objects/terrain_features/chasm.gd" id="2_873r6"]
+[ext_resource type="Texture2D" uid="uid://d2y7ktrktk7ek" path="res://assets/objects/terrain_features/terrain_feature_chasm_var1.png" id="4_qb14r"]
+[ext_resource type="Texture2D" uid="uid://cp4fm6cpm8an5" path="res://assets/objects/terrain_features/terrain_feature_chasm_var2.png" id="5_pvaxj"]
 
 [node name="Chasm" unique_id=609911264 instance=ExtResource("1_1tr88")]
 script = ExtResource("2_873r6")
-variations = Array[CompressedTexture2D]([ExtResource("2_6amod")])
+variations = Array[CompressedTexture2D]([ExtResource("2_6amod"), ExtResource("4_qb14r"), ExtResource("5_pvaxj")])
 
 [node name="Sprite2D" parent="." index="0" unique_id=929203464]
 texture = ExtResource("2_6amod")

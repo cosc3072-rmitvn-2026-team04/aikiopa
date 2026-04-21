@@ -3,10 +3,12 @@
 [ext_resource type="PackedScene" uid="uid://blvhcx1c6kpg7" path="res://scenes/game/objects/terrain_features/_generic.tscn" id="1_s3qhr"]
 [ext_resource type="Texture2D" uid="uid://bx26oeqm4ggxx" path="res://assets/objects/terrain_features/terrain_feature_mountain_var0.png" id="2_jqh5q"]
 [ext_resource type="Script" uid="uid://bkbl6u3np50nf" path="res://scripts/game/objects/terrain_features/mountain.gd" id="2_sgby7"]
+[ext_resource type="Texture2D" uid="uid://dyy4pg2xmdbh1" path="res://assets/objects/terrain_features/terrain_feature_mountain_var1.png" id="4_ssbbi"]
+[ext_resource type="Texture2D" uid="uid://lf335lwa54em" path="res://assets/objects/terrain_features/terrain_feature_mountain_var2.png" id="5_2f65u"]
 
 [node name="Mountain" unique_id=609911264 instance=ExtResource("1_s3qhr")]
 script = ExtResource("2_sgby7")
-variations = Array[CompressedTexture2D]([ExtResource("2_jqh5q")])
+variations = Array[CompressedTexture2D]([ExtResource("2_jqh5q"), ExtResource("4_ssbbi"), ExtResource("5_2f65u")])
 
 [node name="Sprite2D" parent="." index="0" unique_id=929203464]
 position = Vector2(0, -8.5)
