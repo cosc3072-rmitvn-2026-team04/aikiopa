@@ -60,11 +60,13 @@ text = "Start"
 [node name="GalleryButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=1634631360]
 unique_name_in_owner = true
 layout_mode = 2
+disabled = true
 text = "Galery"
 
 [node name="SettingsButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=88263360]
 unique_name_in_owner = true
 layout_mode = 2
+disabled = true
 text = "Settings"
 
 [node name="CreditsButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=174603475]
