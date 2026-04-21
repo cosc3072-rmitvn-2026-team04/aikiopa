@@ -27,6 +27,9 @@ const BVB_RULESET_PATH: String = "res://resources/rulesets/bvb.csv"
 ## Savegame location.
 const SAVE_DIR: String = "user://saves/"
 
+## Snapshot location.
+const SNAPSHOT_DIR: String = "user://snapshots/"
+
 #endregion
 # ============================================================================ #
 
