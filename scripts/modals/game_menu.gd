@@ -1,6 +1,9 @@
 extends GameUI
 
 
+@export var game: Game = null
+
+
 # ============================================================================ #
 #region Godot builtins
 
@@ -58,8 +61,11 @@ func _on_save_button_pressed() -> void:
 
 # Listens to %QuitToMainMenuButton.pressed.
 func _on_quit_to_main_menu_button_pressed() -> void:
-	%GameMenuContainer.hide()
-	%QuitConfirmContainer.show()
+	if game.is_save_dirty():
+		%GameMenuContainer.hide()
+		%QuitConfirmContainer.show()
+		return
+	acted.emit(&"quit_to_main_menu")
 
 
 # Listens to %QuitConfirmNoButton.pressed.

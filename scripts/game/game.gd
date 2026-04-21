@@ -26,16 +26,8 @@ enum GameOverType {
 
 @export var game_mode: GameMode = GameMode.PLAY
 @export var autosave: bool = true # TODO: Move this into Settings (#14).
-@export var autosave_interval: int = 5 # TODO: Move this into Settings (#14).
+@export var autosave_interval: int = 15 # TODO: Move this into Settings (#14).
 @export var container_scene: GameScene2D = null
-
-#endregion
-# ============================================================================ #
-
-
-# ============================================================================ #
-#region Public variables
-
 
 #endregion
 # ============================================================================ #
@@ -45,6 +37,8 @@ enum GameOverType {
 #region Private variables
 
 var _save_slot_index: int = -1
+var _turns_elapsed: int = 0
+var _save_dirty: bool = false
 var _debug_mode_enabled: bool
 @onready var _building_stack_controller: Node = %BuildingStackController
 
@@ -59,12 +53,15 @@ func _ready() -> void:
 	_save_slot_index = Global.current_save_slot_index
 	_debug_mode_enabled = false
 
+	_init_autosave()
 	if Global.is_new_game:
 		Global.game_state = Global.GameState.new()
 		_init_world()
 		_init_population(0)
 		_init_building_stack([])
 		GameplayEventBus.session_created.emit(_save_slot_index)
+		GameSaveService.save(Global.game_state, _save_slot_index)
+		_save_dirty = false
 	else:
 		Global.game_state = GameSaveService.load(_save_slot_index)
 		_load_world()
@@ -97,6 +94,8 @@ func _process(_delta: float) -> void:
 				else GameOverType.NONE
 		)
 		GameplayEventBus.game_over.emit(population, game_over_type)
+		GameSaveService.delete(_save_slot_index)
+		_save_dirty = false
 
 
 func _input(event: InputEvent) -> void:
@@ -109,6 +108,12 @@ func _input(event: InputEvent) -> void:
 
 # ============================================================================ #
 #region Public methods
+
+## Returns [code]true[/code] if the current game state has changed from the last
+## game save.
+func is_save_dirty() -> bool:
+	return _save_dirty
+
 
 ## Returns [code][/code] if game over conditions has been satisfied.
 func is_game_over(
@@ -131,6 +136,10 @@ func is_game_over(
 #region Private methods
 
 #region _ready()
+
+func _init_autosave() -> void:
+	GameplayEventBus.building_placed.connect(_on_building_placed)
+
 
 func _init_world(world_seed: Variant = null) -> void:
 	%World.initialize(world_seed)
@@ -235,6 +244,22 @@ func _input_update_gameplay_debug_mode(event: InputEvent) -> void:
 # ============================================================================ #
 #region Signal listeners
 
+# Listens to GameplayEventBus.building_placed(
+#		coords: Vector2i,
+#		building_type: Building.BuildingType,
+#		interaction_result: BuildingRulesetEngine.InteractionResult).
+func _on_building_placed(
+		_coords: Vector2i,
+		_building_type: Building.BuildingType,
+		_interaction_result: BuildingRulesetEngine.InteractionResult
+) -> void:
+	_turns_elapsed += 1
+	_save_dirty = true
+	if autosave and _turns_elapsed % autosave_interval == 0 and is_save_dirty():
+		GameSaveService.save(Global.game_state, _save_slot_index)
+		_save_dirty = false
+
+
 # Listens to %GameMenu.acted(action: StringName).
 func _on_game_menu_acted(action: StringName) -> void:
 	match action:
@@ -243,6 +268,7 @@ func _on_game_menu_acted(action: StringName) -> void:
 		&"save_session":
 			%GameMenu.close()
 			GameSaveService.save(Global.game_state, _save_slot_index)
+			_save_dirty = false
 		&"quit_to_main_menu":
 			%GameMenu.close()
 			container_scene.scene_finished.emit(GameScene2D.SceneKey.MAIN_MENU)
