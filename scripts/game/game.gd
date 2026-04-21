@@ -25,6 +25,8 @@ enum GameOverType {
 #region Exported properties
 
 @export var game_mode: GameMode = GameMode.PLAY
+@export var autosave: bool = true # TODO: Move this into Settings (#14).
+@export var autosave_interval: int = 5 # TODO: Move this into Settings (#14).
 @export var container_scene: GameScene2D = null
 
 #endregion
@@ -243,7 +245,6 @@ func _on_game_menu_acted(action: StringName) -> void:
 			GameSaveService.save(Global.game_state, _save_slot_index)
 		&"quit_to_main_menu":
 			%GameMenu.close()
-			GameSaveService.save(Global.game_state, _save_slot_index)
 			container_scene.scene_finished.emit(GameScene2D.SceneKey.MAIN_MENU)
 
 
