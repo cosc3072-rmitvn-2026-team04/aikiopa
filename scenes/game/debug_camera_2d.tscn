@@ -33,6 +33,9 @@ content_margin_right = 16.0
 content_margin_bottom = 16.0
 bg_color = Color(0, 0, 0, 0.39215687)
 
+[sub_resource type="Theme" id="Theme_0s1lt"]
+LineEdit/font_sizes/font_size = 24
+
 [node name="DebugCamera2D" type="Camera2D" unique_id=1889864583]
 zoom = Vector2(0.5, 0.5)
 limit_enabled = false
@@ -195,6 +198,31 @@ theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 24
 text = " Popped: NONE "
 vertical_alignment = 1
+
+[node name="PopulationControlContainer" type="VBoxContainer" parent="DebugCanvasLayer/ControlPanelContainer/VBoxContainer/HBoxContainer" unique_id=1877514506]
+layout_mode = 2
+
+[node name="ChangePopulationButton" type="Button" parent="DebugCanvasLayer/ControlPanelContainer/VBoxContainer/HBoxContainer/PopulationControlContainer" unique_id=1920585941]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 24
+text = " Change🧑‍🚀 "
+
+[node name="PopulationChangeSpinBox" type="SpinBox" parent="DebugCanvasLayer/ControlPanelContainer/VBoxContainer/HBoxContainer/PopulationControlContainer" unique_id=1090085286]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme = SubResource("Theme_0s1lt")
+min_value = -100.0
+rounded = true
+allow_greater = true
+allow_lesser = true
+alignment = 1
+suffix = "pop(s)"
+custom_arrow_step = 1.0
+custom_arrow_round = true
 
 [node name="ShroudDisplayCheckBox" type="CheckBox" parent="DebugCanvasLayer/ControlPanelContainer/VBoxContainer" unique_id=1717155315]
 unique_name_in_owner = true

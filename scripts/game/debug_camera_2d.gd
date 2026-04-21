@@ -30,6 +30,7 @@ extends Camera2D
 
 @export var world: World = null
 @export var building_stack_controller: BuildingStackController = null
+@export var population_controller: PopulationController = null
 
 #endregion
 # ============================================================================ #
@@ -53,6 +54,7 @@ func _ready() -> void:
 			_on_gameplay_debug_mode_toggled)
 	%AddBuildingButton.pressed.connect(_on_add_building_button_pressed)
 	%PopBuildingButton.pressed.connect(_on_pop_building_button_pressed)
+	%ChangePopulationButton.pressed.connect(_on_change_population_button_pressed)
 	%ShroudDisplayCheckBox.toggled.connect(_on_shroud_display_check_button_toggled)
 
 
@@ -142,6 +144,11 @@ func _on_pop_building_button_pressed() -> void:
 	%BuildingPoppedLabel.text = " Popped: %s " % [
 		Building.BuildingType.keys()[popped_building_type]
 	]
+
+
+# Listens to %ChangePopulationButton.pressed.
+func _on_change_population_button_pressed() -> void:
+	population_controller.change_population(int(%PopulationChangeSpinBox.value))
 
 
 # Listens to %ShroudDisplayCheckBox.toggled(toggled_on: bool).

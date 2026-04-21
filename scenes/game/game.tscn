@@ -83,7 +83,7 @@ game = NodePath("../..")
 [node name="GameOverMenu" parent="GameOverCanvasLayer" unique_id=1463684322 instance=ExtResource("10_5jirj")]
 unique_name_in_owner = true
 
-[node name="DebugCamera2D" parent="." unique_id=1889864583 node_paths=PackedStringArray("world", "building_stack_controller") instance=ExtResource("4_lfrn8")]
+[node name="DebugCamera2D" parent="." unique_id=1889864583 node_paths=PackedStringArray("world", "building_stack_controller", "population_controller") instance=ExtResource("4_lfrn8")]
 unique_name_in_owner = true
 pan_speed = 860
 zoom_min = 0.1
@@ -92,6 +92,7 @@ zoom_increment = 0.05
 zoom_rate = 6.0
 world = NodePath("../World")
 building_stack_controller = NodePath("../BuildingStackController")
+population_controller = NodePath("../PopulationController")
 
 [node name="PlayerCamera" parent="." unique_id=1893900081 node_paths=PackedStringArray("world") instance=ExtResource("8_87uf6")]
 unique_name_in_owner = true
