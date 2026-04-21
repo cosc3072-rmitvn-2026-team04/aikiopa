@@ -10,6 +10,11 @@ extends Node
 ## [code]"Android Mobile"[/code].
 var os_platform: StringName
 
+## The index of the save file in [constant GameSaveService.SAVE_FILES] currently
+## assigned to the active game session. All game progress will be saved into
+## this file.
+var current_save_slot_index: int
+
 ## The current state of the game session. [code]null[/code] if no active
 ## session.
 var game_state: GameState

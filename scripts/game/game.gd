@@ -32,8 +32,17 @@ enum GameOverType {
 
 
 # ============================================================================ #
+#region Public variables
+
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
 #region Private variables
 
+var _save_slot_index: int = -1
 var _debug_mode_enabled: bool
 @onready var _building_stack_controller: Node = %BuildingStackController
 
@@ -45,6 +54,7 @@ var _debug_mode_enabled: bool
 #region Godot builtins
 
 func _ready() -> void:
+	_save_slot_index = Global.current_save_slot_index
 	_debug_mode_enabled = false
 
 	# TODO: Add world restore functionality by providing world_seed when needed.
@@ -213,9 +223,10 @@ func _on_game_menu_acted(action: StringName) -> void:
 			%GameMenu.close()
 		&"save_session":
 			%GameMenu.close()
-			push_error("Not implemented.")
+			GameSaveService.save(Global.game_state, _save_slot_index)
 		&"quit_to_main_menu":
 			%GameMenu.close()
+			GameSaveService.save(Global.game_state, _save_slot_index)
 			container_scene.scene_finished.emit(GameScene2D.SceneKey.MAIN_MENU)
 
 

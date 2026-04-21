@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bk5jcvk7etfl3" path="res://scripts/scenes/save_loader/save_slot.gd" id="2_hmsw2"]
 
 [node name="SaveSlot" type="PanelContainer" unique_id=1785634137]
+custom_minimum_size = Vector2(0, 588)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
