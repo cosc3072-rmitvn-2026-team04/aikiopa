@@ -74,11 +74,11 @@ horizontal_alignment = 1
 [node name="SavePopulationLabel" type="Label" parent="MarginContainer/VBoxContainer/CenterMarginContainer/VBoxContainer" unique_id=834369587]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 42
 text = "NaN🧑‍🚀"
 horizontal_alignment = 1
 
-[node name="SaveDateTimeLabel" type="Label" parent="MarginContainer/VBoxContainer/CenterMarginContainer/VBoxContainer" unique_id=1131577135]
+[node name="SaveDatetimeLabel" type="Label" parent="MarginContainer/VBoxContainer/CenterMarginContainer/VBoxContainer" unique_id=1131577135]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
@@ -89,7 +89,7 @@ horizontal_alignment = 1
 [node name="BottomMarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer" unique_id=748098160]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.2
+size_flags_stretch_ratio = 0.25
 theme_override_constants/margin_left = 128
 theme_override_constants/margin_right = 128
 
@@ -104,30 +104,30 @@ size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 32
 text = "🗑️"
 
-[node name="DeleteConfirmationContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BottomMarginContainer/VBoxContainer" unique_id=1851013479]
+[node name="DeleteConfirmContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BottomMarginContainer/VBoxContainer" unique_id=1851013479]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="ConfirmationLabel" type="Label" parent="MarginContainer/VBoxContainer/BottomMarginContainer/VBoxContainer/DeleteConfirmationContainer" unique_id=1592663105]
+[node name="ConfirmationLabel" type="Label" parent="MarginContainer/VBoxContainer/BottomMarginContainer/VBoxContainer/DeleteConfirmContainer" unique_id=1592663105]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Delete?"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/BottomMarginContainer/VBoxContainer/DeleteConfirmationContainer" unique_id=467758627]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/BottomMarginContainer/VBoxContainer/DeleteConfirmContainer" unique_id=467758627]
 layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="DeleteConfirmYesButton" type="Button" parent="MarginContainer/VBoxContainer/BottomMarginContainer/VBoxContainer/DeleteConfirmationContainer/HBoxContainer" unique_id=2091649210]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(72, 0)
-layout_mode = 2
-text = "Yes"
-
-[node name="DeleteConfirmNoButton" type="Button" parent="MarginContainer/VBoxContainer/BottomMarginContainer/VBoxContainer/DeleteConfirmationContainer/HBoxContainer" unique_id=1333037423]
+[node name="DeleteConfirmNoButton" type="Button" parent="MarginContainer/VBoxContainer/BottomMarginContainer/VBoxContainer/DeleteConfirmContainer/HBoxContainer" unique_id=1333037423]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(72, 0)
 layout_mode = 2
 text = "No"
+
+[node name="DeleteConfirmYesButton" type="Button" parent="MarginContainer/VBoxContainer/BottomMarginContainer/VBoxContainer/DeleteConfirmContainer/HBoxContainer" unique_id=2091649210]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(72, 0)
+layout_mode = 2
+text = "Yes"

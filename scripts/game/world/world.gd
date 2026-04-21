@@ -117,7 +117,6 @@ func initialize(world_seed: Variant = null) -> void:
 	%WorldGenerator.generate_seeds(world_seed)
 	get_terrain_tile_map_layer().clear()
 	get_terrain_feature_layer().clear()
-	get_building_layer().clear()
 
 	_generated_chunks.clear()
 

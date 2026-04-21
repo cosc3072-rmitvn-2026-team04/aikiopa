@@ -29,6 +29,8 @@ var _building_card_scene = preload(
 #region Godot builtins
 
 func _ready() -> void:
+	GameplayEventBus.session_created.connect(_on_session_created)
+	GameplayEventBus.session_restored.connect(_on_session_restored)
 	GameplayEventBus.building_stack_building_added.connect(
 			_on_building_stack_building_added)
 	GameplayEventBus.building_stack_building_popped.connect(
@@ -38,8 +40,6 @@ func _ready() -> void:
 	var placeholder_card: InstancePlaceholder = %BuildingStack.get_child(0)
 	%BuildingStack.remove_child(placeholder_card)
 	placeholder_card.queue_free()
-
-	%BuildingStackCountLabel.text = "%d🏠" % Global.game_state.building_stack.size()
 
 #endregion
 # ============================================================================ #
@@ -136,6 +136,31 @@ func _update_building_stack_position() -> void:
 
 # ============================================================================ #
 #region Signal listeners
+
+# Listens to GameplayEventBus.session_created(save_slot_index: int).
+func _on_session_created(_save_slot_index) -> void:
+	%BuildingStackCountLabel.text = "%d🏠" % 0
+
+
+# Listens to GameplayEventBus.session_restored(save_slot_index: int).
+func _on_session_restored(_save_slot_index) -> void:
+	var building_stack_count: int = Global.game_state.building_stack.size()
+	for index: int in range(building_stack_count - 1, -1, -1):
+		var building_type: Building.BuildingType =\
+				Global.game_state.building_stack[index]
+		var building_card: BuildingCard = _building_card_scene.instantiate()
+		building_card.set_type(building_type)
+		%BuildingStack.add_child(building_card)
+		%BuildingStack.move_child(building_card, 0)
+		%BuildingStack.get_child(-1).set_pickable()
+		_update_building_card_positions()
+		_update_building_stack_position()
+		# HACK: Without this line, rapid adding of buildings would make the
+		# building stack UI put its cards at the wrong positions. Good
+		# enough for now, fix when this becomes critical.
+		await get_tree().create_timer(BuildingStackController.REWARD_DELAY).timeout
+	%BuildingStackCountLabel.text = "%d🏠" % building_stack_count
+
 
 # Listens to
 # GameplayEventBus.building_stack_building_added(

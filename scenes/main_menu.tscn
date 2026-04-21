@@ -13,10 +13,10 @@ metadata/_custom_type_script = "uid://dqjitm5fwb83b"
 texture = ExtResource("2_bqqt6")
 centered = false
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=262500120]
+[node name="MainMenuUICanvasLayer" type="CanvasLayer" parent="." unique_id=262500120]
 layer = 99
 
-[node name="MainMenuUI" type="Control" parent="CanvasLayer" unique_id=305829909]
+[node name="MainMenuUI" type="Control" parent="MainMenuUICanvasLayer" unique_id=305829909]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
@@ -28,7 +28,7 @@ theme = ExtResource("3_wu84c")
 script = ExtResource("2_ekxnf")
 metadata/_custom_type_script = "uid://cupvablkoadik"
 
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/MainMenuUI" unique_id=718349148]
+[node name="CenterContainer" type="CenterContainer" parent="MainMenuUICanvasLayer/MainMenuUI" unique_id=718349148]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,43 +36,67 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MainMenuContainer" type="VBoxContainer" parent="CanvasLayer/MainMenuUI/CenterContainer" unique_id=417638024]
+[node name="MainMenuContainer" type="VBoxContainer" parent="MainMenuUICanvasLayer/MainMenuUI/CenterContainer" unique_id=417638024]
 layout_mode = 2
 theme_override_constants/separation = 64
 
-[node name="GameNameLabel" type="Label" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=1638659751]
+[node name="GameNameLabel" type="Label" parent="MainMenuUICanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=1638659751]
 layout_mode = 2
 theme_override_constants/outline_size = 12
 theme_override_font_sizes/font_size = 100
 text = "AIKIOΠA"
 horizontal_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=1418974258]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenuUICanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=1418974258]
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="StartButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=1569103081]
+[node name="StartButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=1569103081]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Start"
 
-[node name="GalleryButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=1634631360]
+[node name="GalleryButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=1634631360]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Galery"
 
-[node name="SettingsButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=88263360]
+[node name="SettingsButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=88263360]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Settings"
 
-[node name="CreditsButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=174603475]
+[node name="CreditsButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=174603475]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Credits"
 
-[node name="QuitButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=517774371]
+[node name="QuitButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=517774371]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Quit"
+
+[node name="GameVersionCanvasLayer" type="CanvasLayer" parent="." unique_id=530979069]
+
+[node name="MarginContainer" type="MarginContainer" parent="GameVersionCanvasLayer" unique_id=2103687741]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_wu84c")
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 64
+
+[node name="GameVersionLabel" type="Label" parent="GameVersionCanvasLayer/MarginContainer" unique_id=943240516]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 24
+text = "v0.0.0"
+horizontal_alignment = 1
+vertical_alignment = 2

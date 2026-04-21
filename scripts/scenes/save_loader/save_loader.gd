@@ -23,7 +23,9 @@ func _ready() -> void:
 		save_slot.assign_save_index(index)
 		save_slot.set_slot_number(index + 1)
 		if save_slot_usage_status[index]:
-			save_slot.set_slot_used()
+			var save_header: Dictionary[StringName, Variant]
+			save_header = GameSaveService.get_header(index)
+			save_slot.set_slot_used(save_header)
 		else:
 			save_slot.set_slot_empty()
 		%SaveSlotContainer.add_child(save_slot)

@@ -11,9 +11,14 @@ extends Node
 var os_platform: StringName
 
 ## The index of the save file in [constant GameSaveService.SAVE_FILES] currently
-## assigned to the active game session. All game progress will be saved into
-## this file.
+## assigned to the active game session. All game progress will be saved into and
+## restored from this file.
 var current_save_slot_index: int
+
+## Set to [code]true[/code] if the current active game session state should be
+## randomized for a new run. Otherwise its state would be loaded from the save
+## file at [member Global.current_save_slot_index].
+var is_new_game: bool = true
 
 ## The current state of the game session. [code]null[/code] if no active
 ## session.
@@ -49,7 +54,7 @@ func _exit_tree() -> void:
 
 func _bootstrap() -> void:
 	GameSaveService.verify_save_directory()
-	game_state = null
+	game_state = GameState.new()
 
 
 func _teardown() -> void:
@@ -65,7 +70,6 @@ func _teardown() -> void:
 ## Game state data. Contains relevant information on the current state of the
 ## game.
 class GameState extends RefCounted:
-
 	## The [World] map seed of the current game session.[br]
 	## [br]
 	## [b]Note:[/b] The [code]0[/code] value documented here is a placeholder,
@@ -74,7 +78,7 @@ class GameState extends RefCounted:
 	## [color=orange][b]WARNING:[/b] This affects the internal logic of
 	## [WorldGenerator]. DO NOT modify directly. Assign values using
 	## [method WorldGenerator.get_seed] instead.[/color]
-	var map_seed: int = 0
+	var world_seed: int = 0
 
 	## The RNG seed of the [BuildingStackController].[br]
 	## [br]
@@ -101,7 +105,15 @@ class GameState extends RefCounted:
 
 	## The [Building] instances in the game. Identified by their [Vector2i]
 	## coordinates.
-	var buildings: Dictionary[Vector2i, Building] = {}
+	var building_instances: Dictionary[Vector2i, Building] = {}
+
+	## The [Building] data in the game, consisting of the
+	## [enum Building.BuildingType]. Identified by their [Vector2i]
+	## coordinates.[br]
+	## [br]
+	## To access the building instances in the game, use
+	## [member building_instances] instead.
+	var building_data: Dictionary[Vector2i, Building.BuildingType]
 
 	## The list of building coordinates at the colony's edge.
 	var edge_coords: Array[Vector2i] = []
@@ -126,11 +138,11 @@ class GameState extends RefCounted:
 
 	## Resets the game state.
 	func reset() -> void:
-		map_seed = 0
+		world_seed = 0
 		building_stack_seed = 0
 		building_stack_state = 0
 		building_stack = []
-		buildings = {}
+		building_instances = {}
 		edge_coords = []
 		enclosed_forest_coords = []
 		shroud_data = {}

@@ -17,6 +17,18 @@ extends Node
 ## [/codeblock]
 
 
+## Emitted when a new game session has been created and assigned to the save
+## file at [param save_slot_index] in [constant GameSaveService.SAVE_FILES].
+@warning_ignore("unused_signal")
+signal session_created(save_slot_index: int)
+
+
+## Emitted when a game session has completed loading from the save file at
+## [param save_slot_index] in [constant GameSaveService.SAVE_FILES].
+@warning_ignore("unused_signal")
+signal session_restored(save_slot_index: int)
+
+
 ## Emitted when the [RewardController] determines that the [param reward] should
 ## be given to the player.
 @warning_ignore("unused_signal")

@@ -57,17 +57,21 @@ func _ready() -> void:
 	_save_slot_index = Global.current_save_slot_index
 	_debug_mode_enabled = false
 
-	# TODO: Add world restore functionality by providing world_seed when needed.
-	# Implement in #11.
-	_init_world()
-
-	# TODO: Add population restore functionality when restoring a session.
-	# Implement in #11.
-	_init_population()
-
-	# TODO: Add building stack restore functionality by providing session_seed
-	# and session_state when needed. Implement in #11.
-	_init_building_stack([])
+	if Global.is_new_game:
+		Global.game_state = Global.GameState.new()
+		_init_world()
+		_init_population(0)
+		_init_building_stack([])
+		GameplayEventBus.session_created.emit(_save_slot_index)
+	else:
+		Global.game_state = GameSaveService.load(_save_slot_index)
+		_load_world()
+		_init_population(Global.game_state.population)
+		_init_building_stack(
+				Global.game_state.building_stack,
+				Global.game_state.building_stack_seed,
+				Global.game_state.building_stack_state)
+		GameplayEventBus.session_restored.emit(_save_slot_index)
 
 	_init_cameras()
 	_init_game_menu()
@@ -83,7 +87,7 @@ func _process(_delta: float) -> void:
 	if is_game_over(
 			building_stack_count,
 			population,
-			Global.game_state.buildings.size()):
+			Global.game_state.building_instances.size()):
 		%GameOverMenu.open()
 		var game_over_type: GameOverType = (
 				GameOverType.NO_BUILDING_CARD if building_stack_count == 0
@@ -131,18 +135,31 @@ func _init_world(world_seed: Variant = null) -> void:
 	%World.create_chunk(Vector2i.ZERO)
 
 	var world_center_coords: Vector2i = %World.get_chunk_size() / 2
-	%World.remove_terrain_feature_at(world_center_coords)
 	%World.place_building_at(
 			world_center_coords,
-			Building.BuildingType.LANDING_SITE) # Quiet placement.
+			Building.BuildingType.LANDING_SITE)
 
 	%World.reset_shroud()
-	Global.game_state.shroud_data =\
-			%World.get_shroud_tile_map_layer().get_shroud_data()
+	Global.game_state.shroud_data = %World.get_shroud_data()
 
 
-func _init_population() -> void:
-	%PopulationController.set_population(0)
+func _load_world() -> void:
+	%World.initialize(Global.game_state.world_seed)
+	%World.create_chunk(Vector2i.ZERO)
+
+	var building_coords: Array[Vector2i] = Global.game_state.building_data.keys()
+	for index: int in range(building_coords.size()):
+		var map_coords: Vector2i = building_coords[index]
+		%World.place_building_at(
+				map_coords,
+				Global.game_state.building_data.get(map_coords))
+
+	%World.reset_shroud()
+	%World.set_shroud_data(Global.game_state.shroud_data)
+
+
+func _init_population(population: int) -> void:
+	%PopulationController.set_population(population)
 
 
 func _init_building_stack(

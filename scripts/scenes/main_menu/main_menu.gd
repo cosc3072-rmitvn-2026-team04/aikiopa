@@ -6,6 +6,8 @@ extends GameScene2D
 
 func _ready() -> void:
 	%MainMenuUI.acted.connect(_on_main_menu_ui_acted)
+	%GameVersionLabel.text = "v%s" % ProjectSettings.get_setting(
+			"application/config/version")
 
 #endregion
 # ============================================================================ #

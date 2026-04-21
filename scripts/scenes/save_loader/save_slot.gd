@@ -39,16 +39,47 @@ func set_slot_empty() -> void:
 
 	%LoadButton.hide()
 	%SavePopulationLabel.hide()
-	%SaveDateTimeLabel.hide()
+	%SaveDatetimeLabel.hide()
 	%DeleteButton.hide()
-	%DeleteConfirmationContainer.hide()
+	%DeleteConfirmContainer.hide()
 
 
-## Sets the slot as used (has game save).
-func set_slot_used() -> void:
+## Sets the slot as used (has game save) and display information from
+## [param save_header].
+func set_slot_used(save_header: Dictionary[StringName, Variant]) -> void:
+	const MONTH_STRINGS: Array[String] = [
+		"Jan", "Feb", "Mar",
+		"Apr", "May", "Jun",
+		"Jul", "Aug", "Sep",
+		"Oct", "Nov", "Dec",
+	]
+
 	%NewButton.hide()
 	%SlotEmptyLabel.hide()
-	%DeleteConfirmationContainer.hide()
+	%DeleteConfirmContainer.hide()
+
+	%LoadButton.pressed.connect(_on_load_button_pressed)
+	%DeleteButton.pressed.connect(_on_delete_button_pressed)
+	%DeleteConfirmNoButton.pressed.connect(_on_delete_confirm_no_button_pressed)
+	%DeleteConfirmYesButton.pressed.connect(_on_delete_confirm_yes_button_pressed)
+
+	%SavePopulationLabel.text = "%d🧑‍🚀" % [save_header.population]
+
+	var save_timestamp: int = save_header.timestamp
+	save_timestamp += Time.get_time_zone_from_system().bias * 60
+	var save_datetime_dict: Dictionary = Time.get_datetime_dict_from_unix_time(
+			save_timestamp)
+	%SaveDatetimeLabel.text = "%d:%d %s\n%d %s %d" % [
+		(
+				save_datetime_dict.hour if save_datetime_dict.hour <= 12
+				else save_datetime_dict.hour - 12
+		),
+		save_datetime_dict.minute,
+		"AM" if save_datetime_dict.hour < 12 else "PM",
+		save_datetime_dict.day,
+		MONTH_STRINGS[save_datetime_dict.month - 1],
+		save_datetime_dict.year,
+	]
 
 #endregion
 # ============================================================================ #
@@ -57,10 +88,37 @@ func set_slot_used() -> void:
 # ============================================================================ #
 #region Signal listeners
 
+# Listens to %NewButton.pressed.
 func _on_new_button_pressed() -> void:
 	Global.current_save_slot_index = _save_slot_index
-	Global.game_state = Global.GameState.new()
+	Global.is_new_game = true
 	container_scene.scene_finished.emit(GameScene2D.SceneKey.PLAY)
+
+
+# Listens to %LoadButton.pressed.
+func _on_load_button_pressed() -> void:
+	Global.current_save_slot_index = _save_slot_index
+	Global.is_new_game = false
+	container_scene.scene_finished.emit(GameScene2D.SceneKey.PLAY)
+
+
+# Listens to %Delete.pressed.
+func _on_delete_button_pressed() -> void:
+	%DeleteButton.hide()
+	%DeleteConfirmContainer.show()
+
+
+# Listens to %DeleteConfirmNoButton.pressed.
+func _on_delete_confirm_no_button_pressed() -> void:
+	%DeleteButton.show()
+	%DeleteConfirmContainer.hide()
+
+
+# Listens to %DeleteConfirmYesButton.pressed.
+func _on_delete_confirm_yes_button_pressed() -> void:
+	%DeleteConfirmContainer.hide()
+	GameSaveService.delete(_save_slot_index)
+	container_scene.scene_finished.emit(GameScene2D.SceneKey.SAVE_LOADER)
 
 #endregion
 # ============================================================================ #

@@ -91,11 +91,11 @@ static func save(game_state: Global.GameState, slot_index: int) -> bool:
 		&"timestamp": int(Time.get_unix_time_from_system()),
 	}
 	file.store_var(header, false)
-	file.store_var(game_state.map_seed, false)
+	file.store_var(game_state.world_seed, false)
 	file.store_var(game_state.building_stack_seed, false)
 	file.store_var(game_state.building_stack_state, false)
 	file.store_var(game_state.building_stack, false)
-	file.store_var(game_state.buildings, false)
+	file.store_var(game_state.building_data, false)
 	file.store_var(game_state.edge_coords, false)
 	file.store_var(game_state.enclosed_forest_coords, false)
 	file.store_var(game_state.shroud_data, false)
@@ -205,11 +205,11 @@ static func load(slot_index: int) -> Global.GameState:
 	# INFO: The hard-coded deserialization logic here is intentional to maintain
 	# a strict and secure data schema.
 	var game_state: Global.GameState = Global.GameState.new()
-	game_state.map_seed = file.get_var(false)
+	game_state.world_seed = file.get_var(false)
 	game_state.building_stack_seed = file.get_var(false)
 	game_state.building_stack_state = file.get_var(false)
 	game_state.building_stack = file.get_var(false)
-	game_state.buildings = file.get_var(false)
+	game_state.building_data = file.get_var(false)
 	game_state.edge_coords = file.get_var(false)
 	game_state.enclosed_forest_coords = file.get_var(false)
 	game_state.shroud_data = file.get_var(false)
