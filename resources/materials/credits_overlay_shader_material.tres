@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cibobvof01gdw"]
+
+[ext_resource type="Shader" uid="uid://cc8851x1in2du" path="res://shaders/menu_blur.gdshader" id="1_lu70w"]
+
+[resource]
+shader = ExtResource("1_lu70w")
+shader_parameter/strength = 5.00000023424012
+shader_parameter/mix_percentage = 0.750000035625
