@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://b2bjig41asnpv"]
+
+[ext_resource type="Script" uid="uid://bb1vdtl87pjp6" path="res://scripts/scenes/splash_screen.gd" id="1_hsxvm"]
+[ext_resource type="Texture2D" uid="uid://o2ii3ojy8vy2" path="res://assets/logos/splash.png" id="1_n4g2v"]
+
+[sub_resource type="Animation" id="Animation_n4g2v"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_hsxvm"]
+resource_name = "splash"
+length = 1.5333333
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4gp4q"]
+_data = {
+&"RESET": SubResource("Animation_n4g2v"),
+&"splash": SubResource("Animation_hsxvm")
+}
+
+[node name="SplashScreen" type="Node2D" unique_id=354475341]
+script = ExtResource("1_hsxvm")
+metadata/_custom_type_script = "uid://dqjitm5fwb83b"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1016909055]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1426839975]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer" unique_id=2006658708]
+texture_filter = 1
+position = Vector2(960, 540)
+texture = ExtResource("1_n4g2v")
+hframes = 2
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Sprite2D" unique_id=1505720091]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_4gp4q")
