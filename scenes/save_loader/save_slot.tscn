@@ -37,12 +37,14 @@ size_flags_vertical = 0
 
 [node name="NewButton" type="Button" parent="MarginContainer/VBoxContainer/TopMarginContainer/VBoxContainer" unique_id=1667750442]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "New"
 
 [node name="LoadButton" type="Button" parent="MarginContainer/VBoxContainer/TopMarginContainer/VBoxContainer" unique_id=1217105200]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Continue"
@@ -67,6 +69,13 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Empty"
+horizontal_alignment = 1
+
+[node name="SavePopulationLabel" type="Label" parent="MarginContainer/VBoxContainer/CenterMarginContainer/VBoxContainer" unique_id=834369587]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "NaN🧑‍🚀"
 horizontal_alignment = 1
 
 [node name="SaveDateTimeLabel" type="Label" parent="MarginContainer/VBoxContainer/CenterMarginContainer/VBoxContainer" unique_id=1131577135]
@@ -108,17 +117,19 @@ horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/BottomMarginContainer/VBoxContainer/DeleteConfirmationContainer" unique_id=467758627]
 layout_mode = 2
-theme_override_constants/separation = 28
+theme_override_constants/separation = 20
 alignment = 1
 
 [node name="DeleteConfirmYesButton" type="Button" parent="MarginContainer/VBoxContainer/BottomMarginContainer/VBoxContainer/DeleteConfirmationContainer/HBoxContainer" unique_id=2091649210]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(72, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Yes"
 
 [node name="DeleteConfirmNoButton" type="Button" parent="MarginContainer/VBoxContainer/BottomMarginContainer/VBoxContainer/DeleteConfirmationContainer/HBoxContainer" unique_id=1333037423]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(72, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "No"

@@ -68,6 +68,7 @@ horizontal_alignment = 1
 
 [node name="ButtonVBoxContainer" type="VBoxContainer" parent="TextureRect/VBoxContainer" unique_id=447443858]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="SaveButton" type="Button" parent="TextureRect/VBoxContainer/ButtonVBoxContainer" unique_id=1160669998]
 unique_name_in_owner = true

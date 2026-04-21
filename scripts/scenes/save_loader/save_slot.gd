@@ -20,6 +20,7 @@ func _ready() -> void:
 	%NewButton.hide()
 	%LoadButton.hide()
 	%SlotEmptyLabel.hide()
+	%SavePopulationLabel.hide()
 	%SaveDateTimeLabel.hide()
 	%DeleteButton.hide()
 	%DeleteConfirmationContainer.hide()
