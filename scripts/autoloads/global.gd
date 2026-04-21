@@ -1,37 +1,5 @@
 extends Node
-## Global game scope data and functions.
-
-
-# ============================================================================ #
-#region Enums
-#endregion
-# ============================================================================ #
-
-
-# ============================================================================ #
-#region Constants
-
-## Assets location for [Building]s.
-const BUILDING_ASSET_DIR: String = "res://assets/objects/"
-
-## Assets location for [BuildingCard]s.
-const BUILDING_CARD_ASSET_DIR: String =\
-		"res://assets/user_interface/building_stack/building_card/"
-
-## Ruleset - Building versus Terrain location.
-const BVT_RULESET_PATH: String = "res://resources/rulesets/bvt.csv"
-
-## Ruleset - Building versus adjacent Building location.
-const BVB_RULESET_PATH: String = "res://resources/rulesets/bvb.csv"
-
-## Savegame location.
-const SAVE_DIR: String = "user://saves/"
-
-## Snapshot location.
-const SNAPSHOT_DIR: String = "user://snapshots/"
-
-#endregion
-# ============================================================================ #
+## Global scope. Also handles low-level bootstrap and teardown procedures.
 
 
 # ============================================================================ #
@@ -44,11 +12,7 @@ var os_platform: StringName
 
 ## The current state of the game session. [code]null[/code] if no active
 ## session.
-var game_state: GameState = null
-
-## If [code]true[/code], debugging tools would be activated while the game is
-## running.
-var gameplay_debug_mode_enabled: bool = false
+var game_state: GameState
 
 #endregion
 # ============================================================================ #
@@ -65,17 +29,27 @@ func _ready() -> void:
 		_:
 			printerr("Platform not supported: %s", os_name)
 			get_tree().quit()
+	_bootstrap()
 
 
 func _exit_tree() -> void:
-	game_state.queue_free()
+	_teardown()
 
 #endregion
 # ============================================================================ #
 
 
 # ============================================================================ #
-#region Public methods
+#region Private methods
+
+func _bootstrap() -> void:
+	GameSaveService.verify_save_directory()
+	game_state = null
+
+
+func _teardown() -> void:
+	game_state.queue_free()
+
 #endregion
 # ============================================================================ #
 

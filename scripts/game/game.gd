@@ -32,8 +32,9 @@ enum GameOverType {
 
 
 # ============================================================================ #
-#region Variables
+#region Private variables
 
+var _debug_mode_enabled: bool
 @onready var _building_stack_controller: Node = %BuildingStackController
 
 #endregion
@@ -44,6 +45,8 @@ enum GameOverType {
 #region Godot builtins
 
 func _ready() -> void:
+	_debug_mode_enabled = false
+
 	# TODO: Add world restore functionality by providing world_seed when needed.
 	# Implement in #11.
 	_init_world()
@@ -191,8 +194,8 @@ func _input_command_game_menu(event: InputEvent) -> void:
 
 func _input_update_gameplay_debug_mode(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_gameplay_debug_mode"):
-		Global.gameplay_debug_mode_enabled = not Global.gameplay_debug_mode_enabled
-		UIEventBus.gameplay_debug_mode_toggled.emit(Global.gameplay_debug_mode_enabled)
+		_debug_mode_enabled = not _debug_mode_enabled
+		UIEventBus.gameplay_debug_mode_toggled.emit(_debug_mode_enabled)
 
 #endregion
 

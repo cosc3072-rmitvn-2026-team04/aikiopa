@@ -32,6 +32,19 @@ enum PlacementCheckStatus {
 
 
 # ============================================================================ #
+#region Enums
+
+## Ruleset - Building versus Terrain location.
+const BVT_RULESET_PATH: String = "res://resources/rulesets/bvt.csv"
+
+## Ruleset - Building versus adjacent Building location.
+const BVB_RULESET_PATH: String = "res://resources/rulesets/bvb.csv"
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
 #region Exported properties
 
 @export_group("Combo Rules", "combo_rule")
@@ -274,12 +287,12 @@ func parse_rules(
 #region Private methods
 
 func _load_ruleset_bvt() -> Dictionary[Array, Array]:
-	if not FileAccess.file_exists(Global.BVT_RULESET_PATH):
-		push_error("File not found: '%s'." % Global.BVT_RULESET_PATH)
+	if not FileAccess.file_exists(BVT_RULESET_PATH):
+		push_error("File not found: '%s'." % BVT_RULESET_PATH)
 		return {}
 
 	var ruleset: Dictionary[Array, Array] = {}
-	var file: FileAccess = FileAccess.open(Global.BVT_RULESET_PATH, FileAccess.READ)
+	var file: FileAccess = FileAccess.open(BVT_RULESET_PATH, FileAccess.READ)
 	var csv_header: Array = Array(file.get_csv_line(","))
 
 	while file.get_position() < file.get_length():
@@ -306,12 +319,12 @@ func _load_ruleset_bvt() -> Dictionary[Array, Array]:
 
 
 func _load_ruleset_bvb() -> Dictionary[Array, Array]:
-	if not FileAccess.file_exists(Global.BVB_RULESET_PATH):
-		push_error("File not found: '%s'." % Global.BVB_RULESET_PATH)
+	if not FileAccess.file_exists(BVB_RULESET_PATH):
+		push_error("File not found: '%s'." % BVB_RULESET_PATH)
 		return {}
 
 	var ruleset: Dictionary[Array, Array] = {}
-	var file: FileAccess = FileAccess.open(Global.BVB_RULESET_PATH, FileAccess.READ)
+	var file: FileAccess = FileAccess.open(BVB_RULESET_PATH, FileAccess.READ)
 	var csv_header: Array = Array(file.get_csv_line(","))
 
 	while file.get_position() < file.get_length():

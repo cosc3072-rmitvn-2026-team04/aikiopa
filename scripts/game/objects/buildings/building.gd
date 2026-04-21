@@ -26,6 +26,9 @@ enum BuildingType {
 # ============================================================================ #
 #region Constants
 
+## [Building] asset location.
+const BUILDING_ASSET_DIR: String = "res://assets/objects/"
+
 ## [String] building name for each [enum BuildingType].
 const BUILDING_NAME: Dictionary[BuildingType, String] = {
 	BuildingType.NONE: "",

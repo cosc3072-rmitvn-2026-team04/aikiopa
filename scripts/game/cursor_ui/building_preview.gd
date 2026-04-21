@@ -48,44 +48,44 @@ func set_type(building_type: Building.BuildingType) -> void:
 			_local_sprite_2d.texture = null
 		Building.BuildingType.HOUSING:
 			_map_sprite_2d.texture = load(
-					Global.BUILDING_ASSET_DIR.path_join("building_housing.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_housing.png"))
 			_local_sprite_2d.texture = load(
-					Global.BUILDING_ASSET_DIR.path_join("building_housing.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_housing.png"))
 		Building.BuildingType.GREENHOUSE:
 			_map_sprite_2d.texture = load(
-					Global.BUILDING_ASSET_DIR.path_join("building_greenhouse.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_greenhouse.png"))
 			_local_sprite_2d.texture = load(
-					Global.BUILDING_ASSET_DIR.path_join("building_greenhouse.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_greenhouse.png"))
 		Building.BuildingType.RANCH:
 			_map_sprite_2d.texture = load(
-					Global.BUILDING_ASSET_DIR.path_join("building_ranch.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_ranch.png"))
 			_local_sprite_2d.texture = load(
-					Global.BUILDING_ASSET_DIR.path_join("building_ranch.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_ranch.png"))
 		Building.BuildingType.FISHERY:
 			_map_sprite_2d.texture = load(
-					Global.BUILDING_ASSET_DIR.path_join("building_fishery.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_fishery.png"))
 			_local_sprite_2d.texture = load(
-					Global.BUILDING_ASSET_DIR.path_join("building_fishery.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_fishery.png"))
 		Building.BuildingType.SOLAR_FARM:
 			_map_sprite_2d.texture = load(
-					Global.BUILDING_ASSET_DIR.path_join("building_solar_farm.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_solar_farm.png"))
 			_local_sprite_2d.texture = load(
-					Global.BUILDING_ASSET_DIR.path_join("building_solar_farm.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_solar_farm.png"))
 		Building.BuildingType.WIND_FARM:
 			_map_sprite_2d.texture = load(
-					Global.BUILDING_ASSET_DIR.path_join("building_wind_farm.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_wind_farm.png"))
 			_local_sprite_2d.texture = load(
-					Global.BUILDING_ASSET_DIR.path_join("building_wind_farm.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_wind_farm.png"))
 		Building.BuildingType.NUCLEAR_REACTOR:
 			_map_sprite_2d.texture = load(
-					Global.BUILDING_ASSET_DIR.path_join("building_nuclear_reactor.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_nuclear_reactor.png"))
 			_local_sprite_2d.texture = load(
-					Global.BUILDING_ASSET_DIR.path_join("building_nuclear_reactor.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_nuclear_reactor.png"))
 		Building.BuildingType.FACTORY:
 			_map_sprite_2d.texture = load(
-					Global.BUILDING_ASSET_DIR.path_join("building_factory.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_factory.png"))
 			_local_sprite_2d.texture = load(
-					Global.BUILDING_ASSET_DIR.path_join("building_factory.png"))
+					Building.BUILDING_ASSET_DIR.path_join("building_factory.png"))
 		_:
 			push_error("Unrecognized building type: '%s'." % [
 				Building.BuildingType.keys()[building_type]

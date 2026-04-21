@@ -17,5 +17,12 @@ extends PanelContainer
 func _ready() -> void:
 	%SlotNameLabel.text = "SLOT %d" % [slot_index + 1]
 
+	%NewButton.hide()
+	%LoadButton.hide()
+	%SlotEmptyLabel.hide()
+	%SaveDateTimeLabel.hide()
+	%DeleteButton.hide()
+	%DeleteConfirmationContainer.hide()
+
 #endregion
 # ============================================================================ #
