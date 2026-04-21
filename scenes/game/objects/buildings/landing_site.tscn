@@ -3,11 +3,16 @@
 [ext_resource type="PackedScene" uid="uid://q1crh5ps008g" path="res://scenes/game/objects/buildings/_generic.tscn" id="1_352gu"]
 [ext_resource type="Texture2D" uid="uid://cdd2qh0mo4cfc" path="res://assets/objects/buildings/building_landing_site_var0.png" id="2_hw7vc"]
 [ext_resource type="Script" uid="uid://g00y4vnoic60" path="res://scripts/game/objects/buildings/landing_site.gd" id="2_phbvg"]
+[ext_resource type="Texture2D" uid="uid://m32iyv8e7uou" path="res://assets/objects/buildings/building_landing_site_pad_var0.png" id="4_1qbsi"]
 
 [node name="LandingSite" unique_id=1178872670 instance=ExtResource("1_352gu")]
 script = ExtResource("2_phbvg")
 variations = Array[CompressedTexture2D]([ExtResource("2_hw7vc")])
 
-[node name="Sprite2D" parent="." index="0" unique_id=906012488]
+[node name="PadSprite2D" type="Sprite2D" parent="." index="0" unique_id=1681878993]
+position = Vector2(0, -18)
+texture = ExtResource("4_1qbsi")
+
+[node name="Sprite2D" parent="." index="1" unique_id=906012488]
 position = Vector2(0, -15)
 texture = ExtResource("2_hw7vc")
