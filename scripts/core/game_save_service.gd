@@ -40,10 +40,11 @@ static func get_save_slot_count() -> int:
 ## The indices of the returned array correspond to the indices of
 ## [constant SAVE_FILES]. A value of [code]true[/code] means the file exists,
 ## and a value of [code]false[/code] means the slot is empty.
-static func get_save_slot_status() -> Array[bool]:
-	return SAVE_FILES.map(
+static func get_save_slot_usage_status() -> Array[bool]:
+	var result: Array = SAVE_FILES.map(
 			func (save_file_name: String):
 				return FileAccess.file_exists(SAVE_DIR.path_join(save_file_name)))
+	return Array(result, TYPE_BOOL, "", null)
 
 
 ## Writes [param game_state] to the save file at [param slot_index] of

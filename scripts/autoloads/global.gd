@@ -48,7 +48,7 @@ func _bootstrap() -> void:
 
 
 func _teardown() -> void:
-	game_state.queue_free()
+	pass # Add teardown logic here.
 
 #endregion
 # ============================================================================ #

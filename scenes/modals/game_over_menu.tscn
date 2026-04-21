@@ -67,6 +67,7 @@ text = "Expedition Completed!"
 horizontal_alignment = 1
 
 [node name="ButtonVBoxContainer" type="VBoxContainer" parent="TextureRect/VBoxContainer" unique_id=447443858]
+custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 

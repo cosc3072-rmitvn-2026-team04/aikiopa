@@ -43,7 +43,7 @@ signal preview_cursor_snapped(
 ## Emitted when the building preview cursor unsnaps. See
 ## [signal preview_cursor_snapped].
 @warning_ignore("unused_signal")
-signal preview_cursor_unsnapped()
+signal preview_cursor_unsnapped
 
 
 ## Emitted when the player attempts to use the building card they have on hand

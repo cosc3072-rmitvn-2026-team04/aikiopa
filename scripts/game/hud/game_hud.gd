@@ -174,12 +174,12 @@ func _on_building_card_picked(building_type: Building.BuildingType) -> void:
 	_picked_building = building_type
 
 
-# Listens to building_card_dropped(building: Building.BuildingType).
+# Listens to UIEventBus.building_card_dropped(building: Building.BuildingType).
 func _on_building_card_dropped(_building: Building.BuildingType) -> void:
 	_picked_building = Building.BuildingType.NONE
 
 
-# Listens to preview_cursor_snapped(
+# Listens to UIEventBus.preview_cursor_snapped(
 #		coords: Vector2i,
 #		picked_building_type: Building.BuildingType,
 #		placement_check_status: BuildingRulesetEngine.PlacementCheckStatus,
@@ -195,6 +195,7 @@ func _on_preview_cursor_snapped(
 		_update_population_milestone_progress_bar(interaction_result)
 
 
+# Listens to UIEventBus.preview_cursor_unsnapped.
 func _on_preview_cursor_unsnapped() -> void:
 	_deactivate_population_milestone_preview_progress_bar()
 	_update_population_milestone_progress_bar(null)

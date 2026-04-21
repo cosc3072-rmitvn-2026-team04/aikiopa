@@ -21,7 +21,9 @@ func _on_main_menu_ui_acted(action: StringName) -> void:
 			scene_finished.emit(SceneKey.PLAY)
 			Global.game_state = Global.GameState.new()
 		&"gallery":
-			scene_finished.emit(SceneKey.GALLERY_LOADER)
+			# TODO: Surrogate. Remove when #11 is completed.
+			scene_finished.emit(SceneKey.SAVE_LOADER)
+			#scene_finished.emit(SceneKey.GALLERY_LOADER)
 		&"settings":
 			scene_finished.emit(SceneKey.SETTINGS)
 		&"credits":
