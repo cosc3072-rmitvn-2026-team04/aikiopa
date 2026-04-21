@@ -146,6 +146,7 @@ func _on_session_created(_save_slot_index) -> void:
 func _on_session_restored(_save_slot_index) -> void:
 	var building_stack_count: int = Global.game_state.building_stack.size()
 	for index: int in range(building_stack_count - 1, -1, -1):
+		%BuildingStackCountLabel.text = "%d🏠" % [building_stack_count - index]
 		var building_type: Building.BuildingType =\
 				Global.game_state.building_stack[index]
 		var building_card: BuildingCard = _building_card_scene.instantiate()
@@ -159,7 +160,6 @@ func _on_session_restored(_save_slot_index) -> void:
 		# building stack UI put its cards at the wrong positions. Good
 		# enough for now, fix when this becomes critical.
 		await get_tree().create_timer(BuildingStackController.REWARD_DELAY).timeout
-	%BuildingStackCountLabel.text = "%d🏠" % building_stack_count
 
 
 # Listens to
