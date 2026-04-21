@@ -224,6 +224,7 @@ func _on_population_changed(_old_amount: int, _new_amount: int) -> void:
 
 # Listens to GameplayEventBus.session_saved(save_slot_index: int).
 func _on_session_saved(_save_slot_index: int) -> void:
+	# TODO: This could be made prettier using a Tween animation on its modulate.
 	var game_saved_label_timer: Timer = %GameSavedLabel.get_node("Timer")
 	%GameSavedLabel.show()
 	game_saved_label_timer.start()

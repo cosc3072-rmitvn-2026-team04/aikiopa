@@ -185,8 +185,8 @@ func parse_rules(
 				building_type, neighbor_building_type
 			]]
 			if bvb_parse_result[0] != PlacementCheckStatus.ALLOWED:
-				# WARN: Known limitation - this only keeps the last non-allowed
-				# placement check status.
+				# WARNING: Known limitation - this only keeps the last
+				# non-allowed placement check status.
 				parse_result.placement_check_status = bvb_parse_result[0]
 				if summarized:
 					parse_result.interaction_result = null
