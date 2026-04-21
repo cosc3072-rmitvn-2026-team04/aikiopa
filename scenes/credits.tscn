@@ -54,9 +54,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 bbcode_enabled = true
-text = "A game by [Team Name][br]
+text = "A game by[br]
 [b]Mike Vo[/b] & [b]Yolanda Tran[/b][br]
-[img]res://assets/logos/placeholder_studio_logo.png[/img]
+[img]res://assets/logos/studio_logo.png[/img]
 [br]
 Tech Lead[br]
 Mike Vo[br]
