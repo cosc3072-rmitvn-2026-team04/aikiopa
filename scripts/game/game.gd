@@ -128,6 +128,8 @@ func _init_world(world_seed: Variant = null) -> void:
 			Building.BuildingType.LANDING_SITE) # Quiet placement.
 
 	%World.reset_shroud()
+	Global.game_state.shroud_data =\
+			%World.get_shroud_tile_map_layer().get_shroud_data()
 
 
 func _init_population() -> void:
