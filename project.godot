@@ -23,7 +23,6 @@ config/icon="uid://dqp3lnsxh5fw"
 Global="*uid://bh23jxt878mfg"
 GameplayEventBus="*uid://cile0rk71d8x8"
 UIEventBus="*uid://d14g2l5ubghi2"
-Math="*uid://chbvmtto2mtli"
 
 [display]
 

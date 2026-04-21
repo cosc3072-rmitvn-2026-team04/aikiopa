@@ -1,10 +1,11 @@
-extends Node
+class_name Math
+extends Object
 ## Math library. Contains game-specific algorithms not implemented by the game
 ## engine.
 
 
 ## Matrix-related utility library.
-class Matrix extends Node:
+class Matrix extends Object:
 
 	## Converts the linear mapping row-major [param index] to its corresponding
 	## 2D space coordinates.[br]
@@ -54,7 +55,7 @@ class Matrix extends Node:
 ## areas, intersection, etc. Please refer to the Online Tutorials below for
 ## impelemtation details.
 ## @tutorial(Hexagonal Grids from Red Blob Games): https://www.redblobgames.com/grids/hexagons
-class HexGrid extends Node:
+class HexGrid extends Object:
 
 	# ======================================================================== #
 	#region Enums
