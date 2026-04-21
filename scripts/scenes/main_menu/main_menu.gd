@@ -17,10 +17,11 @@ func _ready() -> void:
 # Listens to %MainMenuUI.acted(action: StringName).
 func _on_main_menu_ui_acted(action: StringName) -> void:
 	match action:
-		&"tutorial":
-			scene_finished.emit(SceneKey.TUTORIAL)
-		&"free_play":
-			scene_finished.emit(SceneKey.FREE_PLAY)
+		&"start":
+			scene_finished.emit(SceneKey.PLAY)
+			Global.game_state = Global.GameState.new()
+		&"gallery":
+			scene_finished.emit(SceneKey.GALLERY_LOADER)
 		&"settings":
 			scene_finished.emit(SceneKey.SETTINGS)
 		&"credits":

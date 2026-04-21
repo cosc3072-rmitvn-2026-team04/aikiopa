@@ -38,7 +38,10 @@ const SAVE_DIR: String = "user://saves/"
 ## [code]"Windows Desktop"[/code], [code]"Linux Desktop"[/code], or
 ## [code]"Android Mobile"[/code].
 var os_platform: StringName
-var game_state: GameState
+
+## The current state of the game session. [code]null[/code] if no active
+## session.
+var game_state: GameState = null
 
 ## If [code]true[/code], debugging tools would be activated while the game is
 ## running.
@@ -59,8 +62,6 @@ func _ready() -> void:
 		_:
 			printerr("Platform not supported: %s", os_name)
 			get_tree().quit()
-
-	game_state = GameState.new()
 
 
 func _exit_tree() -> void:

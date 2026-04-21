@@ -7,8 +7,8 @@ extends Node2D
 #region Enums
 
 enum GameMode {
-	TUTORIAL,
-	FREE_PLAY,
+	PLAY,
+	GALLERY,
 }
 
 enum GameOverType {
@@ -24,6 +24,7 @@ enum GameOverType {
 # ============================================================================ #
 #region Exported properties
 
+@export var game_mode: GameMode = GameMode.PLAY
 @export var container_scene: GameScene2D = null
 
 #endregion
@@ -33,7 +34,6 @@ enum GameOverType {
 # ============================================================================ #
 #region Variables
 
-@export var game_mode: GameMode = GameMode.FREE_PLAY
 @onready var _building_stack_controller: Node = %BuildingStackController
 
 #endregion
@@ -44,10 +44,6 @@ enum GameOverType {
 #region Godot builtins
 
 func _ready() -> void:
-	# TODO: Add world restore functionality by providing world_seed when needed.
-	# Implement in #11.
-	Global.game_state.reset()
-
 	# TODO: Add world restore functionality by providing world_seed when needed.
 	# Implement in #11.
 	_init_world()
@@ -228,7 +224,7 @@ func _on_game_over_menu_acted(action: StringName) -> void:
 			push_error("Not implemented.")
 		&"new_session":
 			%GameMenu.close()
-			container_scene.scene_finished.emit(GameScene2D.SceneKey.FREE_PLAY)
+			container_scene.scene_finished.emit(GameScene2D.SceneKey.PLAY)
 		&"quit_to_main_menu":
 			%GameMenu.close()
 			container_scene.scene_finished.emit(GameScene2D.SceneKey.MAIN_MENU)

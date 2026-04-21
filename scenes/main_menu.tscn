@@ -38,34 +38,41 @@ grow_vertical = 2
 
 [node name="MainMenuContainer" type="VBoxContainer" parent="CanvasLayer/MainMenuUI/CenterContainer" unique_id=417638024]
 layout_mode = 2
+theme_override_constants/separation = 64
 
 [node name="GameNameLabel" type="Label" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=1638659751]
 layout_mode = 2
+theme_override_constants/outline_size = 12
 theme_override_font_sizes/font_size = 100
 text = "AIKIOΠA"
 horizontal_alignment = 1
 
-[node name="TutorialButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=1569103081]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=1418974258]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="StartButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=1569103081]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Tutorial"
+text = "Start"
 
-[node name="FreeGameButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=1634631360]
+[node name="GalleryButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=1634631360]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Free Play"
+text = "Galery"
 
-[node name="SettingsButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=88263360]
+[node name="SettingsButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=88263360]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Settings"
 
-[node name="CreditsButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=174603475]
+[node name="CreditsButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=174603475]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Credits"
 
-[node name="QuitButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=517774371]
+[node name="QuitButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=517774371]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Quit"

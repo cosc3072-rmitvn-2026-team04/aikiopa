@@ -12,9 +12,10 @@ signal scene_finished(next_scene_key: SceneKey)
 
 enum SceneKey {
 	MAIN_MENU,
-	TUTORIAL,
-	FREE_PLAY,
+	PLAY,
+	GALLERY,
 	SAVE_LOADER,
+	GALLERY_LOADER,
 	SETTINGS,
 	CREDITS,
 	NONE,
@@ -22,9 +23,10 @@ enum SceneKey {
 
 const GAME_SCENE: Dictionary[SceneKey, String] = {
 	SceneKey.MAIN_MENU: "res://scenes/main_menu.tscn",
-	SceneKey.TUTORIAL: "res://scenes/tutorial.tscn",
-	SceneKey.FREE_PLAY: "res://scenes/free_play.tscn",
+	SceneKey.PLAY: "res://scenes/play.tscn",
 	SceneKey.SAVE_LOADER: "res://scenes/save_loader.tscn",
+	SceneKey.GALLERY: "res://scenes/gallery.tscn",
+	SceneKey.GALLERY_LOADER: "res://scenes/gallery_loader.tscn",
 	SceneKey.SETTINGS: "res://scenes/settings.tscn",
 	SceneKey.CREDITS: "res://scenes/credits.tscn",
 }
