@@ -29,6 +29,7 @@ var _picked_building: Building.BuildingType = Building.BuildingType.NONE
 func _ready() -> void:
 	_update_population_milestone_progress_bar(null)
 	_update_population_label()
+	%GameSavedLabel.hide()
 
 	UIEventBus.building_card_picked.connect(_on_building_card_picked)
 	UIEventBus.building_card_dropped.connect(_on_building_card_dropped)
@@ -36,6 +37,7 @@ func _ready() -> void:
 	UIEventBus.preview_cursor_unsnapped.connect(_on_preview_cursor_unsnapped)
 	GameplayEventBus.building_placed.connect(_on_building_placed)
 	GameplayEventBus.population_changed.connect(_on_population_changed)
+	GameplayEventBus.session_saved.connect(_on_session_saved)
 
 
 func _input(event: InputEvent) -> void:
@@ -218,6 +220,15 @@ func _on_building_placed(
 func _on_population_changed(_old_amount: int, _new_amount: int) -> void:
 	_update_population_milestone_progress_bar(null)
 	_update_population_label()
+
+
+# Listens to GameplayEventBus.session_saved(save_slot_index: int).
+func _on_session_saved(_save_slot_index: int) -> void:
+	var game_saved_label_timer: Timer = %GameSavedLabel.get_node("Timer")
+	%GameSavedLabel.show()
+	game_saved_label_timer.start()
+	await game_saved_label_timer.timeout
+	%GameSavedLabel.hide()
 
 #endregion
 # ============================================================================ #

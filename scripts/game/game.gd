@@ -60,7 +60,7 @@ func _ready() -> void:
 		_init_population(0)
 		_init_building_stack([])
 		GameplayEventBus.session_created.emit(_save_slot_index)
-		GameSaveService.save(Global.game_state, _save_slot_index)
+		_save_session()
 		_save_dirty = false
 	else:
 		Global.game_state = GameSaveService.load(_save_slot_index)
@@ -136,6 +136,11 @@ func is_game_over(
 #region Private methods
 
 #region _ready()
+
+func _save_session() -> void:
+	GameSaveService.save(Global.game_state, _save_slot_index)
+	GameplayEventBus.session_saved.emit(_save_slot_index)
+
 
 func _init_autosave() -> void:
 	GameplayEventBus.building_placed.connect(_on_building_placed)
@@ -256,7 +261,7 @@ func _on_building_placed(
 	_turns_elapsed += 1
 	_save_dirty = true
 	if autosave and _turns_elapsed % autosave_interval == 0 and is_save_dirty():
-		GameSaveService.save(Global.game_state, _save_slot_index)
+		_save_session()
 		_save_dirty = false
 
 
@@ -267,7 +272,7 @@ func _on_game_menu_acted(action: StringName) -> void:
 			%GameMenu.close()
 		&"save_session":
 			%GameMenu.close()
-			GameSaveService.save(Global.game_state, _save_slot_index)
+			_save_session()
 			_save_dirty = false
 		&"quit_to_main_menu":
 			%GameMenu.close()

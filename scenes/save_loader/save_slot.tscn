@@ -122,12 +122,12 @@ alignment = 1
 
 [node name="DeleteConfirmNoButton" type="Button" parent="MarginContainer/VBoxContainer/BottomMarginContainer/VBoxContainer/DeleteConfirmContainer/HBoxContainer" unique_id=1333037423]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
-text = "Cancel"
+text = "No"
 
 [node name="DeleteConfirmYesButton" type="Button" parent="MarginContainer/VBoxContainer/BottomMarginContainer/VBoxContainer/DeleteConfirmContainer/HBoxContainer" unique_id=2091649210]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
-text = "Confirm"
+text = "Yes"

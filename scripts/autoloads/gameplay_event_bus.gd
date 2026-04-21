@@ -29,6 +29,12 @@ signal session_created(save_slot_index: int)
 signal session_restored(save_slot_index: int)
 
 
+## Emitted when a game session has been saved in the save file at
+## [param save_slot_index] in [constant GameSaveService.SAVE_FILES].
+@warning_ignore("unused_signal")
+signal session_saved(save_slot_index: int)
+
+
 ## Emitted when the [RewardController] determines that the [param reward] should
 ## be given to the player.
 @warning_ignore("unused_signal")
