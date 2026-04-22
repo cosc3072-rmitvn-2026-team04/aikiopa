@@ -9,9 +9,9 @@ extends Object
 ## Save location.
 const SAVE_DIR: String = "user://saves/"
 
-## Save file names. Must be unique and follow the format [code]slot_x[/code]
-## where [code]x[/code] is the slot number starting from [code]1[/code]. Saving
-## is limited to these slots only.
+## Save file names. Must be unique and follow the format
+## [code]"slot_x.save"[/code] where [code]'x'[/code] is the slot number starting
+## from [code]1[/code]. Saving logic is limited to these save files.
 const SAVE_FILES: Array[String] = [
 	"slot_1.save",
 	"slot_2.save",
@@ -95,7 +95,7 @@ static func save(game_state: Global.GameState, slot_index: int) -> bool:
 	file.store_var(game_state.building_stack_seed, false)
 	file.store_var(game_state.building_stack_state, false)
 	file.store_var(game_state.building_stack, false)
-	file.store_var(game_state.building_data, false)
+	file.store_var(game_state.building_metadata, false)
 	file.store_var(game_state.edge_coords, false)
 	file.store_var(game_state.enclosed_forest_coords, false)
 	file.store_var(game_state.shroud_data, false)
@@ -143,11 +143,15 @@ static func save(game_state: Global.GameState, slot_index: int) -> bool:
 ## Reads and returns the metadata header of the save file at
 ## [param slot_index] of [constant SAVE_FILES].[br]
 ## [br]
-## The returned metadata includes the following fields:[br]
-## - [code]"&version"[/code]: The game version producing the save file.[br]
-## - [code]"&population"[/code]: The population reached when the session is last
+## The returned metadata is a dictionary of keys: [code]"&version"[/code],
+## [code]"&population"[/code], and [code]"&timestamp"[/code].[br]
+## [br]
+## - [code]"&version"[/code] is game version producing the save file.[br]
+## [br]
+## - [code]"&population"[/code] is population reached when the session is
 ## saved.[br]
-## - [code]"&timestamp"[/code]: The Unix timestamp of the most recent write to
+## [br]
+## - [code]"&timestamp"[/code] is the Unix timestamp of the most recent write to
 ## the save file.[br]
 ## [br]
 ## Returns [code]{}[/code] (empty dictionary) and print the relevant error if
@@ -209,7 +213,7 @@ static func load(slot_index: int) -> Global.GameState:
 	game_state.building_stack_seed = file.get_var(false)
 	game_state.building_stack_state = file.get_var(false)
 	game_state.building_stack = file.get_var(false)
-	game_state.building_data = file.get_var(false)
+	game_state.building_metadata = file.get_var(false)
 	game_state.edge_coords = file.get_var(false)
 	game_state.enclosed_forest_coords = file.get_var(false)
 	game_state.shroud_data = file.get_var(false)

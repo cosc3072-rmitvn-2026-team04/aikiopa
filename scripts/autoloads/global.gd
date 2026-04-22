@@ -103,17 +103,26 @@ class GameState extends RefCounted:
 	## The building stack in the current game session.
 	var building_stack: Array[Building.BuildingType] = []
 
-	## The [Building] instances in the game. Identified by their [Vector2i]
-	## coordinates.
+	## The building instances in the current game session, represented as a
+	## dictionary of key [Vector2i] coordinates and its corresponding [Building]
+	## instance.[br]
+	## [br]
+	## [color=red][b]WARNING:[/b] This must be kept in sync with
+	## [member building_metadata]. Failure to do so will result in undefined
+	## behavior.[/color]
 	var building_instances: Dictionary[Vector2i, Building] = {}
 
-	## The [Building] data in the game, consisting of the
-	## [enum Building.BuildingType]. Identified by their [Vector2i]
-	## coordinates.[br]
+	## The building metadata in the current game session, represented as a
+	## dictionary of key [Vector2i] coordinates and its corresponding
+	## [enum Building.BuildingType] value.[br]
 	## [br]
 	## To access the building instances in the game, use
-	## [member building_instances] instead.
-	var building_data: Dictionary[Vector2i, Building.BuildingType]
+	## [member building_instances] instead.[br]
+	## [br]
+	## [color=red][b]WARNING:[/b] This must be kept in sync with
+	## [member building_instances]. Failure to do so will result in undefined
+	## behavior.[/color]
+	var building_metadata: Dictionary[Vector2i, Building.BuildingType]
 
 	## The list of building coordinates at the colony's edge.
 	var edge_coords: Array[Vector2i] = []
@@ -121,11 +130,12 @@ class GameState extends RefCounted:
 	## The list of Forest coordinates already enclosed by the colony.
 	var enclosed_forest_coords: Array[Vector2i] = []
 
-	## Data representing The Shroud.[br]
+	## The data representing The Shroud. See
+	## [method ShroudTileMapLayer.get_shroud_data] for its schema.[br]
 	## [br]
 	## [color=orange][b]WARNING:[/b] This affects the internal logic of
 	## [ShroudTileMapLayer]. Take precaution when modifying directly. Prefer the
-	## safer [method ShroudTileMapLayer.get_shroud_data] instead.[/color]
+	## safer [method ShroudTileMapLayer.set_shroud_data] instead.[/color]
 	var shroud_data: Dictionary[StringName, Array] = {}
 
 	## The population in the current game session.

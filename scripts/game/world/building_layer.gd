@@ -46,7 +46,7 @@ func clear() -> void:
 			remove_child(building)
 			building.queue_free()
 	Global.game_state.building_instances.clear()
-	Global.game_state.building_data.clear()
+	Global.game_state.building_metadata.clear()
 
 
 ## Returns the [enum Building.BuildingType] at [param coords].
@@ -77,7 +77,7 @@ func has_building_at(coords: Vector2i) -> bool:
 ## Sets the building at [param coords] to one of [enum Building.BuildingType].
 ## [color=orange][b][u]Warning:[/u] This will replace any existing terrain
 ## feature or building.[/b][/color][br]
-## TODO: Deterministically assign random variations.[br]
+## TODO: Deterministically assign random variations (#47).[br]
 ## [br]
 ## Prints an error and do nothing if [param building_type] is unknown.[br]
 func place_building_at(
@@ -122,7 +122,7 @@ func place_building_at(
 	# Insert the building.
 	var terrain_tile_map_layer: TileMapLayer = world.get_terrain_tile_map_layer()
 	Global.game_state.building_instances.set(coords, building)
-	Global.game_state.building_data.set(coords, building_type)
+	Global.game_state.building_metadata.set(coords, building_type)
 	building.position = terrain_tile_map_layer.map_to_local(coords)
 	add_child(building)
 
@@ -168,7 +168,7 @@ func destroy_building_at(coords: Vector2i) -> Building.BuildingType:
 	var building: Building = Global.game_state.building_instances[coords]
 	var building_type: Building.BuildingType = building.get_type()
 	Global.game_state.building_instances.erase(coords)
-	Global.game_state.building_data.erase(coords)
+	Global.game_state.building_metadata.erase(coords)
 	remove_child(building)
 	building.queue_free()
 

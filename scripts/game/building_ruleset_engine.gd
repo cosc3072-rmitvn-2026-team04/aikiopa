@@ -115,24 +115,26 @@ func _ready() -> void:
 # ============================================================================ #
 #region Public methods
 
-## Returns a dictionary consisting of two elements:[br]
-## - [code]&"placement_check_status"[/code]: Calculated
+## Returns a dictionary consisting of keys:
+## [code]&"placement_check_status"[/code] and
+## [code]&"interaction_result"[/code].[br]
+## [br]
+## - [code]&"placement_check_status"[/code] is the calculated
 ## [enum PlacementCheckStatus] for [param building_type] at [param coords].[br]
-## - [code]&"interaction_result"[/code]: Calculated total
+## [br]
+## - [code]&"interaction_result"[/code] is the calculated total
 ## [BuildingRulesetEngine.InteractionResult] between [param building_type] and
 ## the environment around [param coords]. Will be [code]null[/code] if
 ## [code]&"placement_check_status"[/code] is any value other than
 ## [constant BuildingRulesetEngine.PlacementCheckStatus.ALLOWED].[br]
 ## [br]
 ## [b]Advanced:[/b] For more granular output, set [param summarized] to
-## [code]false[/code]. The total [code]&"interaction_result"[/code] will
-## instead be divided and returned as a
-## [code]Dictionary[Vector2i, BuildingRulesetEngine.InteractionResult][/code]
-## with each key-value pair corresponding to a unit
-## [BuildingRulesetEngine.InteractionResult] value coming from its [Vector2i]
-## key. If [code]&"placement_check_status"[/code] is [code]null[/code], this
-## will consist of a single key-value pair of [param coords] and
-## [code]null[/code], i.e. [code]{ coords: null }[/code].[br]
+## [code]false[/code]. The [code]&"interaction_result"[/code] will instead be
+## divided and assigned as a dictionary key [Vector2i] coordinates and its
+## corresponding unit [BuildingRulesetEngine.InteractionResult]. If
+## [code]&"placement_check_status"[/code] is [code]null[/code], the unit
+## [BuildingRulesetEngine.InteractionResult] will be set to
+## [code]null[/code].[br]
 ## [br]
 ## [color=orange][b]WARNING:[/b] Since the return schema of this method is loose
 ## ([code]&"interaction_result"[/code] can be either one object or a dictionary

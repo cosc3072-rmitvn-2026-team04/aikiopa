@@ -163,12 +163,12 @@ func _load_world() -> void:
 	%World.initialize(Global.game_state.world_seed)
 	%World.create_chunk(Vector2i.ZERO)
 
-	var building_coords: Array[Vector2i] = Global.game_state.building_data.keys()
+	var building_coords: Array[Vector2i] = Global.game_state.building_metadata.keys()
 	for index: int in range(building_coords.size()):
 		var map_coords: Vector2i = building_coords[index]
 		%World.place_building_at(
 				map_coords,
-				Global.game_state.building_data.get(map_coords))
+				Global.game_state.building_metadata.get(map_coords))
 
 	%World.reset_shroud()
 	%World.set_shroud_data(Global.game_state.shroud_data)
