@@ -1,28 +1,30 @@
 extends GameScene2D
 
 
-@onready var _animation_player: AnimationPlayer = get_node("Sprite2D/AnimationPlayer")
+# @onread -> use $ or %
+
+var _animation_player: AnimationPlayer = %Sprite2D.AnimationPlayer
 
 
 # ============================================================================ #
 #region Godot builtins
+
 func _ready() -> void:
     _animation_player.connect("animation_finished", _end_splash.unbind(1))
-    _animation_player.play("default")
+    _animation_player.play("default") # change default ->...
 
 
 func _process(_delta: float) -> void:
-    if Input.is_action_pressed("skip"):
+    if Input.is_action_pressed("ui_cancel"):
         _end_splash()
+
 #endregion
 # ============================================================================ #
 
 
 # ============================================================================ #
-#region Utils
+#region Private methods
 
-# Listens to $Sprite2D/AnimationPlayer.animation_finished(anim_name: String)
-# unbind(1).
 func _end_splash() -> void:
     _animation_player.stop(true)
     scene_finished.emit(SceneKey.MAIN_MENU)
