@@ -53,7 +53,7 @@ grow_vertical = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.02
+size_flags_stretch_ratio = 1.56
 theme_override_styles/background = SubResource("StyleBoxEmpty_lsjxn")
 step = 1.0
 value = 35.0
@@ -63,6 +63,7 @@ show_percentage = false
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
+size_flags_vertical = 3
 size_flags_stretch_ratio = 88.8
 theme_override_constants/outline_size = 20
 theme_override_font_sizes/font_size = 64
@@ -71,9 +72,9 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_snjka")
 text = "NaN/NaN👨‍🚀"
 horizontal_alignment = 2
 
-[node name="BuildingStackUI" parent="VBoxContainer" unique_id=776021788 instance=ExtResource("2_snjka")]
+[node name="BuildingStackUI" parent="." unique_id=776021788 instance=ExtResource("2_snjka")]
 unique_name_in_owner = true
-layout_mode = 2
+layout_mode = 1
 size_flags_vertical = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1538599690]
@@ -100,5 +101,5 @@ theme_override_font_sizes/font_size = 36
 text = "Game Saved…"
 
 [node name="Timer" type="Timer" parent="MarginContainer/GameSavedLabel" unique_id=1378524284]
-wait_time = 1.5999999999999999
+wait_time = 1.6
 one_shot = true

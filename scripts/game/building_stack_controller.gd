@@ -12,12 +12,6 @@ extends Node
 ## generate a building with available placement for the player to not get stuck.
 const MAX_REROLL_COUNT: int = 10_000
 
-# HACK: Without this constant, rapid adding of buildings would make the building
-# stack UI put its cards at the wrong positions. Good enough for now, fix when
-# this becomes critical.
-## The delay in seconds between receiving consecutive building rewards.
-const REWARD_DELAY: float = 0.1
-
 #endregion
 # ============================================================================ #
 
@@ -100,7 +94,6 @@ func _ready() -> void:
 ## to behave properly. It should only be set to values that came from
 ## [method get_session_state].
 func initialize_session(
-		building_queue: Array[Building.BuildingType],
 		session_seed: Variant = null,
 		session_state: Variant = null
 ) -> void:
@@ -114,24 +107,14 @@ func initialize_session(
 	if session_seed and session_state:
 		_rng.seed = session_seed
 		_rng.state = session_state
-		Global.game_state.building_stack = building_queue
 	else:
 		_rng.randomize()
+		Global.game_state.building_stack_seed = get_session_seed()
 		for building_type:Building.BuildingType in guaranteed_starting_buildings:
 			add_building(building_type)
-			# HACK: Without this line, rapid adding of buildings would make the
-			# building stack UI put its cards at the wrong positions. Good
-			# enough for now, fix when this becomes critical.
-			await get_tree().create_timer(REWARD_DELAY).timeout
 		for iteration: int in range(starting_random_buildings_count):
 			add_building()
-			# HACK: Without this line, rapid adding of buildings would make the
-			# building stack UI put its cards at the wrong positions. Good
-			# enough for now, fix when this becomes critical.
-			await get_tree().create_timer(REWARD_DELAY).timeout
-
-	Global.game_state.building_stack_seed = get_session_seed()
-	Global.game_state.building_stack_state = get_session_state()
+		Global.game_state.building_stack_state = get_session_state()
 
 
 ## Returns the seed of the internal [RandomNumberGenerator]. Useful for saving
@@ -275,10 +258,6 @@ func _on_building_placed(
 func _on_reward_triggered(reward: RewardController.Reward) -> void:
 	for iteration: int in range(reward.get_building_bonus()):
 		add_building()
-		# HACK: Without this line, rapid adding of buildings would make the
-		# building stack UI put its cards at the wrong positions. Good enough
-		# for now, fix when this becomes critical.
-		await get_tree().create_timer(REWARD_DELAY).timeout
 
 #endregion
 # ============================================================================ #

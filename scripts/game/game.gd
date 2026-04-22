@@ -67,7 +67,6 @@ func _ready() -> void:
 		_load_world()
 		_init_population(Global.game_state.population)
 		_init_building_stack(
-				Global.game_state.building_stack,
 				Global.game_state.building_stack_seed,
 				Global.game_state.building_stack_state)
 		GameplayEventBus.session_restored.emit(_save_slot_index)
@@ -179,12 +178,10 @@ func _init_population(population: int) -> void:
 
 
 func _init_building_stack(
-		building_queue: Array[Building.BuildingType],
 		session_seed: Variant = null,
 		session_state: Variant = null
 ) -> void:
 	_building_stack_controller.initialize_session(
-			building_queue,
 			session_seed,
 			session_state)
 
@@ -287,6 +284,7 @@ func _on_game_over_menu_acted(action: StringName) -> void:
 			push_error("Not implemented.")
 		&"new_session":
 			%GameMenu.close()
+			Global.is_new_game = true
 			container_scene.scene_finished.emit(GameScene2D.SceneKey.PLAY)
 		&"quit_to_main_menu":
 			%GameMenu.close()
