@@ -6,17 +6,6 @@ extends Node
 # ============================================================================ #
 #region Exported properties
 
-@export_group("Variation Map", "v")
-
-# Variation map generation noise algorithm. Produce float values used to select
-# random variations of a game object.
-@export var v_map: FastNoiseLite = preload(
-	"res://resources/world_generator/variation_map_noise.tres")
-
-
-## Affects how large/small the generated variation areas would be.
-@export_range(0.1, 1.0, 0.01, "or_greater") var v_noise_scale: float = 1.0
-
 @export_group("Height Map", "h")
 
 # Height map generation noise algorithm. Produces Water / Plain / Mountain based
@@ -124,7 +113,6 @@ extends Node
 ## The [World].
 @export var world: World = null
 
-
 #endregion
 # ============================================================================ #
 
@@ -150,7 +138,6 @@ func generate_seeds(rng_seed: Variant = null) -> void:
 	else:
 		_rng.randomize()
 	Global.game_state.world_seed = get_seed()
-	v_map.seed = _rng.randi()
 	h_map.seed = _rng.randi()
 	m_map.seed = _rng.randi()
 	c_map.seed = _rng.randi()
@@ -170,7 +157,6 @@ func get_seed() -> int:
 func get_internal_seeds() -> Dictionary[String, int]:
 	return {
 		"master": _rng.seed,
-		"variation_map_seed": v_map.seed,
 		"height_map_seed": h_map.seed,
 		"moisture_map_seed": m_map.seed,
 		"chasm_map_seed": c_map.seed,
@@ -193,10 +179,6 @@ func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 	var chunk_linear_variation_data: Array[float]
 
 	# Set chunk offset.
-	v_map.offset = Vector3(
-			chunk_offset.x * chunk_size.x * v_noise_scale,
-			chunk_offset.y * chunk_size.y * v_noise_scale,
-			0.0)
 	h_map.offset = Vector3(
 			chunk_offset.x * chunk_size.x * h_noise_scale,
 			chunk_offset.y * chunk_size.y * h_noise_scale,
@@ -224,7 +206,7 @@ func create_chunk(chunk_offset: Vector2i = Vector2i.ZERO) -> void:
 
 	# WARNING: DO NOT RE-ORDER THE FOLLOWING PRIVATE METHOD CALLS. IT WILL BREAK
 	# THE PROCEDURAL GENERATION ALGORITHM.
-	_create_chunk_variation_map(chunk_linear_variation_data)
+	_create_chunk_variation_map(chunk_linear_variation_data, chunk_offset)
 	_create_chunk_height_map(chunk_linear_data, chunk_offset)
 	_create_chunk_moisture_map(chunk_linear_data)
 	_create_chunk_chasm_map(chunk_linear_data)
@@ -275,12 +257,18 @@ func _first_chunk_noise(noise_value: float, position: Vector2i) -> float:
 
 
 # 1st Step.
-func _create_chunk_variation_map(chunk_linear_variation_data: Array[float]) -> void:
+func _create_chunk_variation_map(
+		chunk_linear_variation_data: Array[float],
+		chunk_offset: Vector2i
+) -> void:
 	for y: int in range(chunk_size.y):
 		for x: int in range(chunk_size.x):
-			var noise_value: float = h_map.get_noise_2d(
-					x * h_noise_scale,
-					y * h_noise_scale)
+			var coords_x: int = chunk_offset.x * chunk_size.x + x
+			var coords_y: int = chunk_offset.y * chunk_size.y + y
+			var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+			rng.seed = coords_x * 12345 ^ coords_y * 67890
+
+			var noise_value: float = rng.randf_range(-1, 1)
 			chunk_linear_variation_data.append(noise_value)
 
 
