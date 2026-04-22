@@ -95,8 +95,10 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 36
 text = "Game Saved…"
 
 [node name="Timer" type="Timer" parent="MarginContainer/GameSavedLabel" unique_id=1378524284]
-wait_time = 3.0
+wait_time = 1.5999999999999999
 one_shot = true
