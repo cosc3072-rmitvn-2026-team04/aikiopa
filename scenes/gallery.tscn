@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://dqjitm5fwb83b" path="res://scripts/core/game_scene_2d.gd" id="1_c13y7"]
 [ext_resource type="PackedScene" uid="uid://ckf5ejaxdb3vf" path="res://scenes/game/game.tscn" id="2_8ho6b"]
 
-[node name="Tutorial" type="Node2D" unique_id=1480069995]
+[node name="Gallery" type="Node2D" unique_id=1480069995]
 script = ExtResource("1_c13y7")
 metadata/_custom_type_script = "uid://dqjitm5fwb83b"
 
 [node name="Game" parent="." unique_id=1327406412 node_paths=PackedStringArray("container_scene") instance=ExtResource("2_8ho6b")]
+game_mode = 1
 container_scene = NodePath("..")
-game_mode = 0

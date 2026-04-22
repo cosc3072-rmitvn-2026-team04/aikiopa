@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bjico263pdusu" path="res://scripts/scenes/credits.gd" id="1_2ckv8"]
 [ext_resource type="Texture2D" uid="uid://drsmsbinxipa8" path="res://assets/main_menu_placeholder.png" id="2_0ctdu"]
 [ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="3_0ctdu"]
+[ext_resource type="Material" uid="uid://cibobvof01gdw" path="res://resources/materials/credits_overlay_shader_material.tres" id="3_2fbfq"]
 
 [node name="Credits" type="Node2D" unique_id=1890754985]
 script = ExtResource("1_2ckv8")
@@ -15,6 +16,7 @@ centered = false
 [node name="OverlayCanvasLayer" type="CanvasLayer" parent="." unique_id=655295641]
 
 [node name="ColorRect" type="ColorRect" parent="OverlayCanvasLayer" unique_id=1506790693]
+material = ExtResource("3_2fbfq")
 custom_minimum_size = Vector2(1920, 1080)
 anchors_preset = -1
 offset_right = 1920.0
@@ -23,7 +25,6 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color(0, 0, 0, 0.78431374)
 
 [node name="MainCanvasLayer" type="CanvasLayer" parent="." unique_id=155775081]
 

@@ -32,6 +32,19 @@ enum PlacementCheckStatus {
 
 
 # ============================================================================ #
+#region Enums
+
+## Ruleset - Building versus Terrain location.
+const BVT_RULESET_PATH: String = "res://resources/rulesets/bvt.csv"
+
+## Ruleset - Building versus adjacent Building location.
+const BVB_RULESET_PATH: String = "res://resources/rulesets/bvb.csv"
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
 #region Exported properties
 
 @export_group("Combo Rules", "combo_rule")
@@ -102,24 +115,26 @@ func _ready() -> void:
 # ============================================================================ #
 #region Public methods
 
-## Returns a dictionary consisting of two elements:[br]
-## - [code]&"placement_check_status"[/code]: Calculated
+## Returns a dictionary consisting of keys:
+## [code]&"placement_check_status"[/code] and
+## [code]&"interaction_result"[/code].[br]
+## [br]
+## - [code]&"placement_check_status"[/code] is the calculated
 ## [enum PlacementCheckStatus] for [param building_type] at [param coords].[br]
-## - [code]&"interaction_result"[/code]: Calculated total
+## [br]
+## - [code]&"interaction_result"[/code] is the calculated total
 ## [BuildingRulesetEngine.InteractionResult] between [param building_type] and
 ## the environment around [param coords]. Will be [code]null[/code] if
 ## [code]&"placement_check_status"[/code] is any value other than
 ## [constant BuildingRulesetEngine.PlacementCheckStatus.ALLOWED].[br]
 ## [br]
 ## [b]Advanced:[/b] For more granular output, set [param summarized] to
-## [code]false[/code]. The total [code]&"interaction_result"[/code] will
-## instead be divided and returned as a
-## [code]Dictionary[Vector2i, BuildingRulesetEngine.InteractionResult][/code]
-## with each key-value pair corresponding to a unit
-## [BuildingRulesetEngine.InteractionResult] value coming from its [Vector2i]
-## key. If [code]&"placement_check_status"[/code] is [code]null[/code], this
-## will consist of a single key-value pair of [param coords] and
-## [code]null[/code], i.e. [code]{ coords: null }[/code].[br]
+## [code]false[/code]. The [code]&"interaction_result"[/code] will instead be
+## divided and assigned as a dictionary key [Vector2i] coordinates and its
+## corresponding unit [BuildingRulesetEngine.InteractionResult]. If
+## [code]&"placement_check_status"[/code] is [code]null[/code], the unit
+## [BuildingRulesetEngine.InteractionResult] will be set to
+## [code]null[/code].[br]
 ## [br]
 ## [color=orange][b]WARNING:[/b] Since the return schema of this method is loose
 ## ([code]&"interaction_result"[/code] can be either one object or a dictionary
@@ -172,8 +187,8 @@ func parse_rules(
 				building_type, neighbor_building_type
 			]]
 			if bvb_parse_result[0] != PlacementCheckStatus.ALLOWED:
-				# WARN: Known limitation - this only keeps the last non-allowed
-				# placement check status.
+				# WARNING: Known limitation - this only keeps the last
+				# non-allowed placement check status.
 				parse_result.placement_check_status = bvb_parse_result[0]
 				if summarized:
 					parse_result.interaction_result = null
@@ -274,12 +289,12 @@ func parse_rules(
 #region Private methods
 
 func _load_ruleset_bvt() -> Dictionary[Array, Array]:
-	if not FileAccess.file_exists(Global.BVT_RULESET_PATH):
-		push_error("File not found: '%s'." % Global.BVT_RULESET_PATH)
+	if not FileAccess.file_exists(BVT_RULESET_PATH):
+		push_error("File not found: '%s'." % BVT_RULESET_PATH)
 		return {}
 
 	var ruleset: Dictionary[Array, Array] = {}
-	var file: FileAccess = FileAccess.open(Global.BVT_RULESET_PATH, FileAccess.READ)
+	var file: FileAccess = FileAccess.open(BVT_RULESET_PATH, FileAccess.READ)
 	var csv_header: Array = Array(file.get_csv_line(","))
 
 	while file.get_position() < file.get_length():
@@ -306,12 +321,12 @@ func _load_ruleset_bvt() -> Dictionary[Array, Array]:
 
 
 func _load_ruleset_bvb() -> Dictionary[Array, Array]:
-	if not FileAccess.file_exists(Global.BVB_RULESET_PATH):
-		push_error("File not found: '%s'." % Global.BVB_RULESET_PATH)
+	if not FileAccess.file_exists(BVB_RULESET_PATH):
+		push_error("File not found: '%s'." % BVB_RULESET_PATH)
 		return {}
 
 	var ruleset: Dictionary[Array, Array] = {}
-	var file: FileAccess = FileAccess.open(Global.BVB_RULESET_PATH, FileAccess.READ)
+	var file: FileAccess = FileAccess.open(BVB_RULESET_PATH, FileAccess.READ)
 	var csv_header: Array = Array(file.get_csv_line(","))
 
 	while file.get_position() < file.get_length():

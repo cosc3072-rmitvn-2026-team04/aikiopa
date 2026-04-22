@@ -57,17 +57,17 @@ func _on_game_over(population: int, game_over_type: Game.GameOverType) -> void:
 			])
 
 
-# Listens to %SaveButton.pressed.connect().
+# Listens to %SaveButton.pressed.
 func _on_save_button_pressed() -> void:
 	acted.emit(&"save_snapshot")
 
 
-# Listens to %NewExpeditionButton.pressed.connect().
+# Listens to %NewExpeditionButton.pressed.
 func _on_new_session_button_pressed() -> void:
 	acted.emit(&"new_session")
 
 
-# Listens to %QuitToMainMenuButton.pressed.connect().
+# Listens to %QuitToMainMenuButton.pressed.
 func _on_quit_to_main_menu_button_press() -> void:
 	acted.emit(&"quit_to_main_menu")
 

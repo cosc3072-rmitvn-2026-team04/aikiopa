@@ -29,6 +29,7 @@ var _picked_building: Building.BuildingType = Building.BuildingType.NONE
 func _ready() -> void:
 	_update_population_milestone_progress_bar(null)
 	_update_population_label()
+	%GameSavedLabel.hide()
 
 	UIEventBus.building_card_picked.connect(_on_building_card_picked)
 	UIEventBus.building_card_dropped.connect(_on_building_card_dropped)
@@ -36,6 +37,7 @@ func _ready() -> void:
 	UIEventBus.preview_cursor_unsnapped.connect(_on_preview_cursor_unsnapped)
 	GameplayEventBus.building_placed.connect(_on_building_placed)
 	GameplayEventBus.population_changed.connect(_on_population_changed)
+	GameplayEventBus.session_saved.connect(_on_session_saved)
 
 
 func _input(event: InputEvent) -> void:
@@ -174,12 +176,12 @@ func _on_building_card_picked(building_type: Building.BuildingType) -> void:
 	_picked_building = building_type
 
 
-# Listens to building_card_dropped(building: Building.BuildingType).
+# Listens to UIEventBus.building_card_dropped(building: Building.BuildingType).
 func _on_building_card_dropped(_building: Building.BuildingType) -> void:
 	_picked_building = Building.BuildingType.NONE
 
 
-# Listens to preview_cursor_snapped(
+# Listens to UIEventBus.preview_cursor_snapped(
 #		coords: Vector2i,
 #		picked_building_type: Building.BuildingType,
 #		placement_check_status: BuildingRulesetEngine.PlacementCheckStatus,
@@ -195,6 +197,7 @@ func _on_preview_cursor_snapped(
 		_update_population_milestone_progress_bar(interaction_result)
 
 
+# Listens to UIEventBus.preview_cursor_unsnapped.
 func _on_preview_cursor_unsnapped() -> void:
 	_deactivate_population_milestone_preview_progress_bar()
 	_update_population_milestone_progress_bar(null)
@@ -217,6 +220,16 @@ func _on_building_placed(
 func _on_population_changed(_old_amount: int, _new_amount: int) -> void:
 	_update_population_milestone_progress_bar(null)
 	_update_population_label()
+
+
+# Listens to GameplayEventBus.session_saved(save_slot_index: int).
+func _on_session_saved(_save_slot_index: int) -> void:
+	# TODO: This could be made prettier using a Tween animation on its modulate.
+	var game_saved_label_timer: Timer = %GameSavedLabel.get_node("Timer")
+	%GameSavedLabel.show()
+	game_saved_label_timer.start()
+	await game_saved_label_timer.timeout
+	%GameSavedLabel.hide()
 
 #endregion
 # ============================================================================ #

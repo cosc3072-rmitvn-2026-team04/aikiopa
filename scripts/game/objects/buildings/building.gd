@@ -26,6 +26,9 @@ enum BuildingType {
 # ============================================================================ #
 #region Constants
 
+## [Building] asset location.
+const BUILDING_ASSET_DIR: String = "res://assets/objects/"
+
 ## [String] building name for each [enum BuildingType].
 const BUILDING_NAME: Dictionary[BuildingType, String] = {
 	BuildingType.NONE: "",
@@ -54,23 +57,6 @@ const BUILDING_NAME: Dictionary[BuildingType, String] = {
 func get_type() -> BuildingType:
 	push_warning("Calling method 'get_type()' on generic 'Building' instance.")
 	return BuildingType.NONE
-
-
-## Returns a serialized [Dictionary] representing this building instance. Useful
-## for storing the game session in a save file.[br]
-## [br]
-## Schema:
-## [codeblock]
-##     # TODO: Develop a schema and implement this function in children classes.
-##     # See #11.
-## [/codeblock]
-## [br]
-## [br]
-## Virtual method. Override this method in children scenes to provide the
-## appropriate return value.
-func serialized() -> Dictionary[StringName, Variant]:
-	push_warning("Calling method 'serialized()' on generic 'Building' instance.")
-	return {}
 
 #endregion
 # ============================================================================ #

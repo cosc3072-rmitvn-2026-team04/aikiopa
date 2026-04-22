@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://dk6v00jrx7hg"]
+
+[ext_resource type="Script" uid="uid://b6mrsjfb5u8b1" path="res://scripts/scenes/save_loader/save_loader.gd" id="1_r0hmw"]
+[ext_resource type="Texture2D" uid="uid://drsmsbinxipa8" path="res://assets/main_menu_placeholder.png" id="2_4sn0j"]
+[ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="2_olopm"]
+[ext_resource type="Material" uid="uid://ds2pe4fbpgkjp" path="res://resources/materials/save_loader_overlay_shader_material.tres" id="3_dq3ih"]
+
+[node name="SaveLoader" type="Node2D" unique_id=1976988115]
+script = ExtResource("1_r0hmw")
+metadata/_custom_type_script = "uid://dqjitm5fwb83b"
+
+[node name="BackgroundSprite2D" type="Sprite2D" parent="." unique_id=66720678]
+texture = ExtResource("2_4sn0j")
+centered = false
+
+[node name="OverlayCanvasLayer" type="CanvasLayer" parent="." unique_id=192039102]
+
+[node name="ColorRect" type="ColorRect" parent="OverlayCanvasLayer" unique_id=1908863304]
+material = ExtResource("3_dq3ih")
+custom_minimum_size = Vector2(1920, 1080)
+anchors_preset = -1
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=499783038]
+
+[node name="SaveLoaderUI" type="Control" parent="CanvasLayer" unique_id=2081203690]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_olopm")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SaveLoaderUI" unique_id=1554789555]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 128
+theme_override_constants/margin_top = 220
+theme_override_constants/margin_right = 128
+theme_override_constants/margin_bottom = 220
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SaveLoaderUI/MarginContainer" unique_id=1375228348]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/SaveLoaderUI/MarginContainer/VBoxContainer" unique_id=1481978682]
+layout_mode = 2
+alignment = 1
+
+[node name="BackButton" type="Button" parent="CanvasLayer/SaveLoaderUI/MarginContainer/VBoxContainer/HBoxContainer" unique_id=172643860]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Back"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/SaveLoaderUI/MarginContainer/VBoxContainer" unique_id=1263478805]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SaveSlotContainer" type="GridContainer" parent="CanvasLayer/SaveLoaderUI/MarginContainer/VBoxContainer/ScrollContainer" unique_id=2134311015]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+theme_override_constants/h_separation = 32
+theme_override_constants/v_separation = 32
+columns = 3
+
+[node name="PlaceholderSaveSlot" parent="CanvasLayer/SaveLoaderUI/MarginContainer/VBoxContainer/ScrollContainer/SaveSlotContainer" unique_id=1785634137 instance_placeholder="res://scenes/save_loader/save_slot.tscn"]
+layout_mode = 2

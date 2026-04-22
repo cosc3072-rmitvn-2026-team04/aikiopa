@@ -91,12 +91,21 @@ func get_shroud_at(coords: Vector2i) -> ShroudType:
 	return cell_tile_data.get_custom_data("shroud_type") as ShroudType
 
 
-## Returns The Shroud's internal data as a [Dictionary]. Useful for saving game
-## sessions.
+## Returns The Shroud's internal data as a dictionary of keys:
+## [code]&"cleared_shroud_coords"[/code] and
+## [code]&"thin_shroud_coords"[/code].[br]
+## [br]
+## - [code]&"cleared_shroud_coords"[/code] is the list of coordinates where The
+## Shroud is set to [constant ShroudType.CLEARED].
+## [br]
+## - [code]&"thin_shroud_coords"[/code] is the list of coordinates where The
+## Shroud is set to [constant ShroudType.THIN].
+## [br]
+## Useful for saving game sessions.
 func get_shroud_data() -> Dictionary[StringName, Array]:
 	return {
-		"cleared_shroud_coords": _cleared_shroud_coords,
-		"thin_shroud_coords": _thin_shroud_coords,
+		&"cleared_shroud_coords": _cleared_shroud_coords,
+		&"thin_shroud_coords": _thin_shroud_coords,
 	}
 
 
@@ -186,6 +195,7 @@ func _on_building_placed(
 		_interaction_result: BuildingRulesetEngine.InteractionResult
 ) -> void:
 	_append_vision_area_from_range_at(coords)
+	Global.game_state.shroud_data = get_shroud_data()
 
 
 # Listens to UIEventBus.gameplay_debug_mode_shroud_toggled(toggled_on: bool).

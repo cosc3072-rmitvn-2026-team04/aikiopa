@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://b7p1b85oyvfnp" path="res://scenes/game/world.tscn" id="2_7h61r"]
 [ext_resource type="Script" uid="uid://goc0ooup6fxp" path="res://scripts/game/building_ruleset_engine.gd" id="4_87uf6"]
 [ext_resource type="PackedScene" uid="uid://ccpo3uu672sqa" path="res://scenes/game/debug_camera_2d.tscn" id="4_lfrn8"]
-[ext_resource type="PackedScene" uid="uid://c8uldsfm820ug" path="res://scenes/game/game_hud.tscn" id="5_5i0tg"]
+[ext_resource type="PackedScene" uid="uid://c8uldsfm820ug" path="res://scenes/game/hud/game_hud.tscn" id="5_5i0tg"]
 [ext_resource type="Script" uid="uid://0nisd2iu4boj" path="res://scripts/game/building_stack_controller.gd" id="5_lfrn8"]
 [ext_resource type="Script" uid="uid://fybashptyea7" path="res://scripts/game/reward_controller.gd" id="6_4j704"]
 [ext_resource type="Script" uid="uid://cauurnggrdqh0" path="res://scripts/game/population_controller.gd" id="6_5i0tg"]
@@ -74,15 +74,16 @@ reward_controller = NodePath("../../RewardController")
 
 [node name="GameMenuCanvasLayer" type="CanvasLayer" parent="." unique_id=630394916]
 
-[node name="GameMenu" parent="GameMenuCanvasLayer" unique_id=650760349 instance=ExtResource("11_kp23o")]
+[node name="GameMenu" parent="GameMenuCanvasLayer" unique_id=650760349 node_paths=PackedStringArray("game") instance=ExtResource("11_kp23o")]
 unique_name_in_owner = true
+game = NodePath("../..")
 
 [node name="GameOverCanvasLayer" type="CanvasLayer" parent="." unique_id=1568259986]
 
 [node name="GameOverMenu" parent="GameOverCanvasLayer" unique_id=1463684322 instance=ExtResource("10_5jirj")]
 unique_name_in_owner = true
 
-[node name="DebugCamera2D" parent="." unique_id=1889864583 node_paths=PackedStringArray("world", "building_stack_controller") instance=ExtResource("4_lfrn8")]
+[node name="DebugCamera2D" parent="." unique_id=1889864583 node_paths=PackedStringArray("world", "building_stack_controller", "population_controller") instance=ExtResource("4_lfrn8")]
 unique_name_in_owner = true
 pan_speed = 860
 zoom_min = 0.1
@@ -91,6 +92,7 @@ zoom_increment = 0.05
 zoom_rate = 6.0
 world = NodePath("../World")
 building_stack_controller = NodePath("../BuildingStackController")
+population_controller = NodePath("../PopulationController")
 
 [node name="PlayerCamera" parent="." unique_id=1893900081 node_paths=PackedStringArray("world") instance=ExtResource("8_87uf6")]
 unique_name_in_owner = true

@@ -24,8 +24,8 @@ var _mountain_scene: PackedScene =\
 var _chasm_scene: PackedScene =\
 		preload("res://scenes/game/objects/terrain_features/chasm.tscn")
 
-# The [TerrainFeature] instances in the game. Identified by their [Vector2i]
-# coordinates.
+# The terrain feature instances in the game, represented as a dictionary of key
+# [Vector2i] coordinates and its correspoding [TerrainFeature] instance.
 var _terrain_features: Dictionary[Vector2i, TerrainFeature]
 
 #endregion
@@ -72,7 +72,7 @@ func has_feature_at(coords: Vector2i) -> bool:
 ## Sets the terrain feature at [param coords] to one of
 ## [enum TerrainFeature.FeatureType].[br]
 ## [br]
-## TODO: Deterministically assign random variations.
+## TODO: Deterministically assign random variations (#46).
 func set_feature_at(
 		coords: Vector2i,
 		feature_type: TerrainFeature.FeatureType

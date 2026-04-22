@@ -117,7 +117,6 @@ func initialize(world_seed: Variant = null) -> void:
 	%WorldGenerator.generate_seeds(world_seed)
 	get_terrain_tile_map_layer().clear()
 	get_terrain_feature_layer().clear()
-	get_building_layer().clear()
 
 	_generated_chunks.clear()
 
@@ -276,10 +275,7 @@ func place_building_at(
 ## [br]
 ## Returns [constant Building.BuildingType.NONE] if there is no building at
 ## [param coords].
-## [br]
-## Set [param quiet] to [code]true[/code] to execute without notifying other
-## game systems. Useful for scripted game events.
-func destroy_building_at(coords: Vector2i) -> bool:
+func destroy_building_at(coords: Vector2i) -> Building.BuildingType:
 	return get_building_layer().destroy_building_at(coords)
 
 

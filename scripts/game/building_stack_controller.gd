@@ -12,6 +12,9 @@ extends Node
 ## generate a building with available placement for the player to not get stuck.
 const MAX_REROLL_COUNT: int = 10_000
 
+# HACK: Without this constant, rapid adding of buildings would make the building
+# stack UI put its cards at the wrong positions. Good enough for now, fix when
+# this becomes critical.
 ## The delay in seconds between receiving consecutive building rewards.
 const REWARD_DELAY: float = 0.1
 
@@ -127,6 +130,9 @@ func initialize_session(
 			# enough for now, fix when this becomes critical.
 			await get_tree().create_timer(REWARD_DELAY).timeout
 
+	Global.game_state.building_stack_seed = get_session_seed()
+	Global.game_state.building_stack_state = get_session_state()
+
 
 ## Returns the seed of the internal [RandomNumberGenerator]. Useful for saving
 ## and restoring game sessions.
@@ -164,6 +170,7 @@ func add_building(
 				_rng.rand_weighted(PackedFloat32Array(building_type_weights.values()))
 				+ 1 # Skip Building.BuildingType.NONE.
 		) as Building.BuildingType
+		Global.game_state.building_stack_state = get_session_state()
 
 		# Loop through all buildings at the edge of the colony.
 		for edge_coords in Global.game_state.edge_coords:

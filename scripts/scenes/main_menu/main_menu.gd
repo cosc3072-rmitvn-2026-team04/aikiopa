@@ -6,6 +6,8 @@ extends GameScene2D
 
 func _ready() -> void:
 	%MainMenuUI.acted.connect(_on_main_menu_ui_acted)
+	%GameVersionLabel.text = "v%s" % ProjectSettings.get_setting(
+			"application/config/version")
 
 #endregion
 # ============================================================================ #
@@ -17,10 +19,10 @@ func _ready() -> void:
 # Listens to %MainMenuUI.acted(action: StringName).
 func _on_main_menu_ui_acted(action: StringName) -> void:
 	match action:
-		&"tutorial":
-			scene_finished.emit(SceneKey.TUTORIAL)
-		&"free_play":
-			scene_finished.emit(SceneKey.FREE_PLAY)
+		&"start":
+			scene_finished.emit(SceneKey.SAVE_LOADER)
+		&"gallery":
+			scene_finished.emit(SceneKey.GALLERY_LOADER)
 		&"settings":
 			scene_finished.emit(SceneKey.SETTINGS)
 		&"credits":
