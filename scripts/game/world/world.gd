@@ -183,10 +183,13 @@ func get_neigboring_chunks(chunk_offset: Vector2i) -> Array[Vector2i]:
 ## Returns the [enum TerrainType] at [param coords].
 func get_terrain_at(coords: Vector2i) -> TerrainType:
 	var terrain_feature_layer: Node2D = get_terrain_feature_layer()
+	var cell_tile_data: TileData = get_terrain_tile_map_layer()\
+			.get_cell_tile_data(coords)
+	if not cell_tile_data:
+		return TerrainType.NONE
 
-	var base_terrain_type: TerrainType = get_terrain_tile_map_layer()\
-			.get_cell_tile_data(coords)\
-			.get_custom_data("base_terrain_type")
+	var base_terrain_type: TerrainType = cell_tile_data.get_custom_data(
+			"base_terrain_type")
 	var terrain_feature_type: TerrainFeature.FeatureType =\
 			terrain_feature_layer.get_feature_at(coords)
 
