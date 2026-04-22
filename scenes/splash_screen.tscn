@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://b2bjig41asnpv"]
+[gd_scene format=3 uid="uid://bwghpkv81jn5d"]
 
 [ext_resource type="Script" uid="uid://bb1vdtl87pjp6" path="res://scripts/scenes/splash_screen.gd" id="1_hsxvm"]
 [ext_resource type="Texture2D" uid="uid://o2ii3ojy8vy2" path="res://assets/logos/splash.png" id="1_n4g2v"]
@@ -20,8 +20,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_hsxvm"]
 resource_name = "splash"
-length = 1.5333333
-loop_mode = 1
+length = 0.9
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -29,10 +28,10 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.9, 1.2, 1.5000001),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2]
+"values": [0, 1, 2, 0, 1, 2]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4gp4q"]
