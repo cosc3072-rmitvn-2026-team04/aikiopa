@@ -15,6 +15,7 @@ script = ExtResource("1_t4al5")
 [node name="WorldGenerator" type="Node" parent="." unique_id=1493408137 node_paths=PackedStringArray("world")]
 unique_name_in_owner = true
 script = ExtResource("3_d8brc")
+v_noise_scale = 0.1
 h_noise_scale = 10.0
 h_water_height = -0.14
 h_land_height = 0.32000000000000006

@@ -71,11 +71,10 @@ func has_feature_at(coords: Vector2i) -> bool:
 
 ## Sets the terrain feature at [param coords] to one of
 ## [enum TerrainFeature.FeatureType].[br]
-## [br]
-## TODO: Deterministically assign random variations (#46).
 func set_feature_at(
 		coords: Vector2i,
-		feature_type: TerrainFeature.FeatureType
+		feature_type: TerrainFeature.FeatureType,
+		variation_value: float
 ) -> void:
 	var terrain_feature: TerrainFeature = null
 	match feature_type:
@@ -98,6 +97,7 @@ func set_feature_at(
 
 	var terrain_tile_map_layer: TileMapLayer = world.get_terrain_tile_map_layer()
 	_terrain_features.set(coords, terrain_feature)
+	terrain_feature.set_variation(variation_value)
 	terrain_feature.position = terrain_tile_map_layer.map_to_local(coords)
 	add_child(terrain_feature)
 

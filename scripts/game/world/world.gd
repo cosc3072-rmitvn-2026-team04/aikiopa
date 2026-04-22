@@ -203,8 +203,12 @@ func get_terrain_at(coords: Vector2i) -> TerrainType:
 	])
 
 
-## Sets the terrain at [param coords] to one of [enum TerrainType].
-func set_terrain_at(coords: Vector2i, terrain_type: TerrainType) -> void:
+## Sets the terrain at [param coords] to one of [enum TerrainType], with
+## [param variation] applied if there is a [TerrainFeature].
+func set_terrain_at(
+		coords: Vector2i,
+		terrain_type: TerrainType,
+		variation_value: float) -> void:
 	var terrain_tile_map_layer: TileMapLayer = get_terrain_tile_map_layer()
 	var terrain_features_layer: Node2D = get_terrain_feature_layer()
 
@@ -217,23 +221,28 @@ func set_terrain_at(coords: Vector2i, terrain_type: TerrainType) -> void:
 		TerrainType.SHALLOW_WATER_FISHES:
 			terrain_features_layer.set_feature_at(
 					coords,
-					TerrainFeature.FeatureType.FISHES)
+					TerrainFeature.FeatureType.FISHES,
+					variation_value)
 		TerrainType.PLAIN_FOREST, TerrainType.GRASSLAND_FOREST:
 			terrain_features_layer.set_feature_at(
 					coords,
-					TerrainFeature.FeatureType.FOREST)
+					TerrainFeature.FeatureType.FOREST,
+					variation_value)
 		TerrainType.DESERT_SAND_DUNES:
 			terrain_features_layer.set_feature_at(
 					coords,
-					TerrainFeature.FeatureType.SAND_DUNES)
+					TerrainFeature.FeatureType.SAND_DUNES,
+					variation_value)
 		TerrainType.PLAIN_MOUNTAIN, TerrainType.GRASSLAND_MOUNTAIN, TerrainType.DESERT_MOUNTAIN:
 			terrain_features_layer.set_feature_at(
 					coords,
-					TerrainFeature.FeatureType.MOUNTAIN)
+					TerrainFeature.FeatureType.MOUNTAIN,
+					variation_value)
 		TerrainType.PLAIN_CHASM, TerrainType.GRASSLAND_CHASM, TerrainType.DESERT_CHASM:
 			terrain_features_layer.set_feature_at(
 					coords,
-					TerrainFeature.FeatureType.CHASM)
+					TerrainFeature.FeatureType.CHASM,
+					variation_value)
 
 
 ## Returns [code]true[/code] if there is a [TerrainFeature] at [param coords].
