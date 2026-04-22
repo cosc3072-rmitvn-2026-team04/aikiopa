@@ -115,16 +115,8 @@ func initialize_session(
 		_rng.seed = session_seed
 		_rng.state = session_state
 		Global.game_state.building_stack = building_queue
-		for building_type: Building.BuildingType in Global.game_state.building_stack:
-			add_building(building_type)
-			# HACK: Without this line, rapid adding of buildings would make the
-			# building stack UI put its cards at the wrong positions. Good
-			# enough for now, fix when this becomes critical.
-			await get_tree().create_timer(REWARD_DELAY).timeout
 	else:
 		_rng.randomize()
-		Global.game_state.building_stack_seed = get_session_seed()
-		Global.game_state.building_stack_state = get_session_state()
 		for building_type:Building.BuildingType in guaranteed_starting_buildings:
 			add_building(building_type)
 			# HACK: Without this line, rapid adding of buildings would make the
@@ -137,6 +129,9 @@ func initialize_session(
 			# building stack UI put its cards at the wrong positions. Good
 			# enough for now, fix when this becomes critical.
 			await get_tree().create_timer(REWARD_DELAY).timeout
+
+	Global.game_state.building_stack_seed = get_session_seed()
+	Global.game_state.building_stack_state = get_session_state()
 
 
 ## Returns the seed of the internal [RandomNumberGenerator]. Useful for saving
