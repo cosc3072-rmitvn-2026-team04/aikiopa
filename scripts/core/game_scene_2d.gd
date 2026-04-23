@@ -11,6 +11,7 @@ extends Node2D
 signal scene_finished(next_scene_key: SceneKey)
 
 enum SceneKey {
+	SPLASH,
 	MAIN_MENU,
 	PLAY,
 	GALLERY,
@@ -22,6 +23,7 @@ enum SceneKey {
 }
 
 const GAME_SCENE: Dictionary[SceneKey, String] = {
+	SceneKey.SPLASH: "res://scenes/splash_screen.tscn",
 	SceneKey.MAIN_MENU: "res://scenes/main_menu.tscn",
 	SceneKey.PLAY: "res://scenes/play.tscn",
 	SceneKey.SAVE_LOADER: "res://scenes/save_loader/save_loader.tscn",
