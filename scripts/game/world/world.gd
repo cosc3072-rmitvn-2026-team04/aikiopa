@@ -255,8 +255,8 @@ func has_terrain_feature_at(coords: Vector2i) -> bool:
 
 ## Returns and destroys the terrain feature at [param coords].[br]
 ## [br]
-## Returns [constant TerrainFeature.FeatureType.NONE] if there is no terrain
-## feature at [param coords].
+## Returns [constant TerrainFeature.NONE] if there is no terrain feature at
+## [param coords].
 func remove_terrain_feature_at(coords: Vector2i) -> TerrainFeature.FeatureType:
 	return get_terrain_feature_layer().remove_feature_at(coords)
 
@@ -285,8 +285,7 @@ func place_building_at(
 
 ## Returns and destroys the building at [param coords].[br]
 ## [br]
-## Returns [constant Building.BuildingType.NONE] if there is no building at
-## [param coords].
+## Returns [constant Building.NONE] if there is no building at [param coords].
 func destroy_building_at(coords: Vector2i) -> Building.BuildingType:
 	return get_building_layer().destroy_building_at(coords)
 

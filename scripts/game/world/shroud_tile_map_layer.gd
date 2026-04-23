@@ -96,10 +96,10 @@ func get_shroud_at(coords: Vector2i) -> ShroudType:
 ## [code]&"thin_shroud_coords"[/code].[br]
 ## [br]
 ## - [code]&"cleared_shroud_coords"[/code] is the list of coordinates where The
-## Shroud is set to [constant ShroudType.CLEARED].
+## Shroud is set to [constant CLEARED].[br]
 ## [br]
 ## - [code]&"thin_shroud_coords"[/code] is the list of coordinates where The
-## Shroud is set to [constant ShroudType.THIN].
+## Shroud is set to [constant THIN].[br]
 ## [br]
 ## Useful for saving game sessions.
 func get_shroud_data() -> Dictionary[StringName, Array]:

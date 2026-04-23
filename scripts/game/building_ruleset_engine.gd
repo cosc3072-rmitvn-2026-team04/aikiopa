@@ -32,7 +32,7 @@ enum PlacementCheckStatus {
 
 
 # ============================================================================ #
-#region Enums
+#region Constants
 
 ## Ruleset - Building versus Terrain location.
 const BVT_RULESET_PATH: String = "res://resources/rulesets/bvt.csv"
@@ -126,7 +126,7 @@ func _ready() -> void:
 ## [BuildingRulesetEngine.InteractionResult] between [param building_type] and
 ## the environment around [param coords]. Will be [code]null[/code] if
 ## [code]&"placement_check_status"[/code] is any value other than
-## [constant BuildingRulesetEngine.PlacementCheckStatus.ALLOWED].[br]
+## [constant ALLOWED].[br]
 ## [br]
 ## [b]Advanced:[/b] For more granular output, set [param summarized] to
 ## [code]false[/code]. The [code]&"interaction_result"[/code] will instead be

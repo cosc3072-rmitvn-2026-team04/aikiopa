@@ -193,7 +193,7 @@ func add_building(
 
 
 ## Pops and returns the building type at the top of the building stack. Returns
-## [constant Building.BuildingType.NONE] if the building stack is already empty.
+## [constant Building.NONE] if the building stack is already empty.
 func pop_building() -> Building.BuildingType:
 	if is_empty():
 		return Building.BuildingType.NONE

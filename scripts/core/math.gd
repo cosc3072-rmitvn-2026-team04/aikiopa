@@ -48,8 +48,8 @@ class Matrix extends Object:
 
 
 ## Hexagonal grid math libary. Since this game exclusively implements
-## [constant TileSet.TileOffsetAxis.TILE_OFFSET_AXIS_HORIZONTAL], no algorithm
-## is provided for vertical offset axis.[br]
+## [constant TileSet.TILE_OFFSET_AXIS_HORIZONTAL], no algorithm is provided for
+## vertical offset axis.[br]
 ## [br]
 ## [u]Note:[/u] This library does not provide algorithms to find distances,
 ## areas, intersection, etc. Please refer to the Online Tutorials below for
@@ -63,11 +63,11 @@ class HexGrid extends Object:
 	## Layout types of offset coordinates for the game's hexagonal grid.
 	enum OffsetLayout {
 		## Odd rows get shoved to the right. Same as Godot's
-		## [constant TileSet.TileLayout.TILE_LAYOUT_STACKED].
+		## [constant TileSet.TILE_LAYOUT_STACKED].
 		ODD_R,
 
 		## Even rows get shoved to the right. Same as Godot's
-		## [constant TileSet.TileLayout.TILE_LAYOUT_STACKED_OFFSET].
+		## [constant TileSet.TILE_LAYOUT_STACKED_OFFSET].
 		EVEN_R,
 	}
 
