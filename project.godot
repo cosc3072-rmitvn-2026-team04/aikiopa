@@ -22,6 +22,10 @@ boot_splash/show_image=false
 config/icon="uid://dqp3lnsxh5fw"
 boot_splash/minimum_display_time=20
 
+[audio]
+
+buses/default_bus_layout="uid://otsdrg2b1fgq"
+
 [autoload]
 
 Global="*uid://bh23jxt878mfg"
