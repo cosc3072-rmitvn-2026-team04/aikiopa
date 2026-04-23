@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://0nisd2iu4boj" path="res://scripts/game/building_stack_controller.gd" id="5_lfrn8"]
 [ext_resource type="Script" uid="uid://fybashptyea7" path="res://scripts/game/reward_controller.gd" id="6_4j704"]
 [ext_resource type="Script" uid="uid://cauurnggrdqh0" path="res://scripts/game/population_controller.gd" id="6_5i0tg"]
+[ext_resource type="Script" uid="uid://r8eyf1cugtof" path="res://scripts/game/game_log_manager.gd" id="7_vaxfo"]
 [ext_resource type="PackedScene" uid="uid://cmoxmw1iug4v0" path="res://scenes/game/player_camera.tscn" id="8_87uf6"]
 [ext_resource type="PackedScene" uid="uid://cgm4qt1v27f2b" path="res://scenes/game/cursor_ui/cursor_ui.tscn" id="10_4j704"]
 [ext_resource type="PackedScene" uid="uid://c2jk4roqpaohs" path="res://scenes/modals/game_over_menu.tscn" id="10_5jirj"]
@@ -15,7 +16,7 @@
 
 [node name="Game" type="Node2D" unique_id=361428006]
 script = ExtResource("1_sul5r")
-autosave_interval = 5
+autosave_interval = 8
 metadata/_custom_type_script = "uid://dqjitm5fwb83b"
 
 [node name="World" parent="." unique_id=1513868058 node_paths=PackedStringArray("building_ruleset_engine") instance=ExtResource("2_7h61r")]
@@ -59,6 +60,12 @@ reward_amount = 10
 difficulty = 2.0
 estimated_population_gain_per_turn = 10
 population_controller = NodePath("../PopulationController")
+
+[node name="GameLogManager" type="Node" parent="." unique_id=578115048 node_paths=PackedStringArray("world")]
+unique_name_in_owner = true
+script = ExtResource("7_vaxfo")
+max_log_files = 80
+world = NodePath("../World")
 
 [node name="CursorUI" parent="." unique_id=618488837 node_paths=PackedStringArray("world", "building_ruleset_engine") instance=ExtResource("10_4j704")]
 unique_name_in_owner = true
