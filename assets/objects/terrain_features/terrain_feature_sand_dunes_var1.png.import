@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dti3722xw4pdt"
-path="res://.godot/imported/terrain_feature_fishes.png-90ae8f84ed9f0beebbdf28649e50aa61.ctex"
+uid="uid://burpl544yvlb6"
+path="res://.godot/imported/terrain_feature_sand_dunes_var1.png-67ca9db13584507facb93a39727c6e1f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/objects/terrain_feature_fishes.png"
-dest_files=["res://.godot/imported/terrain_feature_fishes.png-90ae8f84ed9f0beebbdf28649e50aa61.ctex"]
+source_file="res://assets/objects/terrain_features/terrain_feature_sand_dunes_var1.png"
+dest_files=["res://.godot/imported/terrain_feature_sand_dunes_var1.png-67ca9db13584507facb93a39727c6e1f.ctex"]
 
 [params]
 

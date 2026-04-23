@@ -6,8 +6,8 @@ extends GameUI
 
 func _ready() -> void:
 	GameplayEventBus.game_over.connect(_on_game_over)
-	%SaveButton.pressed.connect(_on_save_button_pressed)
-	%NewExpeditionButton.pressed.connect(_on_new_session_button_pressed)
+	%SaveSnapshotButton.pressed.connect(_on_save_snapshot_button_pressed)
+	%NewSessionButton.pressed.connect(_on_new_session_button_pressed)
 	%QuitToMainMenuButton.pressed.connect(_on_quit_to_main_menu_button_press)
 
 #endregion
@@ -57,12 +57,12 @@ func _on_game_over(population: int, game_over_type: Game.GameOverType) -> void:
 			])
 
 
-# Listens to %SaveButton.pressed.
-func _on_save_button_pressed() -> void:
+# Listens to %SaveSnapshotButton.pressed.
+func _on_save_snapshot_button_pressed() -> void:
 	acted.emit(&"save_snapshot")
 
 
-# Listens to %NewExpeditionButton.pressed.
+# Listens to %NewSessionButton.pressed.
 func _on_new_session_button_pressed() -> void:
 	acted.emit(&"new_session")
 

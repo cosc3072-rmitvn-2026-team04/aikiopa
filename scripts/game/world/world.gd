@@ -183,10 +183,13 @@ func get_neigboring_chunks(chunk_offset: Vector2i) -> Array[Vector2i]:
 ## Returns the [enum TerrainType] at [param coords].
 func get_terrain_at(coords: Vector2i) -> TerrainType:
 	var terrain_feature_layer: Node2D = get_terrain_feature_layer()
+	var cell_tile_data: TileData = get_terrain_tile_map_layer()\
+			.get_cell_tile_data(coords)
+	if not cell_tile_data:
+		return TerrainType.NONE
 
-	var base_terrain_type: TerrainType = get_terrain_tile_map_layer()\
-			.get_cell_tile_data(coords)\
-			.get_custom_data("base_terrain_type")
+	var base_terrain_type: TerrainType = cell_tile_data.get_custom_data(
+			"base_terrain_type")
 	var terrain_feature_type: TerrainFeature.FeatureType =\
 			terrain_feature_layer.get_feature_at(coords)
 
@@ -203,8 +206,12 @@ func get_terrain_at(coords: Vector2i) -> TerrainType:
 	])
 
 
-## Sets the terrain at [param coords] to one of [enum TerrainType].
-func set_terrain_at(coords: Vector2i, terrain_type: TerrainType) -> void:
+## Sets the terrain at [param coords] to one of [enum TerrainType], with
+## [param variation] applied if there is a [TerrainFeature].
+func set_terrain_at(
+		coords: Vector2i,
+		terrain_type: TerrainType,
+		variation_value: float) -> void:
 	var terrain_tile_map_layer: TileMapLayer = get_terrain_tile_map_layer()
 	var terrain_features_layer: Node2D = get_terrain_feature_layer()
 
@@ -217,23 +224,28 @@ func set_terrain_at(coords: Vector2i, terrain_type: TerrainType) -> void:
 		TerrainType.SHALLOW_WATER_FISHES:
 			terrain_features_layer.set_feature_at(
 					coords,
-					TerrainFeature.FeatureType.FISHES)
+					TerrainFeature.FeatureType.FISHES,
+					variation_value)
 		TerrainType.PLAIN_FOREST, TerrainType.GRASSLAND_FOREST:
 			terrain_features_layer.set_feature_at(
 					coords,
-					TerrainFeature.FeatureType.FOREST)
+					TerrainFeature.FeatureType.FOREST,
+					variation_value)
 		TerrainType.DESERT_SAND_DUNES:
 			terrain_features_layer.set_feature_at(
 					coords,
-					TerrainFeature.FeatureType.SAND_DUNES)
+					TerrainFeature.FeatureType.SAND_DUNES,
+					variation_value)
 		TerrainType.PLAIN_MOUNTAIN, TerrainType.GRASSLAND_MOUNTAIN, TerrainType.DESERT_MOUNTAIN:
 			terrain_features_layer.set_feature_at(
 					coords,
-					TerrainFeature.FeatureType.MOUNTAIN)
+					TerrainFeature.FeatureType.MOUNTAIN,
+					variation_value)
 		TerrainType.PLAIN_CHASM, TerrainType.GRASSLAND_CHASM, TerrainType.DESERT_CHASM:
 			terrain_features_layer.set_feature_at(
 					coords,
-					TerrainFeature.FeatureType.CHASM)
+					TerrainFeature.FeatureType.CHASM,
+					variation_value)
 
 
 ## Returns [code]true[/code] if there is a [TerrainFeature] at [param coords].

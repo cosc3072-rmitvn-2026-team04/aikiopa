@@ -27,7 +27,7 @@ enum BuildingType {
 #region Constants
 
 ## [Building] asset location.
-const BUILDING_ASSET_DIR: String = "res://assets/objects/"
+const BUILDING_ASSET_DIR: String = "res://assets/objects/buildings/"
 
 ## [String] building name for each [enum BuildingType].
 const BUILDING_NAME: Dictionary[BuildingType, String] = {
@@ -42,6 +42,16 @@ const BUILDING_NAME: Dictionary[BuildingType, String] = {
 	BuildingType.NUCLEAR_REACTOR: "Nuclear Reactor",
 	BuildingType.FACTORY: "Factory",
 }
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Exported properties
+
+## Sprite variations.
+@export var variations: Array[CompressedTexture2D] = []
 
 #endregion
 # ============================================================================ #

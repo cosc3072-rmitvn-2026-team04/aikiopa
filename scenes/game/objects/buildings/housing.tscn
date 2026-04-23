@@ -2,10 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://q1crh5ps008g" path="res://scenes/game/objects/buildings/_generic.tscn" id="1_brcn4"]
 [ext_resource type="Script" uid="uid://clekhm8vlfdu" path="res://scripts/game/objects/buildings/housing.gd" id="2_6o4u4"]
-[ext_resource type="Texture2D" uid="uid://eclfqwoyfb4r" path="res://assets/objects/building_housing.png" id="2_657y4"]
+[ext_resource type="Texture2D" uid="uid://eclfqwoyfb4r" path="res://assets/objects/buildings/building_housing_var0.png" id="2_657y4"]
 
 [node name="Housing" unique_id=1178872670 instance=ExtResource("1_brcn4")]
 script = ExtResource("2_6o4u4")
+variations = Array[CompressedTexture2D]([ExtResource("2_657y4")])
 
 [node name="Sprite2D" parent="." index="0" unique_id=906012488]
 position = Vector2(0, -13)

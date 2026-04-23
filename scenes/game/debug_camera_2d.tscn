@@ -212,6 +212,7 @@ text = " Change🧑‍🚀 "
 
 [node name="PopulationChangeSpinBox" type="SpinBox" parent="DebugCanvasLayer/ControlPanelContainer/VBoxContainer/HBoxContainer/PopulationControlContainer" unique_id=1090085286]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 size_flags_vertical = 3
 theme = SubResource("Theme_0s1lt")

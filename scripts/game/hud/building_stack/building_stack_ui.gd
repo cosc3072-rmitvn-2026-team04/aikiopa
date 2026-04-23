@@ -60,6 +60,24 @@ func redraw() -> void:
 # ============================================================================ #
 #region Private methods
 
+func _add_building_card(building_type: Building.BuildingType) -> void:
+	var building_card: BuildingCard = _building_card_scene.instantiate()
+	building_card.set_type(building_type)
+	%BuildingStack.add_child(building_card)
+	%BuildingStack.move_child(building_card, 0)
+	%BuildingStack.get_child(-1).set_pickable()
+	%BuildingStackCountLabel.text = "%d🏠" % Global.game_state.building_stack.size()
+
+
+func _pop_building_card() -> void:
+	var top_building_card: BuildingCard = %BuildingStack.get_child(-1)
+	%BuildingStack.remove_child(top_building_card)
+	if %BuildingStack.get_child_count() != 0:
+		%BuildingStack.get_child(-1).set_pickable()
+	%BuildingStackCountLabel.text = "%d🏠" % Global.game_state.building_stack.size()
+	top_building_card.queue_free()
+
+
 func _update_building_card_positions() -> void:
 	var building_card_count: int = %BuildingStack.get_child_count()
 	var building_cards: Array[Node] = %BuildingStack.get_children()
@@ -149,17 +167,8 @@ func _on_session_restored(_save_slot_index) -> void:
 		%BuildingStackCountLabel.text = "%d🏠" % [building_stack_count - index]
 		var building_type: Building.BuildingType =\
 				Global.game_state.building_stack[index]
-		var building_card: BuildingCard = _building_card_scene.instantiate()
-		building_card.set_type(building_type)
-		%BuildingStack.add_child(building_card)
-		%BuildingStack.move_child(building_card, 0)
-		%BuildingStack.get_child(-1).set_pickable()
-		_update_building_card_positions()
-		_update_building_stack_position()
-		# HACK: Without this line, rapid adding of buildings would make the
-		# building stack UI put its cards at the wrong positions. Good
-		# enough for now, fix when this becomes critical.
-		await get_tree().create_timer(BuildingStackController.REWARD_DELAY).timeout
+		_add_building_card(building_type)
+	redraw()
 
 
 # Listens to
@@ -168,31 +177,18 @@ func _on_session_restored(_save_slot_index) -> void:
 func _on_building_stack_building_added(
 		building_type: Building.BuildingType
 ) -> void:
-	var building_card: BuildingCard = _building_card_scene.instantiate()
-	building_card.set_type(building_type)
-	%BuildingStack.add_child(building_card)
-	%BuildingStack.move_child(building_card, 0)
-	%BuildingStack.get_child(-1).set_pickable()
-	%BuildingStackCountLabel.text = "%d🏠" % Global.game_state.building_stack.size()
-	_update_building_card_positions()
-	_update_building_stack_position()
+	_add_building_card(building_type)
+	redraw()
 
 
 # Listens to
 # GameplayEventBus.building_stack_building_popped(building: Building.BuildingType).
 func _on_building_stack_building_popped(_building: Building.BuildingType) -> void:
-	var top_building_card: BuildingCard = %BuildingStack.get_child(-1)
-	%BuildingStack.remove_child(top_building_card)
-	if %BuildingStack.get_child_count() != 0:
-		%BuildingStack.get_child(-1).set_pickable()
-	%BuildingStackCountLabel.text = "%d🏠" % Global.game_state.building_stack.size()
-	_update_building_card_positions()
-	_update_building_stack_position()
-	top_building_card.queue_free()
-
+	_pop_building_card()
 	if Global.game_state.building_stack.is_empty():
 		# TODO: This could be made prettier using a Tween animation on its size.
 		%BuildingStackCountTextureRect.hide()
+	redraw()
 
 
 # Listens to GameplayEventBus.game_over(

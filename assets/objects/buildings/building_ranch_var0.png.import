@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bvedx7x0djy77"
-path="res://.godot/imported/building_wind_farm.png-75caf73b4f6b2e9c7dcb5aef21f37824.ctex"
+uid="uid://c55vc5m23tmso"
+path="res://.godot/imported/building_ranch_var0.png-d3c19650b8343b0a6c99f2fec5b6e3f7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/objects/building_wind_farm.png"
-dest_files=["res://.godot/imported/building_wind_farm.png-75caf73b4f6b2e9c7dcb5aef21f37824.ctex"]
+source_file="res://assets/objects/buildings/building_ranch_var0.png"
+dest_files=["res://.godot/imported/building_ranch_var0.png-d3c19650b8343b0a6c99f2fec5b6e3f7.ctex"]
 
 [params]
 

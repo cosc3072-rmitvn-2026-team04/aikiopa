@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bq4cf5o7ayr8q"
-path="res://.godot/imported/building_solar_farm.png-a064af4f7d5907b585c042ca591bf61c.ctex"
+uid="uid://ht1psllv6o3e"
+path="res://.godot/imported/building_nuclear_reactor_var0.png-d376672b62a795af24a39ad241b4e5e8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/objects/building_solar_farm.png"
-dest_files=["res://.godot/imported/building_solar_farm.png-a064af4f7d5907b585c042ca591bf61c.ctex"]
+source_file="res://assets/objects/buildings/building_nuclear_reactor_var0.png"
+dest_files=["res://.godot/imported/building_nuclear_reactor_var0.png-d376672b62a795af24a39ad241b4e5e8.ctex"]
 
 [params]
 

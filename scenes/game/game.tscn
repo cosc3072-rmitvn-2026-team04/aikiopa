@@ -15,6 +15,7 @@
 
 [node name="Game" type="Node2D" unique_id=361428006]
 script = ExtResource("1_sul5r")
+autosave_interval = 5
 metadata/_custom_type_script = "uid://dqjitm5fwb83b"
 
 [node name="World" parent="." unique_id=1513868058 node_paths=PackedStringArray("building_ruleset_engine") instance=ExtResource("2_7h61r")]

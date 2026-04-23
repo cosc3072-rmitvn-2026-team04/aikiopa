@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://b48xj46vq8p2u"]
 
 [ext_resource type="PackedScene" uid="uid://q1crh5ps008g" path="res://scenes/game/objects/buildings/_generic.tscn" id="1_1psii"]
-[ext_resource type="Texture2D" uid="uid://c8rhursgc3vrc" path="res://assets/objects/building_greenhouse.png" id="2_7e8cd"]
+[ext_resource type="Texture2D" uid="uid://c8rhursgc3vrc" path="res://assets/objects/buildings/building_greenhouse_var0.png" id="2_7e8cd"]
 [ext_resource type="Script" uid="uid://c2nkqjbf4tkqd" path="res://scripts/game/objects/buildings/greenhouse.gd" id="2_y4axj"]
 
 [node name="Greenhouse" unique_id=1178872670 instance=ExtResource("1_1psii")]
 script = ExtResource("2_y4axj")
+variations = Array[CompressedTexture2D]([ExtResource("2_7e8cd")])
 
 [node name="Sprite2D" parent="." index="0" unique_id=906012488]
 texture = ExtResource("2_7e8cd")

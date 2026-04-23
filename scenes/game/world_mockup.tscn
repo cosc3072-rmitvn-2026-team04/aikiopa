@@ -22,16 +22,16 @@
 tile_map_data = PackedByteArray("AAD/////AAABAAAAAAD//wEAAAABAAAAAAD//wMAAAABAAAAAAD//wUAAAABAAAAAAD//wcAAAABAAAAAAD//wkAAAABAAAAAAD//wsAAAABAAAAAAAAAP//AAABAAAAAAAAAAAAAAABAAAAAAAAAAEAAAABAAAAAAAAAAIAAAABAAAAAAAAAAMAAAABAAAAAAAAAAQAAAABAAAAAAAAAAUAAAABAAAAAAAAAAYAAAABAAAAAAAAAAcAAAAAAAAAAAAAAAgAAAABAAAAAAAAAAkAAAABAAAAAAAAAAoAAAABAAAAAAAAAAsAAAABAAAAAAABAP//AAABAAAAAAABAAAAAAABAAAAAAABAAEAAAABAAAAAAABAAIAAAABAAAAAAABAAMAAAABAAAAAAABAAQAAAABAAAAAAABAAUAAAAAAAAAAAABAAYAAAAAAAAAAAABAAcAAAAAAAEAAAABAAgAAAAAAAAAAAABAAkAAAAAAAAAAAABAAoAAAABAAAAAAABAAsAAAABAAAAAAACAP//AAABAAAAAAACAAAAAAABAAAAAAACAAEAAAABAAAAAAACAAIAAAABAAAAAAACAAMAAAAAAAAAAAACAAQAAAAAAAAAAAACAAUAAAAAAAAAAAACAAYAAAAAAAEAAAACAAcAAAABAAEAAAACAAgAAAABAAEAAAACAAkAAAABAAEAAAACAAoAAAAAAAAAAAACAAsAAAABAAAAAAADAP//AAABAAAAAAADAAAAAAABAAAAAAADAAEAAAABAAAAAAADAAIAAAAAAAAAAAADAAMAAAAAAAEAAAADAAQAAAAAAAEAAAADAAUAAAAAAAEAAAADAAYAAAAAAAEAAAADAAcAAAAAAAAAAAADAAgAAAABAAEAAAADAAkAAAAAAAAAAAADAAoAAAAAAAAAAAADAAsAAAABAAAAAAAEAP//AAABAAAAAAAEAAAAAAABAAAAAAAEAAEAAAABAAAAAAAEAAIAAAAAAAAAAAAEAAMAAAABAAEAAAAEAAQAAAABAAEAAAAEAAUAAAABAAEAAAAEAAYAAAAAAAEAAAAEAAcAAAAAAAEAAAAEAAgAAAAAAAAAAAAEAAkAAAABAAAAAAAEAAoAAAABAAAAAAAEAAsAAAABAAAAAAAFAP//AAABAAAAAAAFAAAAAAABAAAAAAAFAAEAAAAAAAAAAAAFAAIAAAAAAAAAAAAFAAMAAAABAAEAAAAFAAQAAAABAAEAAAAFAAUAAAABAAEAAAAFAAYAAAABAAEAAAAFAAcAAAAAAAEAAAAFAAgAAAAAAAAAAAAFAAkAAAABAAAAAAAFAAoAAAABAAAAAAAFAAsAAAABAAAAAAAGAP//AAABAAAAAAAGAAAAAAABAAAAAAAGAAEAAAAAAAAAAAAGAAIAAAAAAAEAAAAGAAMAAAABAAEAAAAGAAQAAAABAAEAAAAGAAUAAAAAAAEAAAAGAAYAAAAAAAEAAAAGAAcAAAAAAAEAAAAGAAgAAAAAAAAAAAAGAAkAAAAAAAAAAAAGAAoAAAABAAAAAAAGAAsAAAABAAAAAAAHAP//AAABAAAAAAAHAAAAAAABAAAAAAAHAAEAAAAAAAAAAAAHAAIAAAAAAAEAAAAHAAMAAAAAAAEAAAAHAAQAAAAAAAEAAAAHAAUAAAACAAAAAAAHAAYAAAACAAAAAAAHAAcAAAACAAAAAAAHAAgAAAAAAAEAAAAHAAkAAAAAAAAAAAAHAAoAAAABAAAAAAAHAAsAAAABAAAAAAAIAP//AAABAAAAAAAIAAAAAAAAAAAAAAAIAAEAAAACAAAAAAAIAAIAAAACAAAAAAAIAAMAAAACAAAAAAAIAAQAAAACAAAAAAAIAAUAAAACAAAAAAAIAAYAAAACAAAAAAAIAAcAAAAAAAEAAAAIAAgAAAAAAAEAAAAIAAkAAAAAAAAAAAAIAAoAAAABAAAAAAAIAAsAAAABAAAAAAAJAP//AAABAAAAAAAJAAAAAAAAAAAAAAAJAAEAAAAAAAAAAAAJAAIAAAACAAAAAAAJAAMAAAAAAAAAAAAJAAQAAAAAAAAAAAAJAAUAAAAAAAAAAAAJAAYAAAACAAAAAAAJAAcAAAAAAAAAAAAJAAgAAAAAAAAAAAAJAAkAAAABAAAAAAAJAAoAAAABAAAAAAAJAAsAAAABAAAAAAAKAP//AAABAAAAAAAKAAAAAAABAAAAAAAKAAEAAAABAAAAAAAKAAIAAAAAAAAAAAAKAAMAAAABAAAAAAAKAAQAAAABAAAAAAAKAAUAAAABAAAAAAAKAAYAAAAAAAAAAAAKAAcAAAABAAAAAAAKAAgAAAABAAAAAAAKAAkAAAABAAAAAAAKAAoAAAABAAAAAAAKAAsAAAABAAAAAAALAP//AAABAAAAAAALAAAAAAABAAAAAAALAAEAAAABAAAAAAALAAIAAAABAAAAAAALAAMAAAABAAAAAAALAAQAAAABAAAAAAALAAUAAAABAAAAAAALAAYAAAABAAAAAAALAAcAAAABAAAAAAALAAgAAAABAAAAAAALAAkAAAABAAAAAAALAAoAAAABAAAAAAALAAsAAAABAAAAAAA=")
 
 [node name="Mountain" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="0" unique_id=609911264 instance=ExtResource("2_5vt6i")]
-position = Vector2(872, 451)
+position = Vector2(882, 463)
 
 [node name="Mountain2" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="1" unique_id=1731690927 instance=ExtResource("2_5vt6i")]
-position = Vector2(961, 546)
+position = Vector2(962, 567)
 
 [node name="Mountain3" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="2" unique_id=1989208071 instance=ExtResource("2_5vt6i")]
-position = Vector2(1118, 546)
+position = Vector2(1118, 564)
 
 [node name="Mountain4" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="3" unique_id=1131990581 instance=ExtResource("2_5vt6i")]
-position = Vector2(1192, 446)
+position = Vector2(1198, 465)
 
 [node name="Forest" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="4" unique_id=1542832817 instance=ExtResource("3_ge07p")]
 position = Vector2(718, 459)
@@ -76,25 +76,22 @@ position = Vector2(1201, 649)
 position = Vector2(639, 748)
 
 [node name="Fishes2" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="18" unique_id=1133005785 instance=ExtResource("5_4utx7")]
-position = Vector2(477, 552)
+position = Vector2(401, 456)
 
 [node name="Forest10" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="19" unique_id=31863317 instance=ExtResource("3_ge07p")]
 position = Vector2(716, 652)
 
 [node name="Chasm" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="20" unique_id=1564893698 instance=ExtResource("6_kg817")]
-position = Vector2(809, 557)
+position = Vector2(802, 554)
 
 [node name="Chasm2" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="21" unique_id=1660207485 instance=ExtResource("6_kg817")]
-position = Vector2(1283, 748)
+position = Vector2(1277, 747)
 
 [node name="Forest11" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="22" unique_id=464058614 instance=ExtResource("3_ge07p")]
 position = Vector2(796, 752)
 
-[node name="Chasm3" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="23" unique_id=1930766387 instance=ExtResource("6_kg817")]
-position = Vector2(809, 557)
-
-[node name="Chasm4" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="24" unique_id=1452170702 instance=ExtResource("6_kg817")]
-position = Vector2(1109, 749)
+[node name="Chasm4" parent="GroundLayer/TerrainFeatureLayer" parent_id_path=PackedInt32Array(614560681) index="23" unique_id=1452170702 instance=ExtResource("6_kg817")]
+position = Vector2(1115, 745)
 
 [node name="LandingSite" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="0" unique_id=1178872670 instance=ExtResource("7_mwd2l")]
 position = Vector2(881, 655)
@@ -109,19 +106,19 @@ position = Vector2(805, 356)
 position = Vector2(1356, 641)
 
 [node name="SolarFarm2" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="4" unique_id=121088533 instance=ExtResource("9_e5kk6")]
-position = Vector2(1439, 738)
+position = Vector2(1438, 746)
 
 [node name="WindFarm" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="5" unique_id=195833678 instance=ExtResource("10_7qspy")]
 position = Vector2(1192, 666)
 
 [node name="WindFarm2" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="6" unique_id=253609113 instance=ExtResource("10_7qspy")]
-position = Vector2(1509, 440)
+position = Vector2(1512, 465)
 
 [node name="Housing" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="7" unique_id=1089995812 instance=ExtResource("11_awecp")]
-position = Vector2(1283, 340)
+position = Vector2(1273, 358)
 
 [node name="Greenhouse" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="8" unique_id=28098927 instance=ExtResource("12_ylelj")]
-position = Vector2(475, 731)
+position = Vector2(484, 745)
 
 [node name="Greenhouse2" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="9" unique_id=1373879327 instance=ExtResource("12_ylelj")]
 position = Vector2(321, 748)
@@ -136,10 +133,10 @@ position = Vector2(478, 553)
 position = Vector2(799, 746)
 
 [node name="Factory2" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="13" unique_id=1987318850 instance=ExtResource("14_y87f1")]
-position = Vector2(1357, 438)
+position = Vector2(1357, 453)
 
 [node name="NuclearReactor" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="14" unique_id=1999556063 instance=ExtResource("15_0prlu")]
-position = Vector2(1436, 344)
+position = Vector2(1434, 355)
 
 [node name="Housing2" parent="GroundLayer/BuildingLayer" parent_id_path=PackedInt32Array(357589614) index="15" unique_id=1050833759 instance=ExtResource("11_awecp")]
-position = Vector2(1527, 248)
+position = Vector2(1521, 257)

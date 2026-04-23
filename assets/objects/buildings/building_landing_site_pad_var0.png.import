@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2qja0wjoqvlm"
-path="res://.godot/imported/terrain_feature_sand_dunes.png-bed525ee86fbbbfe6c26b68e60025a95.ctex"
+uid="uid://m32iyv8e7uou"
+path="res://.godot/imported/building_landing_site_pad_var0.png-229f0dd8a527f1bf35c41269add9c441.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/objects/terrain_feature_sand_dunes.png"
-dest_files=["res://.godot/imported/terrain_feature_sand_dunes.png-bed525ee86fbbbfe6c26b68e60025a95.ctex"]
+source_file="res://assets/objects/buildings/building_landing_site_pad_var0.png"
+dest_files=["res://.godot/imported/building_landing_site_pad_var0.png-229f0dd8a527f1bf35c41269add9c441.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ht1psllv6o3e"
-path="res://.godot/imported/building_nuclear_reactor.png-918e11fd0c3c8a6019c08fea84ea4121.ctex"
+uid="uid://d2y7ktrktk7ek"
+path="res://.godot/imported/terrain_feature_chasm_var1.png-32373b8e5bc87b4c282c18ab3e101b83.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/objects/building_nuclear_reactor.png"
-dest_files=["res://.godot/imported/building_nuclear_reactor.png-918e11fd0c3c8a6019c08fea84ea4121.ctex"]
+source_file="res://assets/objects/terrain_features/terrain_feature_chasm_var1.png"
+dest_files=["res://.godot/imported/terrain_feature_chasm_var1.png-32373b8e5bc87b4c282c18ab3e101b83.ctex"]
 
 [params]
 
