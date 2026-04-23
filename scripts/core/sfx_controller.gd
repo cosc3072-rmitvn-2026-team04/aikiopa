@@ -7,7 +7,7 @@ extends Node
 ## Nested children are not allowed. The only accepted node types are
 ## [AudioStreamPlayer] and [AudioStreamPlayer2D].[br]
 ## [br]
-## Throwsw a failed assertion if the structure of its children does not satisfy
+## Throws a failed assertion if the structure of its children does not satisfy
 ## the above requirements.
 
 
