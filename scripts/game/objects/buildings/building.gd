@@ -58,12 +58,46 @@ const BUILDING_NAME: Dictionary[BuildingType, String] = {
 
 
 # ============================================================================ #
+#region Private variables
+
+var _variation_index: int
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
 #region Public methods
 
-## Returns the [enum Building.BuildingType] of this [Building] instance.[br]
+## Returns the current index of sprite [member variations] of the building.
+func get_variation_index() -> int:
+	return _variation_index
+
+
+## Sets the sprite variation of the building based on [param value] between
+## [code]-1.0[/code] and [code]1.0[/code] (inclusive).[br]
 ## [br]
-## Virtual method. Override this method in children scenes to provide correct
-## building type.
+## The variation is calculated from the position of [param value] within the
+## uniform intervals in the above [code][-1.0, 1.0][/code] range, determined by
+## the size of [member variations].
+func set_variation(value: float) -> void:
+	if value < -1.0 or value > 1.0:
+		push_error("Value %.2f for parameter 'value' is out of bound." % value)
+		return
+	if variations.is_empty():
+		return
+
+	var normalized_value: float = (value + 1.0) / 2.0
+	var variation_index: int = int(normalized_value * variations.size())
+	variation_index = clampi(variation_index, 0, variations.size() - 1)
+	_variation_index = variation_index
+	$Sprite2D.texture = variations[variation_index]
+
+
+## Returns the [enum BuildingType] of this [Building] instance.[br]
+## [br]
+## Virtual method. Override in children scenes to provide the correct return
+## value.
 func get_type() -> BuildingType:
 	push_warning("Calling method 'get_type()' on generic 'Building' instance.")
 	return BuildingType.NONE
