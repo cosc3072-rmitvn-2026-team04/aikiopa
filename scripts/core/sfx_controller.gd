@@ -65,7 +65,7 @@ func _ready() -> void:
 				"SfxController must contain only AudioStreamPlayer or AudioStreamPlayer2D")
 		assert(child.get_child_count(true) == 0,
 				"SfxController does not accept nested children.")
-		child.finished.connect(func (): playback_finished.emit(child.name))
+		child.finished.connect(func () -> void: playback_finished.emit(child.name))
 
 #endregion
 # ============================================================================ #

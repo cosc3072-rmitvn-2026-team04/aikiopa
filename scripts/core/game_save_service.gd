@@ -51,7 +51,7 @@ static func get_save_slot_count() -> int:
 ## [constant SAVE_FILES]. A value of [code]true[/code] means the file exists,
 ## and a value of [code]false[/code] means the slot is empty.
 static func get_save_slot_usage_status() -> Array[bool]:
-	return Array(SAVE_FILES.map(func (save_file_name: String):
+	return Array(SAVE_FILES.map(func (save_file_name: String) -> bool:
 			return FileAccess.file_exists(SAVE_DIR.path_join(save_file_name))),
 			TYPE_BOOL, "", null)
 

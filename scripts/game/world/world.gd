@@ -121,9 +121,16 @@ func initialize(world_seed: Variant = null) -> void:
 	_generated_chunks.clear()
 
 
-## Returns the current world's seed.
+## Returns the current world's seed. Useful for saving and restoring game
+## sessions.
 func get_seed() -> int:
 	return %WorldGenerator.get_seed()
+
+
+## Returns the current world's seed and its corresponding internal terrain
+## module seeds. Useful for debugging.
+func get_seeds_internal() -> Dictionary[StringName, int]:
+	return %WorldGenerator.get_seeds_internal()
 
 
 ## Generates new world chunk at [param chunk_offset]. [param chunk_offset]
