@@ -8,7 +8,7 @@ extends Node2D
 
 enum GameMode {
 	PLAY,
-	GALLERY,
+	GALLERY, # TODO: Implement this mode in #149.
 }
 
 enum GameOverType {

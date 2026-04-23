@@ -156,8 +156,7 @@ func place_building_at(
 
 ## Returns and destroys the building at [param coords].[br]
 ## [br]
-## Returns [constant Building.BuildingType.NONE] if there is no building at
-## [param coords].
+## Returns [constant Building.NONE] if there is no building at [param coords].
 ## [br]
 ## Set [param quiet] to [code]true[/code] to execute without notifying other
 ## game systems. Useful for scripted game events.

@@ -104,8 +104,8 @@ func set_feature_at(
 
 ## Returns and destroys the terrain feature at [param coords].[br]
 ## [br]
-## Returns [constant TerrainFeature.FeatureType.NONE] if there is no terrain
-## feature at [param coords].
+## Returns [constant TerrainFeature.NONE] if there is no terrain feature at
+## [param coords].
 func remove_feature_at(coords: Vector2i) -> TerrainFeature.FeatureType:
 	if not has_feature_at(coords):
 		return TerrainFeature.FeatureType.NONE

@@ -96,10 +96,10 @@ func get_shroud_at(coords: Vector2i) -> ShroudType:
 ## [code]&"thin_shroud_coords"[/code].[br]
 ## [br]
 ## - [code]&"cleared_shroud_coords"[/code] is the list of coordinates where The
-## Shroud is set to [constant ShroudType.CLEARED].
+## Shroud is set to [constant CLEARED].[br]
 ## [br]
 ## - [code]&"thin_shroud_coords"[/code] is the list of coordinates where The
-## Shroud is set to [constant ShroudType.THIN].
+## Shroud is set to [constant THIN].[br]
 ## [br]
 ## Useful for saving game sessions.
 func get_shroud_data() -> Dictionary[StringName, Array]:
@@ -158,7 +158,7 @@ func _append_vision_area_from_range_at(coords: Vector2i) -> void:
 					coords,
 					Math.HexGrid.OffsetLayout.ODD_R)
 	_cleared_shroud_coords.append_array(surrounding_neighbor_coords.filter(
-			func (neighbor_coords: Vector2i):
+			func (neighbor_coords: Vector2i) -> bool:
 				return neighbor_coords not in _cleared_shroud_coords))
 	if coords not in _cleared_shroud_coords:
 		_cleared_shroud_coords.append(coords)
@@ -168,7 +168,7 @@ func _append_vision_area_from_range_at(coords: Vector2i) -> void:
 					coords,
 					vision_range,
 					Math.HexGrid.OffsetLayout.ODD_R).filter(
-							func (in_range_coords):
+							func (in_range_coords) -> bool:
 								return (
 										in_range_coords.distance_squared_to(coords) > 1
 										and in_range_coords not in _cleared_shroud_coords

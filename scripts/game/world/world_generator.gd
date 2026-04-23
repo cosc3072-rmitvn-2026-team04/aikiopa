@@ -154,15 +154,15 @@ func get_seed() -> int:
 
 ## Returns the current world's seed and its corresponding internal terrain
 ## module seeds. Useful for debugging.
-func get_internal_seeds() -> Dictionary[String, int]:
+func get_seeds_internal() -> Dictionary[StringName, int]:
 	return {
-		"master": _rng.seed,
-		"height_map_seed": h_map.seed,
-		"moisture_map_seed": m_map.seed,
-		"chasm_map_seed": c_map.seed,
-		"dunes_map_seed": d_map.seed,
-		"forest_map_seed": t_map.seed,
-		"fish_map_seed": f_map.seed,
+		&"master": _rng.seed,
+		&"height_map_seed": h_map.seed,
+		&"moisture_map_seed": m_map.seed,
+		&"chasm_map_seed": c_map.seed,
+		&"dunes_map_seed": d_map.seed,
+		&"forest_map_seed": t_map.seed,
+		&"fish_map_seed": f_map.seed,
 	}
 
 

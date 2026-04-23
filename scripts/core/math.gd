@@ -48,8 +48,8 @@ class Matrix extends Object:
 
 
 ## Hexagonal grid math libary. Since this game exclusively implements
-## [constant TileSet.TileOffsetAxis.TILE_OFFSET_AXIS_HORIZONTAL], no algorithm
-## is provided for vertical offset axis.[br]
+## [constant TileSet.TILE_OFFSET_AXIS_HORIZONTAL], no algorithm is provided for
+## vertical offset axis.[br]
 ## [br]
 ## [u]Note:[/u] This library does not provide algorithms to find distances,
 ## areas, intersection, etc. Please refer to the Online Tutorials below for
@@ -63,11 +63,11 @@ class HexGrid extends Object:
 	## Layout types of offset coordinates for the game's hexagonal grid.
 	enum OffsetLayout {
 		## Odd rows get shoved to the right. Same as Godot's
-		## [constant TileSet.TileLayout.TILE_LAYOUT_STACKED].
+		## [constant TileSet.TILE_LAYOUT_STACKED].
 		ODD_R,
 
 		## Even rows get shoved to the right. Same as Godot's
-		## [constant TileSet.TileLayout.TILE_LAYOUT_STACKED_OFFSET].
+		## [constant TileSet.TILE_LAYOUT_STACKED_OFFSET].
 		EVEN_R,
 	}
 
@@ -165,7 +165,7 @@ class HexGrid extends Object:
 		var cube_coords: Vector3i = offset_to_cube(coords, offset_layout)
 		var cube_surrounding_neighbors: Array[Vector3i] =\
 				get_cube_surrounding_neighbors(cube_coords)
-		return Array(cube_surrounding_neighbors.map(func (neighbor: Vector3i):
+		return Array(cube_surrounding_neighbors.map(func (neighbor: Vector3i) -> Vector2i:
 				return cube_to_offset(neighbor, offset_layout)),
 				TYPE_VECTOR2I, "", null)
 
@@ -178,7 +178,7 @@ class HexGrid extends Object:
 
 	## Returns the list of all neighboring cube coordinates to [param coords].
 	static func get_cube_surrounding_neighbors(coords: Vector3i) -> Array[Vector3i]:
-		return Array(CUBE_UNIT_VECTORS.keys().map(func (direction: Direction):
+		return Array(CUBE_UNIT_VECTORS.keys().map(func (direction: Direction) -> Vector3i:
 				return coords + CUBE_UNIT_VECTORS[direction]),
 				TYPE_VECTOR3I, "", null)
 
@@ -203,7 +203,7 @@ class HexGrid extends Object:
 		var cube_coords: Vector3i = offset_to_cube(coords, offset_layout)
 		return Array(
 				get_cube_area_from_range_at(cube_coords, range_distance).map(
-						func (in_range_cube_coords: Vector3i):
+						func (in_range_cube_coords: Vector3i) -> Vector2i:
 							return cube_to_offset(
 									in_range_cube_coords,
 									offset_layout)),

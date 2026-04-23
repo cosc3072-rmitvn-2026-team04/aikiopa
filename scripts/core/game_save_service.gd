@@ -34,7 +34,9 @@ const BACKUP_FILE_EXT: String = ".backup"
 ## Ensure that [constant SAVE_DIR] exists in the file system.
 static func verify_save_directory() -> void:
 	if not DirAccess.dir_exists_absolute(SAVE_DIR):
-		DirAccess.make_dir_recursive_absolute(SAVE_DIR)
+		var error: Error = DirAccess.make_dir_recursive_absolute(SAVE_DIR)
+		if error != Error.OK:
+			push_error("Failed to create save directory at '%s'." % SAVE_DIR)
 
 
 ## Returns the total number of save slots.
@@ -49,7 +51,7 @@ static func get_save_slot_count() -> int:
 ## [constant SAVE_FILES]. A value of [code]true[/code] means the file exists,
 ## and a value of [code]false[/code] means the slot is empty.
 static func get_save_slot_usage_status() -> Array[bool]:
-	return Array(SAVE_FILES.map(func (save_file_name: String):
+	return Array(SAVE_FILES.map(func (save_file_name: String) -> bool:
 			return FileAccess.file_exists(SAVE_DIR.path_join(save_file_name))),
 			TYPE_BOOL, "", null)
 
@@ -77,7 +79,7 @@ static func save(game_state: Global.GameState, slot_index: int) -> bool:
 	var file: FileAccess = FileAccess.open(swap_file_path, FileAccess.WRITE)
 	if not file:
 		error = FileAccess.get_open_error()
-		push_error("Fatal: Cannot create temporary file '%s' (%d)." % [
+		push_error("Fatal: Cannot open temporary file '%s' (%d)." % [
 			swap_file_path,
 			error,
 		])
