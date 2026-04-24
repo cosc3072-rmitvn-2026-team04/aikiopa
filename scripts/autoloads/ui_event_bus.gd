@@ -18,24 +18,39 @@ extends Node
 
 
 ## Emitted when the player picks up a [param building] card from the building
-## stack in the Game HUD.
+## stack in the Game HUD.[br]
+## [br]
+## [param variation_value] identifies the sprite variation of that building
+## card. See [method BuildingCard.set_type_and_variation].
 @warning_ignore("unused_signal")
-signal building_card_picked(building_type: Building.BuildingType)
+signal building_card_picked(
+		building_type: Building.BuildingType,
+		variation_value: float)
 
 
 ## Emitted when the player drops the [param building] card back to the building
-## stack in the Game HUD.
+## stack in the Game HUD.[br]
+## [br]
+## [param variation_value] identifies the sprite variation of that building
+## card. See [method BuildingCard.set_type_and_variation].
 @warning_ignore("unused_signal")
-signal building_card_dropped(building_type: Building.BuildingType)
+signal building_card_dropped(
+		building_type: Building.BuildingType,
+		variation_value: float)
 
 
 ## Emitted when the building preview cursor snaps into a tile at [param coords]
 ## for the [param picked_building_type]. The calculated resulting game effects
-## are given in [param placement_check_status] and [param interaction_result].
+## are given in [param placement_check_status] and
+## [param interaction_result].[br]
+## [br]
+## [param variation_value] identifies the sprite variation of that building
+## card. See [method BuildingCard.set_type_and_variation].
 @warning_ignore("unused_signal")
 signal preview_cursor_snapped(
 		coords: Vector2i,
 		picked_building_type: Building.BuildingType,
+		variation_value: float,
 		placement_check_status: BuildingRulesetEngine.PlacementCheckStatus,
 		interaction_result: BuildingRulesetEngine.InteractionResult)
 
@@ -49,13 +64,17 @@ signal preview_cursor_unsnapped
 ## Emitted when the player attempts to use the building card they have on hand
 ## (picked up) to place [param building_type] at [param mouse_position].[br]
 ## [br]
+## [param variation_value] identifies the sprite variation of that building
+## card. See [method BuildingCard.set_type_and_variation].[br]
+## [br]
 ## [b]Note:[/b] [param mouse_position] is NOT the corresponding tile position
 ## in the [World]. Use [method World.local_to_map] to convert it to the [World]
 ## space coordinates.
 @warning_ignore("unused_signal")
 signal building_placement_requested(
         mouse_position: Vector2,
-        building_type: Building.BuildingType)
+        building_type: Building.BuildingType,
+		variation_value: float)
 
 
 ## Emitted when [member Global.gameplay_debug_mode_enabled] changes to the value

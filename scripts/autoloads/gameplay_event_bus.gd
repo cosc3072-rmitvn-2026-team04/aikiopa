@@ -42,23 +42,35 @@ signal reward_triggered(reward: RewardController.Reward)
 
 
 ## Emitted when a [param building_type] is added to the bottom of the building
-## stack. See [BuildingStackController].
+## stack by the [BuildingStackController]. [param variation_value] identifies
+## the sprite variation of that building. See [method Building.set_variation]
+## and [method BuildingCard.set_type_and_variation].
 @warning_ignore("unused_signal")
-signal building_stack_building_added(building_type: Building.BuildingType)
+signal building_stack_building_added(
+		building_type: Building.BuildingType,
+		variation_value: float)
 
 
 ## Emitted when the [param_building_type] at the top of the building stack is
-## popped off. See [BuildingStackController].
+## popped off by the [BuildingStackController]. [param variation_value]
+## identifies the sprite variation of that building. See
+## [method Building.set_variation] and
+## [method BuildingCard.set_type_and_variation].
 @warning_ignore("unused_signal")
-signal building_stack_building_popped(building_type: Building.BuildingType)
+signal building_stack_building_popped(
+		building_type: Building.BuildingType,
+		variation_value: float)
 
 
 ## Emitted when a [Building] of [param building_type] is successfully added at
-## [param coords] in the [World].
+## [param coords] in the [World]. [param variation_value] identifies the sprite
+## variation of that building. See [method Building.set_variation] and
+## [method BuildingCard.set_type_and_variation].
 @warning_ignore("unused_signal")
 signal building_placed(
 		coords: Vector2i,
 		building_type: Building.BuildingType,
+		variation_value: float,
 		interaction_result: BuildingRulesetEngine.InteractionResult)
 
 

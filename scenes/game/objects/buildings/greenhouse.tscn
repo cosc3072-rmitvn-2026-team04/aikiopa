@@ -3,10 +3,12 @@
 [ext_resource type="PackedScene" uid="uid://q1crh5ps008g" path="res://scenes/game/objects/buildings/_generic.tscn" id="1_1psii"]
 [ext_resource type="Texture2D" uid="uid://c8rhursgc3vrc" path="res://assets/objects/buildings/building_greenhouse_var0.png" id="2_7e8cd"]
 [ext_resource type="Script" uid="uid://c2nkqjbf4tkqd" path="res://scripts/game/objects/buildings/greenhouse.gd" id="2_y4axj"]
+[ext_resource type="Texture2D" uid="uid://bdo1w2n7dtf1n" path="res://assets/objects/buildings/building_greenhouse_var1.png" id="4_i1hcd"]
+[ext_resource type="Texture2D" uid="uid://ctdqxt13wmj2l" path="res://assets/objects/buildings/building_greenhouse_var2.png" id="5_7kywv"]
 
 [node name="Greenhouse" unique_id=1178872670 instance=ExtResource("1_1psii")]
 script = ExtResource("2_y4axj")
-variations = Array[CompressedTexture2D]([ExtResource("2_7e8cd")])
+variations = Array[CompressedTexture2D]([ExtResource("2_7e8cd"), ExtResource("4_i1hcd"), ExtResource("5_7kywv")])
 
 [node name="Sprite2D" parent="." index="0" unique_id=906012488]
 texture = ExtResource("2_7e8cd")

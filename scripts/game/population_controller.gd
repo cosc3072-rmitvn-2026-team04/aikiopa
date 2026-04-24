@@ -53,11 +53,13 @@ func change_population(amount: int) -> void:
 
 # Listens to GameplayEventBus.building_placed(
 #		coords: Vector2i,
-#		building_type: Building.BuildingType).
+#		building_type: Building.BuildingType),
+#		variation_value: float,
 #		interaction_result: BuildingRulesetEngine.InteractionResult).
 func _on_building_placed(
 		_coords: Vector2i,
 		_building_type: Building.BuildingType,
+		_variation_value: float,
 		interaction_result: BuildingRulesetEngine.InteractionResult
 ) -> void:
 	if not interaction_result:

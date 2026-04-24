@@ -19,6 +19,16 @@ enum BuildingType {
 	FACTORY,
 }
 
+## The building classes available in the game.
+enum BuildingClass {
+	CLASS_NONE,
+	CLASS_LANDING_SITE,
+	CLASS_HOUSING,
+	CLASS_FOOD,
+	CLASS_ENERGY,
+	CLASS_INDUSTRY,
+}
+
 #endregion
 # ============================================================================ #
 
@@ -41,6 +51,22 @@ const BUILDING_NAME: Dictionary[BuildingType, String] = {
 	BuildingType.WIND_FARM: "Wind Farm",
 	BuildingType.NUCLEAR_REACTOR: "Nuclear Reactor",
 	BuildingType.FACTORY: "Factory",
+}
+
+## Definition dictionary of key [BuildingType] and corresponding [BuildingClass]
+## value. For example: [code]BUILDING_CLASS_OF_TYPE[BuildingType.RANCH][/code]
+## would be [constant CLASS_FOOD].
+const BUILDING_CLASS_OF_TYPE: Dictionary[BuildingType, BuildingClass] = {
+	BuildingType.NONE: BuildingClass.CLASS_NONE,
+	BuildingType.LANDING_SITE: BuildingClass.CLASS_LANDING_SITE,
+	BuildingType.HOUSING: BuildingClass.CLASS_HOUSING,
+	BuildingType.GREENHOUSE: BuildingClass.CLASS_FOOD,
+	BuildingType.RANCH: BuildingClass.CLASS_FOOD,
+	BuildingType.FISHERY: BuildingClass.CLASS_FOOD,
+	BuildingType.SOLAR_FARM: BuildingClass.CLASS_ENERGY,
+	BuildingType.WIND_FARM: BuildingClass.CLASS_ENERGY,
+	BuildingType.NUCLEAR_REACTOR: BuildingClass.CLASS_ENERGY,
+	BuildingType.FACTORY: BuildingClass.CLASS_INDUSTRY,
 }
 
 #endregion
@@ -69,6 +95,11 @@ var _variation_index: int
 # ============================================================================ #
 #region Public methods
 
+## Static version of [method get_building_class].
+static func get_building_class_of_type(building_type: BuildingType) -> BuildingClass:
+	return BUILDING_CLASS_OF_TYPE[building_type]
+
+
 ## Returns the current index of sprite [member variations] of the building.
 func get_variation_index() -> int:
 	return _variation_index
@@ -88,10 +119,9 @@ func set_variation(value: float) -> void:
 		return
 
 	var normalized_value: float = (value + 1.0) / 2.0
-	var variation_index: int = int(normalized_value * variations.size())
-	variation_index = clampi(variation_index, 0, variations.size() - 1)
-	_variation_index = variation_index
-	$Sprite2D.texture = variations[variation_index]
+	_variation_index = int(normalized_value * variations.size())
+	_variation_index = clampi(_variation_index, 0, variations.size() - 1)
+	$Sprite2D.texture = variations[_variation_index]
 
 
 ## Returns the [enum BuildingType] of this [Building] instance.[br]
@@ -101,6 +131,11 @@ func set_variation(value: float) -> void:
 func get_type() -> BuildingType:
 	push_warning("Calling method 'get_type()' on generic 'Building' instance.")
 	return BuildingType.NONE
+
+
+## Returns the [enum BuildingClass] of this [Building] instance.[br]
+func get_building_class() -> BuildingClass:
+	return BUILDING_CLASS_OF_TYPE[get_type()]
 
 #endregion
 # ============================================================================ #

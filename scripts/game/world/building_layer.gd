@@ -74,15 +74,16 @@ func has_building_at(coords: Vector2i) -> bool:
 	return Global.game_state.building_instances.has(coords)
 
 
-## Sets the building at [param coords] to one of [enum Building.BuildingType].
-## [color=orange][b][u]Warning:[/u] This will replace any existing terrain
-## feature or building.[/b][/color][br]
-## TODO: Deterministically assign random variations (#47).[br]
+## Sets the building at [param coords] to one of [enum Building.BuildingType]
+## with its sprite variation based on [param variation_value]. See
+## [method Building.set_variation]. [color=orange][b][u]Warning:[/u] This will
+## replace any existing building.[/b][/color][br]
 ## [br]
 ## Prints an error and do nothing if [param building_type] is unknown.[br]
 func place_building_at(
 		coords: Vector2i,
-		building_type: Building.BuildingType
+		building_type: Building.BuildingType,
+		variation_value: float
 ) -> void:
 	var building: Building = null
 	match building_type:
@@ -110,6 +111,7 @@ func place_building_at(
 				building_type,
 			])
 			return
+	building.set_variation(variation_value)
 
 	# Clear existing building, if any.
 	if has_building_at(coords):
@@ -122,7 +124,10 @@ func place_building_at(
 	# Insert the building.
 	var terrain_tile_map_layer: TileMapLayer = world.get_terrain_tile_map_layer()
 	Global.game_state.building_instances.set(coords, building)
-	Global.game_state.building_metadata.set(coords, building_type)
+	Global.game_state.building_metadata.set(coords, {
+		&"building_type": building_type,
+		&"variation_value": variation_value,
+	})
 	building.position = terrain_tile_map_layer.map_to_local(coords)
 	add_child(building)
 

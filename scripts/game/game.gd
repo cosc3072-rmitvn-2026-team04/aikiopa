@@ -152,7 +152,8 @@ func _init_world(world_seed: Variant = null) -> void:
 	var world_center_coords: Vector2i = %World.get_chunk_size() / 2
 	%World.place_building_at(
 			world_center_coords,
-			Building.BuildingType.LANDING_SITE)
+			Building.BuildingType.LANDING_SITE,
+			0.0)
 
 	%World.reset_shroud()
 	Global.game_state.shroud_data = %World.get_shroud_data()
@@ -167,7 +168,8 @@ func _load_world() -> void:
 		var map_coords: Vector2i = building_coords[index]
 		%World.place_building_at(
 				map_coords,
-				Global.game_state.building_metadata.get(map_coords))
+				Global.game_state.building_metadata.get(map_coords).building_type,
+				Global.game_state.building_metadata.get(map_coords).variation_value)
 
 	%World.reset_shroud()
 	%World.set_shroud_data(Global.game_state.shroud_data)
@@ -249,10 +251,12 @@ func _input_update_gameplay_debug_mode(event: InputEvent) -> void:
 # Listens to GameplayEventBus.building_placed(
 #		coords: Vector2i,
 #		building_type: Building.BuildingType,
+#		variation_value: float,
 #		interaction_result: BuildingRulesetEngine.InteractionResult).
 func _on_building_placed(
 		_coords: Vector2i,
 		_building_type: Building.BuildingType,
+		_variation_value: float,
 		_interaction_result: BuildingRulesetEngine.InteractionResult
 ) -> void:
 	_turns_elapsed += 1

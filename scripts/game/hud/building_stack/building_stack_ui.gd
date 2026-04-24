@@ -60,9 +60,12 @@ func redraw() -> void:
 # ============================================================================ #
 #region Private methods
 
-func _add_building_card(building_type: Building.BuildingType) -> void:
+func _add_building_card(
+		building_type: Building.BuildingType,
+		variation_value: float
+) -> void:
 	var building_card: BuildingCard = _building_card_scene.instantiate()
-	building_card.set_type(building_type)
+	building_card.set_type_and_variation(building_type, variation_value)
 	%BuildingStack.add_child(building_card)
 	%BuildingStack.move_child(building_card, 0)
 	%BuildingStack.get_child(-1).set_pickable()
@@ -165,25 +168,32 @@ func _on_session_restored(_save_slot_index) -> void:
 	var building_stack_count: int = Global.game_state.building_stack.size()
 	for index: int in range(building_stack_count - 1, -1, -1):
 		%BuildingStackCountLabel.text = "%d🏠" % [building_stack_count - index]
-		var building_type: Building.BuildingType =\
+		var building_dictionary: Dictionary[StringName, Variant] =\
 				Global.game_state.building_stack[index]
-		_add_building_card(building_type)
+		_add_building_card(
+				building_dictionary.building_type,
+				building_dictionary.variation_value)
 	redraw()
 
 
-# Listens to
-# GameplayEventBus.building_stack_building_added(
-#		building_type: Building.BuildingType).
+# Listens to GameplayEventBus.building_stack_building_added(
+#		building_type: Building.BuildingType,
+#		variation_value: float).
 func _on_building_stack_building_added(
-		building_type: Building.BuildingType
+		building_type: Building.BuildingType,
+		variation_value: float
 ) -> void:
-	_add_building_card(building_type)
+	_add_building_card(building_type, variation_value)
 	redraw()
 
 
-# Listens to
-# GameplayEventBus.building_stack_building_popped(building: Building.BuildingType).
-func _on_building_stack_building_popped(_building: Building.BuildingType) -> void:
+# Listens to GameplayEventBus.building_stack_building_popped(
+#		building: Building.BuildingType,
+#		variation_value: float).
+func _on_building_stack_building_popped(
+		_building: Building.BuildingType,
+		_variation_value: float
+) -> void:
 	_pop_building_card()
 	if Global.game_state.building_stack.is_empty():
 		# TODO: This could be made prettier using a Tween animation on its size.

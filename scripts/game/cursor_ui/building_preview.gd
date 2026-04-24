@@ -4,6 +4,11 @@ extends Node2D
 # ============================================================================ #
 #region Exported properties
 
+## Data definition for building sprite variations based on key
+## [enum Building.BuildingType] and the corresponding [Array] of sprite file
+## names ([String]).
+@export var building_sprite_variations: Dictionary[Building.BuildingType, Array] = {}
+
 @export var cursor_ui: Node2D = null
 
 #endregion
@@ -41,56 +46,88 @@ func _ready() -> void:
 #region Public methods
 
 ## Sets the sprite of the building preview to match [param building_type].
+## @deprecated: Use [method set_type_and_variation] instead.
 func set_type(building_type: Building.BuildingType) -> void:
-	match building_type:
-		Building.BuildingType.NONE:
-			_map_sprite_2d.texture = null
-			_local_sprite_2d.texture = null
-		Building.BuildingType.HOUSING:
-			_map_sprite_2d.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_housing_var0.png"))
-			_local_sprite_2d.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_housing_var0.png"))
-		Building.BuildingType.GREENHOUSE:
-			_map_sprite_2d.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_greenhouse_var0.png"))
-			_local_sprite_2d.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_greenhouse_var0.png"))
-		Building.BuildingType.RANCH:
-			_map_sprite_2d.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_ranch_var0.png"))
-			_local_sprite_2d.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_ranch_var0.png"))
-		Building.BuildingType.FISHERY:
-			_map_sprite_2d.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_fishery_var0.png"))
-			_local_sprite_2d.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_fishery_var0.png"))
-		Building.BuildingType.SOLAR_FARM:
-			_map_sprite_2d.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_solar_farm_var0.png"))
-			_local_sprite_2d.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_solar_farm_var0.png"))
-		Building.BuildingType.WIND_FARM:
-			_map_sprite_2d.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_wind_farm_var0.png"))
-			_local_sprite_2d.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_wind_farm_var0.png"))
-		Building.BuildingType.NUCLEAR_REACTOR:
-			_map_sprite_2d.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_nuclear_reactor_var0.png"))
-			_local_sprite_2d.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_nuclear_reactor_var0.png"))
-		Building.BuildingType.FACTORY:
-			_map_sprite_2d.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_factory_var0.png"))
-			_local_sprite_2d.texture = load(
-					Building.BUILDING_ASSET_DIR.path_join("building_factory_var0.png"))
-		_:
-			push_error("Unrecognized building type: '%s'." % [
+	if building_type == Building.BuildingType.NONE:
+		_map_sprite_2d.texture = null
+		_local_sprite_2d.texture = null
+		return
+	const ACCEPTED_BUILDING_TYPES: Array[Building.BuildingType] = [
+		Building.BuildingType.LANDING_SITE,
+		Building.BuildingType.HOUSING,
+		Building.BuildingType.GREENHOUSE,
+		Building.BuildingType.RANCH,
+		Building.BuildingType.FISHERY,
+		Building.BuildingType.SOLAR_FARM,
+		Building.BuildingType.WIND_FARM,
+		Building.BuildingType.NUCLEAR_REACTOR,
+		Building.BuildingType.FACTORY,
+	]
+	if building_type not in ACCEPTED_BUILDING_TYPES:
+			push_error("Building type '%s' not implemented." % [
 				Building.BuildingType.keys()[building_type]
 			])
 			return
+
+	var variations: Array[String] = building_sprite_variations[building_type]
+	if variations.is_empty():
+		return
+	_map_sprite_2d.texture = load(Building.BUILDING_ASSET_DIR.path_join(
+			variations[0]))
+	_local_sprite_2d.texture = load(Building.BUILDING_ASSET_DIR.path_join(
+			variations[0]))
+
+
+## Sets the sprite of the building preview to match [param building_type] and
+## [param variation_value] between [code]-1.0[/code] and [code]1.0[/code]
+## (inclusive).[br]
+## [br]
+## The variation is calculated from the position of [param variation_value]
+## within the uniform intervals in the above [code][-1.0, 1.0][/code] range,
+## determined by the size of the corresponding sprite variation array for
+## [param building_type] key in [member building_sprite_variations].
+func set_type_and_variation(
+		building_type: Building.BuildingType,
+		variation_value: float
+) -> void:
+	if building_type == Building.BuildingType.NONE:
+		_map_sprite_2d.texture = null
+		_local_sprite_2d.texture = null
+		return
+	const ACCEPTED_BUILDING_TYPES: Array[Building.BuildingType] = [
+		Building.BuildingType.LANDING_SITE,
+		Building.BuildingType.HOUSING,
+		Building.BuildingType.GREENHOUSE,
+		Building.BuildingType.RANCH,
+		Building.BuildingType.FISHERY,
+		Building.BuildingType.SOLAR_FARM,
+		Building.BuildingType.WIND_FARM,
+		Building.BuildingType.NUCLEAR_REACTOR,
+		Building.BuildingType.FACTORY,
+	]
+	if building_type not in ACCEPTED_BUILDING_TYPES:
+			push_error("Building type '%s' not implemented." % [
+				Building.BuildingType.keys()[building_type]
+			])
+			return
+
+	var variations: Array[String] = Array(
+			building_sprite_variations[building_type], TYPE_STRING, "", null)
+	if variation_value < -1.0 or variation_value > 1.0:
+		push_error("Value %.2f for parameter 'variation_value' is out of bound." % [
+			variation_value
+		])
+		return
+	if variations.is_empty():
+		return
+
+	var normalized_variation_value: float = (variation_value + 1.0) / 2.0
+	var variation_index: int = int(normalized_variation_value * variations.size())
+	variation_index = clampi(variation_index, 0, variations.size() - 1)
+	_map_sprite_2d.texture = load(Building.BUILDING_ASSET_DIR.path_join(
+			variations[variation_index]))
+	_local_sprite_2d.texture = load(Building.BUILDING_ASSET_DIR.path_join(
+			variations[variation_index]))
 
 
 ## Snaps the building preview onto the map's y-sorted [code]BuildingLayer[/code]
