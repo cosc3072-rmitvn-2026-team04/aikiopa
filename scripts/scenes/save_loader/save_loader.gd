@@ -20,6 +20,7 @@ func _ready() -> void:
 	for index: int in GameSaveService.get_save_slot_count():
 		var save_slot: PanelContainer = _save_slot_scene.instantiate()
 		save_slot.container_scene = self
+		save_slot.container_ui = %SaveLoaderUI
 		save_slot.assign_save_index(index)
 		save_slot.set_slot_number(index + 1)
 		if save_slot_usage_status[index]:

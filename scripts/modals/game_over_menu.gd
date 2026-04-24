@@ -5,6 +5,8 @@ extends GameUI
 #region Godot builtins
 
 func _ready() -> void:
+	super()
+
 	GameplayEventBus.game_over.connect(_on_game_over)
 	%SaveSnapshotButton.pressed.connect(_on_save_snapshot_button_pressed)
 	%NewSessionButton.pressed.connect(_on_new_session_button_pressed)
