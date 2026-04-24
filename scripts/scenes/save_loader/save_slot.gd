@@ -5,6 +5,7 @@ extends PanelContainer
 #region Exported properties
 
 @export var container_scene: GameScene2D
+@export var container_ui: GameUI
 
 #endregion
 # ============================================================================ #
@@ -14,6 +15,16 @@ extends PanelContainer
 #region Private variables
 
 var _save_slot_index: int = -1
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Godot builtins
+
+func _ready() -> void:
+	container_ui.refresh_ui_sfx()
 
 #endregion
 # ============================================================================ #

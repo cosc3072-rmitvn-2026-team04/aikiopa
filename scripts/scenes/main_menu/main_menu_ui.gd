@@ -5,6 +5,8 @@ extends GameUI
 #region Godot builtins
 
 func _ready() -> void:
+	super()
+
 	%StartButton.pressed.connect(_on_start_button_pressed)
 	%GalleryButton.pressed.connect(_on_gallery_button_pressed)
 	%SettingsButton.pressed.connect(_on_settings_button_press)

@@ -24,6 +24,10 @@ var is_new_game: bool = true
 ## session.
 var game_state: GameState
 
+## Global scope general purpose [RandomNumberGenerator]. [color=red][b]DO NOT
+## USE FOR GAMEPLAY.[/b][/color]
+var rng: RandomNumberGenerator
+
 #endregion
 # ============================================================================ #
 
@@ -55,6 +59,8 @@ func _exit_tree() -> void:
 func _bootstrap() -> void:
 	GameSaveService.verify_save_directory()
 	game_state = GameState.new()
+	rng = RandomNumberGenerator.new()
+	rng.randomize()
 
 
 func _teardown() -> void:

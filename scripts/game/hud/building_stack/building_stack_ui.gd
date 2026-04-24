@@ -95,7 +95,7 @@ func _update_building_card_positions() -> void:
 		# new cards are added while the player is still picking up a building
 		# card.
 		if building_card.is_picked():
-			building_card.unset_picked()
+			building_card.unset_picked(true)
 
 		# Set position.
 		building_card.position = Vector2(
@@ -184,6 +184,8 @@ func _on_building_stack_building_added(
 		variation_value: float
 ) -> void:
 	_add_building_card(building_type, variation_value)
+	if %BuildingStackCountTextureRect.visible == false:
+		%BuildingStackCountTextureRect.show()
 	redraw()
 
 

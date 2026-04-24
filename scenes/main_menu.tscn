@@ -52,29 +52,29 @@ custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="StartButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=1569103081]
+[node name="StartButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=1569103081 groups=["ui_buttons"]]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Start"
 
-[node name="GalleryButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=1634631360]
+[node name="GalleryButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=1634631360 groups=["ui_buttons"]]
 unique_name_in_owner = true
 layout_mode = 2
 disabled = true
 text = "Galery"
 
-[node name="SettingsButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=88263360]
+[node name="SettingsButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=88263360 groups=["ui_buttons"]]
 unique_name_in_owner = true
 layout_mode = 2
 disabled = true
 text = "Settings"
 
-[node name="CreditsButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=174603475]
+[node name="CreditsButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=174603475 groups=["ui_buttons"]]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Credits"
 
-[node name="QuitButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=517774371]
+[node name="QuitButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=517774371 groups=["ui_buttons"]]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Quit"

@@ -13,6 +13,14 @@
 [ext_resource type="PackedScene" uid="uid://cgm4qt1v27f2b" path="res://scenes/game/cursor_ui/cursor_ui.tscn" id="10_4j704"]
 [ext_resource type="PackedScene" uid="uid://c2jk4roqpaohs" path="res://scenes/modals/game_over_menu.tscn" id="10_5jirj"]
 [ext_resource type="PackedScene" uid="uid://873u2m0dhb0d" path="res://scenes/modals/game_menu.tscn" id="11_kp23o"]
+[ext_resource type="Script" uid="uid://qq5rsbwsfsvk" path="res://scripts/game/sfx_controller.gd" id="14_otnwt"]
+[ext_resource type="AudioStream" uid="uid://c4g8vbqrnmibe" path="res://assets/sfx/building_place.ogg" id="15_otnwt"]
+[ext_resource type="AudioStream" uid="uid://jxtghs6gnbu4" path="res://assets/sfx/preview_snap.ogg" id="16_3xj4h"]
+[ext_resource type="AudioStream" uid="uid://b6tqvtbyf1xr" path="res://assets/sfx/card_pick.ogg" id="17_5v6r0"]
+[ext_resource type="AudioStream" uid="uid://bkbhfhxrrv0we" path="res://assets/sfx/forest_combo.wav" id="17_gc57s"]
+[ext_resource type="AudioStream" uid="uid://cuwidaopk5pgp" path="res://assets/sfx/card_drop.ogg" id="18_uyinl"]
+[ext_resource type="AudioStream" uid="uid://yghkltyh6wrt" path="res://assets/sfx/card_add.ogg" id="19_10c2w"]
+[ext_resource type="AudioStream" uid="uid://by72c82q6g16v" path="res://assets/sfx/milestone.wav" id="20_pg2xm"]
 
 [node name="Game" type="Node2D" unique_id=361428006]
 script = ExtResource("1_sul5r")
@@ -111,3 +119,47 @@ zoom_max = 1.6
 zoom_increment = 0.08
 zoom_rate = 3.0
 world = NodePath("../World")
+
+[node name="SfxController" type="Node" parent="." unique_id=1326019134 node_paths=PackedStringArray("world")]
+script = ExtResource("14_otnwt")
+world = NodePath("../World")
+pitch_scale_random_threshold = 0.083
+volume_random_threshold = 2.0
+metadata/_custom_type_script = "uid://b02xedqua4uqn"
+
+[node name="CursorSnapped2D" type="AudioStreamPlayer2D" parent="SfxController" unique_id=639367575]
+stream = ExtResource("16_3xj4h")
+volume_db = -15.0
+attenuation = 0.5
+bus = &"Gameplay"
+
+[node name="BuildingPlaced2D" type="AudioStreamPlayer2D" parent="SfxController" unique_id=2014111785]
+stream = ExtResource("15_otnwt")
+volume_db = 8.0
+attenuation = 0.5
+bus = &"Gameplay"
+
+[node name="ForestEnclosed2D" type="AudioStreamPlayer2D" parent="SfxController" unique_id=168559478]
+stream = ExtResource("17_gc57s")
+attenuation = 0.3
+bus = &"Gameplay"
+
+[node name="BuildingCardPicked" type="AudioStreamPlayer" parent="SfxController" unique_id=507719053]
+stream = ExtResource("17_5v6r0")
+volume_db = -22.0
+bus = &"Gameplay"
+
+[node name="BuildingCardDropped" type="AudioStreamPlayer" parent="SfxController" unique_id=1170853097]
+stream = ExtResource("18_uyinl")
+volume_db = -22.0
+bus = &"Gameplay"
+
+[node name="BuildingCardAdded" type="AudioStreamPlayer" parent="SfxController" unique_id=1861421683]
+stream = ExtResource("19_10c2w")
+volume_db = -22.0
+bus = &"Gameplay"
+
+[node name="MilestoneReached" type="AudioStreamPlayer" parent="SfxController" unique_id=548568736]
+stream = ExtResource("20_pg2xm")
+volume_db = -6.0
+bus = &"Gameplay"

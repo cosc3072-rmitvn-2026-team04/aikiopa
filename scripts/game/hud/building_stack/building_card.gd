@@ -153,21 +153,29 @@ func is_picked() -> bool:
 
 
 ## Sets this building card as being picked up by the player. See
-## [method is_picked].
-func set_picked() -> void:
+## [method is_picked].[br]
+## [br]
+## Set [param quiet] to [code]true[/code] to disable signal emitting.
+func set_picked(quiet: bool = false) -> void:
 	_is_picked = true
-	UIEventBus.building_card_picked.emit(get_building_type(), get_variation_value())
+	if not quiet:
+		UIEventBus.building_card_picked.emit(
+				get_building_type(),
+				get_variation_value())
 	scale = Vector2.ONE * (float(picked_scale) / 100)
 	position.y -= picked_offset
 
 
 ## Sets this building card as NOT being picked up by the player. See
-## [method is_picked].
-func unset_picked() -> void:
+## [method is_picked].[br]
+## [br]
+## Set [param quiet] to [code]true[/code] to disable signal emitting.
+func unset_picked(quiet: bool = false) -> void:
 	_is_picked = false
-	UIEventBus.building_card_dropped.emit(
-			get_building_type(),
-			get_variation_value())
+	if not quiet:
+		UIEventBus.building_card_dropped.emit(
+				get_building_type(),
+				get_variation_value())
 	scale = Vector2.ONE * (float(pickable_scale) / 100)
 	position.y += picked_offset
 

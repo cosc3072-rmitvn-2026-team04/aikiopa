@@ -8,6 +8,8 @@ extends GameUI
 #region Godot builtins
 
 func _ready() -> void:
+	super()
+
 	%ResumeButton.pressed.connect(_on_resume_button_pressed)
 	%SaveButton.pressed.connect(_on_save_button_pressed)
 	%QuitToMainMenuButton.pressed.connect(_on_quit_to_main_menu_button_pressed)

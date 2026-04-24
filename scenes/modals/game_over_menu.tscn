@@ -71,18 +71,18 @@ custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="SaveSnapshotButton" type="Button" parent="TextureRect/VBoxContainer/ButtonVBoxContainer" unique_id=1160669998]
+[node name="SaveSnapshotButton" type="Button" parent="TextureRect/VBoxContainer/ButtonVBoxContainer" unique_id=1160669998 groups=["ui_buttons"]]
 unique_name_in_owner = true
 layout_mode = 2
 disabled = true
 text = "Save Snapshot"
 
-[node name="NewSessionButton" type="Button" parent="TextureRect/VBoxContainer/ButtonVBoxContainer" unique_id=183934942]
+[node name="NewSessionButton" type="Button" parent="TextureRect/VBoxContainer/ButtonVBoxContainer" unique_id=183934942 groups=["ui_buttons"]]
 unique_name_in_owner = true
 layout_mode = 2
 text = "New Expedition"
 
-[node name="QuitToMainMenuButton" type="Button" parent="TextureRect/VBoxContainer/ButtonVBoxContainer" unique_id=1268427561]
+[node name="QuitToMainMenuButton" type="Button" parent="TextureRect/VBoxContainer/ButtonVBoxContainer" unique_id=1268427561 groups=["ui_buttons"]]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Quit to Main Menu"

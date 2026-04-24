@@ -36,13 +36,13 @@ theme_override_constants/margin_right = 128
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="NewButton" type="Button" parent="MarginContainer/VBoxContainer/TopMarginContainer/VBoxContainer" unique_id=1667750442]
+[node name="NewButton" type="Button" parent="MarginContainer/VBoxContainer/TopMarginContainer/VBoxContainer" unique_id=1667750442 groups=["ui_buttons"]]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 text = "New"
 
-[node name="LoadButton" type="Button" parent="MarginContainer/VBoxContainer/TopMarginContainer/VBoxContainer" unique_id=1217105200]
+[node name="LoadButton" type="Button" parent="MarginContainer/VBoxContainer/TopMarginContainer/VBoxContainer" unique_id=1217105200 groups=["ui_buttons"]]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
@@ -97,7 +97,7 @@ theme_override_constants/margin_right = 128
 layout_mode = 2
 alignment = 2
 
-[node name="DeleteButton" type="Button" parent="MarginContainer/VBoxContainer/BottomMarginContainer/VBoxContainer" unique_id=1842703193]
+[node name="DeleteButton" type="Button" parent="MarginContainer/VBoxContainer/BottomMarginContainer/VBoxContainer" unique_id=1842703193 groups=["ui_buttons"]]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -120,13 +120,13 @@ layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="DeleteConfirmNoButton" type="Button" parent="MarginContainer/VBoxContainer/BottomMarginContainer/VBoxContainer/DeleteConfirmContainer/HBoxContainer" unique_id=1333037423]
+[node name="DeleteConfirmNoButton" type="Button" parent="MarginContainer/VBoxContainer/BottomMarginContainer/VBoxContainer/DeleteConfirmContainer/HBoxContainer" unique_id=1333037423 groups=["ui_buttons"]]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 text = "No"
 
-[node name="DeleteConfirmYesButton" type="Button" parent="MarginContainer/VBoxContainer/BottomMarginContainer/VBoxContainer/DeleteConfirmContainer/HBoxContainer" unique_id=2091649210]
+[node name="DeleteConfirmYesButton" type="Button" parent="MarginContainer/VBoxContainer/BottomMarginContainer/VBoxContainer/DeleteConfirmContainer/HBoxContainer" unique_id=2091649210 groups=["ui_buttons"]]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
