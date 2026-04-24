@@ -74,6 +74,12 @@ signal building_placed(
 		interaction_result: BuildingRulesetEngine.InteractionResult)
 
 
+## Emitted when a building placement at [param coords] completes enclosure of a
+## forest region.
+@warning_ignore("unused_signal")
+signal forest_enclosed(coords: Vector2i)
+
+
 # TODO: At the moment nothing is listening to this. Implement in #21.
 ## Emitted when a [Building] of [param building_type] at [param coords] is
 ## destroyed.

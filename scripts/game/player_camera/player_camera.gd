@@ -13,6 +13,10 @@ extends CharacterBody2D
 ## rapid panning.
 @export_range(0.01, 10.0, 0.01) var pan_mouse_sensitivity: float = 1.0
 
+## If [code]true[/code], the camera will jump to where the player is placing
+## a new building.
+@export var pan_follow_building_placement: bool = false
+
 
 @export_group("Zoom", "zoom")
 
@@ -129,7 +133,8 @@ func _on_building_placed(
 		_variation_value: float,
 		_interaction_result: BuildingRulesetEngine.InteractionResult
 ) -> void:
-	position = world.get_terrain_tile_map_layer().map_to_local(coords)
+	if pan_follow_building_placement:
+		position = world.get_terrain_tile_map_layer().map_to_local(coords)
 
 #endregion
 # ============================================================================ #
