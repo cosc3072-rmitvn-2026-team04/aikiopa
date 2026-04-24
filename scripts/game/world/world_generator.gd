@@ -268,7 +268,7 @@ func _create_chunk_variation_map(
 			var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 			rng.seed = coords_x * 12345 ^ coords_y * 67890
 
-			var noise_value: float = rng.randf_range(-1, 1)
+			var noise_value: float = rng.randf_range(-1.0, 1.0)
 			chunk_linear_variation_data.append(noise_value)
 
 

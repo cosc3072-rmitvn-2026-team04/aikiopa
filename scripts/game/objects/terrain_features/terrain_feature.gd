@@ -31,7 +31,7 @@ enum FeatureType {
 # ============================================================================ #
 #region Public methods
 
-## Sets the sprite variation of the terrain feature based on [param value],
+## Sets the sprite variation of the terrain feature based on [param value]
 ## between [code]-1.0[/code] and [code]1.0[/code] (inclusive).[br]
 ## [br]
 ## The variation is calculated from the position of [param value] within the
