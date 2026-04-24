@@ -31,8 +31,8 @@ enum FeatureType {
 # ============================================================================ #
 #region Public methods
 
-## Sets the sprite variation of the terrain feature based on the [param value],
-## which must be between [code]-1.0[/code] and [code]1.0[/code] (inclusive).[br]
+## Sets the sprite variation of the terrain feature based on [param value]
+## between [code]-1.0[/code] and [code]1.0[/code] (inclusive).[br]
 ## [br]
 ## The variation is calculated from the position of [param value] within the
 ## uniform intervals in the above [code][-1.0, 1.0][/code] range, determined by
@@ -52,7 +52,8 @@ func set_variation(value: float) -> void:
 
 ## Returns the [enum FeatureType] of this [TerrainFeature] instance.[br]
 ## [br]
-## Virtual method. Override in children scenes to provide correct feature type.
+## Virtual method. Override in children scenes to provide the correct return
+## value.
 func get_type() -> FeatureType:
 	push_warning("Calling method 'get_type()' on generic 'TerrainFeature' instance.")
 	return FeatureType.NONE

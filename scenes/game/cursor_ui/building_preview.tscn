@@ -5,6 +5,18 @@
 
 [node name="BuildingPreview" type="Node2D" unique_id=542486455]
 script = ExtResource("1_eorc5")
+building_sprite_variations = Dictionary[int, Array]({
+0: [],
+1: ["building_landing_site_var0.png"],
+2: ["building_housing_var0.png", "building_housing_var1.png", "building_housing_var2.png"],
+3: ["building_greenhouse_var0.png", "building_greenhouse_var1.png", "building_greenhouse_var2.png"],
+4: ["building_ranch_var0.png", "building_ranch_var1.png", "building_ranch_var2.png"],
+5: ["building_fishery_var0.png", "building_fishery_var1.png", "building_fishery_var2.png"],
+6: ["building_solar_farm_var0.png", "building_solar_farm_var1.png"],
+7: ["building_wind_farm_var0.png", "building_wind_farm_var1.png", "building_wind_farm_var2.png", "building_wind_farm_var3.png"],
+8: ["building_nuclear_reactor_var0.png", "building_nuclear_reactor_var1.png"],
+9: ["building_factory_var0.png", "building_factory_var1.png", "building_factory_var2.png"]
+})
 
 [node name="BuildingPreviewSprite2D" parent="." unique_id=1801411118 instance=ExtResource("2_0flwq")]
 unique_name_in_owner = true

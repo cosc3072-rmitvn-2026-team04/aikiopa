@@ -100,8 +100,17 @@ class GameState extends RefCounted:
 	## [method BuildingStackController.get_session_state] instead.[/color]
 	var building_stack_state: int = 0
 
-	## The building stack in the current game session.
-	var building_stack: Array[Building.BuildingType] = []
+	## The building stack in the current game session. Each element is a
+	## dictionary of keys: [code]&"building_type"[/code] and
+	## [code]&"variation_value"[/code].[br]
+	## [br]
+	## - [code]&"building_type"[/code] is the [enum Building.BuildingType] of
+	## the building card.[br]
+	## [br]
+	## - [code]&"variation_value"[/code] is the [float] variation value for the
+	## building sprite. See [method Building.set_variation] and
+	## [method BuildingCard.set_type_and_variation].
+	var building_stack: Array[Dictionary] = []
 
 	## The building instances in the current game session, represented as a
 	## dictionary of key [Vector2i] coordinates and its corresponding [Building]
@@ -113,16 +122,23 @@ class GameState extends RefCounted:
 	var building_instances: Dictionary[Vector2i, Building] = {}
 
 	## The building metadata in the current game session, represented as a
-	## dictionary of key [Vector2i] coordinates and its corresponding
-	## [enum Building.BuildingType] value.[br]
+	## dictionary of key [Vector2i] coordinates and its corresponding data value
+	## packaged as a dictionary of keys:
+	## [code]&"building_type"[/code] and [code]&"variation_value"[/code].[br]
 	## [br]
-	## To access the building instances in the game, use
+	## - [code]&"building_type"[/code] is the [enum Building.BuildingType] of
+	## the building.[br]
+	## [br]
+	## - [code]&"variation_value"[/code] is the [float] variation value for the
+	## building. See [method Building.set_variation].[br]
+	## [br]
+	## To access the building object instances in the game, use
 	## [member building_instances] instead.[br]
 	## [br]
 	## [color=red][b]WARNING:[/b] This must be kept in sync with
 	## [member building_instances]. Failure to do so will result in undefined
 	## behavior.[/color]
-	var building_metadata: Dictionary[Vector2i, Building.BuildingType]
+	var building_metadata: Dictionary[Vector2i, Dictionary]
 
 	## The list of building coordinates at the colony's edge.
 	var edge_coords: Array[Vector2i] = []

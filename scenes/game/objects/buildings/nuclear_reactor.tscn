@@ -3,10 +3,11 @@
 [ext_resource type="PackedScene" uid="uid://q1crh5ps008g" path="res://scenes/game/objects/buildings/_generic.tscn" id="1_4ne2n"]
 [ext_resource type="Script" uid="uid://4q75irpt30rn" path="res://scripts/game/objects/buildings/nuclear_reactor.gd" id="2_fjs7w"]
 [ext_resource type="Texture2D" uid="uid://ht1psllv6o3e" path="res://assets/objects/buildings/building_nuclear_reactor_var0.png" id="2_xchxa"]
+[ext_resource type="Texture2D" uid="uid://l87o33uwc0h4" path="res://assets/objects/buildings/building_nuclear_reactor_var1.png" id="4_c7udd"]
 
 [node name="NuclearReactor" unique_id=1178872670 instance=ExtResource("1_4ne2n")]
 script = ExtResource("2_fjs7w")
-variations = Array[CompressedTexture2D]([ExtResource("2_xchxa")])
+variations = Array[CompressedTexture2D]([ExtResource("2_xchxa"), ExtResource("4_c7udd")])
 
 [node name="Sprite2D" parent="." index="0" unique_id=906012488]
 position = Vector2(0, -9.5)

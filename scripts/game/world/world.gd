@@ -278,16 +278,18 @@ func has_building_at(coords: Vector2i) -> bool:
 	return get_building_layer().has_building_at(coords)
 
 
-## Sets the building at [param coords] to one of [enum Building.BuildingType].
-## [color=orange][b][u]Warning:[/u] This will replace any existing
-## building.[/b][/color][br]
+## Sets the building at [param coords] to one of [enum Building.BuildingType]
+## with its sprite variation based on [param variation_value]. See
+## [method Building.set_variation]. [color=orange][b][u]Warning:[/u] This will
+## replace any existing building.[/b][/color][br]
 ## [br]
 ## Prints an error and do nothing if [param building_type] is unknown.[br]
 func place_building_at(
 		coords: Vector2i,
-		building_type: Building.BuildingType
+		building_type: Building.BuildingType,
+		variation_value: float
 ) -> void:
-	get_building_layer().place_building_at(coords, building_type)
+	get_building_layer().place_building_at(coords, building_type, variation_value)
 
 
 ## Returns and destroys the building at [param coords].[br]
@@ -335,13 +337,15 @@ func render_shroud(camera_position: Vector2) -> void:
 # ============================================================================ #
 #region Signal listeners
 
-# Listens to
-# UIEventBus.building_placement_requested(
+# Listens to UIEventBus.building_placement_requested(
 #		mouse_position: Vector2,
-#		building_type: Building.BuildingType).
+#		building_type: Building.BuildingType,
+#		variation_value: float).
 func _on_building_placement_requested(
 		mouse_position: Vector2,
-		building_type: Building.BuildingType) -> void:
+		building_type: Building.BuildingType,
+		variation_value: float
+) -> void:
 	var map_coords: Vector2i = local_to_map(mouse_position)
 
 	var ruleset_parse_result: Dictionary[StringName, Variant] =\
@@ -350,7 +354,7 @@ func _on_building_placement_requested(
 			ruleset_parse_result.placement_check_status
 			== BuildingRulesetEngine.PlacementCheckStatus.ALLOWED
 	):
-		place_building_at(map_coords, building_type)
+		place_building_at(map_coords, building_type, variation_value)
 		for interaction_coords: Vector2i in ruleset_parse_result.interaction_result.keys():
 			if get_terrain_at(interaction_coords) in [
 				TerrainType.PLAIN_FOREST,
@@ -360,6 +364,7 @@ func _on_building_placement_requested(
 		GameplayEventBus.building_placed.emit(
 				map_coords,
 				building_type,
+				variation_value,
 				BuildingRulesetEngine.InteractionResult.sum(
 						ruleset_parse_result.interaction_result.values()))
 

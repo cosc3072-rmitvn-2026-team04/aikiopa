@@ -131,22 +131,33 @@ func get_session_state() -> int:
 
 ## Adds a random [enum Building.BuildingType] to the bottom of the building
 ## stack, then returns it. Only generates buildings that has a valid tile to
-## be placed on. See [constant MAX_REROLL_COUNT].[br]
+## be placed on. Returns [constant Building.NONE] if cannot roll for a suitable
+## building type before reaching [constant MAX_REROLL_COUNT].[br]
 ## [br]
 ## If [param building_type] is provided, adds that to the building stack
 ## instead.
 func add_building(
 		building_type: Building.BuildingType = Building.BuildingType.NONE
 ) -> Building.BuildingType:
+	var building_dictionary: Dictionary[StringName, Variant] = {
+		&"building_type": building_type,
+		&"variation_value": 0.0,
+	}
+
 	if building_type != Building.BuildingType.NONE:
-		Global.game_state.building_stack.push_front(building_type)
-		GameplayEventBus.building_stack_building_added.emit(building_type)
+		building_dictionary.variation_value = _generate_variation_value()
+		Global.game_state.building_stack.push_front(building_dictionary)
+		GameplayEventBus.building_stack_building_added.emit(
+				building_dictionary.building_type,
+				building_dictionary.variation_value)
 		return building_type
 
 	var new_building_type: Building.BuildingType = Building.BuildingType.NONE
 	var valid_placement_count: int = 0
 	var reroll_count: int = 0
 	while valid_placement_count == 0 and reroll_count < MAX_REROLL_COUNT:
+		# BUG: In some rare cases this still rolls Fishery when there is no
+		# valid placement. Investigate and fix.
 		reroll_count += 1
 
 		new_building_type = (
@@ -175,10 +186,16 @@ func add_building(
 				):
 					valid_placement_count += 1
 
+		var building_stack_building_type_only: Array = []
+		building_stack_building_type_only = Global.game_state.building_stack.map(
+				func (
+						building_dictionary_from_stack: Dictionary[StringName, Variant]
+				) -> Building.BuildingType:
+						return building_dictionary_from_stack.building_type)
 		if (
 				# The building stack has more cards of 'new_building_type' than
 				# there is available space for it.
-				Global.game_state.building_stack.count(new_building_type)
+				building_stack_building_type_only.count(new_building_type)
 				>= valid_placement_count
 		):
 			valid_placement_count = 0 # Reset and go to the next reroll.
@@ -187,8 +204,12 @@ func add_building(
 		push_error("Reroll exhausted: Could not find a suitable building type.")
 		return new_building_type
 
-	Global.game_state.building_stack.push_front(new_building_type)
-	GameplayEventBus.building_stack_building_added.emit(new_building_type)
+	building_dictionary.building_type = new_building_type
+	building_dictionary.variation_value = _generate_variation_value()
+	Global.game_state.building_stack.push_front(building_dictionary)
+	GameplayEventBus.building_stack_building_added.emit(
+			building_dictionary.building_type,
+			building_dictionary.variation_value)
 	return new_building_type
 
 
@@ -197,10 +218,12 @@ func add_building(
 func pop_building() -> Building.BuildingType:
 	if is_empty():
 		return Building.BuildingType.NONE
-	var building_type: Building.BuildingType =\
+	var building_dictionary: Dictionary[StringName, Variant] =\
 			Global.game_state.building_stack.pop_back()
-	GameplayEventBus.building_stack_building_popped.emit(building_type)
-	return building_type
+	GameplayEventBus.building_stack_building_popped.emit(
+			building_dictionary.building_type,
+			building_dictionary.variation_value)
+	return building_dictionary.building_type
 
 
 ## Removes all buildings from the building stack.
@@ -226,17 +249,31 @@ func is_empty() -> bool:
 # ============================================================================ #
 #region Signal listeners
 
+func _generate_variation_value() -> float:
+	var variation_value: float = _rng.randf_range(-1.0, 1.0)
+	Global.game_state.building_stack_state = get_session_state()
+	return variation_value
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Signal listeners
+
 # Listens to GameplayEventBus.building_placed(
 #		coords: Vector2i,
-#		building_type: Building.BuildingType).
+#		building_type: Building.BuildingType,
+#		variation_value: float,
 #		interaction_result: BuildingRulesetEngine.InteractionResult).
 func _on_building_placed(
 		_coords: Vector2i,
 		building_type: Building.BuildingType,
+		_variation_value: float,
 		interaction_result: BuildingRulesetEngine.InteractionResult
 ) -> void:
 	var building_stack_top: Building.BuildingType =\
-			Global.game_state.building_stack.back()
+			Global.game_state.building_stack.back().building_type
 	if building_stack_top != building_type:
 		push_error("Top building card (%s) does not match placed building (%s)" % [
 			Building.BuildingType.keys()[building_stack_top],
@@ -248,9 +285,9 @@ func _on_building_placed(
 				"Unexpected value for 'interaction_result':"
 				+ "Should not be 'null' at this stage.")
 		return
+
 	for interation: int in range(interaction_result.get_building_bonus()):
 		add_building()
-
 	pop_building()
 
 

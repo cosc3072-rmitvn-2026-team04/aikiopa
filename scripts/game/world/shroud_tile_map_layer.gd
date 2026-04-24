@@ -188,10 +188,12 @@ func _append_vision_area_from_range_at(coords: Vector2i) -> void:
 # Listens to GameplayEventBus.building_placed(
 #		coords: Vector2i,
 #		building_type: Building.BuildingType).
+#		variation_value: float,
 #		interaction_result: BuildingRulesetEngine.InteractionResult).
 func _on_building_placed(
 		coords: Vector2i,
 		_building_type: Building.BuildingType,
+		_variation_value: float,
 		_interaction_result: BuildingRulesetEngine.InteractionResult
 ) -> void:
 	_append_vision_area_from_range_at(coords)

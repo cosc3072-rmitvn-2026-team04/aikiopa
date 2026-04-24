@@ -63,6 +63,7 @@ var _interaction_result_label_scene: PackedScene =\
 		preload("res://scenes/game/cursor_ui/interaction_result_label.tscn")
 
 var _picked_building_type: Building.BuildingType = Building.BuildingType.NONE
+var _picked_building_variation_value: float = INF
 var _context_applied_terrain_features: Array[TerrainFeature] = []
 
 #endregion
@@ -117,14 +118,21 @@ func _reset_environment_interaction_result_labels() -> void:
 			label.queue_free()
 
 
-func _load_preview_building_sprite(building_type: Building.BuildingType) -> void:
-	%BuildingPreview.set_type(building_type)
+func _load_preview_building_sprite(
+		building_type: Building.BuildingType,
+		variation_value: float
+) -> void:
+	%BuildingPreview.set_type_and_variation(building_type, variation_value)
 	_picked_building_type = building_type
+	_picked_building_variation_value = variation_value
 
 
 func _unload_preview_building_sprite() -> void:
-	%BuildingPreview.set_type(Building.BuildingType.NONE)
+	%BuildingPreview.set_type_and_variation(
+			Building.BuildingType.NONE,
+			0.0)
 	_picked_building_type = Building.BuildingType.NONE
+	_picked_building_variation_value = INF
 
 
 func _process_snap_preview_building_sprite() -> void:
@@ -147,6 +155,7 @@ func _process_snap_preview_building_sprite() -> void:
 		UIEventBus.preview_cursor_snapped.emit(
 				map_coords,
 				_picked_building_type,
+				_picked_building_variation_value,
 				ruleset_parse_result.placement_check_status,
 				BuildingRulesetEngine.InteractionResult.sum(
 						ruleset_parse_result.interaction_result.values()))
@@ -288,25 +297,35 @@ func _unsnap_preview() -> void:
 # ============================================================================ #
 #region Signal listeners
 
-# Listens to
-# UIEventBus.building_card_picked(building_type: Building.BuildingType).
-func _on_building_card_picked(building_type: Building.BuildingType) -> void:
-	_load_preview_building_sprite(building_type)
+# Listens to UIEventBus.building_card_picked(
+#		building_type: Building.BuildingType,
+#		variation_value: float).
+func _on_building_card_picked(
+	building_type: Building.BuildingType,
+	variation_value: float
+) -> void:
+	_load_preview_building_sprite(building_type, variation_value)
 
 
-# Listens to
-# UIEventBus.building_card_dropped(building_type: Building.BuildingType).
-func _on_building_card_dropped(_building_type: Building.BuildingType) -> void:
+# Listens to UIEventBus.building_card_dropped(
+#		building_type: Building.BuildingType,
+#		variation_value: float).
+func _on_building_card_dropped(
+		_building_type: Building.BuildingType,
+		_variation_value: float
+) -> void:
 	_unload_preview_building_sprite()
 
 
 # Listens to GameplayEventBus.building_placed(
 #		coords: Vector2i,
 #		building_type: Building.BuildingType,
+#		variation_value: float,
 #		interaction_result: BuildingRulesetEngine.InteractionResult).
 func _on_building_placed(
 		_coords: Vector2i,
 		_building_type: Building.BuildingType,
+		_variation_value: float,
 		_interaction_result: BuildingRulesetEngine.InteractionResult
 ) -> void:
 	_unload_preview_building_sprite()

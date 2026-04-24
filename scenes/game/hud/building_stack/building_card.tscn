@@ -3,12 +3,36 @@
 [ext_resource type="Script" uid="uid://cqpexnwf8xpcb" path="res://scripts/game/hud/building_stack/building_card.gd" id="1_qw75a"]
 [ext_resource type="Texture2D" uid="uid://da2bkj7jo73c4" path="res://assets/user_interface/building_stack/building_card/bg.png" id="2_556cu"]
 [ext_resource type="Texture2D" uid="uid://mb7vcj16t4bi" path="res://assets/user_interface/building_stack/building_card/placeholder_fg.png" id="3_556cu"]
+[ext_resource type="Texture2D" uid="uid://ck5k4ita4hthw" path="res://assets/user_interface/building_stack/building_card/housing_fg.png" id="3_ihhck"]
+[ext_resource type="Texture2D" uid="uid://duymi0vx3cagj" path="res://assets/user_interface/building_stack/building_card/food_fg.png" id="4_3eqw0"]
 [ext_resource type="Texture2D" uid="uid://cdd2qh0mo4cfc" path="res://assets/objects/buildings/building_landing_site_var0.png" id="4_556cu"]
+[ext_resource type="Texture2D" uid="uid://d48b8lbe2aat" path="res://assets/user_interface/building_stack/building_card/energy_fg.png" id="5_16t8u"]
 [ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="5_eb2xf"]
 [ext_resource type="FontFile" uid="uid://dgw3768nro5hb" path="res://assets/themes/fonts/DalekPinpointBold.ttf" id="6_40xcq"]
+[ext_resource type="Texture2D" uid="uid://ce8kv7r587fid" path="res://assets/user_interface/building_stack/building_card/industry_fg.png" id="6_tcn3o"]
 
 [node name="BuildingCard" type="Node2D" unique_id=1572232253]
 script = ExtResource("1_qw75a")
+foreground_sprites = Dictionary[int, CompressedTexture2D]({
+0: ExtResource("3_556cu"),
+1: ExtResource("3_556cu"),
+2: ExtResource("3_ihhck"),
+3: ExtResource("4_3eqw0"),
+4: ExtResource("5_16t8u"),
+5: ExtResource("6_tcn3o")
+})
+building_sprite_variations = Dictionary[int, Array]({
+0: [],
+1: ["building_landing_site_var0.png"],
+2: ["building_housing_var0.png", "building_housing_var1.png", "building_housing_var2.png"],
+3: ["building_greenhouse_var0.png", "building_greenhouse_var1.png", "building_greenhouse_var2.png"],
+4: ["building_ranch_var0.png", "building_ranch_var1.png", "building_ranch_var2.png"],
+5: ["building_fishery_var0.png", "building_fishery_var1.png", "building_fishery_var2.png"],
+6: ["building_solar_farm_var0.png", "building_solar_farm_var1.png"],
+7: ["building_wind_farm_var0.png", "building_wind_farm_var1.png", "building_wind_farm_var2.png", "building_wind_farm_var3.png"],
+8: ["building_nuclear_reactor_var0.png", "building_nuclear_reactor_var1.png"],
+9: ["building_factory_var0.png", "building_factory_var1.png", "building_factory_var2.png"]
+})
 pickable_scale = 104
 hover_scale = 106
 picked_scale = 108

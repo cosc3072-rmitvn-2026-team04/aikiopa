@@ -18,6 +18,7 @@ extends GameUI
 # The building card currently on the player's hand to be placed down in the
 # [World].
 var _picked_building: Building.BuildingType = Building.BuildingType.NONE
+var _picked_building_variation_value: float = INF
 
 #endregion
 # ============================================================================ #
@@ -49,7 +50,8 @@ func _input(event: InputEvent) -> void:
 	):
 		UIEventBus.building_placement_requested.emit(
 				world.get_local_mouse_position(),
-				_picked_building)
+				_picked_building,
+				_picked_building_variation_value)
 
 #endregion
 # ============================================================================ #
@@ -170,25 +172,38 @@ func _update_population_label() -> void:
 # ============================================================================ #
 #region Signal listeners
 
-# Listens to
-# UIEventBus.building_card_picked(building_type: Building.BuildingType).
-func _on_building_card_picked(building_type: Building.BuildingType) -> void:
+# Listens to UIEventBus.building_card_picked(
+#		building_type: Building.BuildingType,
+#		variation_value: float).
+func _on_building_card_picked(
+		building_type: Building.BuildingType,
+		variation_value: float
+) -> void:
 	_picked_building = building_type
+	_picked_building_variation_value = variation_value
 
 
-# Listens to UIEventBus.building_card_dropped(building: Building.BuildingType).
-func _on_building_card_dropped(_building: Building.BuildingType) -> void:
+# Listens to UIEventBus.building_card_dropped(
+#		building_type: Building.BuildingType,
+#		variation_value: float).
+func _on_building_card_dropped(
+		_building: Building.BuildingType,
+		_variation_value: float
+) -> void:
 	_picked_building = Building.BuildingType.NONE
+	_picked_building_variation_value = INF
 
 
 # Listens to UIEventBus.preview_cursor_snapped(
 #		coords: Vector2i,
 #		picked_building_type: Building.BuildingType,
+#		variation_value: float,
 #		placement_check_status: BuildingRulesetEngine.PlacementCheckStatus,
 #		interaction_result: BuildingRulesetEngine.InteractionResult).
 func _on_preview_cursor_snapped(
 		_coords: Vector2i,
 		_picked_building_type: Building.BuildingType,
+		_variation_value: float,
 		placement_check_status: BuildingRulesetEngine.PlacementCheckStatus,
 		interaction_result: BuildingRulesetEngine.InteractionResult
 ) -> void:
@@ -205,14 +220,17 @@ func _on_preview_cursor_unsnapped() -> void:
 
 # Listens to GameplayEventBus.building_placed(
 #		coords: Vector2i,
-#		building_type: Building.BuildingType).
+#		building_type: Building.BuildingType),
+#		variation_value: float,
 #		interaction_result: BuildingRulesetEngine.InteractionResult).
 func _on_building_placed(
 		_coords: Vector2i,
 		_building_type: Building.BuildingType,
+		_variation_value: float,
 		_interaction_result: BuildingRulesetEngine.InteractionResult
 ) -> void:
 	_picked_building = Building.BuildingType.NONE
+	_picked_building_variation_value = INF
 
 
 # Listens to

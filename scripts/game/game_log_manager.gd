@@ -132,7 +132,7 @@ func _make_log_metadata() -> String:
 
 func _make_log_line() -> String:
 	_entry_count += 1
-	return "%d: %d Building Card(s), %d Placed Building(s), %d Population, %d Population Milestone" % [
+	return "%d: %d Building Card(s), %d Placed Building(s), %d Population, Milestone %d" % [
 		_entry_count,
 		Global.game_state.building_stack.size(),
 		Global.game_state.building_instances.size(),
@@ -197,15 +197,12 @@ func _on_population_changed(_old_amount: int, _new_amount: int) -> void:
 #		population_reached: int,
 #		game_over_type: Game.GameOverType).
 func _on_game_over(
-		population_reached: int,
+		_population_reached: int,
 		game_over_type: Game.GameOverType
 ) -> void:
 	if _file and not _game_over:
 		_game_over = true
-		_file.store_line("Game Over: %s, population: %d" % [
-			Game.GameOverType.keys()[game_over_type],
-			population_reached,
-		])
+		_file.store_line("Game Over: %s" % Game.GameOverType.keys()[game_over_type])
 
 #endregion
 # ============================================================================ #
