@@ -85,7 +85,7 @@ func _input(event: InputEvent) -> void:
 
 
 # ============================================================================ #
-#region Godot builtins
+#region Private methods
 
 func _activate_population_milestone_preview_progress_bar(
 		interaction_result: BuildingRulesetEngine.InteractionResult
@@ -103,7 +103,7 @@ func _activate_population_milestone_preview_progress_bar(
 	var bar: ProgressBar = %PopulationMilestonePreviewProgressBar
 	if bar.has_theme_stylebox_override(&"fill"):
 		bar.remove_theme_stylebox_override(&"fill")
-	if interaction_result.get_population_change() >= 0:
+	if interaction_result.get_population_change() > 0:
 		bar.max_value = (
 				current_population_milestone
 				- previous_population_milestone
@@ -124,6 +124,7 @@ func _activate_population_milestone_preview_progress_bar(
 				- previous_population_milestone
 		)
 		bar.add_theme_stylebox_override(&"fill", load(bar.STYLE_BOX_BAR_NEGATIVE))
+	bar.flash_start()
 
 
 func _deactivate_population_milestone_preview_progress_bar() -> void:
@@ -138,6 +139,22 @@ func _deactivate_population_milestone_preview_progress_bar() -> void:
 			reward_controller.get_population_milestone(population_milestones_reached)
 
 	var bar: ProgressBar = %PopulationMilestonePreviewProgressBar
+	bar.max_value = current_population_milestone - previous_population_milestone
+	bar.value = population_controller.get_population() - previous_population_milestone
+	bar.flash_reset()
+
+
+func _reset_population_milestone_progress_bar() -> void:
+	var population_milestones_reached: int =\
+			Global.game_state.population_milestones_reached
+	var previous_population_milestone: int = (
+			0 if population_milestones_reached == 0
+			else reward_controller.get_population_milestone(
+					population_milestones_reached - 1)
+	)
+	var current_population_milestone: int =\
+			reward_controller.get_population_milestone(population_milestones_reached)
+	var bar: ProgressBar = %PopulationMilestoneProgressBar
 	bar.max_value = current_population_milestone - previous_population_milestone
 	bar.value = 0.0
 
@@ -203,10 +220,10 @@ func _animate_population_label(negative: bool) -> void:
 	var label: Label = %PopulationLabel
 	label.pivot_offset_ratio = Vector2.ONE / 2
 
-	var tween: Tween = get_tree().create_tween()
+	var tween: Tween = create_tween()
 	tween.tween_property(label, "scale", Vector2.ONE * target_scale, in_duration)\
 			.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
-	tween.chain().tween_property(label, "scale", Vector2.ONE, out_duration)\
+	tween.tween_property(label, "scale", Vector2.ONE, out_duration)\
 			.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
 
 #endregion
