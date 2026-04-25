@@ -4,6 +4,33 @@ extends GameUI
 # ============================================================================ #
 #region Exported properties
 
+@export_group("Animation")
+
+
+@export_subgroup("Population Label", "population_label")
+
+## Maximum scale multiplier reached when the population label is animated for
+## positive changes.
+@export_range(1.0, 1.5, 0.01) var population_label_max_scale: float = 1.0
+
+## Maximum scale multiplier reached when the population label is animated for
+## negative changes.
+@export_range(0.5, 1.0, 0.01) var population_label_min_scale: float = 1.0
+
+## The duration (in seconds) of the initial scaling phase when the label
+## transitions from its default [Vector2.ONE] scale to its target max/min scale.
+@export_range(0.01, 1.0, 0.01, "suffix:s")
+var population_label_tween_in_duration: float = 0.5
+
+## The duration (in seconds) of the return phase where the label
+## transitions from its target max/min scale back to its default
+## [constant Vector2.ONE] scale.
+@export_range(0.01, 1.0, 0.01, "suffix:s")
+var population_label_tween_out_duration: float = 0.5
+
+
+@export_group("", "")
+
 @export var world: World = null
 @export var population_controller: PopulationController = null
 @export var reward_controller: RewardController = null
@@ -153,7 +180,6 @@ func _update_population_milestone_progress_bar(
 
 
 func _update_population_label() -> void:
-	# TODO: This could be made prettier using a Tween animation on its scale.
 	var population_milestones_reached: int =\
 			Global.game_state.population_milestones_reached
 	var current_population_milestone: int =\
@@ -164,6 +190,24 @@ func _update_population_label() -> void:
 		population_controller.get_population(),
 		current_population_milestone,
 	]
+
+
+func _animate_population_label(negative: bool) -> void:
+	var target_scale: float = (
+			population_label_min_scale if negative
+			else population_label_max_scale
+	)
+	var in_duration: float = population_label_tween_in_duration
+	var out_duration: float = population_label_tween_out_duration
+
+	var label: Label = %PopulationLabel
+	label.pivot_offset_ratio = Vector2.ONE / 2
+
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property(label, "scale", Vector2.ONE * target_scale, in_duration)\
+			.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	tween.chain().tween_property(label, "scale", Vector2.ONE, out_duration)\
+			.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
 
 #endregion
 # ============================================================================ #
@@ -235,9 +279,10 @@ func _on_building_placed(
 
 # Listens to
 # GameplayEventBus.population_changed(old_amount: int, new_amount: int).
-func _on_population_changed(_old_amount: int, _new_amount: int) -> void:
+func _on_population_changed(old_amount: int, new_amount: int) -> void:
 	_update_population_milestone_progress_bar(null)
 	_update_population_label()
+	_animate_population_label(new_amount - old_amount < 0)
 
 
 # Listens to GameplayEventBus.session_saved(save_slot_index: int).
