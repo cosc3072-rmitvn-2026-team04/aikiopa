@@ -186,12 +186,13 @@ func add_building(
 				):
 					valid_placement_count += 1
 
-		var building_stack_building_type_only: Array = []
-		building_stack_building_type_only = Global.game_state.building_stack.map(
+		var building_stack_building_type_only: Array[Building.BuildingType] = []
+		building_stack_building_type_only = Array(Global.game_state.building_stack.map(
 				func (
 						building_dictionary_from_stack: Dictionary[StringName, Variant]
 				) -> Building.BuildingType:
-						return building_dictionary_from_stack.building_type)
+						return building_dictionary_from_stack.building_type),
+				TYPE_INT, "", null)
 		if (
 				# The building stack has more cards of 'new_building_type' than
 				# there is available space for it.

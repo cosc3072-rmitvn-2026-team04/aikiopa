@@ -62,9 +62,14 @@ func _on_building_placed(
 			false, true, true)
 
 
-# Listens to GameplayEventBus.forest_enclosed(coords: Vector2i).
-func _on_forest_enclosed(coords: Vector2i) -> void:
-	play_sound_2d(&"ForestEnclosed2D", world.map_to_local(coords),
+# Listens to GameplayEventBus.forest_enclosed(
+#		from_coords: Vector2i,
+#		forest_area: Array[Vector2i]).
+func _on_forest_enclosed(
+		from_coords: Vector2i,
+		_forest_area: Array[Vector2i]
+) -> void:
+	play_sound_2d(&"ForestEnclosed2D", world.map_to_local(from_coords),
 			false, false, true)
 
 

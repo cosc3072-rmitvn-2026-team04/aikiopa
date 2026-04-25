@@ -74,10 +74,10 @@ signal building_placed(
 		interaction_result: BuildingRulesetEngine.InteractionResult)
 
 
-## Emitted when a building placement at [param coords] completes enclosure of a
-## forest region.
+## Emitted when a building placement at [param from_coords] completes enclosure
+## of forest tiles in [param forest_area].
 @warning_ignore("unused_signal")
-signal forest_enclosed(coords: Vector2i)
+signal forest_enclosed(from_coords: Vector2i, forest_area: Array[Vector2i])
 
 
 # TODO: At the moment nothing is listening to this. Implement in #21.
