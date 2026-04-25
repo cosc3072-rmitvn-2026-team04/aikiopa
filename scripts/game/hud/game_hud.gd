@@ -73,6 +73,7 @@ var _progress_bar_animating: bool = false
 func _ready() -> void:
 	_reset_population_milestone_progress_bar()
 	_update_population_label()
+	%GameSaveNotificationBackgroundTextureRect.hide()
 	%GameSaveNotificationLabel.hide()
 
 	UIEventBus.building_card_picked.connect(_on_building_card_picked)
@@ -391,15 +392,16 @@ func _on_population_changed(old_amount: int, new_amount: int) -> void:
 
 # Listens to GameplayEventBus.session_saved(save_slot_index: int).
 func _on_session_saved(_save_slot_index: int) -> void:
-	var timer: Timer = %GameSaveNotificationLabel.get_node("Timer")
-	var animation_player: AnimationPlayer = %GameSaveNotificationLabel.get_node(
-			"AnimationPlayer")
+	var timer: Timer = %GameSaveNotificationLabel/Timer
+	var animation_player: AnimationPlayer = %GameSaveNotificationLabel/AnimationPlayer
 
+	%GameSaveNotificationBackgroundTextureRect.show()
 	%GameSaveNotificationLabel.show()
 	animation_player.play("show")
 	timer.start()
 	await timer.timeout
 	%GameSaveNotificationLabel.hide()
+	%GameSaveNotificationBackgroundTextureRect.hide()
 
 #endregion
 # ============================================================================ #

@@ -37,6 +37,7 @@ func _ready() -> void:
 			_on_building_stack_building_popped)
 	GameplayEventBus.game_over.connect(_on_game_over)
 
+	%BuildingStackCountContainer.pivot_offset_ratio = Vector2.ONE / 2
 	var placeholder_card: InstancePlaceholder = %BuildingStack.get_child(0)
 	%BuildingStack.remove_child(placeholder_card)
 	placeholder_card.queue_free()
@@ -184,8 +185,8 @@ func _on_building_stack_building_added(
 		variation_value: float
 ) -> void:
 	_add_building_card(building_type, variation_value)
-	if %BuildingStackCountTextureRect.visible == false:
-		%BuildingStackCountTextureRect.show()
+	if %BuildingStackCountContainer.visible == false:
+		%BuildingStackCountContainer.show()
 	redraw()
 
 
@@ -197,9 +198,6 @@ func _on_building_stack_building_popped(
 		_variation_value: float
 ) -> void:
 	_pop_building_card()
-	if Global.game_state.building_stack.is_empty():
-		# TODO: This could be made prettier using a Tween animation on its size.
-		%BuildingStackCountTextureRect.hide()
 	redraw()
 
 
@@ -210,6 +208,13 @@ func _on_game_over(_population: int, _game_over_type: Game.GameOverType) -> void
 	if %BuildingStack.get_child_count() > 0:
 		for building_card: BuildingCard in %BuildingStack.get_children():
 			building_card.process_mode = Node.PROCESS_MODE_DISABLED
+	else:
+		%BackgroundTextureRect/AnimationPlayer.play("game_over")
+		var tween: Tween = create_tween()
+		tween.tween_property(
+				%BuildingStackCountContainer, "scale",
+				Vector2.ZERO * 0.01, 0.5).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SPRING)
+		tween.tween_callback(func () -> void: %BuildingStackCountContainer.hide())
 
 #endregion
 # ============================================================================ #
