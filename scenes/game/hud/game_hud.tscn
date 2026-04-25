@@ -57,6 +57,44 @@ content_margin_top = 24.0
 content_margin_right = 48.0
 content_margin_bottom = 24.0
 
+[sub_resource type="Animation" id="Animation_s3y58"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_2h12x"]
+resource_name = "show"
+length = 2.2
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 1.6, 2.2),
+"transitions": PackedFloat32Array(0.5, 1, 2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5h6f3"]
+_data = {
+&"RESET": SubResource("Animation_s3y58"),
+&"show": SubResource("Animation_2h12x")
+}
+
 [node name="GameHUD" type="Control" unique_id=1279456757]
 layout_mode = 3
 anchors_preset = 15
@@ -144,7 +182,7 @@ theme_override_constants/margin_top = 36
 theme_override_constants/margin_right = 36
 theme_override_constants/margin_bottom = 36
 
-[node name="GameSavedLabel" type="Label" parent="MarginContainer" unique_id=1085476592]
+[node name="GameSaveNotificationLabel" type="Label" parent="MarginContainer" unique_id=1085476592]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
@@ -153,6 +191,9 @@ theme_override_constants/outline_size = 6
 theme_override_font_sizes/font_size = 36
 text = "Game Saved…"
 
-[node name="Timer" type="Timer" parent="MarginContainer/GameSavedLabel" unique_id=1378524284]
-wait_time = 1.6
+[node name="Timer" type="Timer" parent="MarginContainer/GameSaveNotificationLabel" unique_id=1378524284]
+wait_time = 2.1999999999999997
 one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/GameSaveNotificationLabel" unique_id=1849306429]
+libraries/ = SubResource("AnimationLibrary_5h6f3")
