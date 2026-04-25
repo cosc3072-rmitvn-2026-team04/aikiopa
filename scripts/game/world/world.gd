@@ -355,13 +355,13 @@ func _on_building_placement_requested(
 			== BuildingRulesetEngine.PlacementCheckStatus.ALLOWED
 	):
 		place_building_at(map_coords, building_type, variation_value)
-		var is_forest_enclosed: bool = false
+		var enclosed_forest_area: Array[Vector2i]
 		for interaction_coords: Vector2i in ruleset_parse_result.interaction_result.keys():
 			if get_terrain_at(interaction_coords) in [
 				TerrainType.PLAIN_FOREST,
 				TerrainType.GRASSLAND_FOREST,
 			]:
-				is_forest_enclosed = true
+				enclosed_forest_area.append(interaction_coords)
 				Global.game_state.enclosed_forest_coords.append(interaction_coords)
 		GameplayEventBus.building_placed.emit(
 				map_coords,
@@ -369,8 +369,8 @@ func _on_building_placement_requested(
 				variation_value,
 				BuildingRulesetEngine.InteractionResult.sum(
 						ruleset_parse_result.interaction_result.values()))
-		if is_forest_enclosed:
-			GameplayEventBus.forest_enclosed.emit(map_coords)
+		if not enclosed_forest_area.is_empty():
+			GameplayEventBus.forest_enclosed.emit(map_coords, enclosed_forest_area)
 
 #endregion
 # ============================================================================ #

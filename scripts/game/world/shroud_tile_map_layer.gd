@@ -63,6 +63,7 @@ var _thin_shroud_coords: Array[Vector2i] = []
 
 func _ready() -> void:
 	GameplayEventBus.building_placed.connect(_on_building_placed)
+	GameplayEventBus.forest_enclosed.connect(_on_forest_enclosed)
 	UIEventBus.gameplay_debug_mode_shroud_toggled.connect(
 			_on_gameplay_debug_mode_shroud_toggled)
 
@@ -198,6 +199,17 @@ func _on_building_placed(
 ) -> void:
 	_append_vision_area_from_range_at(coords)
 	Global.game_state.shroud_data = get_shroud_data()
+
+
+# Listens to GameplayEventBus.forest_enclosed(
+#		from_coords: Vector2i,
+#		forest_area: Array[Vector2i]).
+func _on_forest_enclosed(
+		_from_coords: Vector2i,
+		forest_area: Array[Vector2i]
+) -> void:
+	for forest_coords: Vector2i in forest_area:
+		_append_vision_area_from_range_at(forest_coords)
 
 
 # Listens to UIEventBus.gameplay_debug_mode_shroud_toggled(toggled_on: bool).
