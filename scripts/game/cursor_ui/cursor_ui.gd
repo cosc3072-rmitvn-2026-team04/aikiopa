@@ -65,6 +65,7 @@ var _interaction_result_label_scene: PackedScene =\
 var _picked_building_type: Building.BuildingType = Building.BuildingType.NONE
 var _picked_building_variation_value: float = INF
 var _context_applied_terrain_features: Array[TerrainFeature] = []
+var _preview_snapped: bool = false
 
 #endregion
 # ============================================================================ #
@@ -159,13 +160,16 @@ func _process_snap_preview_building_sprite() -> void:
 				ruleset_parse_result.placement_check_status,
 				BuildingRulesetEngine.InteractionResult.sum(
 						ruleset_parse_result.interaction_result.values()))
-	else: # HACK: This gets called every frame and is a performance bottleneck.
-		_unsnap_preview()
+		_preview_snapped = true
+	else:
+		if _preview_snapped:
+			_preview_snapped = false
+			_unsnap_preview()
+			UIEventBus.preview_cursor_unsnapped.emit()
 		_apply_blocked_context(
 			map_coords,
 			ruleset_parse_result.placement_check_status,
 			ruleset_parse_result.interaction_result)
-		UIEventBus.preview_cursor_unsnapped.emit()
 
 
 func _snap_preview(
@@ -223,6 +227,18 @@ func _snap_preview(
 			%EnvironmentInteractionResultLabels.add_child(interaction_result_label)
 
 
+func _unsnap_preview() -> void:
+	%BuildingPreview.unsnap()
+	%BuildingPreview.position = Vector2.ZERO
+	%BuildingPreview.modulate = building_preview_unsnapped_modulate
+	%PopulationChangePreviewLabel.text = "NaN👨‍🚀"
+	%PopulationChangePreviewLabel.hide()
+	%BuildingBonusPreviewLabel.text = "NaN🏠"
+	%BuildingBonusPreviewLabel.hide()
+	_remove_terrain_feature_context()
+	_reset_environment_interaction_result_labels()
+
+
 func _apply_terrain_feature_context(
 		map_coords: Vector2i,
 		building_type: Building.BuildingType
@@ -277,18 +293,6 @@ func _apply_blocked_context(
 				target_label_position = to_local(target_label_position)
 				interaction_result_label.position = target_label_position
 				%EnvironmentInteractionResultLabels.add_child(interaction_result_label)
-
-
-func _unsnap_preview() -> void:
-	%BuildingPreview.unsnap()
-	%BuildingPreview.position = Vector2.ZERO
-	%BuildingPreview.modulate = building_preview_unsnapped_modulate
-	%PopulationChangePreviewLabel.text = "NaN👨‍🚀"
-	%PopulationChangePreviewLabel.hide()
-	%BuildingBonusPreviewLabel.text = "NaN🏠"
-	%BuildingBonusPreviewLabel.hide()
-	_remove_terrain_feature_context()
-	_reset_environment_interaction_result_labels()
 
 #endregion
 # ============================================================================ #

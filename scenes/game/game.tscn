@@ -84,6 +84,12 @@ building_ruleset_engine = NodePath("../BuildingRulesetEngine")
 
 [node name="GameHUD" parent="GameHUDCanvasLayer" unique_id=1279456757 node_paths=PackedStringArray("world", "population_controller", "reward_controller") instance=ExtResource("5_5i0tg")]
 unique_name_in_owner = true
+population_label_max_scale = 1.1
+population_label_min_scale = 0.9
+population_label_tween_in_duration = 0.05
+population_label_tween_out_duration = 0.09999999999999999
+population_milestone_progress_bar_tween_speed = 0.2
+population_milestone_progress_bar_max_tween_duration = 1.0
 world = NodePath("../../World")
 population_controller = NodePath("../../PopulationController")
 reward_controller = NodePath("../../RewardController")
@@ -135,7 +141,7 @@ bus = &"Gameplay"
 
 [node name="BuildingPlaced2D" type="AudioStreamPlayer2D" parent="SfxController" unique_id=2014111785]
 stream = ExtResource("15_otnwt")
-volume_db = 8.0
+volume_db = 4.0
 attenuation = 0.5
 bus = &"Gameplay"
 
