@@ -370,7 +370,6 @@ func _on_building_placement_requested(
 				BuildingRulesetEngine.InteractionResult.sum(
 						ruleset_parse_result.interaction_result.values()))
 		if is_forest_enclosed:
-			print("forest_enclosed")
 			GameplayEventBus.forest_enclosed.emit(map_coords)
 
 #endregion
