@@ -272,13 +272,13 @@ func _apply_blocked_context(
 		placement_check_status,
 		interaction_results: Dictionary[Vector2i, BuildingRulesetEngine.InteractionResult]
 ) -> void:
+	_reset_environment_interaction_result_labels()
 	if (
 			placement_check_status in [
 				BuildingRulesetEngine.PlacementCheckStatus.BLOCKED_BY_TERRAIN,
 				BuildingRulesetEngine.PlacementCheckStatus.BLOCKED_BY_ADJACENT_BUILDING,
 			]
 	):
-		_reset_environment_interaction_result_labels()
 		for interaction_coords: Vector2i in interaction_results.keys():
 			if(
 					interaction_coords == map_coords
