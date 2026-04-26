@@ -6,6 +6,15 @@
 [ext_resource type="StyleBox" uid="uid://bm2a7stf23aj4" path="res://resources/themes/styleboxes/stylebox_effect_preview_positive.tres" id="3_avxdk"]
 [ext_resource type="Script" uid="uid://bw13r5hq8oda8" path="res://scripts/game/hud/population_milestone_preview_progress_bar.gd" id="4_avxdk"]
 
+[sub_resource type="Gradient" id="Gradient_ej252"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.06302825, 1)
+colors = PackedColorArray(0, 0, 0, 0.10980392, 0, 0, 0, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_s3y58"]
+gradient = SubResource("Gradient_ej252")
+fill_to = Vector2(0, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oii44"]
 bg_color = Color(0.12156863, 0.26666668, 0.11764706, 1)
 
@@ -141,6 +150,15 @@ theme = ExtResource("1_lsjxn")
 script = ExtResource("1_snjka")
 metadata/_custom_type_script = "uid://cupvablkoadik"
 
+[node name="ProgressBarBackgroundTextureRect" type="TextureRect" parent="." unique_id=1738688969]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_s3y58")
+
 [node name="ProgressBarBackgroundPanel" type="Panel" parent="." unique_id=1067247038]
 custom_minimum_size = Vector2(0, 18)
 layout_mode = 1
@@ -204,8 +222,7 @@ horizontal_alignment = 2
 
 [node name="BuildingStackUI" parent="." unique_id=776021788 instance=ExtResource("2_snjka")]
 unique_name_in_owner = true
-layout_mode = 1
-size_flags_vertical = 3
+container_tween_update_duration = 1.1
 
 [node name="GameSaveNotificationBackgroundTextureRect" type="TextureRect" parent="." unique_id=1144918342]
 unique_name_in_owner = true

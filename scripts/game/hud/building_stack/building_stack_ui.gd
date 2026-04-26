@@ -9,6 +9,8 @@ extends Node2D
 @export_range(0, 250, 1, "suffix:px") var collapsed_card_offset: int = 0
 @export_range(0, 1080, 1, "suffix:px") var max_container_height: int = 1080
 @export_range(1, 10, 1, "suffix:cards") var max_revealed_card_count: int = 1
+@export_range(0.01, 5.0, 0.01, "suffix:s")
+var container_tween_update_duration: float = 0.5
 @export var container_padding: Vector2i = Vector2i.ZERO
 
 #endregion
@@ -52,6 +54,7 @@ func _ready() -> void:
 			))
 	%BuildingStack.remove_child(reference_building_card)
 	reference_building_card.queue_free()
+	%BuildingStack.position = Vector2.DOWN * get_viewport_rect().size.y
 
 #endregion
 # ============================================================================ #
@@ -143,7 +146,7 @@ func _update_building_card_positions() -> void:
 
 
 func _update_building_stack_position() -> void:
-	%BuildingStack.position = Vector2.ZERO
+	var target_position = Vector2.ZERO
 
 	var building_card_count: int = %BuildingStack.get_child_count()
 	if building_card_count == 0:
@@ -156,10 +159,15 @@ func _update_building_stack_position() -> void:
 			- top_building_card.position.y + top_building_card.get_size().y
 	)
 	if container_height > max_container_height:
-		%BuildingStack.position.y += (
+		target_position.y += (
 				container_height - max_container_height
 				- container_padding.y
 		)
+		var tween: Tween = create_tween()
+		tween.tween_property(
+				%BuildingStack, "position",
+				target_position, container_tween_update_duration)\
+						.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUART)
 
 #endregion
 # ============================================================================ #
