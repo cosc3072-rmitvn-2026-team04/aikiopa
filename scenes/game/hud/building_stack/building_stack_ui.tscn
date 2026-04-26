@@ -200,6 +200,7 @@ editor_description = "DO NOT REMOVE. This reference BuildingCard is used to calc
 [node name="BuildingStackCountBubble" parent="." unique_id=56046790 instance=ExtResource("4_sdjpw")]
 unique_name_in_owner = true
 offset = Vector2(0, -104)
+dynamic_font_sizes = Array[int]([48, 43, 38])
 
 [node name="MarginContainer" parent="BuildingStackCountBubble" index="0" unique_id=728225458]
 offset_top = -104.0

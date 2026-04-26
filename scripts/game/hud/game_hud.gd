@@ -120,8 +120,6 @@ func _activate_population_milestone_preview_progress_bar(
 			reward_controller.get_population_milestone(population_milestones_reached)
 
 	var bar: ProgressBar = %PopulationMilestonePreviewProgressBar
-	if bar.has_theme_stylebox_override(&"fill"):
-		bar.remove_theme_stylebox_override(&"fill")
 	if population_change > 0:
 		bar.max_value = (
 				current_population_milestone

@@ -97,16 +97,12 @@ func _process(_delta: float) -> void:
 #region Private methods
 
 func _init_population_change_preview_label() -> void:
-	if %PopulationChangePreviewLabel.has_theme_color_override(&"font_color"):
-		%PopulationChangePreviewLabel.remove_theme_color_override(&"font_color")
 	%PopulationChangePreviewLabel.add_theme_color_override(
 			&"font_color", population_change_preview_positive_color)
 	%PopulationChangePreviewLabel.hide()
 
 
 func _init_building_bonus_preview_label() -> void:
-	if %BuildingBonusPreviewLabel.has_theme_color_override(&"font_color"):
-		%BuildingBonusPreviewLabel.remove_theme_color_override(&"font_color")
 	%BuildingBonusPreviewLabel.add_theme_color_override(
 			&"font_color", building_bonus_preview_color)
 	%BuildingBonusPreviewLabel.hide()
@@ -189,8 +185,6 @@ func _snap_preview(
 	var total_population_change = summarized_interaction_result.get_population_change()
 	%PopulationChangePreviewLabel.show()
 	%PopulationChangePreviewLabel.text = "%+d👨‍🚀" % [total_population_change]
-	if %PopulationChangePreviewLabel.has_theme_color_override(&"font_color"):
-		%PopulationChangePreviewLabel.remove_theme_color_override(&"font_color")
 	if total_population_change > 0:
 		%PopulationChangePreviewLabel.add_theme_color_override(
 				&"font_color", population_change_preview_positive_color)
