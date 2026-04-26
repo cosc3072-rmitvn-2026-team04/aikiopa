@@ -178,6 +178,18 @@ func _snap_preview(
 		map_coords: Vector2i,
 		interaction_results: Dictionary[Vector2i, BuildingRulesetEngine.InteractionResult],
 ) -> void:
+	const FOREST_TERRAIN_TYPES: Array[World.TerrainType] = [
+		World.TerrainType.PLAIN_FOREST,
+		World.TerrainType.GRASSLAND_FOREST,
+	]
+	if (
+			world.get_terrain_at(map_coords) in FOREST_TERRAIN_TYPES
+			and map_coords in Global.game_state.enclosed_forest_coords
+	):
+		%BuildingPreview.hide_highlight()
+	else:
+		%BuildingPreview.show_highlight()
+
 	var target_position: Vector2 = world.map_to_local(map_coords)
 	target_position = world.to_global(target_position)
 	target_position = to_local(target_position)
@@ -298,33 +310,36 @@ func _apply_enclosed_forest_area_context(
 		var population_change: int = interaction_result.get_population_change()
 		if world.get_terrain_at(interaction_coords) in FOREST_TERRAIN_TYPES:
 			var terrain_feature_layer: Node2D = world.get_terrain_feature_layer()
-			var terrain_feature: TerrainFeature =\
+			var forest_feature: TerrainFeature =\
 					terrain_feature_layer.get_feature_instance_at(interaction_coords)
-			if terrain_feature:
+			if forest_feature:
 				if population_change == 0:
-					terrain_feature.unset_highlight()
+					forest_feature.unset_highlight()
 				elif population_change < 0:
-					terrain_feature.set_highlight(
-							terrain_feature.HighlightMode.HIGHLIGHT_NEGATIVE)
+					forest_feature.set_highlight(
+							forest_feature.HighlightMode.HIGHLIGHT_NEGATIVE)
 				else:
-					terrain_feature.set_highlight(
-							terrain_feature.HighlightMode.HIGHLIGHT_POSITIVE)
+					forest_feature.set_highlight(
+							forest_feature.HighlightMode.HIGHLIGHT_POSITIVE)
 			else:
 				push_error("Terrain feature expected at (%d, %d). Got 'null' instead." % [
 					interaction_coords.x,
 					interaction_coords.y
 				])
 
-
-			if not _context_applied_enclosed_forest_area.has(terrain_feature):
-				_context_applied_enclosed_forest_area.append(terrain_feature)
+			if not _context_applied_enclosed_forest_area.has(forest_feature):
+				_context_applied_enclosed_forest_area.append(forest_feature)
 
 
 func _remove_enclosed_forest_area_context() -> void:
 	if not _context_applied_enclosed_forest_area.is_empty():
 		for forest_feature: TerrainFeature in _context_applied_enclosed_forest_area:
-			if forest_feature and not forest_feature.is_enclosed:
-				forest_feature.unset_highlight()
+			if forest_feature:
+				if not forest_feature.is_enclosed:
+					forest_feature.unset_highlight()
+				else:
+					forest_feature.set_highlight(
+							TerrainFeature.HighlightMode.HIGHLIGHT_ALTERNATIVE)
 		_context_applied_buildings.clear()
 
 

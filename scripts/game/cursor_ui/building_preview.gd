@@ -145,5 +145,17 @@ func unsnap() -> void:
 	_building_preview_map_insert.hide()
 	_local_sprite_2d.show()
 
+
+## Shows the highlight under the snapped building preview. Has no effect if the
+## building preview is not snapped.
+func show_highlight() -> void:
+	_building_preview_map_insert.show_highlight()
+
+
+## Hides the highlight under the snapped building preview. Has no effect if the
+## building preview is not snapped.
+func hide_highlight() -> void:
+	_building_preview_map_insert.hide_highlight()
+
 #endregion
 # ============================================================================ #

@@ -385,56 +385,69 @@ func _get_enclosed_forest_areas_at(coords: Vector2i) -> Array[Vector2i]:
 	]
 
 	var enclosed_forest_areas: Array[Vector2i] = []
-
+	var visited_coords: Dictionary[Vector2i, bool] = {}
 	var surrounding_neighbor_coords: Array[Vector2i] =\
 			Math.HexGrid.get_offset_surrounding_neighbors(
 					coords,
 					Math.HexGrid.OffsetLayout.ODD_R)
 	for seed_coords: Vector2i in surrounding_neighbor_coords:
-		var discovered_forest_coords: Array[Vector2i] = []
-		if (
-				seed_coords not in discovered_forest_coords
-				and world.get_terrain_at(seed_coords) in FOREST_TERRAIN_TYPES
-		):
-			# Start BFS flood fill.
-			var enclosed: bool = true
-			discovered_forest_coords.append(seed_coords)
-			var bfs_coords_queue: Array[Vector2i] = [seed_coords]
-			while not bfs_coords_queue.is_empty():
-				var current_coords: Vector2i = bfs_coords_queue.pop_front()
-				var current_coords_surrounding_neighbors: Array[Vector2i] =\
-						Math.HexGrid.get_offset_surrounding_neighbors(
-								current_coords,
-								Math.HexGrid.OffsetLayout.ODD_R)
-				for current_coords_neighbor: Vector2i in current_coords_surrounding_neighbors:
-					if current_coords_neighbor == coords:
-						# Skip [param coords] since it would become a building.
-						continue
+		if not world.get_terrain_at(seed_coords) in FOREST_TERRAIN_TYPES:
+			continue
+		if visited_coords.has(seed_coords):
+			continue
 
-					var current_coords_neighbor_terrain: World.TerrainType =\
-						world.get_terrain_at(current_coords_neighbor)
-					if (
-							not world.has_building_at(current_coords_neighbor)
-							and not (
-									current_coords_neighbor_terrain
-									in BLOCKER_TERRAIN_TYPES
-							) and not (
-									current_coords_neighbor_terrain
-									in FOREST_TERRAIN_TYPES
-							)
-					):
-						enclosed = false
-						break
-					if (
-							current_coords_neighbor not in discovered_forest_coords
-							and current_coords_neighbor_terrain in FOREST_TERRAIN_TYPES
-					):
-						discovered_forest_coords.append(current_coords_neighbor)
-						bfs_coords_queue.push_back(current_coords_neighbor)
-				if not enclosed:
+		var enclosed: bool = true
+
+		# Start BFS.
+		const MAX_ITERATIONS: int = 1000
+		var iteration: int = 0
+		var bfs_coords_queue: Array[Vector2i] = [seed_coords]
+		var local_visited_coords: Dictionary[Vector2i, bool] = { seed_coords: true }
+		while not bfs_coords_queue.is_empty():
+			iteration += 1
+			if iteration > MAX_ITERATIONS:
+				push_warning("Breadth-First Search exceeded max %d iterations." % [
+					MAX_ITERATIONS
+				])
+				enclosed = false
+				break
+
+			var current_coords: Vector2i = bfs_coords_queue.pop_front()
+			var current_coords_surrounding_neighbors: Array[Vector2i] =\
+					Math.HexGrid.get_offset_surrounding_neighbors(
+							current_coords,
+							Math.HexGrid.OffsetLayout.ODD_R)
+			for current_coords_neighbor: Vector2i in current_coords_surrounding_neighbors:
+				if current_coords_neighbor == coords:
+					# Skip [param coords] since it would become a building.
+					continue
+
+				var current_coords_neighbor_terrain: World.TerrainType =\
+					world.get_terrain_at(current_coords_neighbor)
+				if (
+						not world.has_building_at(current_coords_neighbor)
+						and not (
+								current_coords_neighbor_terrain
+								in BLOCKER_TERRAIN_TYPES
+						) and not (
+								current_coords_neighbor_terrain
+								in FOREST_TERRAIN_TYPES
+						)
+				):
+					enclosed = false
 					break
-			if enclosed:
-				enclosed_forest_areas.append_array(discovered_forest_coords)
+				if (
+						current_coords_neighbor not in local_visited_coords
+						and current_coords_neighbor_terrain in FOREST_TERRAIN_TYPES
+				):
+					local_visited_coords.set(current_coords_neighbor, true)
+					bfs_coords_queue.push_back(current_coords_neighbor)
+			if not enclosed:
+				break
+		for local_coords: Vector2i in local_visited_coords.keys():
+			visited_coords.set(local_coords, true)
+		if enclosed:
+			enclosed_forest_areas.append_array(local_visited_coords.keys())
 	return enclosed_forest_areas
 
 
