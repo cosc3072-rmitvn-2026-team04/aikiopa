@@ -281,7 +281,7 @@ func _apply_neighbor_building_context(
 		else:
 			# FIXME: This gets triggered a lot, but does not have any apparent
 			# gameplay effect. Find out why.
-			#push_error("Building expected at (%d, %d). Got 'null' instead." % [
+			#push_error("Building instance expected at (%d, %d). Got 'null' instead." % [
 			#	interaction_coords.x,
 			#	interaction_coords.y
 			#])
@@ -317,18 +317,67 @@ func _apply_enclosed_forest_area_context(
 					forest_feature.unset_highlight()
 				elif population_change < 0:
 					forest_feature.set_highlight(
-							forest_feature.HighlightMode.HIGHLIGHT_NEGATIVE)
+							TerrainFeature.HighlightMode.HIGHLIGHT_NEGATIVE)
+					var enclosed_area: Array[Vector2i] =\
+							_get_enclosed_forest_area_from(interaction_coords)
+					for enclosed_coords: Vector2i in enclosed_area:
+						var enclosed_forest_feature: TerrainFeature =\
+								terrain_feature_layer.get_feature_instance_at(enclosed_coords)
+						enclosed_forest_feature.set_highlight(
+								TerrainFeature.HighlightMode.HIGHLIGHT_NEGATIVE)
+						if not _context_applied_enclosed_forest_area.has(enclosed_forest_feature):
+							_context_applied_enclosed_forest_area.append(enclosed_forest_feature)
 				else:
 					forest_feature.set_highlight(
-							forest_feature.HighlightMode.HIGHLIGHT_POSITIVE)
+							TerrainFeature.HighlightMode.HIGHLIGHT_POSITIVE)
 			else:
-				push_error("Terrain feature expected at (%d, %d). Got 'null' instead." % [
+				push_error("Terrain feature instance expected at (%d, %d). Got 'null' instead." % [
 					interaction_coords.x,
 					interaction_coords.y
 				])
 
 			if not _context_applied_enclosed_forest_area.has(forest_feature):
 				_context_applied_enclosed_forest_area.append(forest_feature)
+
+
+func _get_enclosed_forest_area_from(seed_coords: Vector2i) -> Array[Vector2i]:
+	const FOREST_TERRAIN_TYPES: Array[World.TerrainType] = [
+		World.TerrainType.PLAIN_FOREST,
+		World.TerrainType.GRASSLAND_FOREST,
+	]
+	if world.get_terrain_at(seed_coords) not in FOREST_TERRAIN_TYPES:
+		push_error("'seed_coords' (%d, %d) must be a forest tile." % [
+			seed_coords.x,
+			seed_coords.y,
+		])
+		return []
+
+	var enclosed_forest_area: Array[Vector2i] = []
+
+	# BFS flood fill.
+	const MAX_ITERATIONS: int = 1000
+	var iteration: int = 0
+	var bfs_coords_queue: Array[Vector2i] = [seed_coords]
+	var visited_coords: Dictionary[Vector2i, bool] = { seed_coords: true }
+	while not bfs_coords_queue.is_empty():
+		iteration += 1
+		if iteration > MAX_ITERATIONS:
+			push_warning("Flood Fill exceeded max %d iterations." % MAX_ITERATIONS)
+			break
+
+		var current_coords: Vector2i = bfs_coords_queue.pop_front()
+		if world.get_terrain_at(current_coords) in FOREST_TERRAIN_TYPES:
+			enclosed_forest_area.append(current_coords)
+			var current_coords_surrounding_neighbors: Array[Vector2i] =\
+					Math.HexGrid.get_offset_surrounding_neighbors(
+							current_coords,
+							Math.HexGrid.OffsetLayout.ODD_R)
+			for current_coords_neighbor: Vector2i in current_coords_surrounding_neighbors:
+				if not visited_coords.has(current_coords_neighbor):
+					visited_coords.set(current_coords_neighbor, true)
+					bfs_coords_queue.push_back(current_coords_neighbor)
+
+	return enclosed_forest_area
 
 
 func _remove_enclosed_forest_area_context() -> void:
@@ -340,7 +389,7 @@ func _remove_enclosed_forest_area_context() -> void:
 				else:
 					forest_feature.set_highlight(
 							TerrainFeature.HighlightMode.HIGHLIGHT_ALTERNATIVE)
-		_context_applied_buildings.clear()
+		_context_applied_enclosed_forest_area.clear()
 
 
 func _apply_terrain_feature_context(

@@ -369,7 +369,7 @@ func _on_building_placement_requested(
 					forest_feature.set_highlight(
 							TerrainFeature.HighlightMode.HIGHLIGHT_ALTERNATIVE)
 				else:
-					push_error("Enclosed Forest expected at (%d, %d). Got 'null' instead." % [
+					push_error("Forest instance expected at (%d, %d). Got 'null' instead." % [
 						interaction_coords.x,
 						interaction_coords.y
 					])

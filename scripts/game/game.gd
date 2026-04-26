@@ -184,7 +184,7 @@ func _load_world() -> void:
 			forest_feature.set_highlight(
 					TerrainFeature.HighlightMode.HIGHLIGHT_ALTERNATIVE)
 		else:
-			push_error("Enclosed Forest expected at (%d, %d). Got 'null' instead." % [
+			push_error("Forest instance expected at (%d, %d). Got 'null' instead." % [
 				forest_coords.x,
 				forest_coords.y
 			])
