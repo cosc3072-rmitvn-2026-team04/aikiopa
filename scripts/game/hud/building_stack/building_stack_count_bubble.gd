@@ -1,5 +1,5 @@
 class_name BuildingStackCountBubble
-extends Node2D
+extends Sprite2D
 
 
 # ============================================================================ #
@@ -7,7 +7,7 @@ extends Node2D
 
 ## Returns the screen size of this building card.
 func get_size() -> Vector2:
-	return $BackgroundSprite2D.get_rect().size
+	return get_rect().size
 
 
 ## Sets the displayed building stack count to [param amount].

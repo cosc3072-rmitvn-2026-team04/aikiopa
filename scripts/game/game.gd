@@ -38,6 +38,7 @@ enum GameOverType {
 
 var _save_slot_index: int = -1
 var _turns_elapsed: int = 0
+var _game_over: bool = false
 var _save_dirty: bool = false
 var _debug_mode_enabled: bool
 @onready var _building_stack_controller: Node = %BuildingStackController
@@ -86,15 +87,17 @@ func _process(_delta: float) -> void:
 			building_stack_count,
 			population,
 			Global.game_state.building_instances.size()):
-		%GameOverMenu.open()
-		var game_over_type: GameOverType = (
-				GameOverType.NO_BUILDING_CARD if building_stack_count == 0
-				else GameOverType.NO_POPULATION if population == 0
-				else GameOverType.NONE
-		)
-		GameplayEventBus.game_over.emit(population, game_over_type)
-		GameSaveService.delete(_save_slot_index)
-		_save_dirty = false
+		if not _game_over:
+			_game_over = true
+			_save_dirty = false
+			%GameOverMenu.open()
+			var game_over_type: GameOverType = (
+					GameOverType.NO_BUILDING_CARD if building_stack_count == 0
+					else GameOverType.NO_POPULATION if population == 0
+					else GameOverType.NONE
+			)
+			GameplayEventBus.game_over.emit(population, game_over_type)
+			GameSaveService.delete(_save_slot_index)
 
 
 func _input(event: InputEvent) -> void:
@@ -261,7 +264,10 @@ func _on_building_placed(
 ) -> void:
 	_turns_elapsed += 1
 	_save_dirty = true
-	if autosave and _turns_elapsed % autosave_interval == 0 and is_save_dirty():
+	if (
+			autosave and _turns_elapsed % autosave_interval == 0
+			and is_save_dirty() and not _game_over
+	):
 		_save_session()
 		_save_dirty = false
 

@@ -37,7 +37,6 @@ var _time_string: String
 var _save_slot_index: int
 var _is_new_game: bool
 var _seeds: Dictionary[StringName, int]
-var _game_over: bool
 var _entry_count: int
 
 var _file: FileAccess
@@ -152,7 +151,6 @@ func _on_session_created(save_slot_index: int) -> void:
 	_save_slot_index = save_slot_index
 	_is_new_game = true
 	_seeds = world.get_seeds_internal()
-	_game_over = false
 	_entry_count = 0
 	if _file:
 		_file.store_line(_make_log_metadata())
@@ -164,7 +162,6 @@ func _on_session_restored(save_slot_index: int) -> void:
 	_save_slot_index = save_slot_index
 	_is_new_game = false
 	_seeds = world.get_seeds_internal()
-	_game_over = false
 	_entry_count = 0
 	if _file:
 		_file.store_line(_make_log_metadata())
@@ -200,8 +197,7 @@ func _on_game_over(
 		_population_reached: int,
 		game_over_type: Game.GameOverType
 ) -> void:
-	if _file and not _game_over:
-		_game_over = true
+	if _file:
 		_file.store_line("Game Over: %s" % Game.GameOverType.keys()[game_over_type])
 
 #endregion

@@ -41,11 +41,13 @@ func _ready() -> void:
 	var reference_building_card: BuildingCard = %BuildingStack.get_child(0)
 	var building_card_size: Vector2i = reference_building_card.get_size()
 	var building_stack_count_bubble_size: Vector2 = %BuildingStackCountBubble.get_size()
+	var building_stack_count_bubble_offset: Vector2 = %BuildingStackCountBubble.offset
 	%BuildingStackCountBubble.position = Vector2(
 			building_card_size.x + container_padding.x * 2,
 			(
 					get_viewport_rect().size.y
 					- building_stack_count_bubble_size.y
+					- building_stack_count_bubble_offset.y
 					- container_padding.y
 			))
 	%BuildingStack.remove_child(reference_building_card)
@@ -168,12 +170,12 @@ func _update_building_stack_position() -> void:
 
 # Listens to GameplayEventBus.session_created(save_slot_index: int).
 func _on_session_created(_save_slot_index: int) -> void:
-	%BuildingStackCountBubble.set_count(0)
 	# INFO: No need to load anything here since Global.game_state.building_stack
 	# should be empty at the start a new sessions. The [Game] and
 	# [BuildingStackController] would handle the remaining logic.
 	# WARNING: This is tightly coupled to the session creation and restoration
 	# logic. See [method _on_session_restored] below.
+	pass
 
 
 # Listens to GameplayEventBus.session_restored(save_slot_index: int).
@@ -202,6 +204,7 @@ func _on_building_stack_building_added(
 		building_type: Building.BuildingType,
 		variation_value: float
 ) -> void:
+	%AnimationPlayer.play("add_building_card")
 	_add_building_card(building_type, variation_value)
 	redraw()
 
