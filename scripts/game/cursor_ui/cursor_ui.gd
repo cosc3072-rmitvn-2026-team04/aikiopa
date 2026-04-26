@@ -57,7 +57,7 @@ var population_change_preview_neutral_color: Color = Color.WHITE
 
 
 # ============================================================================ #
-#region Exported properties
+#region Private methods
 
 var _interaction_result_label_scene: PackedScene =\
 		preload("res://scenes/game/cursor_ui/interaction_result_label.tscn")
@@ -65,6 +65,7 @@ var _interaction_result_label_scene: PackedScene =\
 var _picked_building_type: Building.BuildingType = Building.BuildingType.NONE
 var _picked_building_variation_value: float = INF
 var _context_applied_terrain_features: Array[TerrainFeature] = []
+var _context_applied_buildings: Array[Building] = []
 var _preview_snapped: bool = false
 
 #endregion
@@ -134,6 +135,7 @@ func _unload_preview_building_sprite() -> void:
 
 func _process_snap_preview_building_sprite() -> void:
 	# HACK: This gets called every frame and is a performance bottleneck.
+	_remove_neighbor_building_context()
 	_remove_terrain_feature_context()
 	var map_coords: Vector2i = world.local_to_map(position)
 	var ruleset_parse_result: Dictionary[StringName, Variant] =\
@@ -145,6 +147,7 @@ func _process_snap_preview_building_sprite() -> void:
 			ruleset_parse_result.placement_check_status
 			== BuildingRulesetEngine.PlacementCheckStatus.ALLOWED
 	): # HACK: This gets called every frame and is a performance bottleneck.
+		_apply_neighbor_building_context(ruleset_parse_result.interaction_result)
 		_apply_terrain_feature_context(map_coords, _picked_building_type)
 		_snap_preview(
 				map_coords,
@@ -208,17 +211,19 @@ func _snap_preview(
 		if interaction_coords != map_coords:
 			var interaction_result: BuildingRulesetEngine.InteractionResult =\
 					interaction_results[interaction_coords]
+			var population_change: int = interaction_result.get_population_change()
+			var building_bonus: int = interaction_result.get_building_bonus()
+
 			var interaction_result_label: Node2D =\
 					_interaction_result_label_scene.instantiate()
-			interaction_result_label.display(
-					interaction_result.get_population_change(),
-				interaction_result.get_building_bonus())
+			interaction_result_label.display(population_change, building_bonus)
 
 			var target_label_position: Vector2 = world.map_to_local(interaction_coords)
 			target_label_position = world.to_global(target_label_position)
 			target_label_position = to_local(target_label_position)
 			interaction_result_label.position = target_label_position
 			%EnvironmentInteractionResultLabels.add_child(interaction_result_label)
+
 
 
 func _unsnap_preview() -> void:
@@ -229,8 +234,43 @@ func _unsnap_preview() -> void:
 	%PopulationChangePreviewLabel.hide()
 	%BuildingBonusPreviewLabel.text = "NaN🏠"
 	%BuildingBonusPreviewLabel.hide()
+	_remove_neighbor_building_context()
 	_remove_terrain_feature_context()
 	_reset_environment_interaction_result_labels()
+
+
+func _apply_neighbor_building_context(
+		interaction_results: Dictionary[Vector2i, BuildingRulesetEngine.InteractionResult]
+) -> void:
+	for interaction_coords: Vector2i in interaction_results.keys():
+		var interaction_result: BuildingRulesetEngine.InteractionResult =\
+				interaction_results[interaction_coords]
+		var population_change: int = interaction_result.get_population_change()
+		var building_bonus: int = interaction_result.get_building_bonus()
+		var building_layer: Node2D = world.get_building_layer()
+		var building: Building = building_layer.get_building_instance_at(
+				interaction_coords)
+		if building:
+			if population_change == 0:
+				building.unset_highlight()
+			elif population_change < 0:
+				building.set_highlight(building.HighlightMode.HIGHLIGHT_NEGATIVE)
+			else:
+				building.set_highlight(building.HighlightMode.HIGHLIGHT_POSITIVE)
+
+			if building_bonus > 0:
+				building.set_highlight(building.HighlightMode.HIGHLIGHT_ALTERNATIVE)
+
+			if not _context_applied_buildings.has(building):
+				_context_applied_buildings.append(building)
+
+
+func _remove_neighbor_building_context() -> void:
+	if not _context_applied_buildings.is_empty():
+		for building: Building in _context_applied_buildings:
+			if building:
+				building.unset_highlight()
+		_context_applied_buildings.clear()
 
 
 func _apply_terrain_feature_context(
