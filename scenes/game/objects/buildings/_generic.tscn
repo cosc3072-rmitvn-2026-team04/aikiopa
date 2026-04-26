@@ -5,10 +5,10 @@
 
 [node name="_generic" type="Node2D" unique_id=1178872670]
 script = ExtResource("1_11b1m")
-highlight_neutral = Color(1, 1, 1, 0.6666667)
-highlight_alternative = Color(1, 1, 0, 0.6666667)
-highlight_positive = Color(0, 1, 0, 0.6666667)
-highlight_negative = Color(1, 0, 0, 0.6666667)
+highlight_neutral = Color(1, 1, 1, 0.6039216)
+highlight_alternative = Color(1, 1, 0, 0.6039216)
+highlight_positive = Color(0, 1, 0, 0.6039216)
+highlight_negative = Color(1, 0, 0, 0.6039216)
 
 [node name="HighlightSprite2D" type="Sprite2D" parent="." unique_id=292392800]
 texture = ExtResource("2_g6b8d")

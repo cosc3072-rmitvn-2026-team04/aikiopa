@@ -28,7 +28,11 @@ alignment = 2
 [node name="PopulationChangePreviewLabel" type="Label" parent="BuildingPreview/VBoxContainer" unique_id=667068354]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 0.2509804)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
 theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 24
 theme_override_font_sizes/font_size = 28
 text = "NaN👨‍🚀"
 horizontal_alignment = 1
@@ -37,7 +41,11 @@ vertical_alignment = 1
 [node name="BuildingBonusPreviewLabel" type="Label" parent="BuildingPreview/VBoxContainer" unique_id=1489898917]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 0.2509804)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
 theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 24
 theme_override_font_sizes/font_size = 28
 text = "NaN🏠"
 horizontal_alignment = 1
@@ -47,3 +55,4 @@ vertical_alignment = 1
 unique_name_in_owner = true
 
 [node name="InteractionResultLabel" parent="EnvironmentInteractionResultLabels" unique_id=2016187391 instance=ExtResource("4_qqer0")]
+visible = false

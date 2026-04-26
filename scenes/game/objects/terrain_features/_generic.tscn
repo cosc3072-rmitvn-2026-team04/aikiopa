@@ -5,9 +5,9 @@
 
 [node name="_generic" type="Node2D" unique_id=609911264]
 script = ExtResource("1_2ltyc")
+highlight_positive = Color(0, 1, 0, 0.6039216)
 
 [node name="HighlightSprite2D" type="Sprite2D" parent="." unique_id=1365083826]
-visible = false
 texture = ExtResource("2_675h4")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=929203464]

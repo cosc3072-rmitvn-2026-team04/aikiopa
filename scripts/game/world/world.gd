@@ -361,6 +361,18 @@ func _on_building_placement_requested(
 				TerrainType.PLAIN_FOREST,
 				TerrainType.GRASSLAND_FOREST,
 			]:
+				var terrain_feature_layer: Node2D = get_terrain_feature_layer()
+				var forest_feature: TerrainFeature =\
+						terrain_feature_layer.get_feature_instance_at(interaction_coords)
+				if forest_feature:
+					forest_feature.is_enclosed = true
+					forest_feature.set_highlight(
+							TerrainFeature.HighlightMode.HIGHLIGHT_ALTERNATIVE)
+				else:
+					push_error("Enclosed Forest expected at (%d, %d). Got 'null' instead." % [
+						interaction_coords.x,
+						interaction_coords.y
+					])
 				enclosed_forest_area.append(interaction_coords)
 				Global.game_state.enclosed_forest_coords.append(interaction_coords)
 		GameplayEventBus.building_placed.emit(

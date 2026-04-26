@@ -64,8 +64,9 @@ var _interaction_result_label_scene: PackedScene =\
 
 var _picked_building_type: Building.BuildingType = Building.BuildingType.NONE
 var _picked_building_variation_value: float = INF
-var _context_applied_terrain_features: Array[TerrainFeature] = []
 var _context_applied_buildings: Array[Building] = []
+var _context_applied_enclosed_forest_area: Array[TerrainFeature] = []
+var _context_applied_terrain_features: Array[TerrainFeature] = []
 var _preview_snapped: bool = false
 
 #endregion
@@ -136,6 +137,7 @@ func _unload_preview_building_sprite() -> void:
 func _process_snap_preview_building_sprite() -> void:
 	# HACK: This gets called every frame and is a performance bottleneck.
 	_remove_neighbor_building_context()
+	_remove_enclosed_forest_area_context()
 	_remove_terrain_feature_context()
 	var map_coords: Vector2i = world.local_to_map(position)
 	var ruleset_parse_result: Dictionary[StringName, Variant] =\
@@ -148,6 +150,7 @@ func _process_snap_preview_building_sprite() -> void:
 			== BuildingRulesetEngine.PlacementCheckStatus.ALLOWED
 	): # HACK: This gets called every frame and is a performance bottleneck.
 		_apply_neighbor_building_context(ruleset_parse_result.interaction_result)
+		_apply_enclosed_forest_area_context(ruleset_parse_result.interaction_result)
 		_apply_terrain_feature_context(map_coords, _picked_building_type)
 		_snap_preview(
 				map_coords,
@@ -225,7 +228,6 @@ func _snap_preview(
 			%EnvironmentInteractionResultLabels.add_child(interaction_result_label)
 
 
-
 func _unsnap_preview() -> void:
 	%BuildingPreview.unsnap()
 	%BuildingPreview.position = Vector2.ZERO
@@ -235,6 +237,7 @@ func _unsnap_preview() -> void:
 	%BuildingBonusPreviewLabel.text = "NaN🏠"
 	%BuildingBonusPreviewLabel.hide()
 	_remove_neighbor_building_context()
+	_remove_enclosed_forest_area_context()
 	_remove_terrain_feature_context()
 	_reset_environment_interaction_result_labels()
 
@@ -263,6 +266,14 @@ func _apply_neighbor_building_context(
 
 			if not _context_applied_buildings.has(building):
 				_context_applied_buildings.append(building)
+		else:
+			# FIXME: This gets triggered a lot, but does not have any apparent
+			# gameplay effect. Find out why.
+			#push_error("Building expected at (%d, %d). Got 'null' instead." % [
+			#	interaction_coords.x,
+			#	interaction_coords.y
+			#])
+			pass
 
 
 func _remove_neighbor_building_context() -> void:
@@ -270,6 +281,50 @@ func _remove_neighbor_building_context() -> void:
 		for building: Building in _context_applied_buildings:
 			if building:
 				building.unset_highlight()
+		_context_applied_buildings.clear()
+
+
+func _apply_enclosed_forest_area_context(
+		interaction_results: Dictionary[Vector2i, BuildingRulesetEngine.InteractionResult]
+) -> void:
+	const FOREST_TERRAIN_TYPES: Array[World.TerrainType] = [
+		World.TerrainType.PLAIN_FOREST,
+		World.TerrainType.GRASSLAND_FOREST,
+	]
+
+	for interaction_coords: Vector2i in interaction_results.keys():
+		var interaction_result: BuildingRulesetEngine.InteractionResult =\
+				interaction_results[interaction_coords]
+		var population_change: int = interaction_result.get_population_change()
+		if world.get_terrain_at(interaction_coords) in FOREST_TERRAIN_TYPES:
+			var terrain_feature_layer: Node2D = world.get_terrain_feature_layer()
+			var terrain_feature: TerrainFeature =\
+					terrain_feature_layer.get_feature_instance_at(interaction_coords)
+			if terrain_feature:
+				if population_change == 0:
+					terrain_feature.unset_highlight()
+				elif population_change < 0:
+					terrain_feature.set_highlight(
+							terrain_feature.HighlightMode.HIGHLIGHT_NEGATIVE)
+				else:
+					terrain_feature.set_highlight(
+							terrain_feature.HighlightMode.HIGHLIGHT_POSITIVE)
+			else:
+				push_error("Terrain feature expected at (%d, %d). Got 'null' instead." % [
+					interaction_coords.x,
+					interaction_coords.y
+				])
+
+
+			if not _context_applied_enclosed_forest_area.has(terrain_feature):
+				_context_applied_enclosed_forest_area.append(terrain_feature)
+
+
+func _remove_enclosed_forest_area_context() -> void:
+	if not _context_applied_enclosed_forest_area.is_empty():
+		for forest_feature: TerrainFeature in _context_applied_enclosed_forest_area:
+			if forest_feature and not forest_feature.is_enclosed:
+				forest_feature.unset_highlight()
 		_context_applied_buildings.clear()
 
 
