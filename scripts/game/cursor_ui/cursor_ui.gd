@@ -57,7 +57,7 @@ var population_change_preview_neutral_color: Color = Color.WHITE
 
 
 # ============================================================================ #
-#region Private methods
+#region Private variables
 
 var _interaction_result_label_scene: PackedScene =\
 		preload("res://scenes/game/cursor_ui/interaction_result_label.tscn")
