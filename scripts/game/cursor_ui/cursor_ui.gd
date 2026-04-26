@@ -82,7 +82,7 @@ func _ready() -> void:
 	_unload_preview_building_sprite()
 	_init_population_change_preview_label()
 	_init_building_bonus_preview_label()
-	_reset_environment_interaction_result_labels()
+	_unsnap_preview()
 
 
 func _process(_delta: float) -> void:
