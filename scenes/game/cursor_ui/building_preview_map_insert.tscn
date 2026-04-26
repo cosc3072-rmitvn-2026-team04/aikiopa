@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cxu7tbupcfexl"]
+
+[ext_resource type="Texture2D" uid="uid://b7iyb73hped1i" path="res://assets/objects/buildings/highlight.png" id="1_7lwkd"]
+[ext_resource type="Script" uid="uid://doiuh66wh1dd0" path="res://scripts/game/cursor_ui/building_preview_map_insert.gd" id="1_mwrnr"]
+[ext_resource type="Texture2D" uid="uid://cqta4luyjo7ek" path="res://assets/user_interface/cursor/picked_building_placeholder.png" id="2_mwrnr"]
+
+[node name="BuildingPreviewMapInsert" type="Node2D" unique_id=718976144]
+script = ExtResource("1_mwrnr")
+
+[node name="HighlightSprite2D" type="Sprite2D" parent="." unique_id=963976465]
+modulate = Color(1, 1, 1, 0.5019608)
+texture = ExtResource("1_7lwkd")
+
+[node name="BuildingSprite2D" type="Sprite2D" parent="." unique_id=1801411118]
+texture = ExtResource("2_mwrnr")

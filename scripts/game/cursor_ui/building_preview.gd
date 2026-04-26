@@ -18,9 +18,9 @@ extends Node2D
 # ============================================================================ #
 #region Private variables
 
-var _building_preview_sprite_2d_scene: PackedScene =\
-		preload("res://scenes/game/cursor_ui/building_preview_sprite_2d.tscn")
-var _map_sprite_2d: Sprite2D = null
+var _building_preview_map_insert_scene: PackedScene =\
+		preload("res://scenes/game/cursor_ui/building_preview_map_insert.tscn")
+var _building_preview_map_insert: Node2D = null
 @onready var _local_sprite_2d: Sprite2D = %BuildingPreviewSprite2D
 
 #endregion
@@ -33,10 +33,10 @@ var _map_sprite_2d: Sprite2D = null
 func _ready() -> void:
 	var world: World = cursor_ui.world
 	var building_layer: Node2D = world.get_building_layer()
-	_map_sprite_2d = _building_preview_sprite_2d_scene.instantiate()
-	_map_sprite_2d.name = &"CursorUIBuildingPreviewSprite2D"
-	_map_sprite_2d.hide()
-	building_layer.add_child(_map_sprite_2d, false, INTERNAL_MODE_BACK)
+	_building_preview_map_insert = _building_preview_map_insert_scene.instantiate()
+	_building_preview_map_insert.name = &"CursorUIBuildingPreviewMapInsert"
+	_building_preview_map_insert.hide()
+	building_layer.add_child(_building_preview_map_insert, false, INTERNAL_MODE_BACK)
 
 #endregion
 # ============================================================================ #
@@ -49,7 +49,7 @@ func _ready() -> void:
 ## @deprecated: Use [method set_type_and_variation] instead.
 func set_type(building_type: Building.BuildingType) -> void:
 	if building_type == Building.BuildingType.NONE:
-		_map_sprite_2d.texture = null
+		_building_preview_map_insert.texture = null
 		_local_sprite_2d.texture = null
 		return
 	const ACCEPTED_BUILDING_TYPES: Array[Building.BuildingType] = [
@@ -72,7 +72,7 @@ func set_type(building_type: Building.BuildingType) -> void:
 	var variations: Array[String] = building_sprite_variations[building_type]
 	if variations.is_empty():
 		return
-	_map_sprite_2d.texture = load(Building.BUILDING_ASSET_DIR.path_join(
+	_building_preview_map_insert.texture = load(Building.BUILDING_ASSET_DIR.path_join(
 			variations[0]))
 	_local_sprite_2d.texture = load(Building.BUILDING_ASSET_DIR.path_join(
 			variations[0]))
@@ -91,7 +91,7 @@ func set_type_and_variation(
 		variation_value: float
 ) -> void:
 	if building_type == Building.BuildingType.NONE:
-		_map_sprite_2d.texture = null
+		_building_preview_map_insert.get_building_sprite().texture = null
 		_local_sprite_2d.texture = null
 		return
 	const ACCEPTED_BUILDING_TYPES: Array[Building.BuildingType] = [
@@ -124,8 +124,8 @@ func set_type_and_variation(
 	var normalized_variation_value: float = (variation_value + 1.0) / 2.0
 	var variation_index: int = int(normalized_variation_value * variations.size())
 	variation_index = clampi(variation_index, 0, variations.size() - 1)
-	_map_sprite_2d.texture = load(Building.BUILDING_ASSET_DIR.path_join(
-			variations[variation_index]))
+	_building_preview_map_insert.get_building_sprite().texture = load(
+			Building.BUILDING_ASSET_DIR.path_join(variations[variation_index]))
 	_local_sprite_2d.texture = load(Building.BUILDING_ASSET_DIR.path_join(
 			variations[variation_index]))
 
@@ -134,15 +134,15 @@ func set_type_and_variation(
 ## at [param coords].
 func snap(map_coords: Vector2i) -> void:
 	var world: World = cursor_ui.world
-	_map_sprite_2d.position = world.map_to_local(map_coords)
-	_map_sprite_2d.show()
+	_building_preview_map_insert.position = world.map_to_local(map_coords)
+	_building_preview_map_insert.show()
 	_local_sprite_2d.hide()
 
 
 ## Unsnaps the building preview from the map's y-sorted
 ## [code]BuildingLayer[/code].
 func unsnap() -> void:
-	_map_sprite_2d.hide()
+	_building_preview_map_insert.hide()
 	_local_sprite_2d.show()
 
 #endregion
