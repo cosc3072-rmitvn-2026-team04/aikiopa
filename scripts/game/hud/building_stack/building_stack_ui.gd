@@ -146,12 +146,11 @@ func _update_building_card_positions() -> void:
 
 
 func _update_building_stack_position() -> void:
-	var target_position = Vector2.ZERO
-
 	var building_card_count: int = %BuildingStack.get_child_count()
 	if building_card_count == 0:
 		return
 
+	var target_position = Vector2.ZERO
 	var top_building_card: BuildingCard = %BuildingStack.get_child(-1)
 	var bottom_building_card: BuildingCard = %BuildingStack.get_child(0)
 	var container_height: float = (
@@ -163,11 +162,14 @@ func _update_building_stack_position() -> void:
 				container_height - max_container_height
 				- container_padding.y
 		)
-		var tween: Tween = create_tween()
-		tween.tween_property(
-				%BuildingStack, "position",
-				target_position, container_tween_update_duration)\
-						.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUART)
+	else:
+		target_position = Vector2.ZERO
+
+	var tween: Tween = create_tween()
+	tween.tween_property(
+			%BuildingStack, "position",
+			target_position, container_tween_update_duration)\
+					.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUART)
 
 #endregion
 # ============================================================================ #
