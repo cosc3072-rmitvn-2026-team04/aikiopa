@@ -82,14 +82,14 @@ func _input(event: InputEvent) -> void:
 		return
 
 	if not is_picked() and event is InputEventMouseMotion:
-		if $CardBackgroundSprite2D.get_rect().has_point(to_local(event.position)):
+		if $BackgroundSprite2D.get_rect().has_point(to_local(event.position)):
 			_set_hovered()
 		else:
 			_unset_hovered()
 
 	if event is InputEventMouseButton and event.pressed:
 		var is_event_inside: bool =\
-				$CardBackgroundSprite2D.get_rect().has_point(to_local(event.position))
+				$BackgroundSprite2D.get_rect().has_point(to_local(event.position))
 
 		if is_event_inside and event.button_index == MOUSE_BUTTON_LEFT:
 			if not is_picked():
@@ -108,8 +108,8 @@ func _input(event: InputEvent) -> void:
 #region Public methods
 
 ## Returns the screen size of this building card.
-func get_size() -> Vector2i:
-	return $CardBackgroundSprite2D.get_rect().size
+func get_size() -> Vector2:
+	return $BackgroundSprite2D.get_rect().size
 
 
 ## Returns the [enum Building.BuildingType] of this building card.
@@ -203,7 +203,7 @@ func set_type(building_type: Building.BuildingType) -> void:
 
 	$BuildingSprite2D.texture = load(Building.BUILDING_ASSET_DIR.path_join(
 			building_sprite_variations[building_type][0]))
-	$CardForegroundSprite2D.texture =\
+	$ForegroundSprite2D.texture =\
 			foreground_sprites[Building.get_building_class_of_type(building_type)]
 	$BuildingNameLabel.text = Building.BUILDING_NAME[building_type]
 	_building_type = building_type
@@ -254,7 +254,7 @@ func set_type_and_variation(
 	variation_index = clampi(variation_index, 0, variations.size() - 1)
 	$BuildingSprite2D.texture = load(Building.BUILDING_ASSET_DIR.path_join(
 			variations[variation_index]))
-	$CardForegroundSprite2D.texture =\
+	$ForegroundSprite2D.texture =\
 			foreground_sprites[Building.get_building_class_of_type(building_type)]
 	$BuildingNameLabel.text = Building.BUILDING_NAME[building_type]
 	_building_type = building_type

@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://ceqdlfvyr4ufw"]
+
+[ext_resource type="Script" uid="uid://ceieqg86wvmw1" path="res://scripts/game/hud/building_stack/building_stack_count_bubble.gd" id="1_p1obv"]
+[ext_resource type="Texture2D" uid="uid://c6qvbouopv6kg" path="res://assets/user_interface/building_stack/building_stack_count_label.png" id="2_n8of2"]
+[ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="3_rhox1"]
+
+[node name="BackgroundSprite2D" type="Sprite2D" unique_id=987026221]
+texture = ExtResource("2_n8of2")
+centered = false
+script = ExtResource("1_p1obv")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=728225458]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_rhox1")
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 16
+
+[node name="BuildingStackCountLabel" type="Label" parent="MarginContainer" unique_id=982776482]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.12156863, 0.26666668, 0.11764706, 1)
+theme_override_font_sizes/font_size = 48
+text = "NaN🏠"
+horizontal_alignment = 1
+vertical_alignment = 1

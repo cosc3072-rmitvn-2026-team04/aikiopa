@@ -248,7 +248,7 @@ func is_empty() -> bool:
 
 
 # ============================================================================ #
-#region Signal listeners
+#region Private methods
 
 func _generate_variation_value() -> float:
 	var variation_value: float = _rng.randf_range(-1.0, 1.0)
@@ -276,6 +276,10 @@ func _on_building_placed(
 	var building_stack_top: Building.BuildingType =\
 			Global.game_state.building_stack.back().building_type
 	if building_stack_top != building_type:
+		# WARNING: DO NOT REMOVE THIS CHECK. It is useful for catching quiet
+		# semantic errors produced by any regressions in [BuildingStackUI],
+		# which is tightly coupled to multiple game systems. This is obviously
+		# suboptimal, but fix (#173) is not needed for now.
 		push_error("Top building card (%s) does not match placed building (%s)" % [
 			Building.BuildingType.keys()[building_stack_top],
 			Building.BuildingType.keys()[building_type],

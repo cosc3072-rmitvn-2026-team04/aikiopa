@@ -1,4 +1,4 @@
-extends Control
+extends Node2D
 
 
 # ============================================================================ #
@@ -9,6 +9,8 @@ extends Control
 @export_range(0, 250, 1, "suffix:px") var collapsed_card_offset: int = 0
 @export_range(0, 1080, 1, "suffix:px") var max_container_height: int = 1080
 @export_range(1, 10, 1, "suffix:cards") var max_revealed_card_count: int = 1
+@export_range(0.01, 5.0, 0.01, "suffix:s")
+var container_tween_update_duration: float = 0.5
 @export var container_padding: Vector2i = Vector2i.ZERO
 
 #endregion
@@ -37,9 +39,22 @@ func _ready() -> void:
 			_on_building_stack_building_popped)
 	GameplayEventBus.game_over.connect(_on_game_over)
 
-	var placeholder_card: InstancePlaceholder = %BuildingStack.get_child(0)
-	%BuildingStack.remove_child(placeholder_card)
-	placeholder_card.queue_free()
+	# UI layout positioning setup.
+	var reference_building_card: BuildingCard = %BuildingStack.get_child(0)
+	var building_card_size: Vector2i = reference_building_card.get_size()
+	var building_stack_count_bubble_size: Vector2 = %BuildingStackCountBubble.get_size()
+	var building_stack_count_bubble_offset: Vector2 = %BuildingStackCountBubble.offset
+	%BuildingStackCountBubble.position = Vector2(
+			building_card_size.x + container_padding.x * 2,
+			(
+					get_viewport_rect().size.y
+					- building_stack_count_bubble_size.y
+					- building_stack_count_bubble_offset.y
+					- container_padding.y
+			))
+	%BuildingStack.remove_child(reference_building_card)
+	reference_building_card.queue_free()
+	%BuildingStack.position = Vector2.DOWN * get_viewport_rect().size.y
 
 #endregion
 # ============================================================================ #
@@ -69,7 +84,7 @@ func _add_building_card(
 	%BuildingStack.add_child(building_card)
 	%BuildingStack.move_child(building_card, 0)
 	%BuildingStack.get_child(-1).set_pickable()
-	%BuildingStackCountLabel.text = "%d🏠" % Global.game_state.building_stack.size()
+	%BuildingStackCountBubble.set_count(Global.game_state.building_stack.size())
 
 
 func _pop_building_card() -> void:
@@ -77,7 +92,7 @@ func _pop_building_card() -> void:
 	%BuildingStack.remove_child(top_building_card)
 	if %BuildingStack.get_child_count() != 0:
 		%BuildingStack.get_child(-1).set_pickable()
-	%BuildingStackCountLabel.text = "%d🏠" % Global.game_state.building_stack.size()
+	%BuildingStackCountBubble.set_count(Global.game_state.building_stack.size())
 	top_building_card.queue_free()
 
 
@@ -86,7 +101,7 @@ func _update_building_card_positions() -> void:
 	var building_cards: Array[Node] = %BuildingStack.get_children()
 	for index: int in range(building_card_count):
 		var building_card: BuildingCard = building_cards[index]
-		var building_card_size: Vector2i = building_card.get_size()
+		var building_card_size: Vector2 = building_card.get_size()
 
 		# Make sure all card positions are uniform, since picked building cards
 		# has an offset y position. See [member BuildingCard.picked_offset].
@@ -100,9 +115,7 @@ func _update_building_card_positions() -> void:
 		# Set position.
 		building_card.position = Vector2(
 				building_card_size.x * 0.5,
-				size.y - building_card_size.y * 0.5
-		)
-
+				get_viewport_rect().size.y - building_card_size.y * 0.5)
 		if index < building_card_count - max_revealed_card_count:
 			building_card.position.y -= collapsed_card_offset * index
 		else:
@@ -133,7 +146,7 @@ func _update_building_card_positions() -> void:
 
 
 func _update_building_stack_position() -> void:
-	%BuildingStack.position = Vector2.ZERO
+	var target_position = Vector2.ZERO
 
 	var building_card_count: int = %BuildingStack.get_child_count()
 	if building_card_count == 0:
@@ -146,10 +159,15 @@ func _update_building_stack_position() -> void:
 			- top_building_card.position.y + top_building_card.get_size().y
 	)
 	if container_height > max_container_height:
-		%BuildingStack.position.y += (
+		target_position.y += (
 				container_height - max_container_height
 				- container_padding.y
 		)
+		var tween: Tween = create_tween()
+		tween.tween_property(
+				%BuildingStack, "position",
+				target_position, container_tween_update_duration)\
+						.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUART)
 
 #endregion
 # ============================================================================ #
@@ -159,21 +177,32 @@ func _update_building_stack_position() -> void:
 #region Signal listeners
 
 # Listens to GameplayEventBus.session_created(save_slot_index: int).
-func _on_session_created(_save_slot_index) -> void:
-	%BuildingStackCountLabel.text = "%d🏠" % 0
+func _on_session_created(_save_slot_index: int) -> void:
+	# INFO: No need to load anything here since Global.game_state.building_stack
+	# should be empty at the start a new sessions. The [Game] and
+	# [BuildingStackController] would handle the remaining logic.
+	# WARNING: This is tightly coupled to the session creation and restoration
+	# logic. See [method _on_session_restored] below.
+	pass
 
 
 # Listens to GameplayEventBus.session_restored(save_slot_index: int).
-func _on_session_restored(_save_slot_index) -> void:
+func _on_session_restored(_save_slot_index: int) -> void:
+	# INFO: Load the building stack of the restored session from
+	# Global.game_state.building_stack.
+	# WARNING: This is tightly coupled to the session restoration logic in
+	# [Game] and [BuildingStackController]. May become problematic later in
+	# development, fix if needed (#173). Maintain extra caution around this for
+	# now.
 	var building_stack_count: int = Global.game_state.building_stack.size()
 	for index: int in range(building_stack_count - 1, -1, -1):
-		%BuildingStackCountLabel.text = "%d🏠" % [building_stack_count - index]
 		var building_dictionary: Dictionary[StringName, Variant] =\
 				Global.game_state.building_stack[index]
-		_add_building_card(
+		_on_building_stack_building_added(
 				building_dictionary.building_type,
 				building_dictionary.variation_value)
-	redraw()
+		%BuildingStackCountBubble.set_count(
+				building_stack_count - index)
 
 
 # Listens to GameplayEventBus.building_stack_building_added(
@@ -183,9 +212,8 @@ func _on_building_stack_building_added(
 		building_type: Building.BuildingType,
 		variation_value: float
 ) -> void:
+	%AnimationPlayer.play("add_building_card")
 	_add_building_card(building_type, variation_value)
-	if %BuildingStackCountTextureRect.visible == false:
-		%BuildingStackCountTextureRect.show()
 	redraw()
 
 
@@ -197,9 +225,6 @@ func _on_building_stack_building_popped(
 		_variation_value: float
 ) -> void:
 	_pop_building_card()
-	if Global.game_state.building_stack.is_empty():
-		# TODO: This could be made prettier using a Tween animation on its size.
-		%BuildingStackCountTextureRect.hide()
 	redraw()
 
 
@@ -210,6 +235,8 @@ func _on_game_over(_population: int, _game_over_type: Game.GameOverType) -> void
 	if %BuildingStack.get_child_count() > 0:
 		for building_card: BuildingCard in %BuildingStack.get_children():
 			building_card.process_mode = Node.PROCESS_MODE_DISABLED
+	else:
+		%AnimationPlayer.play("game_over")
 
 #endregion
 # ============================================================================ #
