@@ -1,26 +1,16 @@
 [gd_scene format=3 uid="uid://csffjo6oq4r5m"]
 
 [ext_resource type="Script" uid="uid://dvq70xagotyu0" path="res://scripts/game/hud/building_stack/building_stack_ui.gd" id="1_8yw7d"]
-[ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="1_l8etm"]
 [ext_resource type="Curve" uid="uid://c7mvftrliarys" path="res://resources/building_stack/revealed_card_spread_curve.tres" id="2_8yw7d"]
-[ext_resource type="Texture2D" uid="uid://c6qvbouopv6kg" path="res://assets/user_interface/building_stack/building_stack_count_label.png" id="3_l8etm"]
-
-[sub_resource type="Gradient" id="Gradient_sdjpw"]
-interpolation_mode = 2
-offsets = PackedFloat32Array(0, 0.18587585)
-colors = PackedColorArray(0, 0, 0, 0.5019608, 0, 0, 0, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_jenna"]
-gradient = SubResource("Gradient_sdjpw")
-fill = 1
-fill_from = Vector2(0, 1)
+[ext_resource type="PackedScene" uid="uid://r1yjn2jyu7k4" path="res://scenes/game/hud/building_stack/building_card.tscn" id="3_sdjpw"]
+[ext_resource type="PackedScene" uid="uid://ceqdlfvyr4ufw" path="res://scenes/game/hud/building_stack/building_stack_count_bubble.tscn" id="4_sdjpw"]
 
 [sub_resource type="Animation" id="Animation_jenna"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("BackgroundTextureRect:modulate")
+tracks/0/path = NodePath("BackgroundCanvasLayer/BackgroundTextureRect:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -32,7 +22,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("BackgroundTextureRect:visible")
+tracks/1/path = NodePath("BackgroundCanvasLayer/BackgroundTextureRect:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -49,7 +39,7 @@ step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("BackgroundTextureRect:modulate")
+tracks/0/path = NodePath("BackgroundCanvasLayer/BackgroundTextureRect:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -61,7 +51,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("BackgroundTextureRect:visible")
+tracks/1/path = NodePath("BackgroundCanvasLayer/BackgroundTextureRect:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -77,14 +67,17 @@ _data = {
 &"game_over": SubResource("Animation_sdjpw")
 }
 
-[node name="BuildingStackUI" type="Control" unique_id=776021788]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("1_l8etm")
+[sub_resource type="Gradient" id="Gradient_sdjpw"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.18587585)
+colors = PackedColorArray(0, 0, 0, 0.5019608, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jenna"]
+gradient = SubResource("Gradient_sdjpw")
+fill = 1
+fill_from = Vector2(0, 1)
+
+[node name="BuildingStackUI" type="Node2D" unique_id=727569831]
 script = ExtResource("1_8yw7d")
 revealed_card_spread_curve = ExtResource("2_8yw7d")
 max_revealed_card_offset = 132
@@ -93,64 +86,26 @@ max_container_height = 620
 max_revealed_card_count = 3
 container_padding = Vector2i(16, 16)
 
-[node name="BackgroundTextureRect" type="TextureRect" parent="." unique_id=414495532]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=715121089]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_jenna")
+
+[node name="BackgroundCanvasLayer" type="CanvasLayer" parent="." unique_id=810019201]
+
+[node name="BackgroundTextureRect" type="TextureRect" parent="BackgroundCanvasLayer" unique_id=414495532]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(1280, 0)
-layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 64.0
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_jenna")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="BackgroundTextureRect" unique_id=715121089]
-root_node = NodePath("../..")
-libraries/ = SubResource("AnimationLibrary_jenna")
-
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1622802902]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 348
-theme_override_constants/margin_bottom = 32
-
-[node name="BuildingStackCountContainer" type="CenterContainer" parent="MarginContainer" unique_id=999540227]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
-
-[node name="BuildingStackCountTextureRect" type="TextureRect" parent="MarginContainer/BuildingStackCountContainer" unique_id=1223990960]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
-texture = ExtResource("3_l8etm")
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/BuildingStackCountContainer/BuildingStackCountTextureRect" unique_id=1353621976]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 36
-theme_override_constants/margin_top = 18
-
-[node name="BuildingStackCountLabel" type="Label" parent="MarginContainer/BuildingStackCountContainer/BuildingStackCountTextureRect/MarginContainer" unique_id=707642239]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 1
-theme_override_colors/font_color = Color(0.12156863, 0.26666668, 0.11764706, 1)
-theme_override_font_sizes/font_size = 48
-text = "NaN🏠"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="BuildingStack" type="Node2D" parent="." unique_id=1760161714]
 unique_name_in_owner = true
 
-[node name="PlaceholderBuildingCard" parent="BuildingStack" unique_id=1572232253 instance_placeholder="res://scenes/game/hud/building_stack/building_card.tscn"]
-position = Vector2(150, 110)
+[node name="ReferenceBuildingCard" parent="BuildingStack" unique_id=1572232253 instance=ExtResource("3_sdjpw")]
+editor_description = "DO NOT REMOVE. This reference BuildingCard is used to calculate positions for other visual elements."
+
+[node name="BuildingStackCountBubble" parent="." unique_id=56046790 instance=ExtResource("4_sdjpw")]
+unique_name_in_owner = true

@@ -38,10 +38,10 @@ hover_scale = 106
 picked_scale = 108
 picked_offset = 36
 
-[node name="CardBackgroundSprite2D" type="Sprite2D" parent="." unique_id=229039851]
+[node name="BackgroundSprite2D" type="Sprite2D" parent="." unique_id=229039851]
 texture = ExtResource("2_556cu")
 
-[node name="CardForegroundSprite2D" type="Sprite2D" parent="." unique_id=51360371]
+[node name="ForegroundSprite2D" type="Sprite2D" parent="." unique_id=51360371]
 texture = ExtResource("3_556cu")
 
 [node name="BuildingSprite2D" type="Sprite2D" parent="." unique_id=754960362]

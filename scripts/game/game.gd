@@ -58,7 +58,7 @@ func _ready() -> void:
 		Global.game_state = Global.GameState.new()
 		_init_world()
 		_init_population(0)
-		_init_building_stack([])
+		_init_building_stack()
 		GameplayEventBus.session_created.emit(_save_slot_index)
 		_save_session()
 		_save_dirty = false
