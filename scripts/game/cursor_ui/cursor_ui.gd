@@ -149,7 +149,7 @@ func _process_snap_preview_building_sprite() -> void:
 			ruleset_parse_result.placement_check_status
 			== BuildingRulesetEngine.PlacementCheckStatus.ALLOWED
 	): # HACK: This gets called every frame and is a performance bottleneck.
-		_apply_neighbor_building_context(ruleset_parse_result.interaction_result)
+		_apply_neighbor_building_context(map_coords, ruleset_parse_result.interaction_result)
 		_apply_enclosed_forest_area_context(ruleset_parse_result.interaction_result)
 		_apply_terrain_feature_context(map_coords, _picked_building_type)
 		_snap_preview(
@@ -255,9 +255,14 @@ func _unsnap_preview() -> void:
 
 
 func _apply_neighbor_building_context(
+		origin_coords: Vector2i,
 		interaction_results: Dictionary[Vector2i, BuildingRulesetEngine.InteractionResult]
 ) -> void:
 	for interaction_coords: Vector2i in interaction_results.keys():
+		if interaction_coords == origin_coords:
+			# Skip the origin coordinates that the building is being placed on.
+			continue
+
 		var interaction_result: BuildingRulesetEngine.InteractionResult =\
 				interaction_results[interaction_coords]
 		var population_change: int = interaction_result.get_population_change()
@@ -279,13 +284,10 @@ func _apply_neighbor_building_context(
 			if not _context_applied_buildings.has(building):
 				_context_applied_buildings.append(building)
 		else:
-			# FIXME: This gets triggered a lot, but does not have any apparent
-			# gameplay effect. Find out why.
-			#push_error("Building instance expected at (%d, %d). Got 'null' instead." % [
-			#	interaction_coords.x,
-			#	interaction_coords.y
-			#])
-			pass
+			push_error("Building instance expected at (%d, %d). Got 'null' instead." % [
+				interaction_coords.x,
+				interaction_coords.y
+			])
 
 
 func _remove_neighbor_building_context() -> void:
