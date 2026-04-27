@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://xxxh008diddy"]
 
 [ext_resource type="Script" uid="uid://bjico263pdusu" path="res://scripts/scenes/credits.gd" id="1_2ckv8"]
-[ext_resource type="Texture2D" uid="uid://drsmsbinxipa8" path="res://assets/main_menu_placeholder.png" id="2_0ctdu"]
+[ext_resource type="PackedScene" uid="uid://bgb6qk47e8yq8" path="res://scenes/main_background_art.tscn" id="2_2fbfq"]
 [ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="3_0ctdu"]
 [ext_resource type="Material" uid="uid://cibobvof01gdw" path="res://resources/materials/credits_overlay_shader_material.tres" id="3_2fbfq"]
 
@@ -9,9 +9,7 @@
 script = ExtResource("1_2ckv8")
 metadata/_custom_type_script = "uid://dqjitm5fwb83b"
 
-[node name="BackgroundSprite2D" type="Sprite2D" parent="." unique_id=1582949480]
-texture = ExtResource("2_0ctdu")
-centered = false
+[node name="MainBackgroundArt" parent="." unique_id=510397190 instance=ExtResource("2_2fbfq")]
 
 [node name="OverlayCanvasLayer" type="CanvasLayer" parent="." unique_id=655295641]
 

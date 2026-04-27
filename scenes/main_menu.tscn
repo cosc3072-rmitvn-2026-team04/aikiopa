@@ -1,17 +1,15 @@
 [gd_scene format=3 uid="uid://d107gii2hpg1j"]
 
 [ext_resource type="Script" uid="uid://dn6k6ykoyxmka" path="res://scripts/scenes/main_menu/main_menu.gd" id="1_0ebjn"]
-[ext_resource type="Texture2D" uid="uid://drsmsbinxipa8" path="res://assets/main_menu_placeholder.png" id="2_bqqt6"]
 [ext_resource type="Script" uid="uid://pv8kfa1omp0b" path="res://scripts/scenes/main_menu/main_menu_ui.gd" id="2_ekxnf"]
+[ext_resource type="PackedScene" uid="uid://bgb6qk47e8yq8" path="res://scenes/main_background_art.tscn" id="2_wu84c"]
 [ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="3_wu84c"]
 
 [node name="MainMenu" type="Node2D" unique_id=285205235]
 script = ExtResource("1_0ebjn")
 metadata/_custom_type_script = "uid://dqjitm5fwb83b"
 
-[node name="BackgroundSprite2D" type="Sprite2D" parent="." unique_id=1736822857]
-texture = ExtResource("2_bqqt6")
-centered = false
+[node name="MainBackgroundArt" parent="." unique_id=510397190 instance=ExtResource("2_wu84c")]
 
 [node name="MainMenuUICanvasLayer" type="CanvasLayer" parent="." unique_id=262500120]
 layer = 99
@@ -30,13 +28,13 @@ metadata/_custom_type_script = "uid://cupvablkoadik"
 
 [node name="CenterContainer" type="CenterContainer" parent="MainMenuUICanvasLayer/MainMenuUI" unique_id=718349148]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = 1187.0
+offset_top = 148.0
+offset_right = 1594.0
+offset_bottom = 502.0
 
 [node name="MainMenuContainer" type="VBoxContainer" parent="MainMenuUICanvasLayer/MainMenuUI/CenterContainer" unique_id=417638024]
+layout_direction = 3
 layout_mode = 2
 theme_override_constants/separation = 64
 
