@@ -73,6 +73,7 @@ func _ready() -> void:
 		GameplayEventBus.session_restored.emit(_save_slot_index)
 
 	_init_cameras()
+	_init_game_hud()
 	_init_game_menu()
 	_init_game_over_menu()
 
@@ -215,6 +216,10 @@ func _init_cameras() -> void:
 	%DebugCamera2D.reset_smoothing()
 
 
+func _init_game_hud() -> void:
+	%GameHUD.acted.connect(_on_game_hud_acted)
+
+
 func _init_game_menu() -> void:
 	%GameMenu.acted.connect(_on_game_menu_acted)
 	%GameMenu.close()
@@ -246,8 +251,7 @@ func _render_shroud() -> void:
 
 func _input_command_game_menu(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_quit"):
-		%GameMenu.open()
-		get_tree().paused = true
+		_open_game_menu()
 
 
 func _input_update_gameplay_debug_mode(event: InputEvent) -> void:
@@ -256,6 +260,11 @@ func _input_update_gameplay_debug_mode(event: InputEvent) -> void:
 		UIEventBus.gameplay_debug_mode_toggled.emit(_debug_mode_enabled)
 
 #endregion
+
+
+func _open_game_menu() -> void:
+		%GameMenu.open()
+		get_tree().paused = true
 
 #endregion
 # ============================================================================ #
@@ -283,6 +292,13 @@ func _on_building_placed(
 	):
 		_save_session()
 		_save_dirty = false
+
+
+# Listens to %GameHUD.acted(action: StringName).
+func _on_game_hud_acted(action: StringName):
+	match action:
+		&"open_game_menu":
+			_open_game_menu()
 
 
 # Listens to %GameMenu.acted(action: StringName).

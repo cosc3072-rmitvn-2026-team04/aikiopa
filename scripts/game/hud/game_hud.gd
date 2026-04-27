@@ -75,6 +75,7 @@ func _ready() -> void:
 	%GameSaveNotificationBackgroundTextureRect.hide()
 	%GameSaveNotificationLabel.hide()
 
+	%HamburgerMenuButton.pressed.connect(_on_hamburger_menu_button_pressed)
 	UIEventBus.building_card_picked.connect(_on_building_card_picked)
 	UIEventBus.building_card_dropped.connect(_on_building_card_dropped)
 	UIEventBus.preview_cursor_snapped.connect(_on_preview_cursor_snapped)
@@ -300,6 +301,11 @@ func _animate_population_label(negative: bool) -> void:
 
 # ============================================================================ #
 #region Signal listeners
+
+# Listens to %HamburgerMenuButton.pressed.
+func _on_hamburger_menu_button_pressed() -> void:
+	acted.emit(&"open_game_menu")
+
 
 # Listens to UIEventBus.building_card_picked(
 #		building_type: Building.BuildingType,
