@@ -102,7 +102,8 @@ func set_feature_at(
 	add_child(terrain_feature)
 
 
-## Returns and destroys the terrain feature at [param coords].[br]
+## Destroys the terrain feature at [param coords] and return its
+## [enum TerrainFeature.FeatureType].[br]
 ## [br]
 ## Returns [constant TerrainFeature.NONE] if there is no terrain feature at
 ## [param coords].
@@ -112,6 +113,15 @@ func remove_feature_at(coords: Vector2i) -> TerrainFeature.FeatureType:
 
 	var terrain_feature: TerrainFeature = _terrain_features[coords]
 	var terrain_feature_type: TerrainFeature.FeatureType = terrain_feature.get_type()
+
+	if (
+			terrain_feature_type in [
+				World.TerrainType.PLAIN_FOREST,
+				World.TerrainType.GRASSLAND_FOREST,
+			] and Global.game_state.enclosed_forest_coords.has(coords)
+	):
+			Global.game_state.enclosed_forest_coords.erase(coords)
+
 	_terrain_features.erase(coords)
 	remove_child(terrain_feature)
 	terrain_feature.queue_free()
