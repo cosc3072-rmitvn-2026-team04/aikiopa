@@ -63,6 +63,7 @@ var _thin_shroud_coords: Array[Vector2i] = []
 
 func _ready() -> void:
 	GameplayEventBus.building_placed.connect(_on_building_placed)
+	GameplayEventBus.forest_enclosed.connect(_on_forest_enclosed)
 	UIEventBus.gameplay_debug_mode_shroud_toggled.connect(
 			_on_gameplay_debug_mode_shroud_toggled)
 
@@ -91,12 +92,21 @@ func get_shroud_at(coords: Vector2i) -> ShroudType:
 	return cell_tile_data.get_custom_data("shroud_type") as ShroudType
 
 
-## Returns The Shroud's internal data as a [Dictionary]. Useful for saving game
-## sessions.
+## Returns The Shroud's internal data as a dictionary of keys:
+## [code]&"cleared_shroud_coords"[/code] and
+## [code]&"thin_shroud_coords"[/code].[br]
+## [br]
+## - [code]&"cleared_shroud_coords"[/code] is the list of coordinates where The
+## Shroud is set to [constant CLEARED].[br]
+## [br]
+## - [code]&"thin_shroud_coords"[/code] is the list of coordinates where The
+## Shroud is set to [constant THIN].[br]
+## [br]
+## Useful for saving game sessions.
 func get_shroud_data() -> Dictionary[StringName, Array]:
 	return {
-		"cleared_shroud_coords": _cleared_shroud_coords,
-		"thin_shroud_coords": _thin_shroud_coords,
+		&"cleared_shroud_coords": _cleared_shroud_coords,
+		&"thin_shroud_coords": _thin_shroud_coords,
 	}
 
 
@@ -149,7 +159,7 @@ func _append_vision_area_from_range_at(coords: Vector2i) -> void:
 					coords,
 					Math.HexGrid.OffsetLayout.ODD_R)
 	_cleared_shroud_coords.append_array(surrounding_neighbor_coords.filter(
-			func (neighbor_coords: Vector2i):
+			func (neighbor_coords: Vector2i) -> bool:
 				return neighbor_coords not in _cleared_shroud_coords))
 	if coords not in _cleared_shroud_coords:
 		_cleared_shroud_coords.append(coords)
@@ -159,7 +169,7 @@ func _append_vision_area_from_range_at(coords: Vector2i) -> void:
 					coords,
 					vision_range,
 					Math.HexGrid.OffsetLayout.ODD_R).filter(
-							func (in_range_coords):
+							func (in_range_coords) -> bool:
 								return (
 										in_range_coords.distance_squared_to(coords) > 1
 										and in_range_coords not in _cleared_shroud_coords
@@ -178,12 +188,28 @@ func _append_vision_area_from_range_at(coords: Vector2i) -> void:
 
 # Listens to GameplayEventBus.building_placed(
 #		coords: Vector2i,
-#		building_type: Building.BuildingType)
+#		building_type: Building.BuildingType).
+#		variation_value: float,
+#		interaction_result: BuildingRulesetEngine.InteractionResult).
 func _on_building_placed(
 		coords: Vector2i,
-		_building_type: Building.BuildingType
+		_building_type: Building.BuildingType,
+		_variation_value: float,
+		_interaction_result: BuildingRulesetEngine.InteractionResult
 ) -> void:
 	_append_vision_area_from_range_at(coords)
+	Global.game_state.shroud_data = get_shroud_data()
+
+
+# Listens to GameplayEventBus.forest_enclosed(
+#		from_coords: Vector2i,
+#		forest_area: Array[Vector2i]).
+func _on_forest_enclosed(
+		_from_coords: Vector2i,
+		forest_area: Array[Vector2i]
+) -> void:
+	for forest_coords: Vector2i in forest_area:
+		_append_vision_area_from_range_at(forest_coords)
 
 
 # Listens to UIEventBus.gameplay_debug_mode_shroud_toggled(toggled_on: bool).

@@ -1,22 +1,20 @@
 [gd_scene format=3 uid="uid://d107gii2hpg1j"]
 
 [ext_resource type="Script" uid="uid://dn6k6ykoyxmka" path="res://scripts/scenes/main_menu/main_menu.gd" id="1_0ebjn"]
-[ext_resource type="Texture2D" uid="uid://drsmsbinxipa8" path="res://assets/main_menu_placeholder.png" id="2_bqqt6"]
 [ext_resource type="Script" uid="uid://pv8kfa1omp0b" path="res://scripts/scenes/main_menu/main_menu_ui.gd" id="2_ekxnf"]
+[ext_resource type="PackedScene" uid="uid://bgb6qk47e8yq8" path="res://scenes/main_background_art.tscn" id="2_wu84c"]
 [ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="3_wu84c"]
 
 [node name="MainMenu" type="Node2D" unique_id=285205235]
 script = ExtResource("1_0ebjn")
 metadata/_custom_type_script = "uid://dqjitm5fwb83b"
 
-[node name="BackgroundSprite2D" type="Sprite2D" parent="." unique_id=1736822857]
-texture = ExtResource("2_bqqt6")
-centered = false
+[node name="MainBackgroundArt" parent="." unique_id=510397190 instance=ExtResource("2_wu84c")]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=262500120]
+[node name="MainMenuUICanvasLayer" type="CanvasLayer" parent="." unique_id=262500120]
 layer = 99
 
-[node name="MainMenuUI" type="Control" parent="CanvasLayer" unique_id=305829909]
+[node name="MainMenuUI" type="Control" parent="MainMenuUICanvasLayer" unique_id=305829909]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
@@ -28,44 +26,69 @@ theme = ExtResource("3_wu84c")
 script = ExtResource("2_ekxnf")
 metadata/_custom_type_script = "uid://cupvablkoadik"
 
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/MainMenuUI" unique_id=718349148]
+[node name="MarginContainer" type="MarginContainer" parent="MainMenuUICanvasLayer/MainMenuUI" unique_id=845375193]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 720
+theme_override_constants/margin_bottom = 260
 
-[node name="MainMenuContainer" type="VBoxContainer" parent="CanvasLayer/MainMenuUI/CenterContainer" unique_id=417638024]
+[node name="CenterContainer" type="CenterContainer" parent="MainMenuUICanvasLayer/MainMenuUI/MarginContainer" unique_id=718349148]
 layout_mode = 2
 
-[node name="GameNameLabel" type="Label" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=1638659751]
+[node name="MainMenuContainer" type="VBoxContainer" parent="MainMenuUICanvasLayer/MainMenuUI/MarginContainer/CenterContainer" unique_id=417638024]
+layout_direction = 3
 layout_mode = 2
-theme_override_font_sizes/font_size = 100
+theme_override_constants/separation = 64
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenuUICanvasLayer/MainMenuUI/MarginContainer/CenterContainer/MainMenuContainer" unique_id=185764601]
+layout_mode = 2
+
+[node name="GameNameLabel" type="Label" parent="MainMenuUICanvasLayer/MainMenuUI/MarginContainer/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=1638659751]
+layout_mode = 2
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 120
 text = "AIKIOΠA"
-horizontal_alignment = 1
+horizontal_alignment = 2
 
-[node name="TutorialButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=1569103081]
+[node name="GameVersionLabel" type="Label" parent="MainMenuUICanvasLayer/MainMenuUI/MarginContainer/CenterContainer/MainMenuContainer/VBoxContainer" unique_id=943240516]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Tutorial"
+size_flags_vertical = 8
+theme_override_constants/outline_size = 8
+text = "v0.0.0"
 
-[node name="FreeGameButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=1634631360]
+[node name="ButtonVBoxContainer" type="VBoxContainer" parent="MainMenuUICanvasLayer/MainMenuUI/MarginContainer/CenterContainer/MainMenuContainer" unique_id=1418974258]
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="StartButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/MarginContainer/CenterContainer/MainMenuContainer/ButtonVBoxContainer" unique_id=1569103081 groups=["ui_buttons"]]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Free Play"
+text = "Start"
 
-[node name="SettingsButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=88263360]
+[node name="GalleryButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/MarginContainer/CenterContainer/MainMenuContainer/ButtonVBoxContainer" unique_id=1634631360 groups=["ui_buttons"]]
 unique_name_in_owner = true
 layout_mode = 2
+disabled = true
+text = "Galery"
+
+[node name="SettingsButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/MarginContainer/CenterContainer/MainMenuContainer/ButtonVBoxContainer" unique_id=88263360 groups=["ui_buttons"]]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
 text = "Settings"
 
-[node name="CreditsButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=174603475]
+[node name="CreditsButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/MarginContainer/CenterContainer/MainMenuContainer/ButtonVBoxContainer" unique_id=174603475 groups=["ui_buttons"]]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Credits"
 
-[node name="QuitButton" type="Button" parent="CanvasLayer/MainMenuUI/CenterContainer/MainMenuContainer" unique_id=517774371]
+[node name="QuitButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/MarginContainer/CenterContainer/MainMenuContainer/ButtonVBoxContainer" unique_id=517774371 groups=["ui_buttons"]]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Quit"

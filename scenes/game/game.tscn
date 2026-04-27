@@ -4,38 +4,108 @@
 [ext_resource type="PackedScene" uid="uid://b7p1b85oyvfnp" path="res://scenes/game/world.tscn" id="2_7h61r"]
 [ext_resource type="Script" uid="uid://goc0ooup6fxp" path="res://scripts/game/building_ruleset_engine.gd" id="4_87uf6"]
 [ext_resource type="PackedScene" uid="uid://ccpo3uu672sqa" path="res://scenes/game/debug_camera_2d.tscn" id="4_lfrn8"]
-[ext_resource type="PackedScene" uid="uid://c8uldsfm820ug" path="res://scenes/game/game_hud.tscn" id="5_5i0tg"]
+[ext_resource type="PackedScene" uid="uid://c8uldsfm820ug" path="res://scenes/game/hud/game_hud.tscn" id="5_5i0tg"]
 [ext_resource type="Script" uid="uid://0nisd2iu4boj" path="res://scripts/game/building_stack_controller.gd" id="5_lfrn8"]
+[ext_resource type="Script" uid="uid://fybashptyea7" path="res://scripts/game/reward_controller.gd" id="6_4j704"]
 [ext_resource type="Script" uid="uid://cauurnggrdqh0" path="res://scripts/game/population_controller.gd" id="6_5i0tg"]
+[ext_resource type="Script" uid="uid://r8eyf1cugtof" path="res://scripts/game/game_log_manager.gd" id="7_vaxfo"]
 [ext_resource type="PackedScene" uid="uid://cmoxmw1iug4v0" path="res://scenes/game/player_camera.tscn" id="8_87uf6"]
+[ext_resource type="PackedScene" uid="uid://cgm4qt1v27f2b" path="res://scenes/game/cursor_ui/cursor_ui.tscn" id="10_4j704"]
+[ext_resource type="PackedScene" uid="uid://c2jk4roqpaohs" path="res://scenes/modals/game_over_menu.tscn" id="10_5jirj"]
+[ext_resource type="PackedScene" uid="uid://873u2m0dhb0d" path="res://scenes/modals/game_menu.tscn" id="11_kp23o"]
+[ext_resource type="Script" uid="uid://qq5rsbwsfsvk" path="res://scripts/game/sfx_controller.gd" id="14_otnwt"]
+[ext_resource type="AudioStream" uid="uid://c4g8vbqrnmibe" path="res://assets/sfx/building_place.ogg" id="15_otnwt"]
+[ext_resource type="AudioStream" uid="uid://jxtghs6gnbu4" path="res://assets/sfx/preview_snap.ogg" id="16_3xj4h"]
+[ext_resource type="AudioStream" uid="uid://b6tqvtbyf1xr" path="res://assets/sfx/card_pick.ogg" id="17_5v6r0"]
+[ext_resource type="AudioStream" uid="uid://bkbhfhxrrv0we" path="res://assets/sfx/forest_combo.wav" id="17_gc57s"]
+[ext_resource type="AudioStream" uid="uid://cuwidaopk5pgp" path="res://assets/sfx/card_drop.ogg" id="18_uyinl"]
+[ext_resource type="AudioStream" uid="uid://yghkltyh6wrt" path="res://assets/sfx/card_add.ogg" id="19_10c2w"]
+[ext_resource type="AudioStream" uid="uid://by72c82q6g16v" path="res://assets/sfx/milestone.wav" id="20_pg2xm"]
 
-[node name="Game" type="Node2D" unique_id=1327406412]
+[node name="Game" type="Node2D" unique_id=361428006]
 script = ExtResource("1_sul5r")
+autosave_interval = 8
+metadata/_custom_type_script = "uid://dqjitm5fwb83b"
 
 [node name="World" parent="." unique_id=1513868058 node_paths=PackedStringArray("building_ruleset_engine") instance=ExtResource("2_7h61r")]
 unique_name_in_owner = true
 building_ruleset_engine = NodePath("../BuildingRulesetEngine")
 
-[node name="BuildingStackController" type="Node" parent="." unique_id=1349143746]
+[node name="BuildingStackController" type="Node" parent="." unique_id=1349143746 node_paths=PackedStringArray("world", "building_ruleset_engine")]
 unique_name_in_owner = true
 script = ExtResource("5_lfrn8")
-starting_building_count = 10
+building_type_weights = Dictionary[int, float]({
+1: 0.0,
+2: 2.0,
+3: 1.0,
+4: 0.7,
+5: 0.55,
+6: 1.0,
+7: 0.8,
+8: 0.45,
+9: 0.5
+})
+guaranteed_starting_buildings = Array[int]([2])
+starting_random_buildings_count = 9
+world = NodePath("../World")
+building_ruleset_engine = NodePath("../BuildingRulesetEngine")
 
 [node name="BuildingRulesetEngine" type="Node" parent="." unique_id=924936073 node_paths=PackedStringArray("world")]
 unique_name_in_owner = true
 script = ExtResource("4_87uf6")
+combo_rule_forest_population_gain = 30
 world = NodePath("../World")
 
-[node name="PopulationController" type="Node" parent="." unique_id=153495353]
+[node name="PopulationController" type="Node" parent="." unique_id=153495353 node_paths=PackedStringArray("building_ruleset_engine")]
 unique_name_in_owner = true
 script = ExtResource("6_5i0tg")
+building_ruleset_engine = NodePath("../BuildingRulesetEngine")
+
+[node name="RewardController" type="Node" parent="." unique_id=1185992142 node_paths=PackedStringArray("population_controller")]
+unique_name_in_owner = true
+script = ExtResource("6_4j704")
+reward_amount = 10
+difficulty = 2.0
+estimated_population_gain_per_turn = 10
+population_controller = NodePath("../PopulationController")
+
+[node name="GameLogManager" type="Node" parent="." unique_id=578115048 node_paths=PackedStringArray("world")]
+unique_name_in_owner = true
+script = ExtResource("7_vaxfo")
+max_log_files = 80
+world = NodePath("../World")
+
+[node name="CursorUI" parent="." unique_id=618488837 node_paths=PackedStringArray("world", "building_ruleset_engine") instance=ExtResource("10_4j704")]
+unique_name_in_owner = true
+world = NodePath("../World")
+building_ruleset_engine = NodePath("../BuildingRulesetEngine")
 
 [node name="GameHUDCanvasLayer" type="CanvasLayer" parent="." unique_id=1835501581]
 
-[node name="GameHUD" parent="GameHUDCanvasLayer" unique_id=1279456757 node_paths=PackedStringArray("world") instance=ExtResource("5_5i0tg")]
+[node name="GameHUD" parent="GameHUDCanvasLayer" unique_id=1279456757 node_paths=PackedStringArray("world", "population_controller", "reward_controller") instance=ExtResource("5_5i0tg")]
+unique_name_in_owner = true
+population_label_max_scale = 1.1
+population_label_min_scale = 0.9
+population_label_tween_in_duration = 0.06999999999999999
+population_label_tween_out_duration = 0.13
+population_milestone_progress_bar_tween_speed = 0.2
+population_milestone_progress_bar_max_tween_duration = 1.0
 world = NodePath("../../World")
+population_controller = NodePath("../../PopulationController")
+reward_controller = NodePath("../../RewardController")
 
-[node name="DebugCamera2D" parent="." unique_id=1889864583 node_paths=PackedStringArray("world", "building_stack_controller") instance=ExtResource("4_lfrn8")]
+[node name="GameMenuCanvasLayer" type="CanvasLayer" parent="." unique_id=630394916]
+
+[node name="GameMenu" parent="GameMenuCanvasLayer" unique_id=650760349 node_paths=PackedStringArray("game") instance=ExtResource("11_kp23o")]
+unique_name_in_owner = true
+game = NodePath("../..")
+
+[node name="GameOverCanvasLayer" type="CanvasLayer" parent="." unique_id=1568259986]
+
+[node name="GameOverMenu" parent="GameOverCanvasLayer" unique_id=1463684322 instance=ExtResource("10_5jirj")]
+unique_name_in_owner = true
+
+[node name="DebugCamera2D" parent="." unique_id=1889864583 node_paths=PackedStringArray("world", "building_stack_controller", "population_controller") instance=ExtResource("4_lfrn8")]
 unique_name_in_owner = true
 pan_speed = 860
 zoom_min = 0.1
@@ -44,6 +114,7 @@ zoom_increment = 0.05
 zoom_rate = 6.0
 world = NodePath("../World")
 building_stack_controller = NodePath("../BuildingStackController")
+population_controller = NodePath("../PopulationController")
 
 [node name="PlayerCamera" parent="." unique_id=1893900081 node_paths=PackedStringArray("world") instance=ExtResource("8_87uf6")]
 unique_name_in_owner = true
@@ -54,3 +125,47 @@ zoom_max = 1.6
 zoom_increment = 0.08
 zoom_rate = 3.0
 world = NodePath("../World")
+
+[node name="SfxController" type="Node" parent="." unique_id=1326019134 node_paths=PackedStringArray("world")]
+script = ExtResource("14_otnwt")
+world = NodePath("../World")
+pitch_scale_random_threshold = 0.083
+volume_random_threshold = 2.0
+metadata/_custom_type_script = "uid://b02xedqua4uqn"
+
+[node name="CursorSnapped2D" type="AudioStreamPlayer2D" parent="SfxController" unique_id=639367575]
+stream = ExtResource("16_3xj4h")
+volume_db = -15.0
+attenuation = 0.5
+bus = &"Gameplay"
+
+[node name="BuildingPlaced2D" type="AudioStreamPlayer2D" parent="SfxController" unique_id=2014111785]
+stream = ExtResource("15_otnwt")
+volume_db = 4.0
+attenuation = 0.5
+bus = &"Gameplay"
+
+[node name="ForestEnclosed2D" type="AudioStreamPlayer2D" parent="SfxController" unique_id=168559478]
+stream = ExtResource("17_gc57s")
+attenuation = 0.3
+bus = &"Gameplay"
+
+[node name="BuildingCardPicked" type="AudioStreamPlayer" parent="SfxController" unique_id=507719053]
+stream = ExtResource("17_5v6r0")
+volume_db = -22.0
+bus = &"Gameplay"
+
+[node name="BuildingCardDropped" type="AudioStreamPlayer" parent="SfxController" unique_id=1170853097]
+stream = ExtResource("18_uyinl")
+volume_db = -22.0
+bus = &"Gameplay"
+
+[node name="BuildingCardAdded" type="AudioStreamPlayer" parent="SfxController" unique_id=1861421683]
+stream = ExtResource("19_10c2w")
+volume_db = -22.0
+bus = &"Gameplay"
+
+[node name="MilestoneReached" type="AudioStreamPlayer" parent="SfxController" unique_id=548568736]
+stream = ExtResource("20_pg2xm")
+volume_db = -6.0
+bus = &"Gameplay"

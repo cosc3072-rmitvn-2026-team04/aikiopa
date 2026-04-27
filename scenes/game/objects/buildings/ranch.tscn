@@ -2,10 +2,14 @@
 
 [ext_resource type="PackedScene" uid="uid://q1crh5ps008g" path="res://scenes/game/objects/buildings/_generic.tscn" id="1_wch6q"]
 [ext_resource type="Script" uid="uid://d0ohm1p5wf0s0" path="res://scripts/game/objects/buildings/ranch.gd" id="2_2x0iu"]
-[ext_resource type="Texture2D" uid="uid://c55vc5m23tmso" path="res://assets/objects/building_ranch.png" id="2_jnsub"]
+[ext_resource type="Texture2D" uid="uid://c55vc5m23tmso" path="res://assets/objects/buildings/building_ranch_var0.png" id="2_jnsub"]
+[ext_resource type="Texture2D" uid="uid://o7ki4n72ba8w" path="res://assets/objects/buildings/building_ranch_var1.png" id="4_ufyhm"]
+[ext_resource type="Texture2D" uid="uid://dhbqv6a0p1q5i" path="res://assets/objects/buildings/building_ranch_var2.png" id="5_un1bi"]
 
 [node name="Ranch" unique_id=1178872670 instance=ExtResource("1_wch6q")]
 script = ExtResource("2_2x0iu")
+variations = Array[CompressedTexture2D]([ExtResource("2_jnsub"), ExtResource("4_ufyhm"), ExtResource("5_un1bi")])
 
 [node name="Sprite2D" parent="." index="0" unique_id=906012488]
+position = Vector2(0, -4.5)
 texture = ExtResource("2_jnsub")

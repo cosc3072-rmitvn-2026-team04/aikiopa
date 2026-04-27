@@ -1,19 +1,20 @@
 [gd_scene format=3 uid="uid://xxxh008diddy"]
 
 [ext_resource type="Script" uid="uid://bjico263pdusu" path="res://scripts/scenes/credits.gd" id="1_2ckv8"]
-[ext_resource type="Texture2D" uid="uid://drsmsbinxipa8" path="res://assets/main_menu_placeholder.png" id="2_0ctdu"]
+[ext_resource type="PackedScene" uid="uid://bgb6qk47e8yq8" path="res://scenes/main_background_art.tscn" id="2_2fbfq"]
+[ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="3_0ctdu"]
+[ext_resource type="Material" uid="uid://cibobvof01gdw" path="res://resources/materials/credits_overlay_shader_material.tres" id="3_2fbfq"]
 
 [node name="Credits" type="Node2D" unique_id=1890754985]
 script = ExtResource("1_2ckv8")
 metadata/_custom_type_script = "uid://dqjitm5fwb83b"
 
-[node name="BackgroundSprite2D" type="Sprite2D" parent="." unique_id=1582949480]
-texture = ExtResource("2_0ctdu")
-centered = false
+[node name="MainBackgroundArt" parent="." unique_id=510397190 instance=ExtResource("2_2fbfq")]
 
 [node name="OverlayCanvasLayer" type="CanvasLayer" parent="." unique_id=655295641]
 
 [node name="ColorRect" type="ColorRect" parent="OverlayCanvasLayer" unique_id=1506790693]
+material = ExtResource("3_2fbfq")
 custom_minimum_size = Vector2(1920, 1080)
 anchors_preset = -1
 offset_right = 1920.0
@@ -22,7 +23,6 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color(0, 0, 0, 0.78431374)
 
 [node name="MainCanvasLayer" type="CanvasLayer" parent="." unique_id=155775081]
 
@@ -35,6 +35,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = ExtResource("3_0ctdu")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainCanvasLayer/ScrollContainer" unique_id=449839570]
 layout_mode = 2
@@ -52,9 +53,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 bbcode_enabled = true
-text = "A game by [Team Name][br]
+text = "A game by[br]
 [b]Mike Vo[/b] & [b]Yolanda Tran[/b][br]
-[img]res://assets/logo/placeholder_studio_logo.png[/img]
+[img]res://assets/logos/studio_logo.png[/img]
 [br]
 Tech Lead[br]
 Mike Vo[br]
@@ -74,7 +75,7 @@ Mike Vo[br]
 [br]
 Testing & QA[br]
 Mike Vo[br]
-Doanh Tran[br]
+Yolanda Tran[br]
 [br]
 Playtesters[br]
 [wip][br]
@@ -95,6 +96,11 @@ layout_mode = 2
 [node name="EndCreditsLabel" type="Label" parent="MainCanvasLayer/ScrollContainer/VBoxContainer" unique_id=118550518]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 46
 text = "Press Esc to exit"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="EndCreditsSpaceControl" type="Control" parent="MainCanvasLayer/ScrollContainer/VBoxContainer" unique_id=1092116774]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2

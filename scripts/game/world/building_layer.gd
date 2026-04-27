@@ -32,10 +32,6 @@ var _nuclear_reactor_scene: PackedScene =\
 var _factory_scene: PackedScene =\
 		preload("res://scenes/game/objects/buildings/factory.tscn")
 
-# The [Building] instances in the game. Identified by their [Vector2i]
-# coordinates.
-var _buildings: Dictionary[Vector2i, Building]
-
 #endregion
 # ============================================================================ #
 
@@ -49,34 +45,44 @@ func clear() -> void:
 		for building: Building in get_children():
 			remove_child(building)
 			building.queue_free()
-	_buildings.clear()
+	Global.game_state.building_instances.clear()
+	Global.game_state.building_metadata.clear()
 
 
 ## Returns the [enum Building.BuildingType] at [param coords].
 func get_building_at(coords: Vector2i) -> Building.BuildingType:
 	if not has_building_at(coords):
 		return Building.BuildingType.NONE
-	return _buildings[coords].get_type()
+	return Global.game_state.building_instances[coords].get_type()
+
+
+## Returns a reference to the [Building] instance at [param coords]. Returns
+## [code]null[/code] if there is no building at the specified coordinates.[br]
+## [br]
+## [color=orange][b]WARNING:[/b] Extra caution must be taken when modifying the
+## returned instance for it being a reference, and thus will produce
+## side-effects on any modification to its properties.[/color]
+func get_building_instance_at(coords: Vector2i) -> Building:
+	if not has_building_at(coords):
+		return null
+	return Global.game_state.building_instances[coords]
 
 
 ## Returns [code]true[/code] if there is a building at [param coords].
 func has_building_at(coords: Vector2i) -> bool:
-	return _buildings.has(coords)
+	return Global.game_state.building_instances.has(coords)
 
 
-## Sets the building at [param coords] to one of [enum Building.BuildingType].
-## [color=orange][b][u]Warning:[/u] This will replace any existing
-## building.[/b][/color][br]
-## TODO: Deterministically assign random variations.[br]
+## Sets the building at [param coords] to one of [enum Building.BuildingType]
+## with its sprite variation based on [param variation_value]. See
+## [method Building.set_variation]. [color=orange][b][u]Warning:[/u] This will
+## replace any existing building.[/b][/color][br]
 ## [br]
 ## Prints an error and do nothing if [param building_type] is unknown.[br]
-## [br]
-## Set [param quiet] to [code]true[/code] to execute without notifying other
-## game systems. Useful for scripted game events.
 func place_building_at(
 		coords: Vector2i,
 		building_type: Building.BuildingType,
-		quiet: bool = false
+		variation_value: float
 ) -> void:
 	var building: Building = null
 	match building_type:
@@ -104,48 +110,68 @@ func place_building_at(
 				building_type,
 			])
 			return
+	building.set_variation(variation_value)
 
-	# Quietly clear existing building, if any.
+	# Clear existing building, if any.
 	if has_building_at(coords):
-		destroy_building_at(coords, true)
+		destroy_building_at(coords)
 
 	# Clear terrain feature, if any.
-	var terrain_feature_layer: Node2D = world.get_terrain_feature_layer()
-	if terrain_feature_layer.has_feature_at(coords):
-		terrain_feature_layer.remove_feature_at(coords)
+	if world.has_terrain_feature_at(coords):
+		world.remove_terrain_feature_at(coords)
 
 	# Insert the building.
 	var terrain_tile_map_layer: TileMapLayer = world.get_terrain_tile_map_layer()
-	_buildings.set(coords, building)
+	Global.game_state.building_instances.set(coords, building)
+	Global.game_state.building_metadata.set(coords, {
+		&"building_type": building_type,
+		&"variation_value": variation_value,
+	})
 	building.position = terrain_tile_map_layer.map_to_local(coords)
 	add_child(building)
 
-	if not quiet:
-		GameplayEventBus.building_placed.emit(coords, building_type)
+	# Update [member _edge_coords].
+	var is_edge: bool = false
+	var surrounding_neighbor_coords: Array[Vector2i] =\
+			Math.HexGrid.get_offset_surrounding_neighbors(
+					coords,
+					Math.HexGrid.OffsetLayout.ODD_R)
+	for neighbor_coords: Vector2i in surrounding_neighbor_coords:
+		if not has_building_at(neighbor_coords):
+			is_edge = true
+
+		var neighbor_is_edge: bool = true
+		var neighbor_surrounding_neighbor_coords: Array[Vector2i] =\
+				Math.HexGrid.get_offset_surrounding_neighbors(
+						neighbor_coords,
+						Math.HexGrid.OffsetLayout.ODD_R)
+		neighbor_surrounding_neighbor_coords.erase(coords)
+		for neighbor_neighbor_coords: Vector2i in neighbor_surrounding_neighbor_coords:
+			if not has_building_at(neighbor_neighbor_coords):
+				neighbor_is_edge = false
+				break
+		if neighbor_is_edge:
+			Global.game_state.edge_coords.erase(neighbor_coords)
+	if is_edge:
+		Global.game_state.edge_coords.append(coords)
+	else:
+		Global.game_state.edge_coords.erase(coords)
 
 
 ## Returns and destroys the building at [param coords].[br]
 ## [br]
-## Returns [constant Building.BuildingType.NONE] if there is no building at
-## [param coords].
-## [br]
-## Set [param quiet] to [code]true[/code] to execute without notifying other
-## game systems. Useful for scripted game events.
-func destroy_building_at(
-		coords: Vector2i,
-		quiet: bool = false
-) -> Building.BuildingType:
+## Returns [constant Building.NONE] if there is no building at [param coords].
+func destroy_building_at(coords: Vector2i) -> Building.BuildingType:
 	if not has_building_at(coords):
 		return Building.BuildingType.NONE
 
-	var building: Building = _buildings[coords]
+	var building: Building = Global.game_state.building_instances[coords]
 	var building_type: Building.BuildingType = building.get_type()
-	_buildings.erase(coords)
+	Global.game_state.building_instances.erase(coords)
+	Global.game_state.building_metadata.erase(coords)
 	remove_child(building)
 	building.queue_free()
 
-	if not quiet:
-		GameplayEventBus.building_destroyed.emit(coords, building_type)
 	return building_type
 
 #endregion

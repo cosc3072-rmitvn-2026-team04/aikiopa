@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://deapbfuai1w0n"]
+
+[ext_resource type="Script" uid="uid://dqjitm5fwb83b" path="res://scripts/core/game_scene_2d.gd" id="1_6wml8"]
+
+[node name="GalleryLoader" type="Node2D" unique_id=385194689]
+script = ExtResource("1_6wml8")
+metadata/_custom_type_script = "uid://dqjitm5fwb83b"

@@ -1,26 +1,173 @@
 [gd_scene format=3 uid="uid://csffjo6oq4r5m"]
 
 [ext_resource type="Script" uid="uid://dvq70xagotyu0" path="res://scripts/game/hud/building_stack/building_stack_ui.gd" id="1_8yw7d"]
-[ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="1_l8etm"]
 [ext_resource type="Curve" uid="uid://c7mvftrliarys" path="res://resources/building_stack/revealed_card_spread_curve.tres" id="2_8yw7d"]
-[ext_resource type="Texture2D" uid="uid://c6qvbouopv6kg" path="res://assets/building_stack/building_stack_count_label.png" id="3_l8etm"]
+[ext_resource type="PackedScene" uid="uid://r1yjn2jyu7k4" path="res://scenes/game/hud/building_stack/building_card.tscn" id="3_sdjpw"]
+[ext_resource type="PackedScene" uid="uid://ceqdlfvyr4ufw" path="res://scenes/game/hud/building_stack/building_stack_count_bubble.tscn" id="4_sdjpw"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l8etm"]
-content_margin_left = 36.0
-content_margin_top = 12.0
+[sub_resource type="Animation" id="Animation_jenna"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BackgroundCanvasLayer/BackgroundTextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BackgroundCanvasLayer/BackgroundTextureRect:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BuildingStackCountBubble:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BuildingStackCountBubble:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BuildingStackCountBubble:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sdjpw"]
-content_margin_left = 36.0
-content_margin_top = 12.0
+[sub_resource type="Animation" id="Animation_qklwp"]
+resource_name = "add_building_card"
+length = 0.2
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BuildingStackCountBubble:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0667, 0.2),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.15, 1.15), Vector2(1, 1)]
+}
 
-[node name="BuildingStackUI" type="Control" unique_id=776021788]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("1_l8etm")
+[sub_resource type="Animation" id="Animation_sdjpw"]
+resource_name = "game_over"
+length = 0.5
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BackgroundCanvasLayer/BackgroundTextureRect:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.25, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BackgroundCanvasLayer/BackgroundTextureRect:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BuildingStackCountBubble:scale")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BuildingStackCountBubble:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [0.0, -1.0471975511965976]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BuildingStackCountBubble:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jenna"]
+_data = {
+&"RESET": SubResource("Animation_jenna"),
+&"add_building_card": SubResource("Animation_qklwp"),
+&"game_over": SubResource("Animation_sdjpw")
+}
+
+[sub_resource type="Gradient" id="Gradient_sdjpw"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.18587585)
+colors = PackedColorArray(0, 0, 0, 0.5019608, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jenna"]
+gradient = SubResource("Gradient_sdjpw")
+fill = 1
+fill_from = Vector2(0, 1)
+
+[node name="BuildingStackUI" type="Node2D" unique_id=727569831]
 script = ExtResource("1_8yw7d")
 revealed_card_spread_curve = ExtResource("2_8yw7d")
 max_revealed_card_offset = 132
@@ -29,43 +176,34 @@ max_container_height = 620
 max_revealed_card_count = 3
 container_padding = Vector2i(16, 16)
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1622802902]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 348
-theme_override_constants/margin_bottom = 32
-
-[node name="CenterContainer" type="CenterContainer" parent="MarginContainer" unique_id=999540227]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
-
-[node name="BuildingStackCountTextureRect" type="TextureRect" parent="MarginContainer/CenterContainer" unique_id=1223990960]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
-texture = ExtResource("3_l8etm")
-stretch_mode = 2
-
-[node name="BuildingStackCountLabel" type="Label" parent="MarginContainer/CenterContainer" unique_id=707642239]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=715121089]
 unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
-theme_override_colors/font_color = Color(0.12156863, 0.26666668, 0.11764706, 1)
-theme_override_font_sizes/font_size = 48
-theme_override_styles/normal = SubResource("StyleBoxEmpty_l8etm")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_sdjpw")
-text = "NaN"
-horizontal_alignment = 2
-vertical_alignment = 1
+libraries/ = SubResource("AnimationLibrary_jenna")
+
+[node name="BackgroundCanvasLayer" type="CanvasLayer" parent="." unique_id=810019201]
+
+[node name="BackgroundTextureRect" type="TextureRect" parent="BackgroundCanvasLayer" unique_id=414495532]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(1280, 0)
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 64.0
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_jenna")
 
 [node name="BuildingStack" type="Node2D" parent="." unique_id=1760161714]
 unique_name_in_owner = true
 
-[node name="PlaceholderBuildingCard" parent="BuildingStack" unique_id=1572232253 instance_placeholder="res://scenes/game/hud/building_stack/building_card.tscn"]
-position = Vector2(150, 110)
+[node name="ReferenceBuildingCard" parent="BuildingStack" unique_id=1572232253 instance=ExtResource("3_sdjpw")]
+editor_description = "DO NOT REMOVE. This reference BuildingCard is used to calculate positions for other visual elements."
+
+[node name="BuildingStackCountBubble" parent="." unique_id=56046790 instance=ExtResource("4_sdjpw")]
+unique_name_in_owner = true
+offset = Vector2(0, -104)
+dynamic_font_sizes = Array[int]([48, 43, 38])
+
+[node name="MarginContainer" parent="BuildingStackCountBubble" index="0" unique_id=728225458]
+offset_top = -104.0
+offset_bottom = -104.0
+
+[editable path="BuildingStackCountBubble"]

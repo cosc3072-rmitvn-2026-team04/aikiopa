@@ -1,11 +1,15 @@
 [gd_scene format=3 uid="uid://d00cp1m1nbkw5"]
 
 [ext_resource type="PackedScene" uid="uid://q1crh5ps008g" path="res://scenes/game/objects/buildings/_generic.tscn" id="1_ua16u"]
-[ext_resource type="Texture2D" uid="uid://bkc4klgrxu463" path="res://assets/objects/building_fishery.png" id="2_qn3ht"]
+[ext_resource type="Texture2D" uid="uid://bkc4klgrxu463" path="res://assets/objects/buildings/building_fishery_var0.png" id="2_qn3ht"]
 [ext_resource type="Script" uid="uid://cfkgvti3fyu1p" path="res://scripts/game/objects/buildings/fishery.gd" id="2_v77kg"]
+[ext_resource type="Texture2D" uid="uid://hubaixx6pows" path="res://assets/objects/buildings/building_fishery_var1.png" id="4_dmcu8"]
+[ext_resource type="Texture2D" uid="uid://hdo6vq0s1msq" path="res://assets/objects/buildings/building_fishery_var2.png" id="5_52e4u"]
 
 [node name="Fishery" unique_id=1178872670 instance=ExtResource("1_ua16u")]
 script = ExtResource("2_v77kg")
+variations = Array[CompressedTexture2D]([ExtResource("2_qn3ht"), ExtResource("4_dmcu8"), ExtResource("5_52e4u")])
 
 [node name="Sprite2D" parent="." index="0" unique_id=906012488]
+position = Vector2(0, -7)
 texture = ExtResource("2_qn3ht")

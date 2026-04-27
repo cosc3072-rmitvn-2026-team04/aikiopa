@@ -12,17 +12,25 @@ config_version=5
 
 config/name="AIKIOPA"
 config/description="COSC3072 Games Studio 1 Project, Team 04, RMIT Vietnam 2026."
+config/version="0.3.0"
 run/main_scene="uid://c3ymdt5ihd458"
+config/use_custom_user_dir=true
 config/custom_user_dir_name="AIKIOPA"
 config/features=PackedStringArray("4.6", "Forward Plus")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/show_image=false
 config/icon="uid://dqp3lnsxh5fw"
+boot_splash/minimum_display_time=20
+
+[audio]
+
+buses/default_bus_layout="uid://otsdrg2b1fgq"
 
 [autoload]
 
-Global="*uid://1e7omhauptu1"
-GameplayEventBus="*uid://bvbx608cejmwp"
-UIEventBus="*uid://ec3r0dickbin"
-Math="*uid://b6l5brx5akrvh"
+Global="*uid://bh23jxt878mfg"
+GameplayEventBus="*uid://cile0rk71d8x8"
+UIEventBus="*uid://d14g2l5ubghi2"
 
 [display]
 
@@ -47,6 +55,10 @@ folder_colors={
 "res://shaders/": "green",
 "res://tests/": "pink"
 }
+
+[global_group]
+
+ui_buttons="User Interface Buttons"
 
 [input]
 
@@ -117,6 +129,11 @@ player_camera_zoom_in={
 player_camera_zoom_out={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":81,"key_label":0,"unicode":113,"location":0,"echo":false,"script":null)
+]
+}
+ui_quit={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194305,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
 

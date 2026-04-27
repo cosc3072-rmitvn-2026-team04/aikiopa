@@ -1,11 +1,15 @@
 [gd_scene format=3 uid="uid://qg445j4asjvt"]
 
 [ext_resource type="PackedScene" uid="uid://q1crh5ps008g" path="res://scenes/game/objects/buildings/_generic.tscn" id="1_nhc7u"]
-[ext_resource type="Texture2D" uid="uid://blv8s18o0w2uu" path="res://assets/objects/building_factory.png" id="2_qvp5r"]
+[ext_resource type="Texture2D" uid="uid://blv8s18o0w2uu" path="res://assets/objects/buildings/building_factory_var0.png" id="2_qvp5r"]
 [ext_resource type="Script" uid="uid://bnkxfw7ibup1j" path="res://scripts/game/objects/buildings/factory.gd" id="2_vokyf"]
+[ext_resource type="Texture2D" uid="uid://dcknreyovr07v" path="res://assets/objects/buildings/building_factory_var1.png" id="4_4v36e"]
+[ext_resource type="Texture2D" uid="uid://d2vhjhnt3o7h5" path="res://assets/objects/buildings/building_factory_var2.png" id="5_urt30"]
 
 [node name="Factory" unique_id=1178872670 instance=ExtResource("1_nhc7u")]
 script = ExtResource("2_vokyf")
+variations = Array[CompressedTexture2D]([ExtResource("2_qvp5r"), ExtResource("4_4v36e"), ExtResource("5_urt30")])
 
 [node name="Sprite2D" parent="." index="0" unique_id=906012488]
+position = Vector2(0, -13.5)
 texture = ExtResource("2_qvp5r")

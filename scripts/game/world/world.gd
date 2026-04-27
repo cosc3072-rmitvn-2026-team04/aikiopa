@@ -117,14 +117,20 @@ func initialize(world_seed: Variant = null) -> void:
 	%WorldGenerator.generate_seeds(world_seed)
 	get_terrain_tile_map_layer().clear()
 	get_terrain_feature_layer().clear()
-	get_building_layer().clear()
 
 	_generated_chunks.clear()
 
 
-## Returns the current world's seed.
+## Returns the current world's seed. Useful for saving and restoring game
+## sessions.
 func get_seed() -> int:
 	return %WorldGenerator.get_seed()
+
+
+## Returns the current world's seed and its corresponding internal terrain
+## module seeds. Useful for debugging.
+func get_seeds_internal() -> Dictionary[StringName, int]:
+	return %WorldGenerator.get_seeds_internal()
 
 
 ## Generates new world chunk at [param chunk_offset]. [param chunk_offset]
@@ -184,10 +190,13 @@ func get_neigboring_chunks(chunk_offset: Vector2i) -> Array[Vector2i]:
 ## Returns the [enum TerrainType] at [param coords].
 func get_terrain_at(coords: Vector2i) -> TerrainType:
 	var terrain_feature_layer: Node2D = get_terrain_feature_layer()
+	var cell_tile_data: TileData = get_terrain_tile_map_layer()\
+			.get_cell_tile_data(coords)
+	if not cell_tile_data:
+		return TerrainType.NONE
 
-	var base_terrain_type: TerrainType = get_terrain_tile_map_layer()\
-			.get_cell_tile_data(coords)\
-			.get_custom_data("base_terrain_type")
+	var base_terrain_type: TerrainType = cell_tile_data.get_custom_data(
+			"base_terrain_type")
 	var terrain_feature_type: TerrainFeature.FeatureType =\
 			terrain_feature_layer.get_feature_at(coords)
 
@@ -204,8 +213,12 @@ func get_terrain_at(coords: Vector2i) -> TerrainType:
 	])
 
 
-## Sets the terrain at [param coords] to one of [enum TerrainType].
-func set_terrain_at(coords: Vector2i, terrain_type: TerrainType) -> void:
+## Sets the terrain at [param coords] to one of [enum TerrainType], with
+## [param variation] applied if there is a [TerrainFeature].
+func set_terrain_at(
+		coords: Vector2i,
+		terrain_type: TerrainType,
+		variation_value: float) -> void:
 	var terrain_tile_map_layer: TileMapLayer = get_terrain_tile_map_layer()
 	var terrain_features_layer: Node2D = get_terrain_feature_layer()
 
@@ -218,23 +231,28 @@ func set_terrain_at(coords: Vector2i, terrain_type: TerrainType) -> void:
 		TerrainType.SHALLOW_WATER_FISHES:
 			terrain_features_layer.set_feature_at(
 					coords,
-					TerrainFeature.FeatureType.FISHES)
+					TerrainFeature.FeatureType.FISHES,
+					variation_value)
 		TerrainType.PLAIN_FOREST, TerrainType.GRASSLAND_FOREST:
 			terrain_features_layer.set_feature_at(
 					coords,
-					TerrainFeature.FeatureType.FOREST)
+					TerrainFeature.FeatureType.FOREST,
+					variation_value)
 		TerrainType.DESERT_SAND_DUNES:
 			terrain_features_layer.set_feature_at(
 					coords,
-					TerrainFeature.FeatureType.SAND_DUNES)
+					TerrainFeature.FeatureType.SAND_DUNES,
+					variation_value)
 		TerrainType.PLAIN_MOUNTAIN, TerrainType.GRASSLAND_MOUNTAIN, TerrainType.DESERT_MOUNTAIN:
 			terrain_features_layer.set_feature_at(
 					coords,
-					TerrainFeature.FeatureType.MOUNTAIN)
+					TerrainFeature.FeatureType.MOUNTAIN,
+					variation_value)
 		TerrainType.PLAIN_CHASM, TerrainType.GRASSLAND_CHASM, TerrainType.DESERT_CHASM:
 			terrain_features_layer.set_feature_at(
 					coords,
-					TerrainFeature.FeatureType.CHASM)
+					TerrainFeature.FeatureType.CHASM,
+					variation_value)
 
 
 ## Returns [code]true[/code] if there is a [TerrainFeature] at [param coords].
@@ -244,8 +262,8 @@ func has_terrain_feature_at(coords: Vector2i) -> bool:
 
 ## Returns and destroys the terrain feature at [param coords].[br]
 ## [br]
-## Returns [constant TerrainFeature.FeatureType.NONE] if there is no terrain
-## feature at [param coords].
+## Returns [constant TerrainFeature.NONE] if there is no terrain feature at
+## [param coords].
 func remove_terrain_feature_at(coords: Vector2i) -> TerrainFeature.FeatureType:
 	return get_terrain_feature_layer().remove_feature_at(coords)
 
@@ -260,30 +278,24 @@ func has_building_at(coords: Vector2i) -> bool:
 	return get_building_layer().has_building_at(coords)
 
 
-## Sets the building at [param coords] to one of [enum Building.BuildingType].
-## [color=orange][b][u]Warning:[/u] This will replace any existing
-## building.[/b][/color][br]
+## Sets the building at [param coords] to one of [enum Building.BuildingType]
+## with its sprite variation based on [param variation_value]. See
+## [method Building.set_variation]. [color=orange][b][u]Warning:[/u] This will
+## replace any existing building.[/b][/color][br]
 ## [br]
 ## Prints an error and do nothing if [param building_type] is unknown.[br]
-## [br]
-## Set [param quiet] to [code]true[/code] to execute without notifying other
-## game systems. Useful for scripted game events.
 func place_building_at(
 		coords: Vector2i,
 		building_type: Building.BuildingType,
-		quiet: bool = false
+		variation_value: float
 ) -> void:
-	get_building_layer().place_building_at(coords, building_type, quiet)
+	get_building_layer().place_building_at(coords, building_type, variation_value)
 
 
 ## Returns and destroys the building at [param coords].[br]
 ## [br]
-## Returns [constant Building.BuildingType.NONE] if there is no building at
-## [param coords].
-## [br]
-## Set [param quiet] to [code]true[/code] to execute without notifying other
-## game systems. Useful for scripted game events.
-func destroy_building_at(coords: Vector2i) -> bool:
+## Returns [constant Building.NONE] if there is no building at [param coords].
+func destroy_building_at(coords: Vector2i) -> Building.BuildingType:
 	return get_building_layer().destroy_building_at(coords)
 
 
@@ -325,23 +337,52 @@ func render_shroud(camera_position: Vector2) -> void:
 # ============================================================================ #
 #region Signal listeners
 
-# Listens to
-# UIEventBus.building_placement_requested(
+# Listens to UIEventBus.building_placement_requested(
 #		mouse_position: Vector2,
-#		building_type: Building.BuildingType).
+#		building_type: Building.BuildingType,
+#		variation_value: float).
 func _on_building_placement_requested(
 		mouse_position: Vector2,
-		building_type: Building.BuildingType) -> void:
-	var map_coords: Vector2i = %World.get_terrain_tile_map_layer().local_to_map(
-			mouse_position)
-	var parse_result: Dictionary[StringName, Variant] =\
-			building_ruleset_engine.parse_rules(map_coords, building_type)
+		building_type: Building.BuildingType,
+		variation_value: float
+) -> void:
+	var map_coords: Vector2i = local_to_map(mouse_position)
 
+	var ruleset_parse_result: Dictionary[StringName, Variant] =\
+			building_ruleset_engine.parse_rules(map_coords, building_type, false)
 	if (
-			parse_result.placement_check_status
+			ruleset_parse_result.placement_check_status
 			== BuildingRulesetEngine.PlacementCheckStatus.ALLOWED
 	):
-		place_building_at(map_coords, building_type)
+		place_building_at(map_coords, building_type, variation_value)
+		var enclosed_forest_area: Array[Vector2i]
+		for interaction_coords: Vector2i in ruleset_parse_result.interaction_result.keys():
+			if get_terrain_at(interaction_coords) in [
+				TerrainType.PLAIN_FOREST,
+				TerrainType.GRASSLAND_FOREST,
+			]:
+				var terrain_feature_layer: Node2D = get_terrain_feature_layer()
+				var forest_feature: TerrainFeature =\
+						terrain_feature_layer.get_feature_instance_at(interaction_coords)
+				if forest_feature:
+					forest_feature.is_enclosed = true
+					forest_feature.set_highlight(
+							TerrainFeature.HighlightMode.HIGHLIGHT_ALTERNATIVE)
+				else:
+					push_error("Forest instance expected at (%d, %d). Got 'null' instead." % [
+						interaction_coords.x,
+						interaction_coords.y
+					])
+				enclosed_forest_area.append(interaction_coords)
+				Global.game_state.enclosed_forest_coords.append(interaction_coords)
+		GameplayEventBus.building_placed.emit(
+				map_coords,
+				building_type,
+				variation_value,
+				BuildingRulesetEngine.InteractionResult.sum(
+						ruleset_parse_result.interaction_result.values()))
+		if not enclosed_forest_area.is_empty():
+			GameplayEventBus.forest_enclosed.emit(map_coords, enclosed_forest_area)
 
 #endregion
 # ============================================================================ #

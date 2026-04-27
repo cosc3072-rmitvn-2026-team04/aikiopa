@@ -29,22 +29,26 @@ t_height = 0.17999999999999994
 f_height = 0.6600000000000001
 world = NodePath("..")
 
-[node name="TerrainTileMapLayer" type="TileMapLayer" parent="." unique_id=1094802460]
+[node name="GroundLayer" type="Node2D" parent="." unique_id=1422293745]
+y_sort_enabled = true
+
+[node name="TerrainTileMapLayer" type="TileMapLayer" parent="GroundLayer" unique_id=1094802460]
 unique_name_in_owner = true
+z_index = -1
 tile_set = ExtResource("3_q5tta")
 script = ExtResource("3_vn813")
 
-[node name="TerrainFeatureLayer" type="Node2D" parent="." unique_id=614560681 node_paths=PackedStringArray("world")]
+[node name="TerrainFeatureLayer" type="Node2D" parent="GroundLayer" unique_id=614560681 node_paths=PackedStringArray("world")]
 unique_name_in_owner = true
 y_sort_enabled = true
 script = ExtResource("3_qd3kh")
-world = NodePath("..")
+world = NodePath("../..")
 
-[node name="BuildingLayer" type="Node2D" parent="." unique_id=357589614 node_paths=PackedStringArray("world")]
+[node name="BuildingLayer" type="Node2D" parent="GroundLayer" unique_id=357589614 node_paths=PackedStringArray("world")]
 unique_name_in_owner = true
 y_sort_enabled = true
 script = ExtResource("4_w1nur")
-world = NodePath("..")
+world = NodePath("../..")
 
 [node name="ShroudTileMapLayer" type="TileMapLayer" parent="." unique_id=1603485493 node_paths=PackedStringArray("world")]
 unique_name_in_owner = true

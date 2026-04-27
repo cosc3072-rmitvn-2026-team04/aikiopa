@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://ccuuk18gdx4gc"]
+
+[ext_resource type="Script" uid="uid://dyhwbhfabl4l5" path="res://scripts/game/cursor_ui/building_preview.gd" id="1_eorc5"]
+[ext_resource type="Texture2D" uid="uid://cqta4luyjo7ek" path="res://assets/user_interface/cursor/picked_building_placeholder.png" id="2_0flwq"]
+
+[node name="BuildingPreview" type="Node2D" unique_id=542486455]
+script = ExtResource("1_eorc5")
+building_sprite_variations = Dictionary[int, Array]({
+0: [],
+1: ["building_landing_site_var0.png"],
+2: ["building_housing_var0.png", "building_housing_var1.png", "building_housing_var2.png"],
+3: ["building_greenhouse_var0.png", "building_greenhouse_var1.png", "building_greenhouse_var2.png"],
+4: ["building_ranch_var0.png", "building_ranch_var1.png", "building_ranch_var2.png"],
+5: ["building_fishery_var0.png", "building_fishery_var1.png", "building_fishery_var2.png"],
+6: ["building_solar_farm_var0.png", "building_solar_farm_var1.png"],
+7: ["building_wind_farm_var0.png", "building_wind_farm_var1.png", "building_wind_farm_var2.png", "building_wind_farm_var3.png"],
+8: ["building_nuclear_reactor_var0.png", "building_nuclear_reactor_var1.png"],
+9: ["building_factory_var0.png", "building_factory_var1.png", "building_factory_var2.png"]
+})
+
+[node name="BuildingPreviewSprite2D" type="Sprite2D" parent="." unique_id=1246158533]
+unique_name_in_owner = true
+texture = ExtResource("2_0flwq")

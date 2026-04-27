@@ -1,11 +1,15 @@
 [gd_scene format=3 uid="uid://cj10xohbicqgv"]
 
 [ext_resource type="PackedScene" uid="uid://blvhcx1c6kpg7" path="res://scenes/game/objects/terrain_features/_generic.tscn" id="1_2km5u"]
-[ext_resource type="Texture2D" uid="uid://jhghyddm5mpa" path="res://assets/objects/terrain_feature_forest.png" id="2_35lf1"]
+[ext_resource type="Texture2D" uid="uid://jhghyddm5mpa" path="res://assets/objects/terrain_features/terrain_feature_forest_var0.png" id="2_35lf1"]
 [ext_resource type="Script" uid="uid://b2kwnqn63c1g7" path="res://scripts/game/objects/terrain_features/forest.gd" id="2_eo1qc"]
+[ext_resource type="Texture2D" uid="uid://ciastmuj5fxr2" path="res://assets/objects/terrain_features/terrain_feature_forest_var1.png" id="4_d4f7y"]
+[ext_resource type="Texture2D" uid="uid://bi78tanoat8ig" path="res://assets/objects/terrain_features/terrain_feature_forest_var2.png" id="5_upl4m"]
 
 [node name="Forest" unique_id=609911264 instance=ExtResource("1_2km5u")]
 script = ExtResource("2_eo1qc")
+variations = Array[CompressedTexture2D]([ExtResource("2_35lf1"), ExtResource("4_d4f7y"), ExtResource("5_upl4m")])
+highlight_alternative = Color(0.38634196, 0.7273232, 0.30328244, 1)
 
-[node name="Sprite2D" parent="." index="0" unique_id=929203464]
+[node name="Sprite2D" parent="." index="1" unique_id=929203464]
 texture = ExtResource("2_35lf1")

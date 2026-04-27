@@ -30,6 +30,7 @@ extends Camera2D
 
 @export var world: World = null
 @export var building_stack_controller: BuildingStackController = null
+@export var population_controller: PopulationController = null
 
 #endregion
 # ============================================================================ #
@@ -53,19 +54,23 @@ func _ready() -> void:
 			_on_gameplay_debug_mode_toggled)
 	%AddBuildingButton.pressed.connect(_on_add_building_button_pressed)
 	%PopBuildingButton.pressed.connect(_on_pop_building_button_pressed)
+	%ChangePopulationButton.pressed.connect(_on_change_population_button_pressed)
 	%ShroudDisplayCheckBox.toggled.connect(_on_shroud_display_check_button_toggled)
 
 
 func _process(delta: float) -> void:
-	var tile_map_position: Vector2i =\
-			world.local_to_map(position)
-	%CameraMapCoordsLabel.text = "(%d, %d)" % [
-		tile_map_position.x,
-		tile_map_position.y,
-	]
-	%CameraZoomLabel.text = "Zoom: %.2f" % [zoom.x]
-
 	if is_current():
+		# Update labels.
+		var map_coords: Vector2i = world.local_to_map(position)
+		%CameraMapCoordsLabel.text = "(%d, %d)" % [map_coords.x, map_coords.y ]
+		%CameraZoomLabel.text = "Zoom: %.2f" % [zoom.x]
+		%TerrainLabel.text = "%s 🏞️" % [
+			World.TerrainType.keys()[world.get_terrain_at(map_coords)],
+		]
+		%BuildingLabel.text = "%s 🏠" % [
+			Building.BuildingType.keys()[world.get_building_at(map_coords)],
+		]
+
 		var movement: Vector2 = Input.get_vector(
 				"debug_camera_left",
 				"debug_camera_right",
@@ -125,12 +130,25 @@ func _on_gameplay_debug_mode_toggled(toggled_on: bool) -> void:
 
 # Listens to %AddBuildingButton.pressed.
 func _on_add_building_button_pressed() -> void:
-	building_stack_controller.add_building()
+	var added_building_type: Building.BuildingType =\
+			building_stack_controller.add_building()
+	%BuildingAddedLabel.text = " Added: %s " % [
+		Building.BuildingType.keys()[added_building_type]
+	]
 
 
 # Listens to %PopBuildingButton.pressed.
 func _on_pop_building_button_pressed() -> void:
-	building_stack_controller.pop_building()
+	var popped_building_type: Building.BuildingType =\
+			building_stack_controller.pop_building()
+	%BuildingPoppedLabel.text = " Popped: %s " % [
+		Building.BuildingType.keys()[popped_building_type]
+	]
+
+
+# Listens to %ChangePopulationButton.pressed.
+func _on_change_population_button_pressed() -> void:
+	population_controller.change_population(int(%PopulationChangeSpinBox.value))
 
 
 # Listens to %ShroudDisplayCheckBox.toggled(toggled_on: bool).

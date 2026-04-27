@@ -1,0 +1,280 @@
+[gd_scene format=3 uid="uid://c8uldsfm820ug"]
+
+[ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="1_lsjxn"]
+[ext_resource type="Script" uid="uid://dwbowd2ej7gmq" path="res://scripts/game/hud/game_hud.gd" id="1_snjka"]
+[ext_resource type="PackedScene" uid="uid://csffjo6oq4r5m" path="res://scenes/game/hud/building_stack/building_stack_ui.tscn" id="2_snjka"]
+[ext_resource type="StyleBox" uid="uid://bm2a7stf23aj4" path="res://resources/themes/styleboxes/stylebox_effect_preview_positive.tres" id="3_avxdk"]
+[ext_resource type="Script" uid="uid://bw13r5hq8oda8" path="res://scripts/game/hud/population_milestone_preview_progress_bar.gd" id="4_avxdk"]
+[ext_resource type="Texture2D" uid="uid://b1yghwopicrl4" path="res://assets/user_interface/hamburger_menu/hamburger_menu.png" id="6_ej252"]
+[ext_resource type="Script" uid="uid://dtwuc5mlss85u" path="res://scripts/game/hud/hamburger_menu_button.gd" id="7_s3y58"]
+
+[sub_resource type="Gradient" id="Gradient_ej252"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.06302825, 1)
+colors = PackedColorArray(0, 0, 0, 0.10980392, 0, 0, 0, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_s3y58"]
+gradient = SubResource("Gradient_ej252")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oii44"]
+bg_color = Color(0.12156863, 0.26666668, 0.11764706, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ej252"]
+
+[sub_resource type="Animation" id="Animation_oii44"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ej252"]
+resource_name = "flash"
+length = 1.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.49803922), Color(1.353256, 1.353256, 1.353256, 1), Color(1, 1, 1, 0.49803922)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s3y58"]
+_data = {
+&"RESET": SubResource("Animation_oii44"),
+&"flash": SubResource("Animation_ej252")
+}
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lsjxn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_snjka"]
+content_margin_left = 48.0
+content_margin_top = 24.0
+content_margin_right = 48.0
+content_margin_bottom = 24.0
+
+[sub_resource type="Gradient" id="Gradient_oii44"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.21101332)
+colors = PackedColorArray(0, 0, 0, 0.6431373, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ej252"]
+gradient = SubResource("Gradient_oii44")
+fill = 1
+fill_from = Vector2(1, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="Animation" id="Animation_s3y58"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("%GameSaveNotificationBackgroundTextureRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_2h12x"]
+resource_name = "show"
+length = 2.2
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 1.6, 2.2),
+"transitions": PackedFloat32Array(0.5, 1, 2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("%GameSaveNotificationBackgroundTextureRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 1.6, 2.2),
+"transitions": PackedFloat32Array(0.5, 1, 2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5h6f3"]
+_data = {
+&"RESET": SubResource("Animation_s3y58"),
+&"show": SubResource("Animation_2h12x")
+}
+
+[node name="GameHUD" type="Control" unique_id=1279456757]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_lsjxn")
+script = ExtResource("1_snjka")
+metadata/_custom_type_script = "uid://cupvablkoadik"
+
+[node name="ProgressBarBackgroundTextureRect" type="TextureRect" parent="." unique_id=1738688969]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_s3y58")
+
+[node name="ProgressBarBackgroundPanel" type="Panel" parent="." unique_id=1067247038]
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_oii44")
+
+[node name="PopulationMilestonePreviewProgressBar" type="ProgressBar" parent="." unique_id=1907833994]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.02
+theme_override_styles/background = SubResource("StyleBoxEmpty_ej252")
+theme_override_styles/fill = ExtResource("3_avxdk")
+value = 65.0
+show_percentage = false
+script = ExtResource("4_avxdk")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PopulationMilestonePreviewProgressBar" unique_id=1910206214]
+libraries/ = SubResource("AnimationLibrary_s3y58")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1194083038]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PopulationMilestoneProgressBar" type="ProgressBar" parent="VBoxContainer" unique_id=2068041148]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.56
+theme_override_styles/background = SubResource("StyleBoxEmpty_lsjxn")
+value = 35.0
+show_percentage = false
+
+[node name="PopulationLabel" type="Label" parent="VBoxContainer" unique_id=867692794]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 2
+size_flags_stretch_ratio = 88.8
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.7294118)
+theme_override_constants/shadow_offset_x = 8
+theme_override_constants/shadow_offset_y = 8
+theme_override_constants/outline_size = 20
+theme_override_constants/shadow_outline_size = 0
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("StyleBoxEmpty_snjka")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_snjka")
+text = "NaN/NaN👨‍🚀"
+horizontal_alignment = 2
+
+[node name="BuildingStackUI" parent="." unique_id=776021788 instance=ExtResource("2_snjka")]
+unique_name_in_owner = true
+container_tween_update_duration = 1.1
+
+[node name="GameSaveNotificationBackgroundTextureRect" type="TextureRect" parent="." unique_id=1144918342]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 520)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -64.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = SubResource("GradientTexture2D_ej252")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1538599690]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 36
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 36
+
+[node name="GameSaveNotificationLabel" type="Label" parent="MarginContainer" unique_id=1085476592]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.2509804)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_constants/outline_size = 6
+theme_override_constants/shadow_outline_size = 0
+theme_override_font_sizes/font_size = 36
+text = "Game Saved…"
+
+[node name="Timer" type="Timer" parent="MarginContainer/GameSaveNotificationLabel" unique_id=1378524284]
+wait_time = 2.1999999999999997
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/GameSaveNotificationLabel" unique_id=1849306429]
+libraries/ = SubResource("AnimationLibrary_5h6f3")
+
+[node name="HamburgerMenuButton" type="Sprite2D" parent="." unique_id=613042799]
+unique_name_in_owner = true
+position = Vector2(100, 90)
+texture = ExtResource("6_ej252")
+script = ExtResource("7_s3y58")
