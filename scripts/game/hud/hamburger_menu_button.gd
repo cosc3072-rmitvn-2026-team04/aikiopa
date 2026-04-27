@@ -27,7 +27,7 @@ func _input(event: InputEvent) -> void:
 		var is_event_inside: bool = get_rect().has_point(to_local(event.position))
 		if is_event_inside and event.button_index == MOUSE_BUTTON_LEFT:
 			pressed.emit()
-		get_viewport().set_input_as_handled()
+			get_viewport().set_input_as_handled()
 
 #endregion
 # ============================================================================ #
