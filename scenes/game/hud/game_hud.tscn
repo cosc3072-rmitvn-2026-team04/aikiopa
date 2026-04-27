@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://csffjo6oq4r5m" path="res://scenes/game/hud/building_stack/building_stack_ui.tscn" id="2_snjka"]
 [ext_resource type="StyleBox" uid="uid://bm2a7stf23aj4" path="res://resources/themes/styleboxes/stylebox_effect_preview_positive.tres" id="3_avxdk"]
 [ext_resource type="Script" uid="uid://bw13r5hq8oda8" path="res://scripts/game/hud/population_milestone_preview_progress_bar.gd" id="4_avxdk"]
+[ext_resource type="Texture2D" uid="uid://b1yghwopicrl4" path="res://assets/user_interface/hamburger_menu/hamburger_menu.png" id="6_ej252"]
+[ext_resource type="Script" uid="uid://dtwuc5mlss85u" path="res://scripts/game/hud/hamburger_menu_button.gd" id="7_s3y58"]
 
 [sub_resource type="Gradient" id="Gradient_ej252"]
 interpolation_mode = 2
@@ -270,3 +272,9 @@ one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/GameSaveNotificationLabel" unique_id=1849306429]
 libraries/ = SubResource("AnimationLibrary_5h6f3")
+
+[node name="HamburgerMenuButton" type="Sprite2D" parent="." unique_id=613042799]
+unique_name_in_owner = true
+position = Vector2(100, 90)
+texture = ExtResource("6_ej252")
+script = ExtResource("7_s3y58")
