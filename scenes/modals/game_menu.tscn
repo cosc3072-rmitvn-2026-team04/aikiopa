@@ -44,7 +44,7 @@ alignment = 1
 [node name="GameMenuLabel" type="Label" parent="OverlayColorRect/GameMenuContainer" unique_id=994679446]
 layout_mode = 2
 theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 42
 text = "Menu"
 horizontal_alignment = 1
 
@@ -87,7 +87,7 @@ alignment = 1
 [node name="QuitConfirmTitleLabel" type="Label" parent="OverlayColorRect/QuitConfirmContainer" unique_id=1418526239]
 layout_mode = 2
 theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 42
 text = "QuitGame"
 horizontal_alignment = 1
 
