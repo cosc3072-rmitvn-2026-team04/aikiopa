@@ -63,6 +63,7 @@ grow_vertical = 2
 theme = ExtResource("5_eb2xf")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("6_40xcq")
+theme_override_font_sizes/font_size = 20
 text = "<BuildingType>"
 horizontal_alignment = 1
 vertical_alignment = 1

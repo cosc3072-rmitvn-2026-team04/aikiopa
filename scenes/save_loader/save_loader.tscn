@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dk6v00jrx7hg"]
 
 [ext_resource type="Script" uid="uid://b6mrsjfb5u8b1" path="res://scripts/scenes/save_loader/save_loader.gd" id="1_r0hmw"]
-[ext_resource type="Texture2D" uid="uid://drsmsbinxipa8" path="res://assets/main_menu_placeholder.png" id="2_4sn0j"]
+[ext_resource type="PackedScene" uid="uid://bgb6qk47e8yq8" path="res://scenes/main_background_art.tscn" id="2_4sn0j"]
 [ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="2_olopm"]
 [ext_resource type="Material" uid="uid://ds2pe4fbpgkjp" path="res://resources/materials/save_loader_overlay_shader_material.tres" id="3_dq3ih"]
 [ext_resource type="Script" uid="uid://cupvablkoadik" path="res://scripts/core/game_ui.gd" id="5_4sn0j"]
@@ -10,9 +10,11 @@
 script = ExtResource("1_r0hmw")
 metadata/_custom_type_script = "uid://dqjitm5fwb83b"
 
-[node name="BackgroundSprite2D" type="Sprite2D" parent="." unique_id=66720678]
-texture = ExtResource("2_4sn0j")
-centered = false
+[node name="MainBackgroundArt" parent="." unique_id=510397190 instance=ExtResource("2_4sn0j")]
+position = Vector2(0, -5)
+
+[node name="SpaceshipSprite2D" parent="MainBackgroundArt/CanvasLayer" parent_id_path=PackedInt32Array(510397190, 386449256) index="1" unique_id=622497592]
+visible = false
 
 [node name="OverlayCanvasLayer" type="CanvasLayer" parent="." unique_id=192039102]
 
@@ -81,3 +83,5 @@ columns = 3
 
 [node name="PlaceholderSaveSlot" parent="CanvasLayer/SaveLoaderUI/MarginContainer/VBoxContainer/ScrollContainer/SaveSlotContainer" unique_id=1785634137 instance_placeholder="res://scenes/save_loader/save_slot.tscn"]
 layout_mode = 2
+
+[editable path="MainBackgroundArt"]

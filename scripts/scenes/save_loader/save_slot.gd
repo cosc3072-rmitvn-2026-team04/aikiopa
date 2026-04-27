@@ -80,7 +80,7 @@ func set_slot_used(save_header: Dictionary[StringName, Variant]) -> void:
 	save_timestamp += Time.get_time_zone_from_system().bias * 60
 	var save_datetime_dict: Dictionary = Time.get_datetime_dict_from_unix_time(
 			save_timestamp)
-	%SaveDatetimeLabel.text = "%d:%d %s\n%d %s %d" % [
+	%SaveDatetimeLabel.text = "%d:%02d %s\n%d %s %d" % [
 		(
 				save_datetime_dict.hour if save_datetime_dict.hour <= 12
 				else save_datetime_dict.hour - 12
