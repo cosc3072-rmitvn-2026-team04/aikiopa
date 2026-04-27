@@ -78,11 +78,19 @@ func has_feature_at(coords: Vector2i) -> bool:
 
 ## Sets the terrain feature at [param coords] to one of
 ## [enum TerrainFeature.FeatureType].[br]
+## [br]
+## Returns the reference to the newly created [TerrainFeature] instance if
+## succeeded. Otherwise returns [code]null[/code] if there is already a terrain
+## feature at [param coords], or if logic for [param feature_type] is not
+## implemented.
 func set_feature_at(
 		coords: Vector2i,
 		feature_type: TerrainFeature.FeatureType,
 		variation_value: float
-) -> void:
+) -> TerrainFeature:
+	if has_feature_at(coords):
+		return null
+
 	var terrain_feature: TerrainFeature = null
 	match feature_type:
 		TerrainFeature.FeatureType.FISHES:
@@ -96,17 +104,17 @@ func set_feature_at(
 		TerrainFeature.FeatureType.CHASM:
 			terrain_feature = _chasm_scene.instantiate()
 		_:
-			push_error("Unable to set terrain feature at (%d, %d): Unknown 'feature_type' %d." % [
-				coords.x, coords.y,
-				feature_type,
+			push_error("Terrain feature type '%s' not implemented." % [
+				TerrainFeature.FeatureType.keys()[feature_type],
 			])
-			return
+			return null
 
 	var terrain_tile_map_layer: TileMapLayer = world.get_terrain_tile_map_layer()
 	_terrain_features.set(coords, terrain_feature)
 	terrain_feature.set_variation(variation_value)
 	terrain_feature.position = terrain_tile_map_layer.map_to_local(coords)
 	add_child(terrain_feature)
+	return terrain_feature
 
 
 ## Destroys the terrain feature at [param coords] and return its

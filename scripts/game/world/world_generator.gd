@@ -127,6 +127,20 @@ var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 
 # ============================================================================ #
+#region Static methods
+
+## Deterministically generate a random variation value between [code]-1.0[/code]
+## and [code]1.0[/code] (inclusive), seeded internally by [param coords].
+static func get_variation_value(coords: Vector2i) -> float:
+	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+	rng.seed = coords.x * 12345 ^ coords.y * 67890
+	return rng.randf_range(-1.0, 1.0)
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
 #region Public methods
 
 ## Generates new random seeds for the generator's internal terrain map modules,
@@ -264,11 +278,10 @@ func _create_chunk_variation_map(
 		for x: int in range(chunk_size.x):
 			var coords_x: int = chunk_offset.x * chunk_size.x + x
 			var coords_y: int = chunk_offset.y * chunk_size.y + y
-			var rng: RandomNumberGenerator = RandomNumberGenerator.new()
-			rng.seed = coords_x * 12345 ^ coords_y * 67890
-
-			var noise_value: float = rng.randf_range(-1.0, 1.0)
-			chunk_linear_variation_data.append(noise_value)
+			var variation_value: float = get_variation_value(Vector2i(
+					coords_x,
+					coords_y))
+			chunk_linear_variation_data.append(variation_value)
 
 
 # 2nd Step.

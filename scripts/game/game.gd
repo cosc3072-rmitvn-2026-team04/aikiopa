@@ -179,15 +179,13 @@ func _load_world() -> void:
 		var terrain_feature_layer: Node2D = %World.get_terrain_feature_layer()
 		var forest_feature: TerrainFeature =\
 				terrain_feature_layer.get_feature_instance_at(forest_coords)
-		if forest_feature:
-			forest_feature.is_enclosed = true
-			forest_feature.set_highlight(
-					TerrainFeature.HighlightMode.HIGHLIGHT_ALTERNATIVE)
-		else:
-			push_error("Forest instance expected at (%d, %d). Got 'null' instead." % [
-				forest_coords.x,
-				forest_coords.y
-			])
+		if not forest_feature:
+			forest_feature = %World.get_terrain_feature_layer().set_feature_at(
+					forest_coords,
+					TerrainFeature.FeatureType.FOREST,
+					WorldGenerator.get_variation_value(forest_coords))
+		forest_feature.is_enclosed = true
+		forest_feature.set_highlight(TerrainFeature.HighlightMode.HIGHLIGHT_ALTERNATIVE)
 
 	%World.reset_shroud()
 	%World.set_shroud_data(Global.game_state.shroud_data)

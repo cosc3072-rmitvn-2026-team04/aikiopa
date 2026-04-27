@@ -122,6 +122,17 @@ var _variation_index: int
 
 
 # ============================================================================ #
+#region Static methods
+
+## Static version of [method get_building_class].
+static func get_building_class_of_type(building_type: BuildingType) -> BuildingClass:
+	return BUILDING_CLASS_OF_TYPE[building_type]
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
 #region Godot builtins
 
 func _ready() -> void:
@@ -133,11 +144,6 @@ func _ready() -> void:
 
 # ============================================================================ #
 #region Public methods
-
-## Static version of [method get_building_class].
-static func get_building_class_of_type(building_type: BuildingType) -> BuildingClass:
-	return BUILDING_CLASS_OF_TYPE[building_type]
-
 
 ## Returns the current index of sprite [member variations] of the building.
 func get_variation_index() -> int:
