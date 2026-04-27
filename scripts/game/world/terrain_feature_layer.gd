@@ -44,7 +44,11 @@ func clear() -> void:
 	_terrain_features.clear()
 
 
-## Returns the [enum TerrainFeature.FeatureType] at [param coords].
+## Returns the [enum TerrainFeature.FeatureType] at [param coords].[br]
+## [br]
+## Returns [constant TerrainFeature.NONE] if there is no terrain feature at
+## [param coords], [b][u]or[/u][/b] if [param coords] is located within an
+## ungenerated chunk.
 func get_feature_at(coords: Vector2i) -> TerrainFeature.FeatureType:
 	if not has_feature_at(coords):
 		return TerrainFeature.FeatureType.NONE
@@ -52,8 +56,9 @@ func get_feature_at(coords: Vector2i) -> TerrainFeature.FeatureType:
 
 
 ## Returns a reference to the [TerrainFeature] instance at [param coords].
-## Returns [code]null[/code] if there is no terrain feature at the specified
-## coordinates.[br]
+## Returns [code]null[/code] if there is no terrain feature at [param coords],
+## [b][u]or[/u][/b] if [param coords] is located within an ungenerated
+## chunk.[br]
 ## [br]
 ## [color=orange][b]WARNING:[/b] Extra caution must be taken when modifying the
 ## returned instance for it being a reference, and thus will produce
@@ -65,6 +70,8 @@ func get_feature_instance_at(coords: Vector2i) -> TerrainFeature:
 
 
 ## Returns [code]true[/code] if there is a terrain feature at [param coords].
+## Returns [code]false[/code] if there is no terrain feature at [param coords],
+## [b][u]or[/u][/b] if [param coords] is located within an ungenerated chunk.
 func has_feature_at(coords: Vector2i) -> bool:
 	return _terrain_features.has(coords)
 
@@ -106,7 +113,8 @@ func set_feature_at(
 ## [enum TerrainFeature.FeatureType].[br]
 ## [br]
 ## Returns [constant TerrainFeature.NONE] if there is no terrain feature at
-## [param coords].
+## [param coords], [b][u]or[/u][/b] if [param coords] is located within an
+## ungenerated chunk.
 func remove_feature_at(coords: Vector2i) -> TerrainFeature.FeatureType:
 	if not has_feature_at(coords):
 		return TerrainFeature.FeatureType.NONE
@@ -115,10 +123,8 @@ func remove_feature_at(coords: Vector2i) -> TerrainFeature.FeatureType:
 	var terrain_feature_type: TerrainFeature.FeatureType = terrain_feature.get_type()
 
 	if (
-			terrain_feature_type in [
-				World.TerrainType.PLAIN_FOREST,
-				World.TerrainType.GRASSLAND_FOREST,
-			] and Global.game_state.enclosed_forest_coords.has(coords)
+			terrain_feature_type == TerrainFeature.FeatureType.FOREST
+			and Global.game_state.enclosed_forest_coords.has(coords)
 	):
 			Global.game_state.enclosed_forest_coords.erase(coords)
 
