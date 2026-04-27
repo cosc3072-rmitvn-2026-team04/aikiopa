@@ -88,6 +88,10 @@ func set_feature_at(
 		feature_type: TerrainFeature.FeatureType,
 		variation_value: float
 ) -> TerrainFeature:
+	if Global.game_state.building_metadata.has(coords):
+		# WARNING: Tightly coupled logic. This depends on other systems
+		# maintaining Global.game_state.building_metadata correctly.
+		return null
 	if has_feature_at(coords):
 		return null
 
