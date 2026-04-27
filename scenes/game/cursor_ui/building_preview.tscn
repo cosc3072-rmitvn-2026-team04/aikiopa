@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ccuuk18gdx4gc"]
 
 [ext_resource type="Script" uid="uid://dyhwbhfabl4l5" path="res://scripts/game/cursor_ui/building_preview.gd" id="1_eorc5"]
-[ext_resource type="PackedScene" uid="uid://cxu7tbupcfexl" path="res://scenes/game/cursor_ui/building_preview_sprite_2d.tscn" id="2_0flwq"]
+[ext_resource type="Texture2D" uid="uid://cqta4luyjo7ek" path="res://assets/user_interface/cursor/picked_building_placeholder.png" id="2_0flwq"]
 
 [node name="BuildingPreview" type="Node2D" unique_id=542486455]
 script = ExtResource("1_eorc5")
@@ -18,5 +18,6 @@ building_sprite_variations = Dictionary[int, Array]({
 9: ["building_factory_var0.png", "building_factory_var1.png", "building_factory_var2.png"]
 })
 
-[node name="BuildingPreviewSprite2D" parent="." unique_id=1801411118 instance=ExtResource("2_0flwq")]
+[node name="BuildingPreviewSprite2D" type="Sprite2D" parent="." unique_id=1246158533]
 unique_name_in_owner = true
+texture = ExtResource("2_0flwq")

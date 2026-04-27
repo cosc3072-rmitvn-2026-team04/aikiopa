@@ -42,7 +42,6 @@ var population_milestone_progress_bar_tween_speed: float = 0.1
 var population_milestone_progress_bar_max_tween_duration: float = 5.0
 
 
-
 @export_group("", "")
 
 @export var world: World = null

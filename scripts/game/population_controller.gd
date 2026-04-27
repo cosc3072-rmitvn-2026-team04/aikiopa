@@ -49,7 +49,7 @@ func change_population(amount: int) -> void:
 
 
 # ============================================================================ #
-#region Public methods
+#region Signal listeners
 
 # Listens to GameplayEventBus.building_placed(
 #		coords: Vector2i,

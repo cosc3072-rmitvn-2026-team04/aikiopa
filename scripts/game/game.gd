@@ -174,6 +174,19 @@ func _load_world() -> void:
 				Global.game_state.building_metadata.get(map_coords).building_type,
 				Global.game_state.building_metadata.get(map_coords).variation_value)
 
+	var enclosed_forest_coords: Array[Vector2i] = Global.game_state.enclosed_forest_coords
+	for forest_coords: Vector2i in enclosed_forest_coords:
+		var terrain_feature_layer: Node2D = %World.get_terrain_feature_layer()
+		var forest_feature: TerrainFeature =\
+				terrain_feature_layer.get_feature_instance_at(forest_coords)
+		if not forest_feature:
+			forest_feature = %World.get_terrain_feature_layer().set_feature_at(
+					forest_coords,
+					TerrainFeature.FeatureType.FOREST,
+					WorldGenerator.get_variation_value(forest_coords))
+		forest_feature.is_enclosed = true
+		forest_feature.set_highlight(TerrainFeature.HighlightMode.HIGHLIGHT_ALTERNATIVE)
+
 	%World.reset_shroud()
 	%World.set_shroud_data(Global.game_state.shroud_data)
 

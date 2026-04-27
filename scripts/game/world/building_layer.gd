@@ -57,8 +57,7 @@ func get_building_at(coords: Vector2i) -> Building.BuildingType:
 
 
 ## Returns a reference to the [Building] instance at [param coords]. Returns
-## [code]null[/code] if there is no terrain feature at the specified
-## coordinates.[br]
+## [code]null[/code] if there is no building at the specified coordinates.[br]
 ## [br]
 ## [color=orange][b]WARNING:[/b] Extra caution must be taken when modifying the
 ## returned instance for it being a reference, and thus will produce

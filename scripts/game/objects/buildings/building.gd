@@ -29,6 +29,14 @@ enum BuildingClass {
 	CLASS_INDUSTRY,
 }
 
+## The highlight modes available for [Building]s. See [method set_highlight].
+enum HighlightMode {
+	HIGHLIGHT_NEUTRAL,
+	HIGHLIGHT_ALTERNATIVE,
+	HIGHLIGHT_POSITIVE,
+	HIGHLIGHT_NEGATIVE,
+}
+
 #endregion
 # ============================================================================ #
 
@@ -76,8 +84,29 @@ const BUILDING_CLASS_OF_TYPE: Dictionary[BuildingType, BuildingClass] = {
 # ============================================================================ #
 #region Exported properties
 
+@export_group("Sprite")
+
 ## Sprite variations.
 @export var variations: Array[CompressedTexture2D] = []
+
+
+@export_group("Highlight", "highlight")
+
+## [Color] of the building highlight in neutral mode. See
+## [method set_highlight].
+@export var highlight_neutral: Color = Color.WHITE
+
+## [Color] of the building highlight in alternative mode.
+## See [method set_highlight].
+@export var highlight_alternative: Color = Color.YELLOW
+
+## [Color] of the building highlight in positive mode.
+## See [method set_highlight].
+@export var highlight_positive: Color = Color.GREEN
+
+## [Color] of the building highlight in negative mode.
+## See [method set_highlight].
+@export var highlight_negative: Color = Color.RED
 
 #endregion
 # ============================================================================ #
@@ -93,12 +122,28 @@ var _variation_index: int
 
 
 # ============================================================================ #
-#region Public methods
+#region Static methods
 
 ## Static version of [method get_building_class].
 static func get_building_class_of_type(building_type: BuildingType) -> BuildingClass:
 	return BUILDING_CLASS_OF_TYPE[building_type]
 
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Godot builtins
+
+func _ready() -> void:
+	$HighlightSprite2D.hide()
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Public methods
 
 ## Returns the current index of sprite [member variations] of the building.
 func get_variation_index() -> int:
@@ -136,6 +181,33 @@ func get_type() -> BuildingType:
 ## Returns the [enum BuildingClass] of this [Building] instance.[br]
 func get_building_class() -> BuildingClass:
 	return BUILDING_CLASS_OF_TYPE[get_type()]
+
+
+## Displays the building highlight and sets its color to [param mode].
+func set_highlight(mode: HighlightMode) -> void:
+	var highlight_modulate: Color = Color.TRANSPARENT
+	match mode:
+		HighlightMode.HIGHLIGHT_NEUTRAL:
+			highlight_modulate = highlight_neutral
+		HighlightMode.HIGHLIGHT_ALTERNATIVE:
+			highlight_modulate = highlight_alternative
+		HighlightMode.HIGHLIGHT_POSITIVE:
+			highlight_modulate = highlight_positive
+		HighlightMode.HIGHLIGHT_NEGATIVE:
+			highlight_modulate = highlight_negative
+		_:
+			push_error("Highlight mode '%s' not implemented" % [
+				HighlightMode.keys()[mode],
+			])
+			return
+	$HighlightSprite2D.modulate = highlight_modulate
+	$HighlightSprite2D.show()
+
+
+## Hides the building highlight.
+func unset_highlight() -> void:
+	$HighlightSprite2D.modulate = Color.TRANSPARENT
+	$HighlightSprite2D.hide()
 
 #endregion
 # ============================================================================ #

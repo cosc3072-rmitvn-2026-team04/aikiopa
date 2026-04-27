@@ -57,13 +57,15 @@ var population_change_preview_neutral_color: Color = Color.WHITE
 
 
 # ============================================================================ #
-#region Exported properties
+#region Private variables
 
 var _interaction_result_label_scene: PackedScene =\
 		preload("res://scenes/game/cursor_ui/interaction_result_label.tscn")
 
 var _picked_building_type: Building.BuildingType = Building.BuildingType.NONE
 var _picked_building_variation_value: float = INF
+var _context_applied_buildings: Array[Building] = []
+var _context_applied_enclosed_forest_area: Array[TerrainFeature] = []
 var _context_applied_terrain_features: Array[TerrainFeature] = []
 var _preview_snapped: bool = false
 
@@ -134,6 +136,8 @@ func _unload_preview_building_sprite() -> void:
 
 func _process_snap_preview_building_sprite() -> void:
 	# HACK: This gets called every frame and is a performance bottleneck.
+	_remove_neighbor_building_context()
+	_remove_enclosed_forest_area_context()
 	_remove_terrain_feature_context()
 	var map_coords: Vector2i = world.local_to_map(position)
 	var ruleset_parse_result: Dictionary[StringName, Variant] =\
@@ -145,6 +149,8 @@ func _process_snap_preview_building_sprite() -> void:
 			ruleset_parse_result.placement_check_status
 			== BuildingRulesetEngine.PlacementCheckStatus.ALLOWED
 	): # HACK: This gets called every frame and is a performance bottleneck.
+		_apply_neighbor_building_context(ruleset_parse_result.interaction_result)
+		_apply_enclosed_forest_area_context(ruleset_parse_result.interaction_result)
 		_apply_terrain_feature_context(map_coords, _picked_building_type)
 		_snap_preview(
 				map_coords,
@@ -172,6 +178,18 @@ func _snap_preview(
 		map_coords: Vector2i,
 		interaction_results: Dictionary[Vector2i, BuildingRulesetEngine.InteractionResult],
 ) -> void:
+	const FOREST_TERRAIN_TYPES: Array[World.TerrainType] = [
+		World.TerrainType.PLAIN_FOREST,
+		World.TerrainType.GRASSLAND_FOREST,
+	]
+	if (
+			world.get_terrain_at(map_coords) in FOREST_TERRAIN_TYPES
+			and map_coords in Global.game_state.enclosed_forest_coords
+	):
+		%BuildingPreview.hide_highlight()
+	else:
+		%BuildingPreview.show_highlight()
+
 	var target_position: Vector2 = world.map_to_local(map_coords)
 	target_position = world.to_global(target_position)
 	target_position = to_local(target_position)
@@ -208,11 +226,12 @@ func _snap_preview(
 		if interaction_coords != map_coords:
 			var interaction_result: BuildingRulesetEngine.InteractionResult =\
 					interaction_results[interaction_coords]
+			var population_change: int = interaction_result.get_population_change()
+			var building_bonus: int = interaction_result.get_building_bonus()
+
 			var interaction_result_label: Node2D =\
 					_interaction_result_label_scene.instantiate()
-			interaction_result_label.display(
-					interaction_result.get_population_change(),
-				interaction_result.get_building_bonus())
+			interaction_result_label.display(population_change, building_bonus)
 
 			var target_label_position: Vector2 = world.map_to_local(interaction_coords)
 			target_label_position = world.to_global(target_label_position)
@@ -229,8 +248,148 @@ func _unsnap_preview() -> void:
 	%PopulationChangePreviewLabel.hide()
 	%BuildingBonusPreviewLabel.text = "NaN🏠"
 	%BuildingBonusPreviewLabel.hide()
+	_remove_neighbor_building_context()
+	_remove_enclosed_forest_area_context()
 	_remove_terrain_feature_context()
 	_reset_environment_interaction_result_labels()
+
+
+func _apply_neighbor_building_context(
+		interaction_results: Dictionary[Vector2i, BuildingRulesetEngine.InteractionResult]
+) -> void:
+	for interaction_coords: Vector2i in interaction_results.keys():
+		var interaction_result: BuildingRulesetEngine.InteractionResult =\
+				interaction_results[interaction_coords]
+		var population_change: int = interaction_result.get_population_change()
+		var building_bonus: int = interaction_result.get_building_bonus()
+		var building_layer: Node2D = world.get_building_layer()
+		var building: Building = building_layer.get_building_instance_at(
+				interaction_coords)
+		if building:
+			if population_change == 0:
+				building.unset_highlight()
+			elif population_change < 0:
+				building.set_highlight(building.HighlightMode.HIGHLIGHT_NEGATIVE)
+			else:
+				building.set_highlight(building.HighlightMode.HIGHLIGHT_POSITIVE)
+
+			if building_bonus > 0:
+				building.set_highlight(building.HighlightMode.HIGHLIGHT_ALTERNATIVE)
+
+			if not _context_applied_buildings.has(building):
+				_context_applied_buildings.append(building)
+		else:
+			# FIXME: This gets triggered a lot, but does not have any apparent
+			# gameplay effect. Find out why.
+			#push_error("Building instance expected at (%d, %d). Got 'null' instead." % [
+			#	interaction_coords.x,
+			#	interaction_coords.y
+			#])
+			pass
+
+
+func _remove_neighbor_building_context() -> void:
+	if not _context_applied_buildings.is_empty():
+		for building: Building in _context_applied_buildings:
+			if building:
+				building.unset_highlight()
+		_context_applied_buildings.clear()
+
+
+func _apply_enclosed_forest_area_context(
+		interaction_results: Dictionary[Vector2i, BuildingRulesetEngine.InteractionResult]
+) -> void:
+	const FOREST_TERRAIN_TYPES: Array[World.TerrainType] = [
+		World.TerrainType.PLAIN_FOREST,
+		World.TerrainType.GRASSLAND_FOREST,
+	]
+
+	for interaction_coords: Vector2i in interaction_results.keys():
+		var interaction_result: BuildingRulesetEngine.InteractionResult =\
+				interaction_results[interaction_coords]
+		var population_change: int = interaction_result.get_population_change()
+		if world.get_terrain_at(interaction_coords) in FOREST_TERRAIN_TYPES:
+			var terrain_feature_layer: Node2D = world.get_terrain_feature_layer()
+			var forest_feature: TerrainFeature =\
+					terrain_feature_layer.get_feature_instance_at(interaction_coords)
+			if forest_feature:
+				if population_change == 0:
+					forest_feature.unset_highlight()
+				elif population_change < 0:
+					forest_feature.set_highlight(
+							TerrainFeature.HighlightMode.HIGHLIGHT_NEGATIVE)
+					var enclosed_area: Array[Vector2i] =\
+							_get_enclosed_forest_area_from(interaction_coords)
+					for enclosed_coords: Vector2i in enclosed_area:
+						var enclosed_forest_feature: TerrainFeature =\
+								terrain_feature_layer.get_feature_instance_at(enclosed_coords)
+						enclosed_forest_feature.set_highlight(
+								TerrainFeature.HighlightMode.HIGHLIGHT_NEGATIVE)
+						if not _context_applied_enclosed_forest_area.has(enclosed_forest_feature):
+							_context_applied_enclosed_forest_area.append(enclosed_forest_feature)
+				else:
+					forest_feature.set_highlight(
+							TerrainFeature.HighlightMode.HIGHLIGHT_POSITIVE)
+			else:
+				push_error("Terrain feature instance expected at (%d, %d). Got 'null' instead." % [
+					interaction_coords.x,
+					interaction_coords.y
+				])
+
+			if not _context_applied_enclosed_forest_area.has(forest_feature):
+				_context_applied_enclosed_forest_area.append(forest_feature)
+
+
+func _get_enclosed_forest_area_from(seed_coords: Vector2i) -> Array[Vector2i]:
+	const FOREST_TERRAIN_TYPES: Array[World.TerrainType] = [
+		World.TerrainType.PLAIN_FOREST,
+		World.TerrainType.GRASSLAND_FOREST,
+	]
+	if world.get_terrain_at(seed_coords) not in FOREST_TERRAIN_TYPES:
+		push_error("'seed_coords' (%d, %d) must be a forest tile." % [
+			seed_coords.x,
+			seed_coords.y,
+		])
+		return []
+
+	var enclosed_forest_area: Array[Vector2i] = []
+
+	# BFS flood fill.
+	const MAX_ITERATIONS: int = 1000
+	var iteration: int = 0
+	var bfs_coords_queue: Array[Vector2i] = [seed_coords]
+	var visited_coords: Dictionary[Vector2i, bool] = { seed_coords: true }
+	while not bfs_coords_queue.is_empty():
+		iteration += 1
+		if iteration > MAX_ITERATIONS:
+			push_warning("Flood Fill exceeded max %d iterations." % MAX_ITERATIONS)
+			break
+
+		var current_coords: Vector2i = bfs_coords_queue.pop_front()
+		if world.get_terrain_at(current_coords) in FOREST_TERRAIN_TYPES:
+			enclosed_forest_area.append(current_coords)
+			var current_coords_surrounding_neighbors: Array[Vector2i] =\
+					Math.HexGrid.get_offset_surrounding_neighbors(
+							current_coords,
+							Math.HexGrid.OffsetLayout.ODD_R)
+			for current_coords_neighbor: Vector2i in current_coords_surrounding_neighbors:
+				if not visited_coords.has(current_coords_neighbor):
+					visited_coords.set(current_coords_neighbor, true)
+					bfs_coords_queue.push_back(current_coords_neighbor)
+
+	return enclosed_forest_area
+
+
+func _remove_enclosed_forest_area_context() -> void:
+	if not _context_applied_enclosed_forest_area.is_empty():
+		for forest_feature: TerrainFeature in _context_applied_enclosed_forest_area:
+			if forest_feature:
+				if not forest_feature.is_enclosed:
+					forest_feature.unset_highlight()
+				else:
+					forest_feature.set_highlight(
+							TerrainFeature.HighlightMode.HIGHLIGHT_ALTERNATIVE)
+		_context_applied_enclosed_forest_area.clear()
 
 
 func _apply_terrain_feature_context(

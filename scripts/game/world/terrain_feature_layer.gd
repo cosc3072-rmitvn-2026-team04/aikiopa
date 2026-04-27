@@ -44,7 +44,11 @@ func clear() -> void:
 	_terrain_features.clear()
 
 
-## Returns the [enum TerrainFeature.FeatureType] at [param coords].
+## Returns the [enum TerrainFeature.FeatureType] at [param coords].[br]
+## [br]
+## Returns [constant TerrainFeature.NONE] if there is no terrain feature at
+## [param coords], [b][u]or[/u][/b] if [param coords] is located within an
+## ungenerated chunk.
 func get_feature_at(coords: Vector2i) -> TerrainFeature.FeatureType:
 	if not has_feature_at(coords):
 		return TerrainFeature.FeatureType.NONE
@@ -52,8 +56,9 @@ func get_feature_at(coords: Vector2i) -> TerrainFeature.FeatureType:
 
 
 ## Returns a reference to the [TerrainFeature] instance at [param coords].
-## Returns [code]null[/code] if there is no terrain feature at the specified
-## coordinates.[br]
+## Returns [code]null[/code] if there is no terrain feature at [param coords],
+## [b][u]or[/u][/b] if [param coords] is located within an ungenerated
+## chunk.[br]
 ## [br]
 ## [color=orange][b]WARNING:[/b] Extra caution must be taken when modifying the
 ## returned instance for it being a reference, and thus will produce
@@ -65,17 +70,31 @@ func get_feature_instance_at(coords: Vector2i) -> TerrainFeature:
 
 
 ## Returns [code]true[/code] if there is a terrain feature at [param coords].
+## Returns [code]false[/code] if there is no terrain feature at [param coords],
+## [b][u]or[/u][/b] if [param coords] is located within an ungenerated chunk.
 func has_feature_at(coords: Vector2i) -> bool:
 	return _terrain_features.has(coords)
 
 
 ## Sets the terrain feature at [param coords] to one of
 ## [enum TerrainFeature.FeatureType].[br]
+## [br]
+## Returns the reference to the newly created [TerrainFeature] instance if
+## succeeded. Otherwise returns [code]null[/code] if there is already a terrain
+## feature at [param coords], or if logic for [param feature_type] is not
+## implemented.
 func set_feature_at(
 		coords: Vector2i,
 		feature_type: TerrainFeature.FeatureType,
 		variation_value: float
-) -> void:
+) -> TerrainFeature:
+	if Global.game_state.building_metadata.has(coords):
+		# WARNING: Tightly coupled logic. This depends on other systems
+		# maintaining Global.game_state.building_metadata correctly.
+		return null
+	if has_feature_at(coords):
+		return null
+
 	var terrain_feature: TerrainFeature = null
 	match feature_type:
 		TerrainFeature.FeatureType.FISHES:
@@ -89,29 +108,38 @@ func set_feature_at(
 		TerrainFeature.FeatureType.CHASM:
 			terrain_feature = _chasm_scene.instantiate()
 		_:
-			push_error("Unable to set terrain feature at (%d, %d): Unknown 'feature_type' %d." % [
-				coords.x, coords.y,
-				feature_type,
+			push_error("Terrain feature type '%s' not implemented." % [
+				TerrainFeature.FeatureType.keys()[feature_type],
 			])
-			return
+			return null
 
 	var terrain_tile_map_layer: TileMapLayer = world.get_terrain_tile_map_layer()
 	_terrain_features.set(coords, terrain_feature)
 	terrain_feature.set_variation(variation_value)
 	terrain_feature.position = terrain_tile_map_layer.map_to_local(coords)
 	add_child(terrain_feature)
+	return terrain_feature
 
 
-## Returns and destroys the terrain feature at [param coords].[br]
+## Destroys the terrain feature at [param coords] and return its
+## [enum TerrainFeature.FeatureType].[br]
 ## [br]
 ## Returns [constant TerrainFeature.NONE] if there is no terrain feature at
-## [param coords].
+## [param coords], [b][u]or[/u][/b] if [param coords] is located within an
+## ungenerated chunk.
 func remove_feature_at(coords: Vector2i) -> TerrainFeature.FeatureType:
 	if not has_feature_at(coords):
 		return TerrainFeature.FeatureType.NONE
 
 	var terrain_feature: TerrainFeature = _terrain_features[coords]
 	var terrain_feature_type: TerrainFeature.FeatureType = terrain_feature.get_type()
+
+	if (
+			terrain_feature_type == TerrainFeature.FeatureType.FOREST
+			and Global.game_state.enclosed_forest_coords.has(coords)
+	):
+			Global.game_state.enclosed_forest_coords.erase(coords)
+
 	_terrain_features.erase(coords)
 	remove_child(terrain_feature)
 	terrain_feature.queue_free()

@@ -29,7 +29,7 @@ const BACKUP_FILE_EXT: String = ".backup"
 
 
 # ============================================================================ #
-#region Public methods
+#region Static methods
 
 ## Ensure that [constant SAVE_DIR] exists in the file system.
 static func verify_save_directory() -> void:

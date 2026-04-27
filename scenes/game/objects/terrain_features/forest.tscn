@@ -9,6 +9,7 @@
 [node name="Forest" unique_id=609911264 instance=ExtResource("1_2km5u")]
 script = ExtResource("2_eo1qc")
 variations = Array[CompressedTexture2D]([ExtResource("2_35lf1"), ExtResource("4_d4f7y"), ExtResource("5_upl4m")])
+highlight_alternative = Color(0.38634196, 0.7273232, 0.30328244, 1)
 
-[node name="Sprite2D" parent="." index="0" unique_id=929203464]
+[node name="Sprite2D" parent="." index="1" unique_id=929203464]
 texture = ExtResource("2_35lf1")
