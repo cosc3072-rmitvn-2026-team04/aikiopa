@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://goc0ooup6fxp" path="res://scripts/game/building_ruleset_engine.gd" id="4_87uf6"]
 [ext_resource type="PackedScene" uid="uid://ccpo3uu672sqa" path="res://scenes/game/debug_camera_2d.tscn" id="4_lfrn8"]
 [ext_resource type="PackedScene" uid="uid://c8uldsfm820ug" path="res://scenes/game/hud/game_hud.tscn" id="5_5i0tg"]
+[ext_resource type="Script" uid="uid://d2p1h5eoye3dc" path="res://scripts/game/disaster_controller.gd" id="5_8b66f"]
 [ext_resource type="Script" uid="uid://0nisd2iu4boj" path="res://scripts/game/building_stack_controller.gd" id="5_lfrn8"]
 [ext_resource type="Script" uid="uid://fybashptyea7" path="res://scripts/game/reward_controller.gd" id="6_4j704"]
 [ext_resource type="Script" uid="uid://cauurnggrdqh0" path="res://scripts/game/population_controller.gd" id="6_5i0tg"]
@@ -55,6 +56,18 @@ unique_name_in_owner = true
 script = ExtResource("4_87uf6")
 combo_rule_forest_population_gain = 30
 world = NodePath("../World")
+
+[node name="DisasterController" type="Node" parent="." unique_id=620651547 node_paths=PackedStringArray("world", "population_controller")]
+unique_name_in_owner = true
+script = ExtResource("5_8b66f")
+ruleset_disaster_casualty = Dictionary[int, int]({
+2: -20,
+3: -10,
+4: -10,
+5: -20
+})
+world = NodePath("../World")
+population_controller = NodePath("../PopulationController")
 
 [node name="PopulationController" type="Node" parent="." unique_id=153495353 node_paths=PackedStringArray("building_ruleset_engine")]
 unique_name_in_owner = true

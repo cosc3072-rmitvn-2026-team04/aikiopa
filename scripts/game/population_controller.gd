@@ -42,6 +42,9 @@ func set_population(amount: int) -> void:
 func change_population(amount: int) -> void:
 	if amount == 0:
 		return
+	if get_population() + amount < 0:
+		set_population(0)
+		return
 	set_population(Global.game_state.population + amount)
 
 #endregion
