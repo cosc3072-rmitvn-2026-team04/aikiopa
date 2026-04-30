@@ -96,6 +96,11 @@ func get_building_layer() -> Node2D:
 	return %BuildingLayer
 
 
+## Returns the [code]DisasterLayer[/code] node.
+func get_disaster_layer() -> Node2D:
+	return %DisasterLayer
+
+
 ## Returns the [code]ShroudTileMapLayer[/code] node.
 func get_shroud_tile_map_layer() -> TileMapLayer:
 	return %ShroudTileMapLayer

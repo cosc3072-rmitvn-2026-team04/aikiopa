@@ -41,6 +41,12 @@ signal session_saved(save_slot_index: int)
 signal reward_triggered(reward: RewardController.Reward)
 
 
+## Emitted when a building placement at [param from_coords] completes enclosure
+## of forest tiles in [param forest_area].
+@warning_ignore("unused_signal")
+signal forest_enclosed(from_coords: Vector2i, forest_area: Array[Vector2i])
+
+
 ## Emitted when a [param building_type] is added to the bottom of the building
 ## stack by the [BuildingStackController]. [param variation_value] identifies
 ## the sprite variation of that building. See [method Building.set_variation]
@@ -74,17 +80,17 @@ signal building_placed(
 		interaction_result: BuildingRulesetEngine.InteractionResult)
 
 
-## Emitted when a building placement at [param from_coords] completes enclosure
-## of forest tiles in [param forest_area].
-@warning_ignore("unused_signal")
-signal forest_enclosed(from_coords: Vector2i, forest_area: Array[Vector2i])
-
-
 # TODO: At the moment nothing is listening to this. Implement in #21.
 ## Emitted when a [Building] of [param building_type] at [param coords] is
 ## destroyed.
 @warning_ignore("unused_signal")
 signal building_destroyed(coords: Vector2i, building_type: Building.BuildingType)
+
+
+## Emitted when a [Disaster] triggered its request for the destruction of
+## building(s) in the specified [param area].
+@warning_ignore("unused_signal")
+signal disaster_destruction_triggered(area: Array[Vector2i])
 
 
 ## Emitted when the population has just been changed from [param old_amount] to

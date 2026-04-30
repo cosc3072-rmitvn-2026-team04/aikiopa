@@ -50,6 +50,10 @@ y_sort_enabled = true
 script = ExtResource("4_w1nur")
 world = NodePath("../..")
 
+[node name="DisasterLayer" type="Node2D" parent="GroundLayer" unique_id=1996883751]
+unique_name_in_owner = true
+y_sort_enabled = true
+
 [node name="ShroudTileMapLayer" type="TileMapLayer" parent="." unique_id=1603485493 node_paths=PackedStringArray("world")]
 unique_name_in_owner = true
 tile_set = ExtResource("7_a33jj")
