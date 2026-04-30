@@ -13,4 +13,4 @@ highlight_negative = Color(1, 0, 0, 0.6039216)
 [node name="HighlightSprite2D" type="Sprite2D" parent="." unique_id=292392800]
 texture = ExtResource("2_g6b8d")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=906012488]
+[node name="MainSprite2D" type="Sprite2D" parent="." unique_id=906012488]

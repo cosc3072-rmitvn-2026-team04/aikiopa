@@ -13,6 +13,6 @@ variations = Array[CompressedTexture2D]([ExtResource("2_hw7vc")])
 position = Vector2(0, -18)
 texture = ExtResource("4_1qbsi")
 
-[node name="Sprite2D" parent="." index="1" unique_id=906012488]
+[node name="MainSprite2D" parent="." index="2" unique_id=906012488]
 position = Vector2(0, -15)
 texture = ExtResource("2_hw7vc")

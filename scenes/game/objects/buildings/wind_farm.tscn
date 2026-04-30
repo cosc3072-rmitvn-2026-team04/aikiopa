@@ -11,6 +11,6 @@
 script = ExtResource("2_y343v")
 variations = Array[CompressedTexture2D]([ExtResource("2_8qrjs"), ExtResource("4_d47ul"), ExtResource("5_5r3tu"), ExtResource("6_2fjen")])
 
-[node name="Sprite2D" parent="." index="0" unique_id=906012488]
+[node name="MainSprite2D" parent="." index="1" unique_id=906012488]
 position = Vector2(0, -14.5)
 texture = ExtResource("2_8qrjs")

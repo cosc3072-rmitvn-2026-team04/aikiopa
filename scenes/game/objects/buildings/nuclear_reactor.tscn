@@ -9,6 +9,6 @@
 script = ExtResource("2_fjs7w")
 variations = Array[CompressedTexture2D]([ExtResource("2_xchxa"), ExtResource("4_c7udd")])
 
-[node name="Sprite2D" parent="." index="0" unique_id=906012488]
+[node name="MainSprite2D" parent="." index="1" unique_id=906012488]
 position = Vector2(0, -9.5)
 texture = ExtResource("2_xchxa")

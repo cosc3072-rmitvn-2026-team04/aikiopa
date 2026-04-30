@@ -166,7 +166,7 @@ func set_variation(value: float) -> void:
 	var normalized_value: float = (value + 1.0) / 2.0
 	_variation_index = int(normalized_value * variations.size())
 	_variation_index = clampi(_variation_index, 0, variations.size() - 1)
-	$Sprite2D.texture = variations[_variation_index]
+	$MainSprite2D.texture = variations[_variation_index]
 
 
 ## Returns the [enum BuildingType] of this [Building] instance.[br]
