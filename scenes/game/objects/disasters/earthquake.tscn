@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cimdtyi4wayj0"]
+
+[ext_resource type="PackedScene" uid="uid://b11i1sobqmbah" path="res://scenes/game/objects/disasters/_generic.tscn" id="1_mnefb"]
+[ext_resource type="Script" uid="uid://b02xedqua4uqn" path="res://scripts/core/sfx_controller.gd" id="2_5276j"]
+[ext_resource type="Script" uid="uid://bflyvacl6xcs0" path="res://scripts/game/objects/disasters/earthquake.gd" id="2_hlf3x"]
+
+[node name="Earthquake" unique_id=1053216560 instance=ExtResource("1_mnefb")]
+script = ExtResource("2_hlf3x")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="0" unique_id=672636133]
+
+[node name="MainSprite2D" type="Sprite2D" parent="." index="1" unique_id=1772864438]
+
+[node name="SfxController" type="Node" parent="." index="2" unique_id=402159013]
+script = ExtResource("2_5276j")
+metadata/_custom_type_script = "uid://b02xedqua4uqn"
+
+[node name="EarthquakeSound2D" type="AudioStreamPlayer2D" parent="SfxController" index="0" unique_id=1160526330]

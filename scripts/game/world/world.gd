@@ -301,6 +301,8 @@ func place_building_at(
 ## [br]
 ## Returns [constant Building.NONE] if there is no building at [param coords].
 func destroy_building_at(coords: Vector2i) -> Building.BuildingType:
+	# TODO: (#21) Handle logic to "regrow" terrain features here (except for
+	# Forest).
 	return get_building_layer().destroy_building_at(coords)
 
 

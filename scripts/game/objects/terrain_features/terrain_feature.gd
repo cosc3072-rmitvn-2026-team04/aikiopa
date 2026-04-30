@@ -91,10 +91,10 @@ func set_variation(value: float) -> void:
 	$Sprite2D.texture = variations[variation_index]
 
 
-## Returns the [enum FeatureType] of this [TerrainFeature] instance.[br]
+## [color=deepskyblue][b]Virtual:[/b][/color] Override this method in children
+## scenes to provide the appropriate return value.[br]
 ## [br]
-## Virtual method. Override in children scenes to provide the correct return
-## value.
+## Returns the [enum FeatureType] of this [TerrainFeature] instance.
 func get_type() -> FeatureType:
 	push_warning("Calling method 'get_type()' on generic 'TerrainFeature' instance.")
 	return FeatureType.NONE

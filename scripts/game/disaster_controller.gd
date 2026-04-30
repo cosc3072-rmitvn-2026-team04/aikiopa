@@ -28,11 +28,49 @@ extends Node
 
 
 # ============================================================================ #
+#region Private variables
+
+var _meteor_strike_scene: PackedScene =\
+		preload("res://scenes/game/objects/disasters/meteor_strike.tscn")
+var _earthquake_scene: PackedScene =\
+		preload("res://scenes/game/objects/disasters/earthquake.tscn")
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
 #region Godot builtins
 
 func _ready() -> void:
 	GameplayEventBus.disaster_destruction_triggered.connect(
 			_on_disaster_destruction_triggered)
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Public methods
+
+## Triggers a [Disaster] instance of [param disaster_type] at [param coords] in
+## the [World].
+func trigger_disaster_at(
+		coords: Vector2i,
+		disaster_type: Disaster.DisasterType
+) -> void:
+	var disaster: Disaster = null
+	match disaster_type:
+		Disaster.DisasterType.METEOR_STRIKE:
+			disaster = _meteor_strike_scene.instantiate()
+		Disaster.DisasterType.EARTHQUAKE:
+			disaster = _earthquake_scene.instantiate()
+		_:
+			push_error("Disaster type '%s' not implemented." % [
+				Disaster.DisasterType.keys()[disaster_type],
+			])
+			return
+	disaster.execute(world, coords)
 
 #endregion
 # ============================================================================ #

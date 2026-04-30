@@ -105,9 +105,8 @@ func place_building_at(
 		Building.BuildingType.FACTORY:
 			building = _factory_scene.instantiate()
 		_:
-			push_error("Unable to set building at (%d, %d): Unknown 'building_type' %d." % [
-				coords.x, coords.y,
-				building_type,
+			push_error("Building type '%d' not implemented." % [
+				Building.BuildingType.keys()[building_type]
 			])
 			return
 	building.set_variation(variation_value)

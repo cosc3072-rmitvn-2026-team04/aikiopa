@@ -169,10 +169,10 @@ func set_variation(value: float) -> void:
 	$MainSprite2D.texture = variations[_variation_index]
 
 
-## Returns the [enum BuildingType] of this [Building] instance.[br]
+## [color=deepskyblue][b]Virtual:[/b][/color] Override this method in children
+## scenes to provide the appropriate return value.[br]
 ## [br]
-## Virtual method. Override in children scenes to provide the correct return
-## value.
+## Returns the [enum BuildingType] of this [Building] instance.
 func get_type() -> BuildingType:
 	push_warning("Calling method 'get_type()' on generic 'Building' instance.")
 	return BuildingType.NONE
