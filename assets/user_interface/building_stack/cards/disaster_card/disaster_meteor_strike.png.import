@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mb7vcj16t4bi"
-path="res://.godot/imported/placeholder_fg.png-c151cf48fcdda2b3706d683c3727397b.ctex"
+uid="uid://0kp5vsysrdjp"
+path="res://.godot/imported/disaster_meteor_strike.png-38f842fab0379207abb331e2880485d7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/user_interface/building_stack/building_card/placeholder_fg.png"
-dest_files=["res://.godot/imported/placeholder_fg.png-c151cf48fcdda2b3706d683c3727397b.ctex"]
+source_file="res://assets/user_interface/building_stack/cards/disaster_card/disaster_meteor_strike.png"
+dest_files=["res://.godot/imported/disaster_meteor_strike.png-38f842fab0379207abb331e2880485d7.ctex"]
 
 [params]
 

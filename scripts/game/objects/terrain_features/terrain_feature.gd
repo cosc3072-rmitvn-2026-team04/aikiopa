@@ -5,6 +5,7 @@ extends Node2D
 # ============================================================================ #
 #region Enums
 
+## The terrain feature types available in the game.
 enum FeatureType {
 	NONE,
 	FISHES,

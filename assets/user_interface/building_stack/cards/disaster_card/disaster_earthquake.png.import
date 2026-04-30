@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://duymi0vx3cagj"
-path="res://.godot/imported/food_fg.png-115ced9df61a606899f61946847d0de0.ctex"
+uid="uid://b2q7iyori2h3r"
+path="res://.godot/imported/disaster_earthquake.png-8081e06bf227ef38d16434cd0a7e21e5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/user_interface/building_stack/building_card/food_fg.png"
-dest_files=["res://.godot/imported/food_fg.png-115ced9df61a606899f61946847d0de0.ctex"]
+source_file="res://assets/user_interface/building_stack/cards/disaster_card/disaster_earthquake.png"
+dest_files=["res://.godot/imported/disaster_earthquake.png-8081e06bf227ef38d16434cd0a7e21e5.ctex"]
 
 [params]
 
