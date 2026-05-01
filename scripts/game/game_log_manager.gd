@@ -132,7 +132,7 @@ func _make_log_line() -> String:
 	_entry_count += 1
 	return "%d: %d Building Card(s), %d Placed Building(s), %d Population, Milestone %d" % [
 		_entry_count,
-		Global.game_state.building_stack.size(),
+		Global.game_state.card_stack.size(),
 		Global.game_state.building_instances.size(),
 		Global.game_state.population,
 		Global.game_state.population_milestones_reached

@@ -47,23 +47,24 @@ signal reward_triggered(reward: RewardController.Reward)
 signal forest_enclosed(from_coords: Vector2i, forest_area: Array[Vector2i])
 
 
-## Emitted when a [param building_type] is added to the bottom of the building
-## stack by the [BuildingStackController]. [param variation_value] identifies
+# TODO: Update this (#21).
+## Emitted when a [param building_type] is added to the bottom of the card
+## stack by the [CardStackController]. [param variation_value] identifies
 ## the sprite variation of that building. See [method Building.set_variation]
 ## and [method BuildingCard.set_type_and_variation].
 @warning_ignore("unused_signal")
-signal building_stack_building_added(
+signal card_stack_card_added(
 		building_type: Building.BuildingType,
 		variation_value: float)
 
 
-## Emitted when the [param_building_type] at the top of the building stack is
-## popped off by the [BuildingStackController]. [param variation_value]
-## identifies the sprite variation of that building. See
-## [method Building.set_variation] and
-## [method BuildingCard.set_type_and_variation].
+# TODO: Update this (#21).
+## Emitted when the [param_building_type] at the top of the card stack is
+## popped off by the [CardStackController]. [param variation_value] identifies
+## the sprite variation of that building. See [method Building.set_variation]
+## and [method BuildingCard.set_type_and_variation].
 @warning_ignore("unused_signal")
-signal building_stack_building_popped(
+signal card_stack_card_popped(
 		building_type: Building.BuildingType,
 		variation_value: float)
 

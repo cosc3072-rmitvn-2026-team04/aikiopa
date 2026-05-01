@@ -43,7 +43,7 @@ func close() -> void:
 func _on_game_over(population: int, game_over_type: Game.GameOverType) -> void:
 	%PopulationValueLabel.text = "Final Population: %d👨‍🚀" % [population]
 	match game_over_type:
-		Game.GameOverType.NO_BUILDING_CARD:
+		Game.GameOverType.EMPTY_CARD_STACK:
 			%PopulationValueLabel.text = "Final Population: %d👨‍🚀" % [population]
 			%MessageLabel.text = "Expedition Completed!"
 		Game.GameOverType.NO_POPULATION:

@@ -100,28 +100,29 @@ class GameState extends RefCounted:
 	## [method WorldGenerator.get_seed] instead.[/color]
 	var world_seed: int = 0
 
-	## The RNG seed of the [BuildingStackController].[br]
+	## The RNG seed of the [CardStackController].[br]
 	## [br]
 	## [b]Note:[/b] The [code]0[/code] value documented here is a placeholder,
 	## and not the actual default seed.[br]
 	## [br]
 	## [color=orange][b]WARNING:[/b] This affects the internal logic of
-	## [BuildingStackController]. DO NOT modify directly. Assign values using
-	## [method BuildingStackController.get_session_seed] instead.[/color]
-	var building_stack_seed: int = 0
+	## [CardStackController]. DO NOT modify directly. Assign values using
+	## [method CardStackController.get_session_seed] instead.[/color]
+	var card_stack_seed: int = 0
 
-	## The RNG state of the [BuildingStackController].[br]
+	## The RNG state of the [CardStackController].[br]
 	## [br]
 	## [b]Note:[/b] The [code]0[/code] value documented here is a placeholder,
 	## and not the actual default state.[br]
 	## [br]
 	## [color=orange][b]WARNING:[/b] This affects the internal logic of
-	## [BuildingStackController]. DO NOT modify directly. Assign values using
-	## [method BuildingStackController.get_session_state] instead.[/color]
-	var building_stack_state: int = 0
+	## [CardStackController]. DO NOT modify directly. Assign values using
+	## [method CardStackController.get_session_state] instead.[/color]
+	var card_stack_state: int = 0
 
-	## The building stack in the current game session. Each element is a
-	## dictionary of keys: [code]&"building_type"[/code] and
+	# TODO: Update this (#21).
+	## The card stack in the current game session. Each element is a dictionary
+	## of keys: [code]&"building_type"[/code] and
 	## [code]&"variation_value"[/code].[br]
 	## [br]
 	## - [code]&"building_type"[/code] is the [enum Building.BuildingType] of
@@ -130,7 +131,7 @@ class GameState extends RefCounted:
 	## - [code]&"variation_value"[/code] is the [float] variation value for the
 	## building sprite. See [method Building.set_variation] and
 	## [method BuildingCard.set_type_and_variation].
-	var building_stack: Array[Dictionary] = []
+	var card_stack: Array[Dictionary] = []
 
 	## The building instances in the current game session, represented as a
 	## dictionary of key [Vector2i] coordinates and its corresponding [Building]
@@ -185,9 +186,9 @@ class GameState extends RefCounted:
 	## Resets the game state.
 	func reset() -> void:
 		world_seed = 0
-		building_stack_seed = 0
-		building_stack_state = 0
-		building_stack = []
+		card_stack_seed = 0
+		card_stack_state = 0
+		card_stack = []
 		building_instances = {}
 		edge_coords = []
 		enclosed_forest_coords = []

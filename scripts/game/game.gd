@@ -14,7 +14,7 @@ enum GameMode {
 
 enum GameOverType {
 	NONE,
-	NO_BUILDING_CARD,
+	EMPTY_CARD_STACK,
 	NO_POPULATION,
 }
 
@@ -42,7 +42,7 @@ var _turns_elapsed: int = 0
 var _game_over: bool = false
 var _save_dirty: bool = false
 var _debug_mode_enabled: bool
-@onready var _building_stack_controller: Node = %BuildingStackController
+@onready var _card_stack_controller: Node = %CardStackController
 
 #endregion
 # ============================================================================ #
@@ -63,7 +63,7 @@ func _ready() -> void:
 		Global.game_state = Global.GameState.new()
 		_init_world()
 		_init_population(0)
-		_init_building_stack()
+		_init_card_stack()
 		GameplayEventBus.session_created.emit(_save_slot_index)
 		_save_session()
 		_save_dirty = false
@@ -71,9 +71,9 @@ func _ready() -> void:
 		Global.game_state = GameSaveService.load(_save_slot_index)
 		_load_world()
 		_init_population(Global.game_state.population)
-		_init_building_stack(
-				Global.game_state.building_stack_seed,
-				Global.game_state.building_stack_state)
+		_init_card_stack(
+				Global.game_state.card_stack_seed,
+				Global.game_state.card_stack_state)
 		GameplayEventBus.session_restored.emit(_save_slot_index)
 
 	_init_cameras()
@@ -86,10 +86,10 @@ func _process(_delta: float) -> void:
 	_process_auto_world_generation()
 	_render_shroud()
 
-	var building_stack_count: int = Global.game_state.building_stack.size()
+	var card_stack_count: int = Global.game_state.card_stack.size()
 	var population: int = Global.game_state.population
 	if is_game_over(
-			building_stack_count,
+			card_stack_count,
 			population,
 			Global.game_state.building_instances.size()):
 		if not _game_over:
@@ -97,7 +97,7 @@ func _process(_delta: float) -> void:
 			_save_dirty = false
 			%GameOverMenu.open()
 			var game_over_type: GameOverType = (
-					GameOverType.NO_BUILDING_CARD if building_stack_count == 0
+					GameOverType.EMPTY_CARD_STACK if card_stack_count == 0
 					else GameOverType.NO_POPULATION if population == 0
 					else GameOverType.NONE
 			)
@@ -124,12 +124,12 @@ func is_save_dirty() -> bool:
 
 ## Returns [code][/code] if game over conditions has been satisfied.
 func is_game_over(
-		building_stack_count: int,
+		card_stack_count: int,
 		population: int,
 		buildings_placed: int
 ) -> bool:
 	if buildings_placed > 1:
-		if building_stack_count == 0:
+		if card_stack_count == 0:
 			return true
 		if population == 0:
 			return true
@@ -200,11 +200,11 @@ func _init_population(population: int) -> void:
 	%PopulationController.set_population(population)
 
 
-func _init_building_stack(
+func _init_card_stack(
 		session_seed: Variant = null,
 		session_state: Variant = null
 ) -> void:
-	_building_stack_controller.initialize_session(
+	_card_stack_controller.initialize_session(
 			session_seed,
 			session_state)
 

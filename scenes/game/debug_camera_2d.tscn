@@ -163,25 +163,25 @@ autowrap_mode = 0
 [node name="BuildingStackControlContainer" type="VFlowContainer" parent="DebugCanvasLayer/ControlPanelContainer/VBoxContainer/HBoxContainer" unique_id=1776058762]
 layout_mode = 2
 
-[node name="AddBuildingButton" type="Button" parent="DebugCanvasLayer/ControlPanelContainer/VBoxContainer/HBoxContainer/BuildingStackControlContainer" unique_id=312910407]
+[node name="AddCardButton" type="Button" parent="DebugCanvasLayer/ControlPanelContainer/VBoxContainer/HBoxContainer/BuildingStackControlContainer" unique_id=312910407]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 24
-text = " Stack: Add 🏠 "
+text = " Stack: Add 🎴 "
 
-[node name="PopBuildingButton" type="Button" parent="DebugCanvasLayer/ControlPanelContainer/VBoxContainer/HBoxContainer/BuildingStackControlContainer" unique_id=833915139]
+[node name="PopCardButton" type="Button" parent="DebugCanvasLayer/ControlPanelContainer/VBoxContainer/HBoxContainer/BuildingStackControlContainer" unique_id=833915139]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 24
-text = " Stack: Pop 🏠 "
+text = " Stack: Pop 🎴 "
 
-[node name="BuildingAddedLabel" type="Label" parent="DebugCanvasLayer/ControlPanelContainer/VBoxContainer/HBoxContainer/BuildingStackControlContainer" unique_id=1576380244]
+[node name="CardAddedLabel" type="Label" parent="DebugCanvasLayer/ControlPanelContainer/VBoxContainer/HBoxContainer/BuildingStackControlContainer" unique_id=1576380244]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -190,7 +190,7 @@ theme_override_font_sizes/font_size = 24
 text = " Added: NONE "
 vertical_alignment = 1
 
-[node name="BuildingPoppedLabel" type="Label" parent="DebugCanvasLayer/ControlPanelContainer/VBoxContainer/HBoxContainer/BuildingStackControlContainer" unique_id=1792827040]
+[node name="CardPoppedLabel" type="Label" parent="DebugCanvasLayer/ControlPanelContainer/VBoxContainer/HBoxContainer/BuildingStackControlContainer" unique_id=1792827040]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3

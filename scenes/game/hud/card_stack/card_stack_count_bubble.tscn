@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ceqdlfvyr4ufw"]
 
-[ext_resource type="Script" uid="uid://ceieqg86wvmw1" path="res://scripts/game/hud/building_stack/building_stack_count_bubble.gd" id="1_p1obv"]
+[ext_resource type="Script" uid="uid://ceieqg86wvmw1" path="res://scripts/game/hud/building_stack/card_stack_count_bubble.gd" id="1_p1obv"]
 [ext_resource type="Texture2D" uid="uid://c6qvbouopv6kg" path="res://assets/user_interface/building_stack/building_stack_count_label.png" id="2_n8of2"]
 [ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="3_rhox1"]
 
@@ -19,7 +19,7 @@ theme = ExtResource("3_rhox1")
 theme_override_constants/margin_left = 28
 theme_override_constants/margin_top = 16
 
-[node name="BuildingStackCountLabel" type="Label" parent="MarginContainer" unique_id=982776482]
+[node name="CardStackCountLabel" type="Label" parent="MarginContainer" unique_id=982776482]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 1

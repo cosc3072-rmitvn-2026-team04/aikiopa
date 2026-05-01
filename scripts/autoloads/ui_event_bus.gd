@@ -17,8 +17,8 @@ extends Node
 ## [/codeblock]
 
 
-## Emitted when the player picks up a [param building] card from the building
-## stack in the Game HUD.[br]
+## Emitted when the player picks up a [param building] card from the card stack
+## in the Game HUD.[br]
 ## [br]
 ## [param variation_value] identifies the sprite variation of that building
 ## card. See [method BuildingCard.set_type_and_variation].
@@ -28,7 +28,7 @@ signal building_card_picked(
 		variation_value: float)
 
 
-## Emitted when the player drops the [param building] card back to the building
+## Emitted when the player drops the [param building] card back to the card
 ## stack in the Game HUD.[br]
 ## [br]
 ## [param variation_value] identifies the sprite variation of that building

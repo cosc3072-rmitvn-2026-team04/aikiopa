@@ -29,7 +29,7 @@ func _ready() -> void:
 	GameplayEventBus.reward_triggered.connect(_on_reward_triggered)
 	GameplayEventBus.building_placed.connect(_on_building_placed)
 	GameplayEventBus.forest_enclosed.connect(_on_forest_enclosed)
-	GameplayEventBus.building_stack_building_added.connect(_on_building_stack_building_added)
+	GameplayEventBus.card_stack_card_added.connect(_on_building_stack_building_added)
 	UIEventBus.building_card_picked.connect(_on_building_card_picked)
 	UIEventBus.building_card_dropped.connect(_on_building_card_dropped)
 	UIEventBus.preview_cursor_snapped.connect(_on_preview_cursor_snapped)

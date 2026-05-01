@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="1_lsjxn"]
 [ext_resource type="Script" uid="uid://dwbowd2ej7gmq" path="res://scripts/game/hud/game_hud.gd" id="1_snjka"]
-[ext_resource type="PackedScene" uid="uid://csffjo6oq4r5m" path="res://scenes/game/hud/building_stack/building_stack_ui.tscn" id="2_snjka"]
+[ext_resource type="PackedScene" uid="uid://csffjo6oq4r5m" path="res://scenes/game/hud/card_stack/card_stack_ui.tscn" id="2_snjka"]
 [ext_resource type="StyleBox" uid="uid://bm2a7stf23aj4" path="res://resources/themes/styleboxes/stylebox_effect_preview_positive.tres" id="3_avxdk"]
 [ext_resource type="Script" uid="uid://bw13r5hq8oda8" path="res://scripts/game/hud/population_milestone_preview_progress_bar.gd" id="4_avxdk"]
 [ext_resource type="Texture2D" uid="uid://b1yghwopicrl4" path="res://assets/user_interface/hamburger_menu/hamburger_menu.png" id="6_ej252"]
@@ -222,7 +222,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_snjka")
 text = "NaN/NaN👨‍🚀"
 horizontal_alignment = 2
 
-[node name="BuildingStackUI" parent="." unique_id=776021788 instance=ExtResource("2_snjka")]
+[node name="CardStackUI" parent="." unique_id=776021788 instance=ExtResource("2_snjka")]
 unique_name_in_owner = true
 container_tween_update_duration = 1.1
 

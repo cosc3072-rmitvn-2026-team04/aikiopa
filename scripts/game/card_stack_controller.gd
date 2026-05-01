@@ -1,7 +1,6 @@
-class_name BuildingStackController
+class_name CardStackController
 extends Node
-## Manages the player's building card stack. In computer science terms, this
-## works as a
+## Manages the player's card stack. In computer science terms, this works as a
 ## [url=https://en.wikipedia.org/wiki/Queue_(abstract_data_type)]queue[/url].
 
 
@@ -25,7 +24,7 @@ const MAX_REROLL_COUNT: int = 10_000
 ## with higher weights appear more often than those with lower weights.[br]
 ## [br]
 ## Used as input for the internal [method RandomNumberGenerator.rand_weighted]
-## calls in this [BuildingStackController].[br]
+## calls in this [CardStackController].[br]
 ## [br]
 ## [b]Note:[/b] Setting a weight to [code]0[/code] means the corresponding
 ## building would never appear.[br]
@@ -85,9 +84,9 @@ func _ready() -> void:
 # ============================================================================ #
 #region Public methods
 
-## Initializes the building stack generator, or restore a previous state by
-## providing [param building_queue] [param session_seed], and
-## [param session_state] with non empty values.[br]
+## Initializes the card stack generator, or restore a previous state by
+## providing [param session_seed], and [param session_state] with non empty
+## values.[br]
 ## [br]
 ## [b]Note:[/b] Do not set [param session_state] to arbitrary values, since the
 ## internal [RandomNumberGenerator] requires its state to have certain qualities
@@ -109,12 +108,12 @@ func initialize_session(
 		_rng.state = session_state
 	else:
 		_rng.randomize()
-		Global.game_state.building_stack_seed = get_session_seed()
-		for building_type:Building.BuildingType in guaranteed_starting_buildings:
+		Global.game_state.card_stack_seed = get_session_seed()
+		for building_type: Building.BuildingType in guaranteed_starting_buildings:
 			add_building(building_type)
 		for iteration: int in range(starting_random_buildings_count):
 			add_building()
-		Global.game_state.building_stack_state = get_session_state()
+		Global.game_state.card_stack_state = get_session_state()
 
 
 ## Returns the seed of the internal [RandomNumberGenerator]. Useful for saving
@@ -129,12 +128,13 @@ func get_session_state() -> int:
 	return _rng.state
 
 
-## Adds a random [enum Building.BuildingType] to the bottom of the building
-## stack, then returns it. Only generates buildings that has a valid tile to
-## be placed on. Returns [constant Building.NONE] if cannot roll for a suitable
-## building type before reaching [constant MAX_REROLL_COUNT].[br]
+# TODO: Update this (#21).
+## Adds a random [enum Building.BuildingType] to the bottom of the card stack,
+## then returns it. Only generates buildings that has a valid tile to be placed
+## on. Returns [constant Building.NONE] if cannot roll for a suitable building
+## type before reaching [constant MAX_REROLL_COUNT].[br]
 ## [br]
-## If [param building_type] is provided, adds that to the building stack
+## If [param building_type] is provided, adds that to the card stack
 ## instead.
 func add_building(
 		building_type: Building.BuildingType = Building.BuildingType.NONE
@@ -145,9 +145,9 @@ func add_building(
 	}
 
 	if building_type != Building.BuildingType.NONE:
-		building_dictionary.variation_value = _generate_variation_value()
-		Global.game_state.building_stack.push_front(building_dictionary)
-		GameplayEventBus.building_stack_building_added.emit(
+		building_dictionary.variation_value = _generate_building_variation_value()
+		Global.game_state.card_stack.push_front(building_dictionary)
+		GameplayEventBus.card_stack_card_added.emit(
 				building_dictionary.building_type,
 				building_dictionary.variation_value)
 		return building_type
@@ -164,7 +164,7 @@ func add_building(
 				_rng.rand_weighted(PackedFloat32Array(building_type_weights.values()))
 				+ 1 # Skip Building.BuildingType.NONE.
 		) as Building.BuildingType
-		Global.game_state.building_stack_state = get_session_state()
+		Global.game_state.card_stack_state = get_session_state()
 
 		# Loop through all buildings at the edge of the colony.
 		for edge_coords in Global.game_state.edge_coords:
@@ -186,17 +186,17 @@ func add_building(
 				):
 					valid_placement_count += 1
 
-		var building_stack_building_type_only: Array[Building.BuildingType] = []
-		building_stack_building_type_only = Array(Global.game_state.building_stack.map(
+		var card_stack_building_type_only: Array[Building.BuildingType] = []
+		card_stack_building_type_only = Array(Global.game_state.card_stack.map(
 				func (
 						building_dictionary_from_stack: Dictionary[StringName, Variant]
 				) -> Building.BuildingType:
 						return building_dictionary_from_stack.building_type),
 				TYPE_INT, "", null)
 		if (
-				# The building stack has more cards of 'new_building_type' than
+				# The card stack has more cards of 'new_building_type' than
 				# there is available space for it.
-				building_stack_building_type_only.count(new_building_type)
+				card_stack_building_type_only.count(new_building_type)
 				>= valid_placement_count
 		):
 			valid_placement_count = 0 # Reset and go to the next reroll.
@@ -206,42 +206,42 @@ func add_building(
 		return new_building_type
 
 	building_dictionary.building_type = new_building_type
-	building_dictionary.variation_value = _generate_variation_value()
-	Global.game_state.building_stack.push_front(building_dictionary)
-	GameplayEventBus.building_stack_building_added.emit(
+	building_dictionary.variation_value = _generate_building_variation_value()
+	Global.game_state.card_stack.push_front(building_dictionary)
+	GameplayEventBus.card_stack_card_added.emit(
 			building_dictionary.building_type,
 			building_dictionary.variation_value)
 	return new_building_type
 
 
-## Pops and returns the building type at the top of the building stack. Returns
-## [constant Building.NONE] if the building stack is already empty.
+## Pops and returns the building type at the top of the card stack. Returns
+## [constant Building.NONE] if the card stack is already empty.
 func pop_building() -> Building.BuildingType:
 	if is_empty():
 		return Building.BuildingType.NONE
 	var building_dictionary: Dictionary[StringName, Variant] =\
-			Global.game_state.building_stack.pop_back()
-	GameplayEventBus.building_stack_building_popped.emit(
+			Global.game_state.card_stack.pop_back()
+	GameplayEventBus.card_stack_card_popped.emit(
 			building_dictionary.building_type,
 			building_dictionary.variation_value)
 	return building_dictionary.building_type
 
 
-## Removes all buildings from the building stack.
-func clear_building_queue() -> void:
-	Global.game_state.building_stack.clear()
+## Removes all cards from the card stack.
+func clear_card_queue() -> void:
+	Global.game_state.card_stack.clear()
 
 
-## Returns the number of building in the building stack. Empty building stack
+## Returns the number of cards in the card stack. Empty card stack
 ## always returns [code]0[/code]. See also [method is_empty].
 func size() -> int:
-	return Global.game_state.building_stack.size()
+	return Global.game_state.card_stack.size()
 
 
-## Returns [code]true[/code] if the building stack is empty ([code][][/code]).
+## Returns [code]true[/code] if the card stack is empty ([code][][/code]).
 ## See also [method size].
 func is_empty() -> bool:
-	return Global.game_state.building_stack.is_empty()
+	return Global.game_state.card_stack.is_empty()
 
 #endregion
 # ============================================================================ #
@@ -250,9 +250,9 @@ func is_empty() -> bool:
 # ============================================================================ #
 #region Private methods
 
-func _generate_variation_value() -> float:
+func _generate_building_variation_value() -> float:
 	var variation_value: float = _rng.randf_range(-1.0, 1.0)
-	Global.game_state.building_stack_state = get_session_state()
+	Global.game_state.card_stack_state = get_session_state()
 	return variation_value
 
 #endregion
@@ -262,6 +262,7 @@ func _generate_variation_value() -> float:
 # ============================================================================ #
 #region Signal listeners
 
+# TODO: Update this (#21).
 # Listens to GameplayEventBus.building_placed(
 #		coords: Vector2i,
 #		building_type: Building.BuildingType,
@@ -273,15 +274,15 @@ func _on_building_placed(
 		_variation_value: float,
 		interaction_result: BuildingRulesetEngine.InteractionResult
 ) -> void:
-	var building_stack_top: Building.BuildingType =\
-			Global.game_state.building_stack.back().building_type
-	if building_stack_top != building_type:
+	var card_stack_top: Building.BuildingType =\
+			Global.game_state.card_stack.back().building_type
+	if card_stack_top != building_type:
 		# WARNING: DO NOT REMOVE THIS CHECK. It is useful for catching quiet
-		# semantic errors produced by any regressions in [BuildingStackUI],
-		# which is tightly coupled to multiple game systems. This is obviously
-		# suboptimal, but fix (#173) is not needed for now.
+		# semantic errors produced by any regressions in [CardStackUI], which is
+		## tightly coupled to multiple game systems. This is obviously not
+		## optimal, but fix (#173) is not needed for now.
 		push_error("Top building card (%s) does not match placed building (%s)" % [
-			Building.BuildingType.keys()[building_stack_top],
+			Building.BuildingType.keys()[card_stack_top],
 			Building.BuildingType.keys()[building_type],
 		])
 		return

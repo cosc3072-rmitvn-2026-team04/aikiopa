@@ -29,7 +29,7 @@ extends Camera2D
 
 
 @export var world: World = null
-@export var building_stack_controller: BuildingStackController = null
+@export var card_stack_controller: CardStackController = null
 @export var population_controller: PopulationController = null
 
 #endregion
@@ -52,8 +52,8 @@ func _ready() -> void:
 	%DebugCanvasLayer.visible = false
 	UIEventBus.gameplay_debug_mode_toggled.connect(
 			_on_gameplay_debug_mode_toggled)
-	%AddBuildingButton.pressed.connect(_on_add_building_button_pressed)
-	%PopBuildingButton.pressed.connect(_on_pop_building_button_pressed)
+	%AddCardButton.pressed.connect(_on_add_card_button_pressed)
+	%PopCardButton.pressed.connect(_on_pop_card_button_pressed)
 	%ChangePopulationButton.pressed.connect(_on_change_population_button_pressed)
 	%ShroudDisplayCheckBox.toggled.connect(_on_shroud_display_check_button_toggled)
 
@@ -128,20 +128,22 @@ func _on_gameplay_debug_mode_toggled(toggled_on: bool) -> void:
 		%DebugCanvasLayer.visible = false
 
 
-# Listens to %AddBuildingButton.pressed.
-func _on_add_building_button_pressed() -> void:
+# TODO: Update this (#21).
+# Listens to %AddCardButton.pressed.
+func _on_add_card_button_pressed() -> void:
 	var added_building_type: Building.BuildingType =\
-			building_stack_controller.add_building()
-	%BuildingAddedLabel.text = " Added: %s " % [
+			card_stack_controller.add_building()
+	%CardAddedLabel.text = " Added: %s " % [
 		Building.BuildingType.keys()[added_building_type]
 	]
 
 
-# Listens to %PopBuildingButton.pressed.
-func _on_pop_building_button_pressed() -> void:
+# TODO: Update this (#21).
+# Listens to %PopCardButton.pressed.
+func _on_pop_card_button_pressed() -> void:
 	var popped_building_type: Building.BuildingType =\
-			building_stack_controller.pop_building()
-	%BuildingPoppedLabel.text = " Popped: %s " % [
+			card_stack_controller.pop_building()
+	%CardPoppedLabel.text = " Popped: %s " % [
 		Building.BuildingType.keys()[popped_building_type]
 	]
 
