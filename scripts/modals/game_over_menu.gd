@@ -21,8 +21,6 @@ func _ready() -> void:
 
 ## Show the Game Over Menu.
 func open() -> void:
-	# TODO: This could be made prettier using a Tween animation to slide the
-	# menu in.
 	process_mode = Node.PROCESS_MODE_INHERIT
 	show()
 
