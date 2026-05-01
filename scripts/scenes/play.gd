@@ -6,6 +6,9 @@ extends GameScene2D
 #region Godot builtins
 
 func _ready() -> void:
+	# Show the SceneTransitionCanvasLayer because it is set to hidden in the
+	# Godot editor for easier debugging.
+	%SceneTransitionCanvasLayer.show()
 	_scene_transition_in()
 
 #endregion
@@ -22,6 +25,12 @@ func _scene_transition_in() -> void:
 	%LoadBackgroundColorRect.color = ProjectSettings.get_setting(
 			"rendering/environment/defaults/default_clear_color")
 
+
+func _scene_transition_out() -> void:
+	%SceneTransitionCanvasLayer.show()
+	%SceneTransitionAnimationPlayer.play(&"transition_out")
+	await %SceneTransitionAnimationPlayer.animation_finished
+
 #endregion
 # ============================================================================ #
 
@@ -31,6 +40,7 @@ func _scene_transition_in() -> void:
 
 ## Triggers a scene switch to [param scene_key].
 func switch_scene(scene_key: SceneKey) -> void:
+	await _scene_transition_out()
 	scene_finished.emit(scene_key)
 
 #endregion

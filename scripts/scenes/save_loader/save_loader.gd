@@ -1,4 +1,14 @@
+class_name SaveLoader
 extends GameScene2D
+
+
+# ============================================================================ #
+#region Static variables
+
+static var _refreshing: bool = false
+
+#endregion
+# ============================================================================ #
 
 
 # ============================================================================ #
@@ -14,7 +24,9 @@ var _save_slot_scene: PackedScene = preload("res://scenes/save_loader/save_slot.
 #region Godot builtins
 
 func _ready() -> void:
-	_scene_transition_in()
+	_scene_transition_in(_refreshing)
+	if _refreshing:
+		_refreshing = false
 
 	%BackButton.pressed.connect(_on_back_button_pressed)
 	%SaveLoaderUI.acted.connect(_on_save_loader_ui_acted)
@@ -41,10 +53,15 @@ func _ready() -> void:
 # ============================================================================ #
 #region Private methods
 
-func _scene_transition_in() -> void:
+func _scene_transition_in(refreshing: bool) -> void:
 	%SceneTransitionAnimationPlayer.play(&"transition_in")
-	await %SceneTransitionAnimationPlayer.animation_finished
-	%SceneTransitionCanvasLayer.hide()
+	if refreshing:
+		%SceneTransitionCanvasLayer.hide()
+		%SceneTransitionAnimationPlayer.advance(
+				%SceneTransitionAnimationPlayer.get_animation(&"transition_in").length)
+	else:
+		await %SceneTransitionAnimationPlayer.animation_finished
+		%SceneTransitionCanvasLayer.hide()
 
 
 func _scene_transition_out() -> void:
@@ -61,6 +78,7 @@ func _scene_transition_out() -> void:
 
 # Listens to %BackButton.pressed.
 func _on_back_button_pressed() -> void:
+	MainMenu.scene_transition_in_enabled = false
 	scene_finished.emit(SceneKey.MAIN_MENU)
 
 
@@ -68,6 +86,7 @@ func _on_back_button_pressed() -> void:
 func _on_save_loader_ui_acted(action: StringName) -> void:
 	match action:
 		&"refresh":
+			_refreshing = true
 			scene_finished.emit(GameScene2D.SceneKey.SAVE_LOADER)
 
 

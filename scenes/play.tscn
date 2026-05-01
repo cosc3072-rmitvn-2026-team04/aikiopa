@@ -9,37 +9,55 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("InTransitionColorRect:material:shader_parameter/progress")
+tracks/0/path = NodePath("TransitionColorRect:material:shader_parameter/progress")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [-1.0]
+"values": [-1.5]
 }
 
 [sub_resource type="Animation" id="Animation_hsi3f"]
 resource_name = "transition_in"
-length = 0.5
+length = 0.8
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("InTransitionColorRect:material:shader_parameter/progress")
+tracks/0/path = NodePath("TransitionColorRect:material:shader_parameter/progress")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
+"times": PackedFloat32Array(0.3, 0.8),
 "transitions": PackedFloat32Array(0.5, 1),
 "update": 0,
-"values": [-1.0, 3.5]
+"values": [-1.5, 3.5]
+}
+
+[sub_resource type="Animation" id="Animation_65v2a"]
+resource_name = "transition_out"
+length = 0.8
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TransitionColorRect:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(4, 1),
+"update": 0,
+"values": [3.5, -1.5]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_65v2a"]
 _data = {
 &"RESET": SubResource("Animation_bq38n"),
-&"transition_in": SubResource("Animation_hsi3f")
+&"transition_in": SubResource("Animation_hsi3f"),
+&"transition_out": SubResource("Animation_65v2a")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_65v2a"]
@@ -67,7 +85,7 @@ shader_parameter/edges = 6
 shader_parameter/shape_feather = 0.1
 shader_parameter/sectors = 1
 shader_parameter/clock_feather = 0.0
-shader_parameter/progress = -1.0
+shader_parameter/progress = -1.5
 shader_parameter/progress_bias = Vector2(0, 0)
 
 [node name="Play" type="Node2D" unique_id=209919511]
@@ -91,12 +109,14 @@ play_scene = NodePath("..")
 
 [node name="SceneTransitionCanvasLayer" type="CanvasLayer" parent="." unique_id=396214211]
 unique_name_in_owner = true
+layer = 99
+visible = false
 
 [node name="SceneTransitionAnimationPlayer" type="AnimationPlayer" parent="SceneTransitionCanvasLayer" unique_id=793813956]
 unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_65v2a")
 
-[node name="InTransitionColorRect" type="ColorRect" parent="SceneTransitionCanvasLayer" unique_id=539030134]
+[node name="TransitionColorRect" type="ColorRect" parent="SceneTransitionCanvasLayer" unique_id=539030134]
 material = SubResource("ShaderMaterial_65v2a")
 anchors_preset = 15
 anchor_right = 1.0
