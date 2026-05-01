@@ -107,6 +107,7 @@ func _on_save_loader_ui_acted_with_data(
 ) -> void:
 	match action:
 		&"new_session":
+			%BackButton.process_mode = Node.PROCESS_MODE_DISABLED
 			Global.current_save_slot_index = int(data)
 			Global.is_new_game = true
 			%SceneTransitionCanvasLayer.show()
@@ -114,6 +115,7 @@ func _on_save_loader_ui_acted_with_data(
 			scene_transition_out_started.emit(Color.BLACK)
 			scene_finished.emit(GameScene2D.SceneKey.PLAY)
 		&"load_session":
+			%BackButton.process_mode = Node.PROCESS_MODE_DISABLED
 			Global.current_save_slot_index = int(data)
 			Global.is_new_game = false
 			await _scene_transition_out_to_play()

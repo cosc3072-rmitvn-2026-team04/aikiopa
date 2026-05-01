@@ -254,7 +254,7 @@ func _render_shroud() -> void:
 #region _input()
 
 func _input_command_game_menu(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_quit"):
+	if not _game_over and event.is_action_pressed("ui_quit"):
 		_open_game_menu()
 
 
