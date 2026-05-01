@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://dk6v00jrx7hg"]
 
 [ext_resource type="Script" uid="uid://b6mrsjfb5u8b1" path="res://scripts/scenes/save_loader/save_loader.gd" id="1_r0hmw"]
-[ext_resource type="PackedScene" uid="uid://bgb6qk47e8yq8" path="res://scenes/main_background_art.tscn" id="2_4sn0j"]
 [ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="2_olopm"]
 [ext_resource type="Material" uid="uid://ds2pe4fbpgkjp" path="res://resources/materials/save_loader_overlay_shader_material.tres" id="3_dq3ih"]
 [ext_resource type="Script" uid="uid://cupvablkoadik" path="res://scripts/core/game_ui.gd" id="5_4sn0j"]
@@ -55,6 +54,30 @@ tracks/3/keys = {
 "handle_modes": PackedInt32Array(0),
 "points": PackedFloat32Array(-1080, 0, 0, 0, 0),
 "times": PackedFloat32Array(0)
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("%SceneTransitionCanvasLayer/../OverlayCanvasLayer/OverlayColorRect:material:shader_parameter/strength")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(2),
+"update": 0,
+"values": [0.00999999977648]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("%SceneTransitionCanvasLayer/../OverlayCanvasLayer/OverlayColorRect:material:shader_parameter/mix_percentage")
+tracks/5/interp = 2
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(2),
+"update": 0,
+"values": [0.0]
 }
 
 [sub_resource type="Animation" id="Animation_3jrjb"]
@@ -228,9 +251,6 @@ shader_parameter/progress_bias = Vector2(0, 0)
 [node name="SaveLoader" type="Node2D" unique_id=1976988115]
 script = ExtResource("1_r0hmw")
 metadata/_custom_type_script = "uid://dqjitm5fwb83b"
-
-[node name="MainBackgroundArt" parent="." unique_id=510397190 instance=ExtResource("2_4sn0j")]
-position = Vector2(0, -5)
 
 [node name="OverlayCanvasLayer" type="CanvasLayer" parent="." unique_id=192039102]
 

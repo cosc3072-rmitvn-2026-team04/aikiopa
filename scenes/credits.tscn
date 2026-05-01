@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://xxxh008diddy"]
 
 [ext_resource type="Script" uid="uid://bjico263pdusu" path="res://scripts/scenes/credits.gd" id="1_2ckv8"]
-[ext_resource type="PackedScene" uid="uid://bgb6qk47e8yq8" path="res://scenes/main_background_art.tscn" id="2_2fbfq"]
 [ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="3_0ctdu"]
 [ext_resource type="Material" uid="uid://cibobvof01gdw" path="res://resources/materials/credits_overlay_shader_material.tres" id="3_2fbfq"]
 
@@ -17,7 +16,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [5.00000023424012]
+"values": [0.00999999977648]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -29,7 +28,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.750000035625]
+"values": [0.0]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -41,7 +40,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_mah5v"]
@@ -141,8 +140,6 @@ metadata/_custom_type_script = "uid://dqjitm5fwb83b"
 unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_mah5v")
 
-[node name="MainBackgroundArt" parent="." unique_id=510397190 instance=ExtResource("2_2fbfq")]
-
 [node name="OverlayCanvasLayer" type="CanvasLayer" parent="." unique_id=655295641]
 
 [node name="ColorRect" type="ColorRect" parent="OverlayCanvasLayer" unique_id=1506790693]
@@ -160,6 +157,7 @@ size_flags_vertical = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MainCanvasLayer" unique_id=104342115]
 unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

@@ -4,5 +4,5 @@
 
 [resource]
 shader = ExtResource("1_lu70w")
-shader_parameter/strength = 5.00000023424012
-shader_parameter/mix_percentage = 0.750000035625
+shader_parameter/strength = 0.00999999977648
+shader_parameter/mix_percentage = 0.0

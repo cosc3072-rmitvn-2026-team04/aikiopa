@@ -76,6 +76,7 @@ root_node = NodePath("../CanvasLayer/SpaceshipSprite2D")
 libraries/ = SubResource("AnimationLibrary_oa1go")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=386449256]
+layer = -98
 
 [node name="BackgroundSprite2D" type="Sprite2D" parent="CanvasLayer" unique_id=154282713]
 texture = ExtResource("1_fpui0")

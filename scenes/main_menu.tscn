@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://dn6k6ykoyxmka" path="res://scripts/scenes/main_menu/main_menu.gd" id="1_0ebjn"]
 [ext_resource type="Script" uid="uid://pv8kfa1omp0b" path="res://scripts/scenes/main_menu/main_menu_ui.gd" id="2_ekxnf"]
-[ext_resource type="PackedScene" uid="uid://bgb6qk47e8yq8" path="res://scenes/main_background_art.tscn" id="2_wu84c"]
 [ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="3_wu84c"]
 [ext_resource type="Shader" uid="uid://df8w2bkx1lv8f" path="res://shaders/scene_transition.gdshader" id="5_8ln24"]
 
@@ -130,8 +129,6 @@ shader_parameter/progress_bias = Vector2(0, 0)
 [node name="MainMenu" type="Node2D" unique_id=285205235]
 script = ExtResource("1_0ebjn")
 metadata/_custom_type_script = "uid://dqjitm5fwb83b"
-
-[node name="MainBackgroundArt" parent="." unique_id=510397190 instance=ExtResource("2_wu84c")]
 
 [node name="MainMenuUICanvasLayer" type="CanvasLayer" parent="." unique_id=262500120]
 

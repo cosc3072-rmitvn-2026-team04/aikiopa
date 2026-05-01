@@ -2,11 +2,14 @@
 
 [ext_resource type="Script" uid="uid://bjaipx0r7jeis" path="res://scripts/main.gd" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://b02xedqua4uqn" path="res://scripts/core/sfx_controller.gd" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://bgb6qk47e8yq8" path="res://scenes/main_background_art.tscn" id="2_tbgi4"]
 [ext_resource type="AudioStream" uid="uid://jo0imjm4kyt2" path="res://assets/sfx/button_hovered.ogg" id="3_sugp2"]
 [ext_resource type="AudioStream" uid="uid://b21nxmqihj2m8" path="res://assets/sfx/button_pressed.ogg" id="4_jyhfs"]
 
 [node name="Main" type="Node" unique_id=2039568771]
 script = ExtResource("1_o5qli")
+
+[node name="MainBackgroundArt" parent="." unique_id=510397190 instance=ExtResource("2_tbgi4")]
 
 [node name="SceneTransitionBackgroundCanvasLayer" type="CanvasLayer" parent="." unique_id=392627524]
 unique_name_in_owner = true
