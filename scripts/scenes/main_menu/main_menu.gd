@@ -30,6 +30,7 @@ func _ready() -> void:
 	_scene_transition_in()
 	if not scene_transition_in_enabled:
 		scene_transition_in_enabled = true
+	_show_ui()
 
 	%MainMenuUI.acted.connect(_on_main_menu_ui_acted)
 
@@ -50,6 +51,16 @@ func _scene_transition_in() -> void:
 		await %SceneTransitionAnimationPlayer.animation_finished
 		%SceneTransitionCanvasLayer.hide()
 
+
+func _show_ui() -> void:
+	%MainMenuUIAnimationPlayer.play("show_ui")
+	await %MainMenuUIAnimationPlayer.animation_finished
+
+
+func _hide_ui() -> void:
+	%MainMenuUIAnimationPlayer.play("hide_ui")
+	await %MainMenuUIAnimationPlayer.animation_finished
+
 #endregion
 # ============================================================================ #
 
@@ -61,12 +72,16 @@ func _scene_transition_in() -> void:
 func _on_main_menu_ui_acted(action: StringName) -> void:
 	match action:
 		&"start":
+			await _hide_ui()
 			scene_finished.emit(SceneKey.SAVE_LOADER)
 		&"gallery":
+			await _hide_ui()
 			scene_finished.emit(SceneKey.GALLERY_LOADER)
 		&"settings":
+			await _hide_ui()
 			scene_finished.emit(SceneKey.SETTINGS)
 		&"credits":
+			await _hide_ui()
 			scene_finished.emit(SceneKey.CREDITS)
 		&"quit":
 			get_tree().quit()
