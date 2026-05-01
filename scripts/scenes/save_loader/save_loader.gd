@@ -64,9 +64,15 @@ func _scene_transition_in(refreshing: bool) -> void:
 		%SceneTransitionCanvasLayer.hide()
 
 
-func _scene_transition_out() -> void:
+func _scene_transition_out_to_main_menu() -> void:
 	%SceneTransitionCanvasLayer.show()
-	%SceneTransitionAnimationPlayer.play(&"transition_out")
+	%SceneTransitionAnimationPlayer.play(&"transition_out_to_main_menu")
+	await %SceneTransitionAnimationPlayer.animation_finished
+
+
+func _scene_transition_out_to_play() -> void:
+	%SceneTransitionCanvasLayer.show()
+	%SceneTransitionAnimationPlayer.play(&"transition_out_to_play")
 	await %SceneTransitionAnimationPlayer.animation_finished
 
 #endregion
@@ -79,6 +85,7 @@ func _scene_transition_out() -> void:
 # Listens to %BackButton.pressed.
 func _on_back_button_pressed() -> void:
 	MainMenu.scene_transition_in_enabled = false
+	await _scene_transition_out_to_main_menu()
 	scene_finished.emit(SceneKey.MAIN_MENU)
 
 
@@ -100,12 +107,12 @@ func _on_save_loader_ui_acted_with_data(
 			Global.current_save_slot_index = int(data)
 			Global.is_new_game = true
 			%SceneTransitionCanvasLayer.show()
-			await _scene_transition_out()
+			await _scene_transition_out_to_play()
 			scene_finished.emit(GameScene2D.SceneKey.PLAY)
 		&"load_session":
 			Global.current_save_slot_index = int(data)
 			Global.is_new_game = false
-			await _scene_transition_out()
+			await _scene_transition_out_to_play()
 			scene_finished.emit(GameScene2D.SceneKey.PLAY)
 
 #endregion

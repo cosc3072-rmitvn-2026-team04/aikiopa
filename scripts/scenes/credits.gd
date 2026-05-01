@@ -28,6 +28,8 @@ var _current_scroll_position: float = 0.0
 #region Godot builtins
 
 func _ready() -> void:
+	_scene_transition_in()
+
 	# Scroll restart Timer.
 	add_child(_scroll_resart_timer)
 	_scroll_resart_timer.one_shot = true
@@ -59,6 +61,8 @@ func _process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		scroll_paused = true
+		MainMenu.scene_transition_in_enabled = false
+		await _scene_transition_out()
 		scene_finished.emit(SceneKey.MAIN_MENU)
 
 #endregion
@@ -67,6 +71,16 @@ func _input(event: InputEvent) -> void:
 
 # ============================================================================ #
 #region Private methods
+
+func _scene_transition_in() -> void:
+	%SceneTransitionAnimationPlayer.play(&"transition_in")
+	await %SceneTransitionAnimationPlayer.animation_finished
+
+
+func _scene_transition_out() -> void:
+	%SceneTransitionAnimationPlayer.play(&"transition_out")
+	await %SceneTransitionAnimationPlayer.animation_finished
+
 
 func _start_scroll_restart_timer() -> void:
 	scroll_paused = true
