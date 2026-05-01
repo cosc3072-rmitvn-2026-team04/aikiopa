@@ -13,9 +13,11 @@ script = ExtResource("1_o5qli")
 
 [node name="SceneTransitionBackgroundCanvasLayer" type="CanvasLayer" parent="." unique_id=392627524]
 unique_name_in_owner = true
-layer = -99
+layer = -98
+visible = false
 
 [node name="SceneTransitionBackgroundColorRect" type="ColorRect" parent="SceneTransitionBackgroundCanvasLayer" unique_id=688529976]
+unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

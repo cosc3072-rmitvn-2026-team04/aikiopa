@@ -104,8 +104,8 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0)
 
-[node name="Game" parent="." unique_id=1327406412 node_paths=PackedStringArray("play_scene") instance=ExtResource("2_bq38n")]
-play_scene = NodePath("..")
+[node name="Game" parent="." unique_id=1327406412 node_paths=PackedStringArray("container_scene") instance=ExtResource("2_bq38n")]
+container_scene = NodePath("..")
 
 [node name="SceneTransitionCanvasLayer" type="CanvasLayer" parent="." unique_id=396214211]
 unique_name_in_owner = true

@@ -6,6 +6,12 @@
 [ext_resource type="Script" uid="uid://cupvablkoadik" path="res://scripts/core/game_ui.gd" id="5_4sn0j"]
 [ext_resource type="Shader" uid="uid://df8w2bkx1lv8f" path="res://shaders/scene_transition.gdshader" id="6_dq3ih"]
 
+[sub_resource type="InputEventAction" id="InputEventAction_4sn0j"]
+action = &"ui_cancel"
+
+[sub_resource type="Shortcut" id="Shortcut_4sn0j"]
+events = [SubResource("InputEventAction_4sn0j")]
+
 [sub_resource type="Animation" id="Animation_dq3ih"]
 length = 0.001
 tracks/0/type = "value"
@@ -304,6 +310,8 @@ alignment = 1
 [node name="BackButton" type="Button" parent="CanvasLayer/SaveLoaderUI/MarginContainer/VBoxContainer/HBoxContainer" unique_id=172643860 groups=["ui_buttons"]]
 unique_name_in_owner = true
 layout_mode = 2
+shortcut = SubResource("Shortcut_4sn0j")
+shortcut_in_tooltip = false
 text = "Back"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/SaveLoaderUI/MarginContainer/VBoxContainer" unique_id=1263478805]

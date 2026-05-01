@@ -1,7 +1,13 @@
 extends GameScene2D
 
 
+# ============================================================================ #
+#region Private variables
+
 @onready var _animation_player: AnimationPlayer = %AnimationPlayer
+
+#endregion
+# ============================================================================ #
 
 
 # ============================================================================ #
@@ -25,6 +31,7 @@ func _process(_delta: float) -> void:
 
 func _end_splash() -> void:
 	_animation_player.stop(true)
+	scene_transition_out_started.emit(Color.BLACK)
 	scene_finished.emit(SceneKey.MAIN_MENU)
 
 #endregion

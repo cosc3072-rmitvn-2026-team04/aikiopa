@@ -21,8 +21,10 @@ static var scene_transition_in_enabled: bool = true
 #region Godot builtins
 
 func _ready() -> void:
+	%MainMenuUI.acted.connect(_on_main_menu_ui_acted)
 	%GameVersionLabel.text = "v%s" % ProjectSettings.get_setting(
 			"application/config/version")
+	_show_ui()
 
 	# Show the SceneTransitionCanvasLayer because it is set to hidden in the
 	# Godot editor for easier debugging.
@@ -30,9 +32,7 @@ func _ready() -> void:
 	_scene_transition_in()
 	if not scene_transition_in_enabled:
 		scene_transition_in_enabled = true
-	_show_ui()
-
-	%MainMenuUI.acted.connect(_on_main_menu_ui_acted)
+	scene_transition_in_finished.emit.call_deferred()
 
 #endregion
 # ============================================================================ #
@@ -40,6 +40,15 @@ func _ready() -> void:
 
 # ============================================================================ #
 #region Private methods
+
+func _show_ui() -> void:
+	%MainMenuUIAnimationPlayer.play("show_ui")
+	await %MainMenuUIAnimationPlayer.animation_finished
+
+
+func _hide_ui() -> void:
+	%MainMenuUIAnimationPlayer.play("hide_ui")
+	await %MainMenuUIAnimationPlayer.animation_finished
 
 func _scene_transition_in() -> void:
 	%SceneTransitionAnimationPlayer.play(&"transition_in")
@@ -50,16 +59,6 @@ func _scene_transition_in() -> void:
 	else:
 		await %SceneTransitionAnimationPlayer.animation_finished
 		%SceneTransitionCanvasLayer.hide()
-
-
-func _show_ui() -> void:
-	%MainMenuUIAnimationPlayer.play("show_ui")
-	await %MainMenuUIAnimationPlayer.animation_finished
-
-
-func _hide_ui() -> void:
-	%MainMenuUIAnimationPlayer.play("hide_ui")
-	await %MainMenuUIAnimationPlayer.animation_finished
 
 #endregion
 # ============================================================================ #

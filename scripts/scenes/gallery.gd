@@ -1,4 +1,4 @@
-class_name Play
+class_name Gallery
 extends GameScene2D
 
 
