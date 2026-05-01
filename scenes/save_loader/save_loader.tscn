@@ -5,6 +5,232 @@
 [ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="2_olopm"]
 [ext_resource type="Material" uid="uid://ds2pe4fbpgkjp" path="res://resources/materials/save_loader_overlay_shader_material.tres" id="3_dq3ih"]
 [ext_resource type="Script" uid="uid://cupvablkoadik" path="res://scripts/core/game_ui.gd" id="5_4sn0j"]
+[ext_resource type="Shader" uid="uid://df8w2bkx1lv8f" path="res://shaders/scene_transition.gdshader" id="6_dq3ih"]
+
+[sub_resource type="Animation" id="Animation_dq3ih"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OutTransitionColorRect:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [4.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../OverlayCanvasLayer/OverlayColorRect:material:shader_parameter/strength")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [5.00000019]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../OverlayCanvasLayer/OverlayColorRect:material:shader_parameter/mix_percentage")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.6000000285]
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("%SaveLoaderUI:position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-1080, 0, 0, 0, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("%SceneTransitionCanvasLayer/../OverlayCanvasLayer/OverlayColorRect:material/shader_parameter/strength")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("%SceneTransitionCanvasLayer/../OverlayCanvasLayer/OverlayColorRect:material/shader_parameter/mix_percentage")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("%SceneTransitionCanvasLayer/../OverlayCanvasLayer/OverlayColorRect:material:shader_parameter/mix_percentage")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.6000000285]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("%SceneTransitionCanvasLayer/../OverlayCanvasLayer/OverlayColorRect:material:shader_parameter/strength")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [5.00000019]
+}
+
+[sub_resource type="Animation" id="Animation_3jrjb"]
+resource_name = "transition_in"
+length = 0.8
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%SceneTransitionCanvasLayer/../OverlayCanvasLayer/OverlayColorRect:material:shader_parameter/strength")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [1.0, 5.00000019]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("%SceneTransitionCanvasLayer/../OverlayCanvasLayer/OverlayColorRect:material:shader_parameter/mix_percentage")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [0.0, 0.6000000285]
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("%SaveLoaderUI:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-1080, 0, 0, 0, 0, 0, -0.8, 80, 0, 0),
+"times": PackedFloat32Array(0, 0.8)
+}
+
+[sub_resource type="Animation" id="Animation_tcuml"]
+resource_name = "transition_out"
+length = 3.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OutTransitionColorRect:material:shader_parameter/progress")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(2.5, 3),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [3.5, -1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../OverlayCanvasLayer/OverlayColorRect:material:shader_parameter/strength")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [5.00000019, 1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../OverlayCanvasLayer/OverlayColorRect:material:shader_parameter/mix_percentage")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [0.6000000285, 0.0]
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("%SaveLoaderUI:position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0.8, 80, -1080, -0.16666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.8)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3jrjb"]
+_data = {
+&"RESET": SubResource("Animation_dq3ih"),
+&"transition_in": SubResource("Animation_3jrjb"),
+&"transition_out": SubResource("Animation_tcuml")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tcuml"]
+shader = ExtResource("6_dq3ih")
+shader_parameter/use_sprite_alpha = true
+shader_parameter/use_transition_texture = false
+shader_parameter/transition_type = 0
+shader_parameter/position = Vector2(0, 0)
+shader_parameter/invert = false
+shader_parameter/grid_size = Vector2(0, 1)
+shader_parameter/rotation_angle = 0.0
+shader_parameter/global_x_mirror = false
+shader_parameter/global_y_mirror = false
+shader_parameter/local_x_mirror = false
+shader_parameter/local_y_mirror = false
+shader_parameter/stagger = Vector2(0, 0)
+shader_parameter/cumulative_stagger_flip = false
+shader_parameter/cumulative_stagger = Vector2(0, 0)
+shader_parameter/stagger_frequency = Vector2i(2, 2)
+shader_parameter/flip_frequency = Vector2i(1, 1)
+shader_parameter/basic_feather = 3.0
+shader_parameter/use_mask_size = false
+shader_parameter/mask_size = Vector2(100, 100)
+shader_parameter/edges = 6
+shader_parameter/shape_feather = 0.1
+shader_parameter/sectors = 1
+shader_parameter/clock_feather = 0.0
+shader_parameter/progress = 4.0
+shader_parameter/progress_bias = Vector2(0, 0)
 
 [node name="SaveLoader" type="Node2D" unique_id=1976988115]
 script = ExtResource("1_r0hmw")
@@ -13,12 +239,9 @@ metadata/_custom_type_script = "uid://dqjitm5fwb83b"
 [node name="MainBackgroundArt" parent="." unique_id=510397190 instance=ExtResource("2_4sn0j")]
 position = Vector2(0, -5)
 
-[node name="SpaceshipSprite2D" parent="MainBackgroundArt/CanvasLayer" parent_id_path=PackedInt32Array(510397190, 386449256) index="1" unique_id=622497592]
-visible = false
-
 [node name="OverlayCanvasLayer" type="CanvasLayer" parent="." unique_id=192039102]
 
-[node name="ColorRect" type="ColorRect" parent="OverlayCanvasLayer" unique_id=1908863304]
+[node name="OverlayColorRect" type="ColorRect" parent="OverlayCanvasLayer" unique_id=1908863304]
 material = ExtResource("3_dq3ih")
 custom_minimum_size = Vector2(1920, 1080)
 anchors_preset = -1
@@ -37,6 +260,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -1080.0
+offset_bottom = -1080.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_olopm")
@@ -84,4 +309,18 @@ columns = 3
 [node name="PlaceholderSaveSlot" parent="CanvasLayer/SaveLoaderUI/MarginContainer/VBoxContainer/ScrollContainer/SaveSlotContainer" unique_id=1785634137 instance_placeholder="res://scenes/save_loader/save_slot.tscn"]
 layout_mode = 2
 
-[editable path="MainBackgroundArt"]
+[node name="SceneTransitionCanvasLayer" type="CanvasLayer" parent="." unique_id=1028419257]
+unique_name_in_owner = true
+
+[node name="SceneTransitionAnimationPlayer" type="AnimationPlayer" parent="SceneTransitionCanvasLayer" unique_id=1976804919]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_3jrjb")
+
+[node name="OutTransitionColorRect" type="ColorRect" parent="SceneTransitionCanvasLayer" unique_id=2112619936]
+material = SubResource("ShaderMaterial_tcuml")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

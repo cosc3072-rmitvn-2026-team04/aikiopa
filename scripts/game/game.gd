@@ -27,7 +27,7 @@ enum GameOverType {
 @export var game_mode: GameMode = GameMode.PLAY
 @export var autosave: bool = true # TODO: Move this into Settings (#14).
 @export var autosave_interval: int = 15 # TODO: Move this into Settings (#14).
-@export var container_scene: GameScene2D = null
+@export var play_scene: Play = null
 
 #endregion
 # ============================================================================ #
@@ -312,7 +312,7 @@ func _on_game_menu_acted(action: StringName) -> void:
 			_save_dirty = false
 		&"quit_to_main_menu":
 			%GameMenu.close()
-			container_scene.scene_finished.emit(GameScene2D.SceneKey.MAIN_MENU)
+			play_scene.switch_scene(GameScene2D.SceneKey.MAIN_MENU)
 
 
 # Listes to %GameOverMenu.acted(action: StringName).
@@ -324,10 +324,10 @@ func _on_game_over_menu_acted(action: StringName) -> void:
 		&"new_session":
 			%GameMenu.close()
 			Global.is_new_game = true
-			container_scene.scene_finished.emit(GameScene2D.SceneKey.PLAY)
+			play_scene.switch_scene(GameScene2D.SceneKey.PLAY)
 		&"quit_to_main_menu":
 			%GameMenu.close()
-			container_scene.scene_finished.emit(GameScene2D.SceneKey.MAIN_MENU)
+			play_scene.switch_scene(GameScene2D.SceneKey.MAIN_MENU)
 
 #endregion
 # ============================================================================ #
