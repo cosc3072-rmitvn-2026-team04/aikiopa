@@ -38,12 +38,15 @@ func _ready() -> void:
 			save_slot.set_slot_empty()
 		%SaveSlotContainer.add_child(save_slot)
 
+	%BackButton.process_mode = Node.PROCESS_MODE_DISABLED
 	await _scene_transition_in(_refreshing)
-	if _refreshing:
-		_refreshing = false
+	%BackButton.process_mode = Node.PROCESS_MODE_INHERIT
 	%BackButton.pressed.connect(_on_back_button_pressed)
 	%SaveLoaderUI.acted.connect(_on_save_loader_ui_acted)
 	%SaveLoaderUI.acted_with_data.connect(_on_save_loader_ui_acted_with_data)
+
+	if _refreshing:
+		_refreshing = false
 
 #endregion
 # ============================================================================ #
@@ -83,6 +86,7 @@ func _scene_transition_out_to_play() -> void:
 
 # Listens to %BackButton.pressed.
 func _on_back_button_pressed() -> void:
+	%BackButton.process_mode = Node.PROCESS_MODE_DISABLED
 	MainMenu.scene_transition_in_enabled = false
 	await _scene_transition_out_to_main_menu()
 	scene_finished.emit(SceneKey.MAIN_MENU)
