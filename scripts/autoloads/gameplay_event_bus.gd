@@ -80,7 +80,8 @@ signal building_placed(
 		interaction_result: BuildingRulesetEngine.InteractionResult)
 
 
-# TODO: At the moment nothing is listening to this. Implement in #21.
+# TODO: At the moment nothing is emitting or listening to this. Implement
+# relevant logic in #21.
 ## Emitted when a [Building] of [param building_type] at [param coords] is
 ## destroyed.
 @warning_ignore("unused_signal")
