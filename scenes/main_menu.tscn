@@ -198,6 +198,7 @@ text = "Start"
 [node name="GalleryButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/MarginContainer/CenterContainer/MainMenuContainer/ButtonVBoxContainer" unique_id=1634631360 groups=["ui_buttons"]]
 unique_name_in_owner = true
 layout_mode = 2
+disabled = true
 text = "Galery"
 
 [node name="SettingsButton" type="Button" parent="MainMenuUICanvasLayer/MainMenuUI/MarginContainer/CenterContainer/MainMenuContainer/ButtonVBoxContainer" unique_id=88263360 groups=["ui_buttons"]]

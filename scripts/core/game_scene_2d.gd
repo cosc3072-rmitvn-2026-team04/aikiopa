@@ -49,7 +49,7 @@ signal scene_finished(next_scene_key: SceneKey)
 # ============================================================================ #
 #region Enums
 
-## The scenes available in the game.
+## The scenes available for the player in the game.
 enum SceneKey {
 	SPLASH_SCREEN,
 	MAIN_MENU,
@@ -73,9 +73,9 @@ enum SceneKey {
 const GAME_SCENE: Dictionary[SceneKey, String] = {
 	SceneKey.SPLASH_SCREEN: "res://scenes/splash_screen.tscn",
 	SceneKey.MAIN_MENU: "res://scenes/main_menu.tscn",
-	SceneKey.PLAY: "res://scenes/play.tscn",
+	SceneKey.PLAY: "res://scenes/game_container/play.tscn",
 	SceneKey.SAVE_LOADER: "res://scenes/save_loader/save_loader.tscn",
-	SceneKey.GALLERY: "res://scenes/gallery.tscn",
+	SceneKey.GALLERY: "res://scenes/game_container/gallery.tscn",
 	SceneKey.GALLERY_LOADER: "res://scenes/gallery_loader/gallery_loader.tscn",
 	SceneKey.SETTINGS: "res://scenes/settings.tscn",
 	SceneKey.CREDITS: "res://scenes/credits.tscn",

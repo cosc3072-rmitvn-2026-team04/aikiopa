@@ -7,8 +7,9 @@ extends Node2D
 #region Enums
 
 enum GameMode {
-	PLAY,
-	SNAPSHOT, # TODO: Implement this mode in #149.
+	GAME_MODE_NULL,
+	GAME_MODE_PLAY,
+	GAME_MODE_SNAPSHOT, # TODO: Implement logic for this mode in #149.
 }
 
 enum GameOverType {
@@ -24,10 +25,10 @@ enum GameOverType {
 # ============================================================================ #
 #region Exported properties
 
-@export var game_mode: GameMode = GameMode.PLAY
+@export var game_mode: GameMode = GameMode.GAME_MODE_NULL
 @export var autosave: bool = true # TODO: Move this into Settings (#14).
 @export var autosave_interval: int = 15 # TODO: Move this into Settings (#14).
-@export var container_scene: GameScene2D = null
+@export var container: GameContainer = null
 
 #endregion
 # ============================================================================ #
@@ -51,6 +52,9 @@ var _debug_mode_enabled: bool
 #region Godot builtins
 
 func _ready() -> void:
+	assert(container, "Must be child of a 'GameContainer' scene.")
+	assert(game_mode != GameMode.GAME_MODE_NULL, "'game_mode' must be specified.")
+
 	_save_slot_index = Global.current_save_slot_index
 	_debug_mode_enabled = false
 
@@ -312,7 +316,7 @@ func _on_game_menu_acted(action: StringName) -> void:
 			_save_dirty = false
 		&"quit_to_main_menu":
 			%GameMenu.close()
-			container_scene.switch_scene(GameScene2D.SceneKey.MAIN_MENU)
+			container.switch_scene(GameScene2D.SceneKey.MAIN_MENU)
 
 
 # Listes to %GameOverMenu.acted(action: StringName).
@@ -324,10 +328,10 @@ func _on_game_over_menu_acted(action: StringName) -> void:
 		&"new_session":
 			%GameMenu.close()
 			Global.is_new_game = true
-			container_scene.switch_scene(GameScene2D.SceneKey.PLAY)
+			container.switch_scene(GameScene2D.SceneKey.PLAY)
 		&"quit_to_main_menu":
 			%GameMenu.close()
-			container_scene.switch_scene(GameScene2D.SceneKey.MAIN_MENU)
+			container.switch_scene(GameScene2D.SceneKey.MAIN_MENU)
 
 #endregion
 # ============================================================================ #

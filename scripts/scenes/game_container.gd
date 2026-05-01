@@ -1,5 +1,6 @@
-class_name Gallery
+class_name GameContainer
 extends GameScene2D
+## Container [GameScene2D] for [Game] sessions.
 
 
 # ============================================================================ #

@@ -1,8 +1,7 @@
-[gd_scene format=3 uid="uid://bxlo1y44rtffo"]
+[gd_scene format=3 uid="uid://dk1rvigfmkonl"]
 
-[ext_resource type="Script" uid="uid://c5x0rktmo2tjw" path="res://scripts/scenes/play.gd" id="1_bq38n"]
-[ext_resource type="PackedScene" uid="uid://ckf5ejaxdb3vf" path="res://scenes/game/game.tscn" id="2_bq38n"]
-[ext_resource type="Shader" uid="uid://df8w2bkx1lv8f" path="res://shaders/scene_transition.gdshader" id="3_bq38n"]
+[ext_resource type="Script" uid="uid://bfq5travc8xj3" path="res://scripts/scenes/game_container.gd" id="1_bnlic"]
+[ext_resource type="Shader" uid="uid://df8w2bkx1lv8f" path="res://shaders/scene_transition.gdshader" id="2_tu7tw"]
 
 [sub_resource type="Animation" id="Animation_bq38n"]
 length = 0.001
@@ -53,15 +52,15 @@ tracks/0/keys = {
 "values": [3.5, -1.5]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_65v2a"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q5b78"]
 _data = {
 &"RESET": SubResource("Animation_bq38n"),
 &"transition_in": SubResource("Animation_hsi3f"),
 &"transition_out": SubResource("Animation_65v2a")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_65v2a"]
-shader = ExtResource("3_bq38n")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_innpn"]
+shader = ExtResource("2_tu7tw")
 shader_parameter/use_sprite_alpha = true
 shader_parameter/use_transition_texture = false
 shader_parameter/transition_type = 0
@@ -88,14 +87,14 @@ shader_parameter/clock_feather = 0.0
 shader_parameter/progress = -1.5
 shader_parameter/progress_bias = Vector2(0, 0)
 
-[node name="Play" type="Node2D" unique_id=209919511]
-script = ExtResource("1_bq38n")
+[node name="GameContainer" type="Node2D" unique_id=534572444]
+script = ExtResource("1_bnlic")
 metadata/_custom_type_script = "uid://dqjitm5fwb83b"
 
-[node name="LoadBackgroundCanvasLayer" type="CanvasLayer" parent="." unique_id=134634402]
+[node name="LoadBackgroundCanvasLayer" type="CanvasLayer" parent="." unique_id=999764049]
 layer = -89
 
-[node name="LoadBackgroundColorRect" type="ColorRect" parent="LoadBackgroundCanvasLayer" unique_id=303269143]
+[node name="LoadBackgroundColorRect" type="ColorRect" parent="LoadBackgroundCanvasLayer" unique_id=750409403]
 unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
@@ -103,21 +102,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0)
+metadata/_edit_use_anchors_ = true
 
-[node name="Game" parent="." unique_id=1327406412 node_paths=PackedStringArray("container_scene") instance=ExtResource("2_bq38n")]
-container_scene = NodePath("..")
-
-[node name="SceneTransitionCanvasLayer" type="CanvasLayer" parent="." unique_id=396214211]
+[node name="SceneTransitionCanvasLayer" type="CanvasLayer" parent="." unique_id=2073915522]
 unique_name_in_owner = true
 layer = 99
 visible = false
 
-[node name="SceneTransitionAnimationPlayer" type="AnimationPlayer" parent="SceneTransitionCanvasLayer" unique_id=793813956]
+[node name="SceneTransitionAnimationPlayer" type="AnimationPlayer" parent="SceneTransitionCanvasLayer" unique_id=993089233]
 unique_name_in_owner = true
-libraries/ = SubResource("AnimationLibrary_65v2a")
+libraries/ = SubResource("AnimationLibrary_q5b78")
 
-[node name="TransitionColorRect" type="ColorRect" parent="SceneTransitionCanvasLayer" unique_id=539030134]
-material = SubResource("ShaderMaterial_65v2a")
+[node name="TransitionColorRect" type="ColorRect" parent="SceneTransitionCanvasLayer" unique_id=1262724935]
+material = SubResource("ShaderMaterial_innpn")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
