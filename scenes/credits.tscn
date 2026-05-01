@@ -134,6 +134,8 @@ _data = {
 
 [node name="Credits" type="Node2D" unique_id=1890754985]
 script = ExtResource("1_2ckv8")
+auto_scroll_speed = 60.0
+manual_scroll_speed = 420.0
 metadata/_custom_type_script = "uid://dqjitm5fwb83b"
 
 [node name="SceneTransitionAnimationPlayer" type="AnimationPlayer" parent="." unique_id=875844055]
@@ -234,3 +236,8 @@ vertical_alignment = 1
 [node name="EndCreditsSpaceControl" type="Control" parent="MainCanvasLayer/ScrollContainer/VBoxContainer" unique_id=1092116774]
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
+
+[node name="ScrollRestartTimer" type="Timer" parent="." unique_id=2083092462]
+unique_name_in_owner = true
+wait_time = 1.5
+one_shot = true
