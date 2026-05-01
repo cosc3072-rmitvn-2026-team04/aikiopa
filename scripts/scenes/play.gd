@@ -16,6 +16,18 @@ func _ready() -> void:
 
 
 # ============================================================================ #
+#region Public methods
+
+## Triggers a scene switch to [param scene_key].
+func switch_scene(scene_key: SceneKey) -> void:
+	await _scene_transition_out()
+	scene_finished.emit(scene_key)
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
 #region Private methods
 
 func _scene_transition_in() -> void:
@@ -30,18 +42,6 @@ func _scene_transition_out() -> void:
 	%SceneTransitionCanvasLayer.show()
 	%SceneTransitionAnimationPlayer.play(&"transition_out")
 	await %SceneTransitionAnimationPlayer.animation_finished
-
-#endregion
-# ============================================================================ #
-
-
-# ============================================================================ #
-#region Godot builtins
-
-## Triggers a scene switch to [param scene_key].
-func switch_scene(scene_key: SceneKey) -> void:
-	await _scene_transition_out()
-	scene_finished.emit(scene_key)
 
 #endregion
 # ============================================================================ #
