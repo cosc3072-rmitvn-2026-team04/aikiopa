@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://yvnaon68hhjm"]
+
+[ext_resource type="PackedScene" uid="uid://dk1rvigfmkonl" path="res://scenes/game_container/game_container.tscn" id="1_2cr4h"]
+[ext_resource type="PackedScene" uid="uid://ckf5ejaxdb3vf" path="res://scenes/game/game.tscn" id="2_8ho6b"]
+
+[node name="Gallery" unique_id=534572444 instance=ExtResource("1_2cr4h")]
+
+[node name="Game" parent="." index="1" unique_id=361428006 node_paths=PackedStringArray("container") instance=ExtResource("2_8ho6b")]
+game_mode = 2
+container = NodePath("..")

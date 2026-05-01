@@ -5,7 +5,7 @@ uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, repeat_disable, filter_n
 /**
  * How blurry the result should be. Limited to 20 because of performance.
  */
-uniform float strength : hint_range(0.1, 20.0) = 5.0;
+uniform float strength : hint_range(0.01, 20.0) = 5.0;
 
 /**
  * How dark the blur will be.

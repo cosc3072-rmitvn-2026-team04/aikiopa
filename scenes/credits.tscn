@@ -1,15 +1,146 @@
 [gd_scene format=3 uid="uid://xxxh008diddy"]
 
 [ext_resource type="Script" uid="uid://bjico263pdusu" path="res://scripts/scenes/credits.gd" id="1_2ckv8"]
-[ext_resource type="PackedScene" uid="uid://bgb6qk47e8yq8" path="res://scenes/main_background_art.tscn" id="2_2fbfq"]
 [ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="3_0ctdu"]
 [ext_resource type="Material" uid="uid://cibobvof01gdw" path="res://resources/materials/credits_overlay_shader_material.tres" id="3_2fbfq"]
 
+[sub_resource type="Animation" id="Animation_2fbfq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OverlayCanvasLayer/ColorRect:material:shader_parameter/strength")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.00999999977648]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OverlayCanvasLayer/ColorRect:material:shader_parameter/mix_percentage")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("%ScrollContainer:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_mah5v"]
+resource_name = "transition_in"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OverlayCanvasLayer/ColorRect:material:shader_parameter/strength")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.25, 1),
+"update": 0,
+"values": [0.00999999977648, 5.00000023424012]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OverlayCanvasLayer/ColorRect:material:shader_parameter/mix_percentage")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.25, 1),
+"update": 0,
+"values": [0.0, 0.750000035625]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("%ScrollContainer:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.25, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_8gwij"]
+resource_name = "transition_out"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OverlayCanvasLayer/ColorRect:material:shader_parameter/strength")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [5.00000023424012, 0.00999999977648]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OverlayCanvasLayer/ColorRect:material:shader_parameter/mix_percentage")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [0.750000035625, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("%ScrollContainer:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mah5v"]
+_data = {
+&"RESET": SubResource("Animation_2fbfq"),
+&"transition_in": SubResource("Animation_mah5v"),
+&"transition_out": SubResource("Animation_8gwij")
+}
+
 [node name="Credits" type="Node2D" unique_id=1890754985]
 script = ExtResource("1_2ckv8")
+auto_scroll_speed = 60.0
+manual_scroll_speed = 420.0
 metadata/_custom_type_script = "uid://dqjitm5fwb83b"
 
-[node name="MainBackgroundArt" parent="." unique_id=510397190 instance=ExtResource("2_2fbfq")]
+[node name="SceneTransitionAnimationPlayer" type="AnimationPlayer" parent="." unique_id=875844055]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_mah5v")
 
 [node name="OverlayCanvasLayer" type="CanvasLayer" parent="." unique_id=655295641]
 
@@ -28,6 +159,7 @@ size_flags_vertical = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MainCanvasLayer" unique_id=104342115]
 unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -104,3 +236,8 @@ vertical_alignment = 1
 [node name="EndCreditsSpaceControl" type="Control" parent="MainCanvasLayer/ScrollContainer/VBoxContainer" unique_id=1092116774]
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
+
+[node name="ScrollRestartTimer" type="Timer" parent="." unique_id=2083092462]
+unique_name_in_owner = true
+wait_time = 1.5
+one_shot = true

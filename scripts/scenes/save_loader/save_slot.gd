@@ -4,7 +4,6 @@ extends PanelContainer
 # ============================================================================ #
 #region Exported properties
 
-@export var container_scene: GameScene2D
 @export var container_ui: GameUI
 
 #endregion
@@ -101,16 +100,12 @@ func set_slot_used(save_header: Dictionary[StringName, Variant]) -> void:
 
 # Listens to %NewButton.pressed.
 func _on_new_button_pressed() -> void:
-	Global.current_save_slot_index = _save_slot_index
-	Global.is_new_game = true
-	container_scene.scene_finished.emit(GameScene2D.SceneKey.PLAY)
+	container_ui.acted_with_data.emit(&"new_session", _save_slot_index)
 
 
 # Listens to %LoadButton.pressed.
 func _on_load_button_pressed() -> void:
-	Global.current_save_slot_index = _save_slot_index
-	Global.is_new_game = false
-	container_scene.scene_finished.emit(GameScene2D.SceneKey.PLAY)
+	container_ui.acted_with_data.emit(&"load_session", _save_slot_index)
 
 
 # Listens to %Delete.pressed.
@@ -129,7 +124,7 @@ func _on_delete_confirm_no_button_pressed() -> void:
 func _on_delete_confirm_yes_button_pressed() -> void:
 	%DeleteConfirmContainer.hide()
 	GameSaveService.delete(_save_slot_index)
-	container_scene.scene_finished.emit(GameScene2D.SceneKey.SAVE_LOADER)
+	container_ui.acted.emit(&"refresh")
 
 #endregion
 # ============================================================================ #
