@@ -57,6 +57,7 @@ func _on_game_over(population: int, game_over_type: Game.GameOverType) -> void:
 			push_error("Unrecognized 'game_over_type': %s" % [
 				Game.GameOverType.keys()[game_over_type]
 			])
+	%AnimationPlayer.play(&"activate")
 
 
 # Listens to %SaveSnapshotButton.pressed.
