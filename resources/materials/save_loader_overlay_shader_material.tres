@@ -4,5 +4,5 @@
 
 [resource]
 shader = ExtResource("1_k0sat")
-shader_parameter/strength = 3.0000001392401203
-shader_parameter/mix_percentage = 0.6000000285
+shader_parameter/strength = 0.00999999977648
+shader_parameter/mix_percentage = 0.0

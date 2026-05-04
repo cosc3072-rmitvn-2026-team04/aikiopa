@@ -31,3 +31,18 @@ func _input(event: InputEvent) -> void:
 
 #endregion
 # ============================================================================ #
+
+
+# ============================================================================ #
+#region Public methods
+
+## Disables the Hamburger Menu Button.
+func disable() -> void:
+	set_process_input(false)
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property(
+			self, "position", self.position + Vector2.LEFT * 256.0, 0.5)\
+					.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
+
+#endregion
+# ============================================================================ #

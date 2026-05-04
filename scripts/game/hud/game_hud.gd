@@ -83,6 +83,7 @@ func _ready() -> void:
 	GameplayEventBus.building_placed.connect(_on_building_placed)
 	GameplayEventBus.population_changed.connect(_on_population_changed)
 	GameplayEventBus.session_saved.connect(_on_session_saved)
+	GameplayEventBus.game_over.connect(_on_game_over)
 
 
 func _input(event: InputEvent) -> void:
@@ -405,6 +406,16 @@ func _on_session_saved(_save_slot_index: int) -> void:
 	await timer.timeout
 	%GameSaveNotificationLabel.hide()
 	%GameSaveNotificationBackgroundTextureRect.hide()
+
+
+# Listens to GameplayEventBus.game_over(
+#		population_reached: int,
+#		game_over_type: Game.GameOverType).
+func _on_game_over(
+		_population_reached: int,
+		_game_over_type: Game.GameOverType
+) -> void:
+	%HamburgerMenuButton.disable()
 
 #endregion
 # ============================================================================ #

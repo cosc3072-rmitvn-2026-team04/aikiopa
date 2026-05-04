@@ -21,8 +21,6 @@ func _ready() -> void:
 
 ## Show the Game Over Menu.
 func open() -> void:
-	# TODO: This could be made prettier using a Tween animation to slide the
-	# menu in.
 	process_mode = Node.PROCESS_MODE_INHERIT
 	show()
 
@@ -57,6 +55,7 @@ func _on_game_over(population: int, game_over_type: Game.GameOverType) -> void:
 			push_error("Unrecognized 'game_over_type': %s" % [
 				Game.GameOverType.keys()[game_over_type]
 			])
+	%AnimationPlayer.play(&"activate")
 
 
 # Listens to %SaveSnapshotButton.pressed.

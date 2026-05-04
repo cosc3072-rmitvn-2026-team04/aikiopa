@@ -3,17 +3,6 @@ extends Node2D
 
 
 # ============================================================================ #
-#region Constants
-
-## [BuildingCard] asset location.
-const BUILDING_CARD_ASSET_DIR: String =\
-		"res://assets/user_interface/building_stack/building_card/"
-
-#endregion
-# ============================================================================ #
-
-
-# ============================================================================ #
 #region Exported properties
 
 @export_group("Sprites")

@@ -2,17 +2,139 @@
 
 [ext_resource type="Script" uid="uid://dn6k6ykoyxmka" path="res://scripts/scenes/main_menu/main_menu.gd" id="1_0ebjn"]
 [ext_resource type="Script" uid="uid://pv8kfa1omp0b" path="res://scripts/scenes/main_menu/main_menu_ui.gd" id="2_ekxnf"]
-[ext_resource type="PackedScene" uid="uid://bgb6qk47e8yq8" path="res://scenes/main_background_art.tscn" id="2_wu84c"]
 [ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="3_wu84c"]
+[ext_resource type="Shader" uid="uid://df8w2bkx1lv8f" path="res://shaders/scene_transition.gdshader" id="5_8ln24"]
+
+[sub_resource type="Animation" id="Animation_5dd4i"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%MainMenuUI:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [890.0]
+}
+
+[sub_resource type="Animation" id="Animation_oa1go"]
+resource_name = "hide_ui"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%MainMenuUI:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(3, 1),
+"update": 0,
+"values": [0.0, 890.0]
+}
+
+[sub_resource type="Animation" id="Animation_jk1qb"]
+resource_name = "show_ui"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%MainMenuUI:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.25, 1),
+"update": 0,
+"values": [890.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5dd4i"]
+_data = {
+&"RESET": SubResource("Animation_5dd4i"),
+&"hide_ui": SubResource("Animation_oa1go"),
+&"show_ui": SubResource("Animation_jk1qb")
+}
+
+[sub_resource type="Animation" id="Animation_rtw2f"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TransitionColorRect:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.5]
+}
+
+[sub_resource type="Animation" id="Animation_8ln24"]
+resource_name = "transition_in"
+length = 0.8
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TransitionColorRect:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [-1.5, 3.5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rtw2f"]
+_data = {
+&"RESET": SubResource("Animation_rtw2f"),
+&"transition_in": SubResource("Animation_8ln24")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rtw2f"]
+shader = ExtResource("5_8ln24")
+shader_parameter/use_sprite_alpha = true
+shader_parameter/use_transition_texture = false
+shader_parameter/transition_type = 0
+shader_parameter/position = Vector2(0, 0)
+shader_parameter/invert = false
+shader_parameter/grid_size = Vector2(0, 1)
+shader_parameter/rotation_angle = 0.0
+shader_parameter/global_x_mirror = false
+shader_parameter/global_y_mirror = false
+shader_parameter/local_x_mirror = false
+shader_parameter/local_y_mirror = false
+shader_parameter/stagger = Vector2(0, 0)
+shader_parameter/cumulative_stagger_flip = false
+shader_parameter/cumulative_stagger = Vector2(0, 0)
+shader_parameter/stagger_frequency = Vector2i(2, 2)
+shader_parameter/flip_frequency = Vector2i(1, 1)
+shader_parameter/basic_feather = 3.0
+shader_parameter/use_mask_size = false
+shader_parameter/mask_size = Vector2(100, 100)
+shader_parameter/edges = 6
+shader_parameter/shape_feather = 0.1
+shader_parameter/sectors = 1
+shader_parameter/clock_feather = 0.0
+shader_parameter/progress = -1.5
+shader_parameter/progress_bias = Vector2(0, 0)
 
 [node name="MainMenu" type="Node2D" unique_id=285205235]
 script = ExtResource("1_0ebjn")
 metadata/_custom_type_script = "uid://dqjitm5fwb83b"
 
-[node name="MainBackgroundArt" parent="." unique_id=510397190 instance=ExtResource("2_wu84c")]
-
 [node name="MainMenuUICanvasLayer" type="CanvasLayer" parent="." unique_id=262500120]
-layer = 99
+
+[node name="MainMenuUIAnimationPlayer" type="AnimationPlayer" parent="MainMenuUICanvasLayer" unique_id=1730758839]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_5dd4i")
 
 [node name="MainMenuUI" type="Control" parent="MainMenuUICanvasLayer" unique_id=305829909]
 unique_name_in_owner = true
@@ -20,6 +142,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 890.0
+offset_right = 889.999
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_wu84c")
@@ -92,3 +216,21 @@ text = "Credits"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Quit"
+
+[node name="SceneTransitionCanvasLayer" type="CanvasLayer" parent="." unique_id=699813137]
+unique_name_in_owner = true
+layer = 99
+visible = false
+
+[node name="SceneTransitionAnimationPlayer" type="AnimationPlayer" parent="SceneTransitionCanvasLayer" unique_id=1432895497]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_rtw2f")
+
+[node name="TransitionColorRect" type="ColorRect" parent="SceneTransitionCanvasLayer" unique_id=1113456014]
+material = SubResource("ShaderMaterial_rtw2f")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

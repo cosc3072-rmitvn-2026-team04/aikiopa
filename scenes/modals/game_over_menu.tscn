@@ -3,6 +3,66 @@
 [ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://resources/themes/main_ui.tres" id="1_18j6f"]
 [ext_resource type="Script" uid="uid://fh4lfcav0lye" path="res://scripts/modals/game_over_menu.gd" id="1_n68tj"]
 
+[sub_resource type="Animation" id="Animation_dadcw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BackgroundTextureRect:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CenterContainer/VBoxContainer:theme_override_constants/separation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1280, 0, 0, 0.4, -600),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_qxbxd"]
+resource_name = "activate"
+length = 1.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BackgroundTextureRect:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.5, 1.5),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CenterContainer/VBoxContainer:theme_override_constants/separation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1280, 0, 0, 0.4, -600, 640, -0.2, -80, 0, 0),
+"times": PackedFloat32Array(0.5, 1.3000001)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dadcw"]
+_data = {
+&"RESET": SubResource("Animation_dadcw"),
+&"activate": SubResource("Animation_qxbxd")
+}
+
 [sub_resource type="Gradient" id="Gradient_dadcw"]
 offsets = PackedFloat32Array(0, 0.31193197, 0.68693197, 1)
 colors = PackedColorArray(0, 0, 0, 0.6431373, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.6392157)
@@ -22,7 +82,12 @@ theme = ExtResource("1_18j6f")
 script = ExtResource("1_n68tj")
 metadata/_custom_type_script = "uid://cupvablkoadik"
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=272883654]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1346753150]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_dadcw")
+
+[node name="BackgroundTextureRect" type="TextureRect" parent="." unique_id=272883654]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,26 +96,23 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_4iega")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect" unique_id=257114138]
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1035737626]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -381.5
-offset_top = -420.5
-offset_right = 381.5
-offset_bottom = 420.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 640
 
-[node name="LabelVBoxContainer" type="VBoxContainer" parent="TextureRect/VBoxContainer" unique_id=125423325]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=257114138]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 1280
 
-[node name="PopulationValueLabel" type="Label" parent="TextureRect/VBoxContainer/LabelVBoxContainer" unique_id=2025826919]
+[node name="LabelVBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer" unique_id=125423325]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PopulationValueLabel" type="Label" parent="CenterContainer/VBoxContainer/LabelVBoxContainer" unique_id=2025826919]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 12
@@ -58,30 +120,30 @@ theme_override_font_sizes/font_size = 64
 text = "Final Population: NaN👨‍🚀"
 horizontal_alignment = 1
 
-[node name="MessageLabel" type="Label" parent="TextureRect/VBoxContainer/LabelVBoxContainer" unique_id=1388868528]
+[node name="MessageLabel" type="Label" parent="CenterContainer/VBoxContainer/LabelVBoxContainer" unique_id=1388868528]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 10
 text = "Expedition Completed!"
 horizontal_alignment = 1
 
-[node name="ButtonVBoxContainer" type="VBoxContainer" parent="TextureRect/VBoxContainer" unique_id=447443858]
+[node name="ButtonVBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer" unique_id=447443858]
 custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="SaveSnapshotButton" type="Button" parent="TextureRect/VBoxContainer/ButtonVBoxContainer" unique_id=1160669998 groups=["ui_buttons"]]
+[node name="SaveSnapshotButton" type="Button" parent="CenterContainer/VBoxContainer/ButtonVBoxContainer" unique_id=1160669998 groups=["ui_buttons"]]
 unique_name_in_owner = true
 layout_mode = 2
 disabled = true
 text = "Save Snapshot"
 
-[node name="NewSessionButton" type="Button" parent="TextureRect/VBoxContainer/ButtonVBoxContainer" unique_id=183934942 groups=["ui_buttons"]]
+[node name="NewSessionButton" type="Button" parent="CenterContainer/VBoxContainer/ButtonVBoxContainer" unique_id=183934942 groups=["ui_buttons"]]
 unique_name_in_owner = true
 layout_mode = 2
 text = "New Expedition"
 
-[node name="QuitToMainMenuButton" type="Button" parent="TextureRect/VBoxContainer/ButtonVBoxContainer" unique_id=1268427561 groups=["ui_buttons"]]
+[node name="QuitToMainMenuButton" type="Button" parent="CenterContainer/VBoxContainer/ButtonVBoxContainer" unique_id=1268427561 groups=["ui_buttons"]]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Quit to Main Menu"
