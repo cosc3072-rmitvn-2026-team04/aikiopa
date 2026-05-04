@@ -3,6 +3,20 @@ extends Node
 
 
 # ============================================================================ #
+#region Constants
+
+## Minimum size of the game's window. The game cannon be resized to be smaller
+## than this size. Aspect ratio: [code]16:9[/code].[br]
+## [br]
+## [code]960 x 540[/code] (qHD) is chosen for it is the smallest HD-based
+## display resolutions available.
+const MIN_SCREEN_RESOLUTION: Vector2i = Vector2i(960, 540)
+
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
 #region Public variables
 
 ## The platform that the game is running on. Can be either

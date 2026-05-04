@@ -10,9 +10,7 @@ var _current_scene: Node
 #region Godot builtins
 
 func _ready() -> void:
-	get_window().set_min_size(Vector2i(
-			ProjectSettings.get_setting("display/window/size/viewport_width"),
-			ProjectSettings.get_setting("display/window/size/viewport_height")))
+	get_window().min_size = Global.MIN_SCREEN_RESOLUTION
 	_current_scene_key = GameScene2D.SceneKey.SPLASH_SCREEN
 	_current_scene = null
 
