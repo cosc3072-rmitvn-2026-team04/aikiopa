@@ -136,6 +136,7 @@ static func get_building_class_of_type(building_type: BuildingType) -> BuildingC
 #region Godot builtins
 
 func _ready() -> void:
+	GameplayEventBus.building_placed.connect(_on_building_placed)
 	$HighlightSprite2D.hide()
 
 #endregion
@@ -209,5 +210,27 @@ func unset_highlight() -> void:
 	$HighlightSprite2D.modulate = Color.TRANSPARENT
 	$HighlightSprite2D.hide()
 
+#endregion
+# ============================================================================ #
+
+
+# ============================================================================ #
+#region Signal listeners
+
+## Listens to GameplayEventBus.building_placed(
+##		coords: Vector2i,
+##		building_type: Building.BuildingType,
+##		variation_value: float,
+##		interaction_result: BuildingRulesetEngine.InteractionResult).
+func _on_building_placed(
+		_coords: Vector2i,
+		_building_type: Building.BuildingType,
+		_variation_value: float,
+		_interaction_result: BuildingRulesetEngine.InteractionResult
+) -> void:
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		%AnimatedSprite2D.play("default")
+	else:
+		%AnimatedSprite2D.stop()
 #endregion
 # ============================================================================ #
